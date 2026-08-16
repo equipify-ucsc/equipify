@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Customer Login</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="auth-shell">
+
+  <!-- Left column: form -->
+  <main class="auth-form-col">
+    <div class="auth-form-inner">
+
+      <div style="margin-bottom: 40px; display: flex; flex-direction: column; align-items: flex-start;">
+        <img class="logo-mark" style="margin-bottom: 16px;" alt="Equipify Logo"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc7pNNuY8tPJ2FCHYW8ZjQVaaSpxwtkAZOCvOrGVxUUgb5yyULPic5UFXF2KjkuTZHacjSHwGofCHXzzGpWLl-Q-yc5n11Td0dVoByBSvxXnhj_GCDUgeyezn45EpHXP3PXj2novV-juHtgdYTPtcoaCHBgwC8zsoUsJO5bBIeH-24cUFPmDbPMtHhlp-E2StdiMj-S0UfxItp6NV4VIJxjqs2KzS8pKZ02qXIcRCt8ji26niCdEb4ZwvcbAJ9AdB-5q6t_IQ_JBA">
+        <h1 class="text-headline-md" style="color: var(--primary-container); margin: 0;">Equipify</h1>
+      </div>
+
+      <div style="margin-bottom: 32px;">
+        <h2 class="text-headline-lg" style="color: var(--primary-container); margin: 0 0 8px 0;">Log in to your account</h2>
+        <p class="text-body-md" style="color: var(--on-surface-variant); margin: 0;">Access your industrial equipment dashboard</p>
+      </div>
+
+      <form id="loginForm" novalidate>
+
+        <div class="field">
+          <label class="text-label-md field-label" for="email">Email address <span class="field-required">*</span></label>
+          <input class="input-standard" id="email" name="email" type="email" placeholder="you@company.com" required>
+        </div>
+
+        <div class="field">
+          <label class="text-label-md field-label" for="password">Password <span class="field-required">*</span></label>
+          <div class="password-wrap">
+            <input class="input-standard" id="password" name="password" type="password" placeholder="Enter your password" required>
+            <button class="password-toggle" type="button" id="passwordToggle" aria-label="Show password">
+              <span class="material-symbols-outlined">visibility</span>
+            </button>
+          </div>
+          <p class="error-message" id="passwordError" style="display:none;">
+            <span class="material-symbols-outlined">error</span>
+            Incorrect email or password
+          </p>
+        </div>
+
+        <div class="field-row-between" style="margin-bottom: 8px;">
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <input type="checkbox" style="width:16px; height:16px; accent-color: var(--brand-teal);">
+            <span class="text-body-sm" style="color: var(--on-surface-variant);">Remember me</span>
+          </label>
+          <a class="link-teal label" href="#">Forgot password?</a>
+        </div>
+
+        <button class="btn btn-cta" type="submit" style="margin-top: 16px;">Log In</button>
+      </form>
+
+      <div class="auth-footer">
+        <p>Don't have an account?
+          <a class="link-teal" style="font-weight:600;" href="register.html">Sign up now</a>
+        </p>
+      </div>
+
+      <p class="mobile-copyright">© 2026 Equipify Sri Lanka. Industrial Reliability.</p>
+    </div>
+  </main>
+
+  <!-- Right column: visual -->
+  <aside class="auth-visual-col">
+    <img class="auth-visual-bg" alt="Industrial Equipment"
+         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZvnolQMcWAhWVgEV60n2Z0u8si-f7qpuMqy9HNF1VOgRSAL2umnkok52T7X6FhgvEby3DfHQxf6wtpM5SpSSlN7HL9VCGw0Y1eP-nmenw90_a2x5Ye3OejX7ZioXjc8EGxLKbPAwRwjuN7W20HCoPtwRrRkpchSQl02oObDoeJUJHvp2NA_WDxFLvHIfLCHTgEDye0LMkrX2FxPfN5pCSlTvOedKvaM2SSvk75zFE2_m8lQRi6HX3Wjp2NwzgpJVgOyZitP7_wBI">
+    <div class="auth-visual-overlay"></div>
+
+    <div class="auth-visual-content">
+      <h3 class="text-headline-xl" style="margin: 0 0 24px 0;">Built for Industrial Excellence</h3>
+      <p class="text-body-lg" style="color: rgba(255,255,255,0.9); margin: 0 0 48px 0;">Streamlining equipment rentals for Sri Lanka's largest construction and manufacturing projects.</p>
+      <div style="display:flex; gap:32px;">
+        <div style="display:flex; flex-direction:column;">
+          <span style="font-size:1.875rem; font-weight:700;">500+</span>
+          <span style="font-size:0.875rem; text-transform:uppercase; letter-spacing:0.1em; opacity:0.7;">Machines</span>
+        </div>
+        <div style="display:flex; flex-direction:column;">
+          <span style="font-size:1.875rem; font-weight:700;">24/7</span>
+          <span style="font-size:0.875rem; text-transform:uppercase; letter-spacing:0.1em; opacity:0.7;">Support</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="auth-visual-footnote text-body-sm">© 2026 Equipify Sri Lanka. Industrial Reliability.</p>
+  </aside>
+
+</div>
+
+<script src="auth.js"></script>
+</body>
+</html>
