@@ -1,0 +1,29 @@
+# PHP / Composer
+/vendor/
+composer.phar
+composer.lock
+*.log
+
+# Environment / secrets — critical for MySQL credentials
+.env
+.env.local
+config.php
+db_config.php
+
+# IDE / editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Uploads / user-generated content (if applicable)
+/uploads/
+/tmp/
+
+# Logs and cache
+*.cache
+error_log
