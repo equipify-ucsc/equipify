@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Area Managers | Equipify</title><link rel="stylesheet" href="css/styles.css"></head><body><div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-mark">E</div><div><h1>Equipify</h1><small>Admin Console</small></div></div>
+  <div class="nav-section">Overview</div>
+  <a class="nav-link" data-nav href="dashboard.html">▦ <span>System Dashboard</span></a>
+  <div class="nav-section">Administration</div>
+  <a class="nav-link" data-nav href="profile.html">◉ <span>Admin Profile</span></a>
+  <a class="nav-link" data-nav href="complaints.html">⚑ <span>Complaints & Users</span></a>
+  <a class="nav-link" data-nav href="area-managers.html" class="nav-link active">♟ <span>Area Managers</span></a>
+  <a class="nav-link" data-nav href="documents.html">✓ <span>Document Verification</span></a>
+  <div class="nav-section">Account</div>
+  <a class="nav-link" data-nav href="login.html">↪ <span>Logout</span></a>
+</aside>
+<main class="main">
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button class="mobile-menu" aria-label="Open menu">☰</button>
+    <div><div class="top-title">Equipify Admin Portal</div><div class="top-sub">B2B Equipment Rental Platform</div></div>
+  </div>
+  <div class="user-menu"><div class="user-name"><strong>Dishanthan</strong><div class="top-sub">Super Administrator</div></div><div class="avatar">D</div></div>
+</header>
+<div class="container">
+<div class="page-head"><div><h2>Area Manager Management</h2><p>Register and manage regional managers responsible for local operations.</p></div><button class="btn btn-secondary" data-modal-open="managerModal">+ Register Area Manager</button></div>
+<div class="grid grid-3">
+<div class="card"><p class="meta">Active Managers</p><h3 style="font-size:28px;margin:8px 0">12</h3><p class="meta">Across operational regions</p></div>
+<div class="card"><p class="meta">Pending Approval</p><h3 style="font-size:28px;margin:8px 0">3</h3><p class="meta">Awaiting admin review</p></div>
+<div class="card"><p class="meta">Regions Covered</p><h3 style="font-size:28px;margin:8px 0">9</h3><p class="meta">Current service areas</p></div>
+</div>
+<div class="card" style="margin-top:18px"><div class="toolbar"><div class="search"><span>⌕</span><input data-filter-table="managerTable" placeholder="Search managers or regions..."></div><select><option>All regions</option><option>Western</option><option>Central</option><option>Southern</option></select></div>
+<div class="table-wrap"><table class="table" id="managerTable"><thead><tr><th>Manager</th><th>Region</th><th>Email</th><th>Assigned Users</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+<tr><td><strong>Kasun Perera</strong></td><td>Western</td><td>kasun@equipify.lk</td><td>486</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-light btn-sm" onclick="showToast('Manager details opened.')">View</button></td></tr>
+<tr><td><strong>Tharushi Silva</strong></td><td>Central</td><td>tharushi@equipify.lk</td><td>312</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-light btn-sm" onclick="showToast('Manager details opened.')">View</button></td></tr>
+<tr><td><strong>Ravindu Fernando</strong></td><td>Southern</td><td>ravindu@equipify.lk</td><td>205</td><td><span class="badge badge-warning">Pending</span></td><td><button class="btn btn-secondary btn-sm" onclick="showToast('Area manager approved.')">Approve</button></td></tr>
+</tbody></table></div></div>
+<div class="modal-backdrop" id="managerModal"><div class="modal"><div class="modal-head"><h3>Register Area Manager</h3><button class="close" data-modal-close>✕</button></div><form data-demo-form data-success="Area manager registered successfully."><div class="form-grid" style="margin-top:18px"><div class="field"><label>Full name</label><input required placeholder="Manager name"></div><div class="field"><label>Email</label><input type="email" required placeholder="manager@equipify.lk"></div><div class="field"><label>Phone</label><input required placeholder="+94 ..."></div><div class="field"><label>Region</label><select required><option value="">Select region</option><option>Western</option><option>Central</option><option>Southern</option><option>Northern</option><option>Eastern</option></select></div><div class="field full"><label>Temporary password</label><input required minlength="6" type="password" placeholder="Minimum 6 characters"></div></div><div class="actions" style="margin-top:20px"><button type="button" class="btn btn-light" data-modal-close>Cancel</button><button type="submit" class="btn btn-secondary">Register Manager</button></div></form></div></div>
+</div><div class="footer">Equipify Admin Console · Group 49 · Academic Project</div></main></div><div id="toast" class="toast"></div><script src="js/app.js"></script></body></html>
