@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipify - Login</title>
+  <link rel="stylesheet" href="Login_N.css">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Left Section -->
+    <div class="left-section">
+      <div class="left-content">
+        <div class="illustration-container">
+          <svg class="equipment-svg" viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Crane -->
+            <rect x="420" y="80" width="12" height="320" fill="#2c3e50" />
+            <path d="M300 100 L520 100 L420 80 Z" fill="#34495e" />
+            <path d="M420 80 L520 100 L520 110 L420 90 Z" fill="#2980b9" />
+            <rect x="360" y="95" width="50" height="20" fill="#16a085" />
+            <line x1="330" y1="100" x2="330" y2="200" stroke="#7f8c8d" stroke-width="2" />
+            <path d="M325 200 C325 210 335 210 335 200" stroke="#7f8c8d" stroke-width="3" fill="none" />
+            
+            <!-- Forklift -->
+            <rect x="180" y="210" width="110" height="70" rx="10" fill="#16a085" />
+            <path d="M220 210 L250 160 L280 160 L290 210 Z" fill="none" stroke="#2c3e50" stroke-width="6" />
+            <rect x="230" y="175" width="40" height="30" fill="#2c3e50" opacity="0.3" />
+            <circle cx="205" cy="280" r="18" fill="#2c3e50" />
+            <circle cx="205" cy="280" r="8" fill="#bdc3c7" />
+            <circle cx="275" cy="280" r="18" fill="#2c3e50" />
+            <circle cx="275" cy="280" r="8" fill="#bdc3c7" />
+            <path d="M120 275 L180 275 L180 200" stroke="#7f8c8d" stroke-width="6" fill="none" />
+            
+            <!-- Generator Box -->
+            <rect x="260" y="315" width="160" height="85" rx="5" fill="#16a085" />
+            <rect x="275" y="330" width="35" height="25" fill="#2c3e50" />
+            <line x1="330" y1="340" x2="400" y2="340" stroke="#2c3e50" stroke-width="4" stroke-dasharray="8 4" />
+            <line x1="330" y1="355" x2="400" y2="355" stroke="#2c3e50" stroke-width="4" stroke-dasharray="8 4" />
+            
+            <!-- Excavator -->
+            <rect x="190" y="440" width="220" height="35" rx="15" fill="#2c3e50" />
+            <line x1="200" y1="457" x2="400" y2="457" stroke="#7f8c8d" stroke-width="12" stroke-dasharray="10 6" />
+            <path d="M230 440 L240 370 L340 370 L360 440 Z" fill="#f39c12" />
+            <path d="M280 370 L300 320 L335 320 L340 370 Z" fill="#2c3e50" />
+            <path d="M60 440 L80 330 L170 380 L250 400" stroke="#f39c12" stroke-width="16" fill="none" stroke-linecap="round" />
+            <path d="M55 450 L40 410 L80 400 Z" fill="#2c3e50" />
+          </svg>
+        </div>
+        
+        <div class="text-content">
+          <h1>Manage Your Equipment Business Efficiently</h1>
+          <p>List equipment, manage rentals, manage bookings, track payments and grow your rental business.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="right-section">
+      <div class="glass-card">
+        <!-- Logo -->
+        <div class="brand">
+          <img src="Images/Equipify_logo" alt="Logo" class="brand-logo">
+        </div>
+
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Sign in to your account to continue</p>
+
+        <form id="loginForm" onsubmit="return false;">
+          <!-- Email Field -->
+          <div class="input-group">
+            <label for="email">Email Address</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope input-icon"></i>
+              <input type="email" id="email" placeholder="you@company.com" required>
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="input-group">
+            <div class="label-row">
+              <label for="password">Password</label>
+              <a href="#" class="forgot-pass">Forgot Password?</a>
+            </div>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="password" placeholder="••••••••" required>
+              <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+            </div>
+          </div>
+
+          <!-- Remember Me Checkbox -->
+          <div class="options-row">
+            <label class="remember-me">
+              <input type="checkbox" id="remember">
+              <span class="checkmark"></span>
+              Remember me
+            </label>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary">Sign In</button>
+
+        <!-- Create Account -->
+        <p class="signup-link">
+          Don't have an account? <a href="Reg_index.html">Create Account</a>
+        </p>
+      </div>
+
+      <!-- Footer Links -->
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <span>|</span>
+        <a href="#">Terms & Conditions</a>
+        <span>|</span>
+        <a href="#">Contact Support</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="Login_script.js"></script>
+</body>
+</html>

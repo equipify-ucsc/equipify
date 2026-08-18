@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rental Manager - EquipOwner Pro</title>
+  <link rel="stylesheet" href="../css files/Rental_Req_style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="user-avatar-container">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="User Avatar" class="user-avatar">
+        </div>
+        <div class="brand-info">
+          <h1 class="brand-title">EquipOwner Pro</h1>
+          <span class="brand-subtitle">Enterprise Admin</span>
+        </div>
+      </div>
+
+      <button class="btn btn-add-equipment">
+        <i class="fa-solid fa-plus"></i>
+        <span>Add Equipment</span>
+      </button>
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <a href="Dash_index.html">
+              <i class="fa-solid fa-border-all"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-layer-group"></i>
+              <span>Inventory</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="#">
+              <i class="fa-solid fa-receipt"></i>
+              <span>Rentals</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-truck"></i>
+              <span>Logistics</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-chart-column"></i>
+              <span>Reports</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-gear"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      
+      <!-- Top Navigation Bar -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <span class="app-heading">Rental Manager</span>
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" placeholder="Search rentals...">
+          </div>
+        </div>
+
+        <div class="navbar-right">
+          <div class="tab-menu">
+            <a href="#" class="tab-item active">Direct Rentals</a>
+            <a href="#" class="tab-item">Sub-leasing</a>
+          </div>
+          <button class="icon-btn" title="Notifications">
+            <i class="fa-regular fa-bell"></i>
+          </button>
+          <button class="icon-btn" title="Help">
+            <i class="fa-regular fa-circle-question"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Content Container -->
+      <main class="content-container">
+        
+        <!-- Page Header / Controls -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h2>Rental Requests</h2>
+            <p>Manage incoming equipment bookings and active rentals.</p>
+          </div>
+          
+          <div class="filter-controls">
+            <div class="select-dropdown">
+              <select id="statusFilter">
+                <option value="all">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+              </select>
+              <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+            </div>
+            
+            <div class="date-range-picker">
+              <i class="fa-regular fa-calendar"></i>
+              <span>Oct 12 - Oct 19</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Dashboard Split Grid -->
+        <div class="dashboard-grid">
+          
+          <!-- Left Column: Rentals Data Table -->
+          <div class="table-card">
+            <div class="table-responsive">
+              <table class="rentals-table">
+                <thead>
+                  <tr>
+                    <th>CUSTOMER</th>
+                    <th>EQUIPMENT</th>
+                    <th>RENTAL PERIOD</th>
+                    <th>TOTAL</th>
+                    <th>STATUS</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="customer-cell">
+                        <div class="avatar-circle">SA</div>
+                        <div class="customer-info">
+                          <span class="company-name">Summit Build Co.</span>
+                          <span class="contact-name">Sarah Jenkins</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="equipment-info">
+                        <span class="equipment-title">Excavator CAT 320</span>
+                        <span class="equipment-id">ID: EQ-4092</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="period-info">
+                        <span class="date-range">Oct 15 - Oct 22</span>
+                        <span class="days-count">7 Days</span>
+                      </div>
+                    </td>
+                    <td class="amount-cell">$4,200.00</td>
+                    <td>
+                      <span class="status-badge status-pending">Pending</span>
+                    </td>
+                    <td class="actions-cell"></td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="customer-cell">
+                        <div class="avatar-circle">MR</div>
+                        <div class="customer-info">
+                          <span class="company-name">Metro Roads LLC</span>
+                          <span class="contact-name">Mike Richards</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="equipment-info">
+                        <span class="equipment-title">Asphalt Paver Volvo</span>
+                        <span class="equipment-id">ID: EQ-1120</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="period-info">
+                        <span class="date-range">Oct 16 - Oct 18</span>
+                        <span class="days-count">3 Days</span>
+                      </div>
+                    </td>
+                    <td class="amount-cell">$2,850.00</td>
+                    <td>
+                      <span class="status-badge status-approved">Approved</span>
+                    </td>
+                    <td class="actions-cell"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table Pagination Footer -->
+            <div class="table-footer">
+              <span class="pagination-info">Showing 1 to 2 of 24 entries</span>
+              <div class="pagination-controls">
+                <button class="pagination-btn disabled">Prev</button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">Next</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Today's Logistics Sidebar Card -->
+          <aside class="logistics-card">
+            <div class="logistics-header">
+              <h3>Today's Logistics</h3>
+              <span class="badge-count">3 Items</span>
+            </div>
+
+            <div class="logistics-list">
+              
+              <!-- Item 1: Pickup -->
+              <div class="logistics-item">
+                <div class="item-icon-box pickup">
+                  <i class="fa-solid fa-plane-arrival"></i>
+                </div>
+                <div class="item-content">
+                  <h4 class="item-title">Pickup: Scissor Lift 19ft</h4>
+                  <p class="item-details">Downtown Site A • 09:00 AM</p>
+                  <div class="item-subtext">
+                    <span class="mini-avatar">JB</span>
+                    <span>Apex Builders</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 2: Return -->
+              <div class="logistics-item">
+                <div class="item-icon-box return">
+                  <i class="fa-solid fa-plane-departure"></i>
+                </div>
+                <div class="item-content">
+                  <h4 class="item-title">Return: Backhoe Loader</h4>
+                  <p class="item-details">Yard 2 • 02:30 PM</p>
+                  <div class="item-subtext">
+                    <span class="mini-avatar">TC</span>
+                    <span>TerraCorp</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <button class="btn btn-view-logistics">
+              View All Logistics
+            </button>
+          </aside>
+
+        </div>
+
+      </main>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

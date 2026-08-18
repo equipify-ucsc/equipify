@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EquipOwner Pro - Equipment Details & Edit</title>
+  <link rel="stylesheet" href="../css files/View_Edit_style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="brand-header">
+          <div class="user-avatar-brand">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="User Avatar">
+          </div>
+          <div class="brand-text">
+            <h2 class="brand-name">EquipOwner Pro</h2>
+            <span class="brand-sub">Enterprise Admin</span>
+          </div>
+        </div>
+
+        <button class="btn btn-add-equipment">
+          <i class="fa-solid fa-plus"></i> Add Equipment
+        </button>
+
+        <nav class="nav-menu">
+          <ul>
+            <li>
+              <a href="Dash_index.html">
+                <i class="fa-solid fa-border-all"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="active">
+              <a href="#">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <span>Inventory</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Rentals</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa-solid fa-truck"></i>
+                <span>Logistics</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Reports</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- Top Header Nav -->
+      <header class="top-header">
+        <div class="top-header-left">
+          <a href="#" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Inventory
+          </a>
+        </div>
+
+        <div class="top-header-right">
+          <button class="icon-btn" title="Notifications">
+            <i class="fa-regular fa-bell"></i>
+          </button>
+          <button class="icon-btn" title="Help & Support">
+            <i class="fa-regular fa-circle-question"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- View Wrapper -->
+      <div class="view-container">
+
+        <!-- Title Section -->
+        <div class="page-title-section">
+          <div class="title-text-group">
+            <div class="title-with-badge">
+              <h2 class="main-heading">Caterpillar 320 GC Excavator</h2>
+              <span class="status-badge badge-active">Available</span>
+            </div>
+            <p class="sub-heading">ID: EQ-4092 • Category: Heavy Excavator</p>
+          </div>
+
+          <div class="header-actions">
+            <button class="btn btn-outline" id="cancelBtn">Cancel</button>
+            <button class="btn btn-teal" id="saveBtn"><i class="fa-solid fa-check"></i> Save Changes</button>
+          </div>
+        </div>
+
+        <!-- Dashboard Grid Layout -->
+        <div class="dashboard-grid">
+
+          <!-- Left Main Details Column -->
+          <div class="left-column">
+
+            <!-- Gallery Card -->
+            <div class="card gallery-card">
+              <div class="main-gallery-view">
+                <img id="mainGalleryImg" src="https://images.unsplash.com/photo-1579412690850-bd41cd0af397?w=1000&auto=format&fit=crop&q=80" alt="Caterpillar Excavator">
+                <button class="btn-gallery-upload" title="Upload New Image">
+                  <i class="fa-solid fa-camera"></i> Change Cover
+                </button>
+              </div>
+
+              <div class="thumbnails-grid">
+                <div class="thumb-item active" onclick="switchGalleryImg(this, 'https://images.unsplash.com/photo-1579412690850-bd41cd0af397?w=1000&auto=format&fit=crop&q=80')">
+                  <img src="https://images.unsplash.com/photo-1579412690850-bd41cd0af397?w=300&auto=format&fit=crop&q=80" alt="Thumbnail 1">
+                </div>
+                <div class="thumb-item" onclick="switchGalleryImg(this, 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=1000&auto=format&fit=crop&q=80')">
+                  <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=300&auto=format&fit=crop&q=80" alt="Thumbnail 2">
+                </div>
+                <div class="thumb-item" onclick="switchGalleryImg(this, 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1000&auto=format&fit=crop&q=80')">
+                  <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=300&auto=format&fit=crop&q=80" alt="Thumbnail 3">
+                </div>
+                <div class="thumb-item add-thumb-btn">
+                  <i class="fa-solid fa-plus"></i>
+                  <span>Add Photo</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Details Card -->
+            <div class="card form-card">
+              <h3 class="card-section-title">Equipment Information</h3>
+
+              <form class="equipment-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="eqTitle">Equipment Title</label>
+                    <input type="text" id="eqTitle" value="Caterpillar 320 GC Excavator">
+                  </div>
+                  <div class="form-group">
+                    <label for="eqSerial">Serial / Tag ID</label>
+                    <input type="text" id="eqSerial" value="CAT-320GC-2022-881">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="eqCategory">Category</label>
+                    <div class="dropdown-select-wrapper">
+                      <select id="eqCategory" class="dropdown-select">
+                        <option value="excavators" selected>Excavators</option>
+                        <option value="loaders">Loaders</option>
+                        <option value="cranes">Cranes</option>
+                        <option value="lifts">Lifts</option>
+                      </select>
+                      <i class="fa-solid fa-chevron-down select-icon"></i>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="eqLocation">Current Yard / Location</label>
+                    <input type="text" id="eqLocation" value="Yard 4 • Sector B (Dallas)">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="dailyRate">Daily Rate ($)</label>
+                    <input type="number" id="dailyRate" value="600.00">
+                  </div>
+                  <div class="form-group">
+                    <label for="weeklyRate">Weekly Rate ($)</label>
+                    <input type="number" id="weeklyRate" value="3200.00">
+                  </div>
+                </div>
+
+                <div class="form-group full-width">
+                  <label for="eqSpecs">Specifications & Notes</label>
+                  <textarea id="eqSpecs" rows="4">Operating Weight: 20,500 kg. Max Digging Depth: 6.72 m. Engine Power: 107 kW. Equipped with grade control and automated bucket control system.</textarea>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+          <!-- Right Status & History Sidebar Column -->
+          <div class="right-column">
+
+            <!-- Availability & Specs Status Card -->
+            <div class="card sidebar-card">
+              <h3 class="card-section-title">Operational Status</h3>
+              
+              <div class="status-meta-list">
+                <div class="meta-item">
+                  <span class="meta-label">Condition</span>
+                  <span class="meta-value text-teal"><i class="fa-solid fa-circle-check"></i> Excellent</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Total Meter Hours</span>
+                  <span class="meta-value">1,240 hrs</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Next Maintenance</span>
+                  <span class="meta-value">Nov 12, 2026</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Assigned Operator</span>
+                  <span class="meta-value">David Ross</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Activity Card -->
+            <div class="card sidebar-card">
+              <div class="logistics-header">
+                <h3 class="card-section-title">Recent Rental History</h3>
+                <span class="count-badge">3 Records</span>
+              </div>
+
+              <div class="logistics-list">
+                <div class="logistics-item">
+                  <div class="logistics-icon-wrapper icon-teal">
+                    <i class="fa-solid fa-file-contract"></i>
+                  </div>
+                  <div class="logistics-details">
+                    <span class="logistics-item-title">Summit Build Co.</span>
+                    <span class="logistics-item-sub">Oct 15 - Oct 22 • 7 Days</span>
+                    <div class="company-tag">
+                      <span class="micro-avatar">SA</span>
+                      <span>Sarah Jenkins</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="logistics-item">
+                  <div class="logistics-icon-wrapper icon-gray">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                  </div>
+                  <div class="logistics-details">
+                    <span class="logistics-item-title">Apex Infrastructure</span>
+                    <span class="logistics-item-sub">Sep 01 - Sep 14 • 14 Days</span>
+                    <div class="company-tag">
+                      <span class="micro-avatar">JB</span>
+                      <span>James Brown</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-view-logistics">
+                View Full Logs
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

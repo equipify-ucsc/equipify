@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipify Pro - Dashboard</title>
+  <link rel="stylesheet" href="../css files/Dash_N.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js for Revenue Overview Curve -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="dashboard-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-box">
+          <i class="fa-solid fa-gear logo-icon"></i>
+          <span class="brand-name">Equipify</span>
+        </div>
+        <div class="pro-tag">
+          <span class="pro-title">Equipify Pro</span>
+          <span class="pro-subtitle">Enterprise Rental</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li class="active">
+            <a href="#"><i class="fa-solid fa-grip-vertical"></i> <span>Dashboard</span></a>
+          </li>
+          <li>
+            <a href="MyEquip_index.html"><i class="fa-solid fa-truck-ramp-box"></i> <span>My Equipment</span></a>
+          </li>
+          <li>
+            <a href="Rental_Req_index.html"><i class="fa-solid fa-file-invoice"></i> <span>Rental Requests</span></a>
+          </li>
+          <li>
+            <a href="#"><i class="fa-solid fa-wrench"></i> <span>Maintenance</span></a>
+          </li>
+          <li>
+            <a href="#"><i class="fa-solid fa-chart-line"></i> <span>Analytics</span></a>
+          </li>
+          <li class="nav-divider"></li>
+          <li>
+            <a href="#"><i class="fa-solid fa-triangle-exclamation"></i> <span>Complaints</span></a>
+          </li>
+          <li>
+            <a href="#"><i class="fa-solid fa-wallet"></i> <span>Payments</span></a>
+          </li>
+          <li>
+            <a href="#"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="#" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Logout</span></a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Navigation Bar -->
+      <header class="topbar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search equipment, rentals, or maintenance...">
+        </div>
+
+        <div class="topbar-actions">
+          <button class="icon-btn" title="Notifications"><i class="fa-regular fa-bell"></i></button>
+          <button class="icon-btn" title="Settings"><i class="fa-solid fa-gear"></i></button>
+          <div class="user-avatar">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Alex">
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-container">
+        
+        <!-- Welcome Banner & Quick Action Buttons -->
+        <section class="welcome-header">
+          <div class="welcome-text">
+            <h1>Welcome back, Alex</h1>
+            <p>Your equipment fleet is performing at 86% capacity today.</p>
+          </div>
+          <div class="action-buttons">
+            <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Equipment</button>
+            <button class="btn btn-outline"><i class="fa-regular fa-circle-check"></i> View Requests</button>
+            <button class="btn btn-outline"><i class="fa-solid fa-user-gear"></i> Hire Maintenance</button>
+          </div>
+        </section>
+
+        <!-- KPI Metric Cards -->
+        <section class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-top">
+              <div class="metric-icon icon-slate"><i class="fa-solid fa-boxes-stacked"></i></div>
+              <span class="badge badge-green">+3 this month</span>
+            </div>
+            <span class="metric-label">Total Equipment</span>
+            <h2 class="metric-value">124</h2>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-top">
+              <div class="metric-icon icon-teal"><i class="fa-solid fa-handshake"></i></div>
+              <span class="badge badge-blue">86% utilization</span>
+            </div>
+            <span class="metric-label">Active Rentals</span>
+            <h2 class="metric-value">42</h2>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-top">
+              <div class="metric-icon icon-green"><i class="fa-solid fa-money-bill-wave"></i></div>
+              <span class="badge badge-green">+12%</span>
+            </div>
+            <span class="metric-label">Monthly Revenue</span>
+            <h2 class="metric-value">$12,450</h2>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-top">
+              <div class="metric-icon icon-red"><i class="fa-solid fa-exclamation"></i></div>
+              <span class="badge badge-red">Urgent: 5</span>
+            </div>
+            <span class="metric-label">Pending Requests</span>
+            <h2 class="metric-value">18</h2>
+          </div>
+        </section>
+
+        <!-- Charts Middle Grid -->
+        <section class="charts-grid">
+          <!-- Revenue Line Chart -->
+          <div class="card chart-card">
+            <div class="card-header">
+              <h3>Revenue Overview</h3>
+              <select class="time-filter">
+                <option>Last 6 months</option>
+                <option>Last 30 days</option>
+                <option>This Year</option>
+              </select>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="revenueChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Equipment Availability Donut Chart -->
+          <div class="card availability-card">
+            <div class="card-header">
+              <h3>Equipment Availability</h3>
+            </div>
+            <div class="donut-wrapper">
+              <div class="donut-chart">
+                <div class="donut-center">
+                  <span class="total-count">124</span>
+                  <span class="total-label">TOTAL</span>
+                </div>
+              </div>
+            </div>
+            <div class="availability-legend">
+              <div class="legend-item">
+                <span class="dot dot-navy"></span>
+                <span class="legend-text">Rented</span>
+                <span class="legend-val">81</span>
+              </div>
+              <div class="legend-item">
+                <span class="dot dot-teal"></span>
+                <span class="legend-text">Available</span>
+                <span class="legend-val">28</span>
+              </div>
+              <div class="legend-item">
+                <span class="dot dot-red"></span>
+                <span class="legend-text">Maintenance</span>
+                <span class="legend-val">15</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Bottom Lists Grid -->
+        <section class="lists-grid">
+          
+          <!-- Recent Rental Activities Table -->
+          <div class="card table-card">
+            <div class="card-header">
+              <h3>Recent Rental Activities</h3>
+              <a href="#" class="view-all-link">View All</a>
+            </div>
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>CUSTOMER</th>
+                    <th>EQUIPMENT</th>
+                    <th>PERIOD</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="customer-cell">
+                        <div class="avatar-circle bg-teal">JS</div>
+                        <div>
+                          <div class="cust-name">James Smith</div>
+                          <div class="cust-sub">Industrial Corp</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="eq-title">Caterpillar 320 GC</div>
+                      <div class="eq-id">ID: EQ-4092</div>
+                    </td>
+                    <td>Mar 12 - Mar 25</td>
+                    <td><span class="status-pill status-active">Active</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="customer-cell">
+                        <div class="avatar-circle bg-blue">MW</div>
+                        <div>
+                          <div class="cust-name">Maria Williams</div>
+                          <div class="cust-sub">BuildRight Ltd.</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="eq-title">Skid Steer Loader</div>
+                      <div class="eq-id">ID: EQ-1122</div>
+                    </td>
+                    <td>Mar 15 - Mar 18</td>
+                    <td><span class="status-pill status-pending">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="customer-cell">
+                        <div class="avatar-circle bg-purple">RB</div>
+                        <div>
+                          <div class="cust-name">Robert Brown</div>
+                          <div class="cust-sub">Coastal Dredging</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="eq-title">Concrete Mixer</div>
+                      <div class="eq-id">ID: EQ-8843</div>
+                    </td>
+                    <td>Mar 01 - Mar 10</td>
+                    <td><span class="status-pill status-returned">Returned</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Upcoming Maintenance Timeline -->
+          <div class="card maintenance-card">
+            <div class="card-header">
+              <h3>Upcoming Maintenance</h3>
+            </div>
+            <div class="maintenance-list">
+              
+              <div class="maintenance-item">
+                <div class="date-badge">
+                  <span class="month">MAR</span>
+                  <span class="day">20</span>
+                </div>
+                <div class="maint-info">
+                  <h4>Boom Lift Service</h4>
+                  <p>ID: BL-442 | Hydr. Check</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron-icon"></i>
+              </div>
+
+              <div class="maintenance-item">
+                <div class="date-badge">
+                  <span class="month">MAR</span>
+                  <span class="day">22</span>
+                </div>
+                <div class="maint-info">
+                  <h4>Forklift Inspection</h4>
+                  <p>ID: FL-098 | Annual Cert</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron-icon"></i>
+              </div>
+
+              <div class="maintenance-item">
+                <div class="date-badge">
+                  <span class="month">MAR</span>
+                  <span class="day">28</span>
+                </div>
+                <div class="maint-info">
+                  <h4>Generator Repair</h4>
+                  <p>ID: GN-771 | Filter Change</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron-icon"></i>
+              </div>
+
+            </div>
+            <button class="btn btn-dashed"><i class="fa-regular fa-calendar-plus"></i> Schedule New Checkup</button>
+          </div>
+
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

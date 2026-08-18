@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipify - Register Your Business</title>
+  <link rel="stylesheet" href="../css files/Reg_N.css">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Left Section: Illustration & Value Proposition -->
+    <div class="left-section">
+      <div class="overlay"></div>
+      
+      <div class="top-tagline">
+        <p>RELIABLE HEAVY EQUIPMENT RENTALS</p>
+        <span>SMART B2B SOLUTIONS FOR SRI LANKAN BUSINESSES</span>
+      </div>
+
+      <div class="illustration-wrapper">
+        <svg class="hero-illustration" viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background Sky & City Silhouette -->
+          <path d="M0 400 L600 400 L600 500 L0 500 Z" fill="#1e293b" opacity="0.3"/>
+          <path d="M50 400 L50 280 L90 280 L90 400 Z M100 400 L100 220 L150 220 L150 400 Z M450 400 L450 250 L500 250 L500 400 Z" fill="#334155" opacity="0.4"/>
+          
+          <!-- Tower Crane -->
+          <rect x="420" y="80" width="12" height="320" fill="#0284c7" />
+          <path d="M220 100 L540 100 L420 75 Z" fill="#0369a1" />
+          <rect x="360" y="95" width="45" height="18" fill="#0f766e" />
+          <line x1="300" y1="100" x2="300" y2="220" stroke="#cbd5e1" stroke-width="2" />
+          <path d="M295 220 C295 228 305 228 305 220" stroke="#cbd5e1" stroke-width="3" fill="none" />
+
+          <!-- Heavy Excavator -->
+          <rect x="180" y="360" width="220" height="35" rx="17" fill="#0f172a" />
+          <line x1="190" y1="377" x2="370" y2="377" stroke="#64748b" stroke-width="12" stroke-dasharray="10 6" />
+          <path d="M220 360 L235 280 L330 280 L350 360 Z" fill="#f59e0b" />
+          <path d="M270 280 L290 220 L325 220 L330 280 Z" fill="#1e293b" />
+          <path d="M80 360 L100 230 L180 280 L250 310" stroke="#d97706" stroke-width="18" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M75 370 L60 320 L100 310 Z" fill="#0f172a" />
+
+          <!-- Rental Container Box -->
+          <rect x="380" y="270" width="150" height="90" rx="6" fill="#0f766e" />
+          <rect x="390" y="280" width="130" height="70" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="6 4" opacity="0.4" />
+          <text x="415" y="322" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="16" letter-spacing="2">RENTALL</text>
+
+          <!-- Engineers / Field Workers Illustration -->
+          <g class="character-group">
+            <!-- Engineer 1 -->
+            <circle cx="120" cy="310" r="14" fill="#fca5a5" />
+            <path d="M104 300 C104 288 136 288 136 300 Z" fill="#f59e0b" /> <!-- Safety Helmet -->
+            <path d="M102 325 L138 325 L132 390 L108 390 Z" fill="#0284c7" /> <!-- Vest -->
+
+            <!-- Engineer 2 -->
+            <circle cx="330" cy="300" r="14" fill="#fed7aa" />
+            <path d="M314 290 C314 278 346 278 346 290 Z" fill="#ffffff" /> <!-- White Helmet -->
+            <path d="M312 315 L348 315 L342 390 L318 390 Z" fill="#0f766e" /> <!-- Vest -->
+          </g>
+        </svg>
+      </div>
+
+      <div class="bottom-caption">
+        <h1>Start Growing Your Rental Business</h1>
+        <p>Create your Equipify account and connect with businesses across Sri Lanka. Streamline your fleet management today.</p>
+      </div>
+    </div>
+
+    <!-- Right Section: Enterprise SaaS Form Card -->
+    <div class="right-section">
+      <div class="form-container">
+        <!-- Logo -->
+        <div class="brand">
+          <img src="Images/Equipify_logo" alt="Logo" class="brand-logo">
+        </div>
+
+        <h2>Create Your Business Account</h2>
+        <p class="subtitle">Register as a Renting Party</p>
+
+        <form id="registerForm" onsubmit="return false;">
+          
+          <!-- Section 1: Business Information -->
+          <div class="form-section-title">
+            <span>Business Information</span>
+          </div>
+
+          <div class="form-row">
+            <div class="input-group">
+              <label for="businessName">BUSINESS NAME</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-building input-icon"></i>
+                <input type="text" id="businessName" placeholder="Acme Rentals Pvt Ltd" required>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="ownerName">OWNER FULL NAME</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-user input-icon"></i>
+                <input type="text" id="ownerName" placeholder="John Doe" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="regNumber">BUSINESS REGISTRATION NUMBER</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-id-card input-icon"></i>
+              <input type="text" id="regNumber" placeholder="PV 123456" required>
+            </div>
+          </div>
+
+          <!-- Section 2: Contact & Location -->
+          <div class="form-section-title">
+            <span>Contact & Location</span>
+          </div>
+
+          <div class="form-row">
+            <div class="input-group">
+              <label for="email">EMAIL ADDRESS</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-envelope input-icon"></i>
+                <input type="email" id="email" placeholder="contact@acmerentals.lk" required>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="phone">MOBILE NUMBER</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-mobile-screen-button input-icon"></i>
+                <input type="tel" id="phone" placeholder="077 123 4567" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="input-group">
+              <label for="district">DISTRICT</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-location-dot input-icon"></i>
+                <select id="district" required>
+                  <option value="" disabled selected>Select District</option>
+                  <option value="Colombo">Colombo</option>
+                  <option value="Gampaha">Gampaha</option>
+                  <option value="Kalutara">Kalutara</option>
+                  <option value="Kandy">Kandy</option>
+                  <option value="Matale">Matale</option>
+                  <option value="Nuwara Eliya">Nuwara Eliya</option>
+                  <option value="Galle">Galle</option>
+                  <option value="Matara">Matara</option>
+                  <option value="Hambantota">Hambantota</option>
+                  <option value="Jaffna">Jaffna</option>
+                  <option value="Kilinochchi">Kilinochchi</option>
+                  <option value="Mannar">Mannar</option>
+                  <option value="Vavuniya">Vavuniya</option>
+                  <option value="Mullaitivu">Mullaitivu</option>
+                  <option value="Batticaloa">Batticaloa</option>
+                  <option value="Ampara">Ampara</option>
+                  <option value="Trincomalee">Trincomalee</option>
+                  <option value="Kurunegala">Kurunegala</option>
+                  <option value="Puttalam">Puttalam</option>
+                  <option value="Anuradhapura">Anuradhapura</option>
+                  <option value="Polonnaruwa">Polonnaruwa</option>
+                  <option value="Badulla">Badulla</option>
+                  <option value="Moneragala">Moneragala</option>
+                  <option value="Ratnapura">Ratnapura</option>
+                  <option value="Kegalle">Kegalle</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="address">BUSINESS ADDRESS</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-map-pin input-icon"></i>
+                <input type="text" id="address" placeholder="123 Industrial Estate, Colombo 10" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Security & Documents -->
+          <div class="form-section-title">
+            <span>Security & Documents</span>
+          </div>
+
+          <div class="form-row">
+            <div class="input-group">
+              <label for="password">PASSWORD</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="password" placeholder="••••••••" required>
+                <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="confirmPassword">CONFIRM PASSWORD</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-rotate-right input-icon"></i>
+                <input type="password" id="confirmPassword" placeholder="••••••••" required>
+                <i class="fa-regular fa-eye toggle-password" id="toggleConfirmPassword"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- File Uploads -->
+          <div class="form-row">
+            <div class="input-group">
+              <label>BUSINESS LOGO</label>
+              <div class="upload-card" id="logoDropZone">
+                <input type="file" id="businessLogo" accept="image/*" hidden>
+                <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                <span class="upload-text" id="logoText">Upload Business Logo</span>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>REGISTRATION CERTIFICATE</label>
+              <div class="upload-card" id="brDropZone">
+                <input type="file" id="brCertificate" accept=".pdf,image/*" hidden>
+                <i class="fa-solid fa-file-pdf upload-icon"></i>
+                <span class="upload-text" id="brText">Upload BR Certificate</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Terms Checkbox -->
+          <div class="terms-row">
+            <label class="checkbox-container">
+              <input type="checkbox" id="terms" required>
+              <span class="checkmark"></span>
+              I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>.
+            </label>
+          </div>
+
+          <!-- Action Buttons -->
+          <button type="submit" class="btn btn-primary">Create Account</button>
+        </form>
+
+        <!-- Bottom Sign-in Link -->
+        <p class="signin-link">
+          Already have an account? <a href="index.html">Sign In</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

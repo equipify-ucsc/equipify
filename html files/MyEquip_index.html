@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TITAN RENTALS - My Equipment</title>
+  <link rel="stylesheet" href="../css files/MyEquip_style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="brand-header">
+          <div class="brand-badge">IO</div>
+          <div class="brand-details">
+            <h2 class="brand-title">Industrial Ops</h2>
+            <span class="brand-subtitle">Premium Account</span>
+          </div>
+        </div>
+
+        <nav class="nav-menu">
+          <ul>
+            <li>
+              <a href="Dash_index.html">
+                <i class="fa-solid fa-border-all"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="active">
+              <a href="#">
+                <i class="fa-solid fa-screws-tilting"></i>
+                <span>My Equipment</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Rentals</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa-solid fa-wrench"></i>
+                <span>Maintenance</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa-solid fa-chart-simple"></i>
+                <span>Analytics</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="sidebar-bottom">
+        <button class="btn btn-rent-equipment">
+          <i class="fa-solid fa-truck-ramp-box"></i> Rent Equipment
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Navigation Header -->
+      <header class="top-header">
+        <h1 class="header-logo">TITAN RENTALS</h1>
+        
+        <div class="top-search-bar">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" placeholder="Search equipment, rentals, maintenance...">
+        </div>
+
+        <div class="top-header-right">
+          <button class="icon-btn" title="Notifications">
+            <i class="fa-regular fa-bell"></i>
+          </button>
+          <button class="icon-btn" title="Help">
+            <i class="fa-regular fa-circle-question"></i>
+          </button>
+          <a href="#" class="support-link">Support</a>
+          <div class="user-avatar">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="User Avatar">
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard View Content -->
+      <div class="view-container">
+        
+        <!-- Title & Action Section -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h2>My Equipment</h2>
+            <p>Manage your industrial fleet, track availability, and schedule maintenance.</p>
+          </div>
+          <button class="btn btn-add-equipment">
+            <i class="fa-solid fa-plus"></i> Add Equipment
+          </button>
+        </div>
+
+        <!-- Filter & Search Bar Card -->
+        <div class="filter-card">
+          <div class="filter-search-input">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="equipmentSearch" placeholder="Search by name, ID, or serial...">
+          </div>
+
+          <div class="filter-dropdowns">
+            <div class="select-wrapper">
+              <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="earthmoving">Earthmoving</option>
+                <option value="material">Material Handling</option>
+                <option value="power">Power Generation</option>
+                <option value="aerial">Aerial Work</option>
+              </select>
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
+            </div>
+
+            <div class="select-wrapper">
+              <select id="statusFilter">
+                <option value="all">All Statuses</option>
+                <option value="available">Available</option>
+                <option value="on-rent">On Rent</option>
+                <option value="maintenance">Maintenance</option>
+              </select>
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
+            </div>
+
+            <div class="select-wrapper">
+              <select id="sortFilter">
+                <option value="recent">Recently Added</option>
+                <option value="name">Name A-Z</option>
+                <option value="price">Price: Low to High</option>
+              </select>
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Equipment Cards Grid -->
+        <div class="equipment-grid" id="equipmentGrid">
+          
+          <!-- Card 1: CAT 320 -->
+          <div class="equipment-card">
+            <div class="card-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1579412690850-bd41cd0af397?w=600&auto=format&fit=crop&q=80" alt="CAT 320 Excavator">
+              <span class="status-badge badge-available">Available</span>
+            </div>
+            <div class="card-body">
+              <div class="card-title-row">
+                <h3>CAT 320 Excavator</h3>
+                <div class="price-box">
+                  <span class="price-amount">$450</span>
+                  <span class="price-unit">/ day</span>
+                </div>
+              </div>
+              <div class="card-category">EARTHMOVING</div>
+
+              <div class="card-meta">
+                <div class="meta-row">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <span>Denver Ya</span>
+                  <span class="rating"><i class="fa-solid fa-star"></i> 4.8 (24)</span>
+                </div>
+                <div class="meta-row">
+                  <i class="fa-regular fa-compass"></i>
+                  <span>Maintained: Oct 12, 2023</span>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <a href="#" class="view-details">View Details <i class="fa-solid fa-arrow-right"></i></a>
+                <div class="card-actions">
+                  <button class="action-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                  <button class="action-btn" title="Pause"><i class="fa-regular fa-circle-pause"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Toyota Core IC -->
+          <div class="equipment-card">
+            <div class="card-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&auto=format&fit=crop&q=80" alt="Toyota Core IC Forklift">
+              <span class="status-badge badge-on-rent">On Rent</span>
+              <div class="image-overlay-info">
+                <span>Return due: Nov 05</span>
+                <span class="site-tag">Site: Omega Corp</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-title-row">
+                <h3>Toyota Core IC</h3>
+                <div class="price-box">
+                  <span class="price-amount">$185</span>
+                  <span class="price-unit">/ day</span>
+                </div>
+              </div>
+              <div class="card-category">MATERIAL HANDLING</div>
+
+              <div class="card-meta">
+                <div class="meta-row">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <span>Out for de</span>
+                  <span class="rating"><i class="fa-solid fa-star"></i> 4.9 (42)</span>
+                </div>
+                <div class="meta-row">
+                  <i class="fa-regular fa-compass"></i>
+                  <span>Maintained: Sep 01, 2023</span>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <a href="#" class="view-details">View Details <i class="fa-solid fa-arrow-right"></i></a>
+                <div class="card-actions">
+                  <button class="action-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                  <button class="action-btn" title="Logs"><i class="fa-solid fa-file-lines"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Generac MDG100 -->
+          <div class="equipment-card">
+            <div class="card-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80" alt="Generac MDG100 Generator">
+              <span class="status-badge badge-maintenance">Maintenance</span>
+            </div>
+            <div class="card-body">
+              <div class="card-title-row">
+                <h3>Generac MDG100</h3>
+                <div class="price-box">
+                  <span class="price-amount">$220</span>
+                  <span class="price-unit">/ day</span>
+                </div>
+              </div>
+              <div class="card-category">POWER GENERATION</div>
+
+              <div class="card-meta">
+                <div class="meta-row">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <span>Service Ba</span>
+                  <span class="rating"><i class="fa-solid fa-star"></i> 4.5 (18)</span>
+                </div>
+                <div class="meta-row alert-row">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <span>Hydraulic fluid leak</span>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <a href="#" class="view-details">View Details <i class="fa-solid fa-arrow-right"></i></a>
+                <div class="card-actions">
+                  <button class="action-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: JLG 450AJ Boom -->
+          <div class="equipment-card">
+            <div class="card-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&auto=format&fit=crop&q=80" alt="JLG 450AJ Boom Lift">
+              <span class="status-badge badge-available">Available</span>
+            </div>
+            <div class="card-body">
+              <div class="card-title-row">
+                <h3>JLG 450AJ Boom</h3>
+                <div class="price-box">
+                  <span class="price-amount">$310</span>
+                  <span class="price-unit">/ day</span>
+                </div>
+              </div>
+              <div class="card-category">AERIAL WORK</div>
+
+              <div class="card-meta">
+                <div class="meta-row">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <span>Denver Ya</span>
+                  <span class="rating"><i class="fa-solid fa-star"></i> 4.7 (31)</span>
+                </div>
+                <div class="meta-row">
+                  <i class="fa-regular fa-compass"></i>
+                  <span>Maintained: Nov 02, 2023</span>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <a href="#" class="view-details">View Details <i class="fa-solid fa-arrow-right"></i></a>
+                <div class="card-actions">
+                  <button class="action-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                  <button class="action-btn" title="Pause"><i class="fa-regular fa-circle-pause"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Load More Section -->
+        <div class="load-more-container">
+          <button class="btn btn-load-more" id="loadMoreBtn">Load More Equipment</button>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

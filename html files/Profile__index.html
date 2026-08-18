@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EquipRent - Business Profile</title>
+  <link rel="stylesheet" href="../css files/Profile_style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="brand-header">
+          <div class="brand-logo-icon">
+            <i class="fa-solid fa-handshake"></i>
+          </div>
+          <div class="brand-details">
+            <h2 class="brand-name">EquipRent</h2>
+            <span class="brand-portal">Enterprise Portal</span>
+          </div>
+        </div>
+
+        <nav class="nav-menu">
+          <ul>
+            <li>
+              <a href="Dash_index.html">
+                <i class="fa-solid fa-border-all"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa-solid fa-box-archive"></i>
+                <span>Inventory</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Rentals</span>
+              </a>
+            </li>
+            <li class="active">
+              <a href="#">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="sidebar-bottom">
+        <button class="btn btn-new-rental">
+          New Rental
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Navigation Header -->
+      <header class="top-header">
+        <div class="top-search-bar">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="top-header-right">
+          <button class="icon-btn" title="Notifications">
+            <i class="fa-regular fa-bell"></i>
+          </button>
+          <button class="icon-btn" title="Settings">
+            <i class="fa-solid fa-gear"></i>
+          </button>
+          <div class="header-divider"></div>
+          <a href="#" class="support-link">Support</a>
+          <div class="user-avatar">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="User Profile">
+          </div>
+        </div>
+      </header>
+
+      <!-- View Wrapper -->
+      <div class="view-container">
+        
+        <!-- Page Title & Main Action Buttons -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <h2>Business Profile</h2>
+            <p>Manage your company information, verify documents, and view performance metrics.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-outline">Edit Profile</button>
+            <button class="btn btn-primary">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- Main Profile Dashboard Grid -->
+        <div class="profile-grid">
+          
+          <!-- Left Column (Forms & Company Details) -->
+          <div class="profile-main-col">
+            
+            <!-- Top Form Block (2-Column Form Fields) -->
+            <div class="form-columns-container">
+              
+              <!-- Company Info Column -->
+              <div class="card form-card">
+                <div class="company-brand-header">
+                  <div class="company-logo-box">
+                    <i class="fa-solid fa-compass-drafting"></i>
+                  </div>
+                  <div class="company-brand-info">
+                    <h3>Apex Industrial Rentals</h3>
+                    <span class="badge badge-category">Heavy Machinery</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Business Registration Number</label>
+                  <input type="text" value="BRN-90210-445" readonly>
+                </div>
+
+                <div class="form-group">
+                  <label>Primary Email</label>
+                  <div class="input-with-icon">
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" value="contact@apexrentals.com">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Phone Number</label>
+                  <div class="input-with-icon">
+                    <i class="fa-solid fa-phone"></i>
+                    <input type="text" value="+1 (555) 019-2837">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Website</label>
+                  <div class="input-with-icon">
+                    <i class="fa-solid fa-globe"></i>
+                    <input type="text" value="https://www.apexrentals.com" class="link-input">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Location & Tax Column -->
+              <div class="card form-card">
+                <div class="card-header-action">
+                  <label class="form-section-title">Business Address</label>
+                  <button class="icon-edit-btn" title="Edit Address"><i class="fa-solid fa-pen"></i></button>
+                </div>
+
+                <div class="form-group">
+                  <textarea rows="2">4500 Enterprise Way, Suite 200&#10;Industrial District</textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>Operating District</label>
+                  <div class="select-wrapper">
+                    <select>
+                      <option>Northwest Metro Area</option>
+                      <option>Southwest District</option>
+                      <option>Central East Region</option>
+                    </select>
+      
+                    <i class="fa-solid fa-chevron-down select-arrow"></i>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Operating Hours</label>
+                  <div class="hours-group">
+                    <input type="text" value="06:00 AM" class="time-input">
+                    <span class="hours-sep">to</span>
+                    <input type="text" value="08:00 PM" class="time-input">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Tax Information (VAT/EIN)</label>
+                  <input type="text" value="XX-XXXX992">
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Company Description Card -->
+            <div class="card company-desc-card">
+              <label class="form-section-title">Company Description</label>
+              <div class="form-group">
+                <textarea rows="3">Apex Industrial Rentals provides top-tier heavy machinery for commercial construction projects across the Northwest Metro Area. Specializing in excavators, loaders, and specialized lifting equipment.</textarea>
+              </div>
+            </div>
+
+            <!-- Verification & Documents Card -->
+            <div class="card verification-card">
+              <div class="verification-header">
+                <h3>Verification & Documents</h3>
+                <span class="badge badge-verified">
+                  <i class="fa-solid fa-circle-check"></i> Verified Partner
+                </span>
+              </div>
+
+              <div class="documents-grid">
+                
+                <!-- Doc 1 -->
+                <div class="document-item">
+                  <div class="doc-icon-box">
+                    <i class="fa-regular fa-file-lines"></i>
+                  </div>
+                  <div class="doc-details">
+                    <span class="doc-title">Business License</span>
+                    <span class="doc-meta">PDF • 2.4 MB • Uploaded Jan 12</span>
+                  </div>
+                  <button class="doc-action-btn" title="Download"><i class="fa-solid fa-download"></i></button>
+                </div>
+
+                <!-- Doc 2 -->
+                <div class="document-item">
+                  <div class="doc-icon-box">
+                    <i class="fa-solid fa-shield-halved"></i>
+                  </div>
+                  <div class="doc-details">
+                    <span class="doc-title">Liability Insurance</span>
+                    <span class="doc-meta">PDF • 4.1 MB • Valid till Dec 2024</span>
+                  </div>
+                  <button class="doc-action-btn" title="Download"><i class="fa-solid fa-download"></i></button>
+                </div>
+
+              </div>
+
+              <div class="upload-btn-container">
+                <button class="btn btn-upload">
+                  <i class="fa-solid fa-upload"></i> Upload Documents
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column (Performance Metrics & Tips) -->
+          <div class="profile-side-col">
+            
+            <!-- Dark Performance Panel -->
+            <div class="card performance-card">
+              <div class="performance-header">
+                <i class="fa-solid fa-chart-line"></i>
+                <h3>Performance Overview</h3>
+              </div>
+
+              <div class="metrics-list">
+                <!-- Metric 1 -->
+                <div class="metric-box">
+                  <div class="metric-icon-box">
+                    <i class="fa-solid fa-handshake-simple"></i>
+                  </div>
+                  <div class="metric-label">Total Rentals</div>
+                  <div class="metric-value">1,248</div>
+                </div>
+
+                <!-- Metric 2 -->
+                <div class="metric-box">
+                  <div class="metric-icon-box">
+                    <i class="fa-regular fa-star"></i>
+                  </div>
+                  <div class="metric-label">Average Rating</div>
+                  <div class="metric-value">4.9 <span class="sub-value">/ 5.0</span></div>
+                </div>
+
+                <!-- Metric 3 -->
+                <div class="metric-box">
+                  <div class="metric-icon-box">
+                    <i class="fa-regular fa-comment-dots"></i>
+                  </div>
+                  <div class="metric-label">Response Rate</div>
+                  <div class="metric-value">98%</div>
+                </div>
+              </div>
+
+              <div class="performance-footer">
+                <span class="period-text">Last 30 days</span>
+                <a href="#" class="report-link">View detailed report</a>
+              </div>
+            </div>
+
+            <!-- Optimize Profile Tip Box -->
+            <div class="card tip-card">
+              <div class="tip-content">
+                <div class="tip-icon">
+                  <i class="fa-regular fa-lightbulb"></i>
+                </div>
+                <div class="tip-body">
+                  <h4>Optimize Your Profile</h4>
+                  <p>Businesses with complete descriptions and up-to-date insurance documents receive 40% more rental inquiries.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
