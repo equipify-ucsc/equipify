@@ -126,11 +126,21 @@
         </div>
       </div>
 
+      <!-- Filter tabs -->
+      <div class="filter-tabs" role="tablist" aria-label="Filter jobs by status">
+        <button class="filter-tab is-active" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
+        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="draft">Draft</button>
+        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="open">Open</button>
+        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="hired">Hired</button>
+        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="completed">Completed</button>
+        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="cancelled">Cancelled</button>
+      </div>
+
       <!-- Job History Grid -->
       <div class="card-grid" id="job-history-grid">
 
         <!-- 1: Open -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="open">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div>
@@ -156,7 +166,7 @@
         </article>
 
         <!-- 2: Open -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="open">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div>
@@ -182,7 +192,7 @@
         </article>
 
         <!-- 3: Hired -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="hired">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div>
@@ -208,7 +218,7 @@
         </article>
 
         <!-- 4: Completed -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="completed">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div>
@@ -235,7 +245,7 @@
         </article>
 
         <!-- 5: Cancelled -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="cancelled">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div>
@@ -261,7 +271,7 @@
         </article>
 
         <!-- 6: Draft -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="draft">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div>
@@ -286,6 +296,9 @@
         </article>
 
       </div>
+
+      <!-- Shown when the active filter matches no jobs (history itself is non-empty) -->
+      <p class="filter-empty" id="job-history-no-results" hidden>No job posts match this filter.</p>
 
       <!-- Empty state, shown when there is no job history -->
       <div class="empty-state" id="job-history-empty" hidden>

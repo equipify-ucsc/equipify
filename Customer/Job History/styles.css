@@ -76,6 +76,13 @@
   box-sizing: border-box;
 }
 
+/* Author rules like `.entity-card { display: flex }` otherwise override the
+   browser's default `[hidden] { display: none }` rule, since author styles
+   always win over user-agent styles regardless of selector specificity. */
+[hidden] {
+  display: none !important;
+}
+
 html,
 body {
   margin: 0;
@@ -645,6 +652,43 @@ a.btn-outline:focus-visible,
 button:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.35);
+}
+
+/* ---------- Filter tabs ---------- */
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.filter-tab {
+  background: none;
+  border: none;
+  padding: 0 0 8px;
+  border-bottom: 2px solid transparent;
+  color: var(--color-on-surface-variant);
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.filter-tab:hover {
+  color: var(--color-on-surface);
+}
+.filter-tab.is-active {
+  border-bottom-color: var(--color-teal);
+  color: var(--color-teal);
+}
+
+.filter-empty {
+  text-align: center;
+  padding: 48px var(--space-lg);
+  color: var(--color-on-surface-variant);
+  font-size: 15px;
+  background-color: var(--color-surface-container-lowest);
+  border: 1px dashed var(--color-outline-variant);
+  border-radius: var(--radius-lg);
 }
 
 /* ---------- Card base ---------- */

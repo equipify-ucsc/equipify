@@ -126,11 +126,20 @@
         </div>
       </div>
 
+      <!-- Filter tabs -->
+      <div class="filter-tabs" role="tablist" aria-label="Filter rentals by status">
+        <button class="filter-tab is-active" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
+        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="active">Active</button>
+        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="pending">Pending Confirmation</button>
+        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="completed">Completed</button>
+        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="cancelled">Cancelled</button>
+      </div>
+
       <!-- Rental History Grid -->
       <div class="card-grid" id="rental-history-grid">
 
         <!-- 1: Active -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="active">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div class="entity-thumb">
@@ -164,7 +173,7 @@
         </article>
 
         <!-- 2: Active -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="active">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div class="entity-thumb">
@@ -198,7 +207,7 @@
         </article>
 
         <!-- 3: Pending Confirmation -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="pending">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div class="entity-thumb">
@@ -230,7 +239,7 @@
         </article>
 
         <!-- 4: Pending Confirmation -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="pending">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div class="entity-thumb">
@@ -262,7 +271,7 @@
         </article>
 
         <!-- 5: Completed -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="completed">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div class="entity-thumb">
@@ -295,7 +304,7 @@
         </article>
 
         <!-- 6: Completed -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="completed">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div class="entity-thumb">
@@ -328,7 +337,7 @@
         </article>
 
         <!-- 7: Cancelled -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="cancelled">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div class="entity-thumb">
@@ -360,7 +369,7 @@
         </article>
 
         <!-- 8: Cancelled -->
-        <article class="card card--hover entity-card">
+        <article class="card card--hover entity-card" data-status="cancelled">
           <div class="entity-card-head">
             <div class="entity-card-main">
               <div class="entity-thumb">
@@ -392,6 +401,9 @@
         </article>
 
       </div>
+
+      <!-- Shown when the active filter matches no rentals (history itself is non-empty) -->
+      <p class="filter-empty" id="rental-history-no-results" hidden>No rentals match this filter.</p>
 
       <!-- Empty state, shown when there is no rental history -->
       <div class="empty-state" id="rental-history-empty" hidden>

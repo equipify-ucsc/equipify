@@ -79,6 +79,13 @@ body {
   padding: 0;
 }
 
+/* Author rules like `.empty-state { display: flex }` otherwise override the
+   browser's default `[hidden] { display: none }` rule, since author styles
+   always win over user-agent styles regardless of selector specificity. */
+[hidden] {
+  display: none !important;
+}
+
 body {
   background-color: var(--color-off-white);
   color: var(--color-on-surface);
