@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - My Wishlist</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Anura Perera</div>
+        <img alt="User Profile" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">favorite</span>
+          <span>Wishlist</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Rental History/index.html">
+          <span class="icon" aria-hidden="true">construction</span>
+          <span>Rentals</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Job History/index.html">
+          <span class="icon" aria-hidden="true">history</span>
+          <span>Job History</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">chat_bubble</span>
+          <span>Messages</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidenav-cta-wrap">
+      <a class="btn-cta" href="../Browsing page/index.html">
+        <span class="icon icon-sm" aria-hidden="true">add_circle</span>
+        Rent Equipment
+      </a>
+    </div>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <!-- Screen-reader announcements for wishlist actions -->
+      <p class="sr-only" id="wishlist-announcer" role="status" aria-live="polite"></p>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="type-page-title">My Wishlist</h1>
+          <p class="page-header__count" id="wishlist-count">4 items saved</p>
+        </div>
+      </div>
+
+      <!-- Wishlist Grid -->
+      <div class="wishlist-grid" id="wishlist-grid">
+
+        <!-- Card 1 -->
+        <article class="wishlist-card" data-item="cat-320-excavator">
+          <div class="wishlist-card__media">
+            <img class="wishlist-card__image" alt="A bright, high-resolution photograph of a yellow Caterpillar 320 excavator parked on a clean construction site." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAenzU8H9CEtI43HSB1PIaybM1xXuNwYu4T7Db30OhzZQfrS8TYA3LkgbPG7jJ_8BDpY2ScHLIkFJentINwbZUIA-Ek9NFygoD-APfmG1hiaU74U7PNPLOlphm5NIwmgH1mPky8F8a2_FmBDgmh3swNutdGRRWeO-8UL88_hP5XD_y1Z5JDFSsTI8X6zXRRLhGE1sarsS2f8ntj4RJZLtMmVaTg6OePJUKkorODBZ5acbRQmz0MoDGRB6kMPPOE7X7FXaqgLRpJQQta">
+            <button type="button" class="wishlist-card__remove" data-remove aria-label="Remove Caterpillar 320 Hydraulic Excavator from wishlist" title="Remove from wishlist">
+              <span class="icon icon-sm" aria-hidden="true">close</span>
+            </button>
+          </div>
+          <div class="wishlist-card__body">
+            <span class="badge-label">Excavators</span>
+            <h3 class="wishlist-card__title">Caterpillar 320 Hydraulic Excavator</h3>
+            <p class="wishlist-card__price">LKR 28,000 <span class="wishlist-card__price-unit">/ day</span></p>
+            <span class="badge-status badge-status--active">
+              <span class="badge-status__dot" aria-hidden="true"></span> Available
+            </span>
+            <div class="wishlist-card__actions">
+              <button type="button" class="btn-primary btn-block" data-move-to-request>
+                <span class="icon icon-sm" aria-hidden="true">assignment_add</span>
+                Move to Rental Request
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="wishlist-card" data-item="cummins-generator">
+          <div class="wishlist-card__media">
+            <img class="wishlist-card__image" alt="A pristine, wide-angle shot of a large portable industrial diesel generator set positioned on a concrete pad." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABb06W_bkJgdcZRmJA6UhUjDSIV1yXyg0asz2jIPbSNhnWqGzDRNUJ3CEGE-FlxVqajGLEsHpidvURLe5DCggAhqVXLImBINKFbnztID2LhYhg4kPxHpn_a6ChGCNZUPWD1FUuXiLUM2NZU2ysW16hUvodll92a7fGk8AZ-UXwSLTxebUwj-4HAt2X6gUCZ3mWiiwUZ6fmdNCOuJz67ZfPo4cH-PwlKKwZdt4lTr9UJgIkQcreUo_9hrJx7shSOt8jeE6H9kqabV0v">
+            <button type="button" class="wishlist-card__remove" data-remove aria-label="Remove Cummins 500kVA Diesel Generator from wishlist" title="Remove from wishlist">
+              <span class="icon icon-sm" aria-hidden="true">close</span>
+            </button>
+          </div>
+          <div class="wishlist-card__body">
+            <span class="badge-label">Generators</span>
+            <h3 class="wishlist-card__title">Cummins 500kVA Diesel Generator</h3>
+            <p class="wishlist-card__price">LKR 15,500 <span class="wishlist-card__price-unit">/ day</span></p>
+            <span class="badge-status badge-status--active">
+              <span class="badge-status__dot" aria-hidden="true"></span> Available
+            </span>
+            <div class="wishlist-card__actions">
+              <button type="button" class="btn-primary btn-block" data-move-to-request>
+                <span class="icon icon-sm" aria-hidden="true">assignment_add</span>
+                Move to Rental Request
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="wishlist-card" data-item="jlg-scissor-lift">
+          <div class="wishlist-card__media">
+            <img class="wishlist-card__image" alt="A vibrant, sharply focused image of an orange JLG electric scissor lift elevated inside a spacious, modern warehouse." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTrHopSzJgkW2EyxD774uo19RQvKrh4qnsmL-8brktHCay7YYsAH1CMPJ74xYCj6PCxsuo2qb1wkCn2963LoMB0W2plUQdd2NQO2AppEdB6AUpFwcbs3TONAXFsUFhIbgvZF6tIEEzUO7Kxubo9VOJI0M1TGUx6MHw_JzzCyxuhvuRXsxh0CqQZ7UKaqO7uRPs5pd0xFR6Q4Lj6D_-nuuZer9Ce08gRw0UbSdB8ppACJqc8Gx4QjE7Q-Zq8i27Cn5gqUMpU3vzdpbe">
+            <button type="button" class="wishlist-card__remove" data-remove aria-label="Remove JLG 1930ES Electric Scissor Lift from wishlist" title="Remove from wishlist">
+              <span class="icon icon-sm" aria-hidden="true">close</span>
+            </button>
+          </div>
+          <div class="wishlist-card__body">
+            <span class="badge-label">Scissor Lifts</span>
+            <h3 class="wishlist-card__title">JLG 1930ES Electric Scissor Lift</h3>
+            <p class="wishlist-card__price">LKR 8,000 <span class="wishlist-card__price-unit">/ day</span></p>
+            <span class="badge-status badge-status--active">
+              <span class="badge-status__dot" aria-hidden="true"></span> Available
+            </span>
+            <div class="wishlist-card__actions">
+              <button type="button" class="btn-primary btn-block" data-move-to-request>
+                <span class="icon icon-sm" aria-hidden="true">assignment_add</span>
+                Move to Rental Request
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4: currently unavailable -->
+        <article class="wishlist-card" data-item="bobcat-loader">
+          <div class="wishlist-card__media">
+            <img class="wishlist-card__image" alt="A dynamic, low-angle shot of a compact Bobcat skid-steer loader working on a dirt patch." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfKb_qvRJGnY49-lMH4p7vXVM7jeBNE90ikrX6jEVdjdOHYaPZKVKC9IQs1A9FrKP6-PYCoL5OytlQXLup6givP75LkXMXCH3rF6ckKs6O-zo0SXpxDMgHSxAZdgwddKFZUSPzyGAdyYJUDjJwaew7mJ2exs68936Dzg650E7UoD7vnXL1mfJBjJCv3ZMMnES1tQ7vKwppe7U5AzxmzQCzEVMdXQwoV9BaN0dihtMW4KZSMkduukut4ZtSRQc5XEEaOxhyLJZxuu4t">
+            <button type="button" class="wishlist-card__remove" data-remove aria-label="Remove Bobcat S650 Skid-Steer Loader from wishlist" title="Remove from wishlist">
+              <span class="icon icon-sm" aria-hidden="true">close</span>
+            </button>
+          </div>
+          <div class="wishlist-card__body">
+            <span class="badge-label">Loaders</span>
+            <h3 class="wishlist-card__title">Bobcat S650 Skid-Steer Loader</h3>
+            <p class="wishlist-card__price">LKR 12,000 <span class="wishlist-card__price-unit">/ day</span></p>
+            <span class="badge-status badge-status--draft">
+              <span class="badge-status__dot" aria-hidden="true"></span> Unavailable
+            </span>
+            <div class="wishlist-card__actions">
+              <button type="button" class="btn-primary btn-block" data-move-to-request disabled aria-disabled="true" title="This item is currently unavailable">
+                <span class="icon icon-sm" aria-hidden="true">assignment_add</span>
+                Move to Rental Request
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Empty state, shown when the wishlist has no items -->
+      <div class="empty-state" id="wishlist-empty" hidden>
+        <span class="icon empty-state__icon" aria-hidden="true">favorite_border</span>
+        <h2 class="type-section-heading">Your wishlist is empty</h2>
+        <p class="empty-state__text">Save equipment you're interested in while browsing, so you can compare and request rentals later.</p>
+        <a class="btn-outline btn-inline" href="../Browsing page/index.html">Browse Equipment</a>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

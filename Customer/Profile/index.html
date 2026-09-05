@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Customer Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Anura Perera</div>
+        <img alt="User Profile" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <button class="support-btn type-label-md" type="button">Support</button>
+      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Wishlist/index.html">
+          <span class="icon" aria-hidden="true">favorite</span>
+          <span>Wishlist</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Rental History/index.html">
+          <span class="icon" aria-hidden="true">construction</span>
+          <span>Rentals</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Job History/index.html">
+          <span class="icon" aria-hidden="true">history</span>
+          <span>Job History</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">chat_bubble</span>
+          <span>Messages</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidenav-cta-wrap">
+      <a class="btn-cta" href="../Browsing page/index.html">
+        <span class="icon icon-sm" aria-hidden="true">add_circle</span>
+        Rent Equipment
+      </a>
+    </div>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <!-- Profile Header -->
+      <section class="card profile-card">
+        <div class="profile-top">
+          <div class="profile-identity">
+            <div class="profile-logo">
+              <img alt="Company Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+            </div>
+            <div>
+              <h1 class="type-headline-lg profile-name">Lanka Build Construction</h1>
+              <div class="profile-meta type-body-md">
+                <span class="icon icon-base" aria-hidden="true">person</span>
+                <span>Anura Perera</span>
+                <span class="divider">|</span>
+                <span class="role">Primary Contact</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn-primary" type="button">
+            <span class="icon icon-sm" aria-hidden="true">edit</span> Edit Profile
+          </button>
+        </div>
+
+        <div class="profile-grid">
+          <div>
+            <div class="stat-tiles">
+              <div class="stat-tile">
+                <span class="icon" aria-hidden="true">history</span>
+                <div class="stat-tile-value">42</div>
+                <div class="stat-tile-label">Total Rentals</div>
+              </div>
+              <div class="stat-tile stat-tile--secondary">
+                <span class="icon" aria-hidden="true">local_shipping</span>
+                <div class="stat-tile-value">5</div>
+                <div class="stat-tile-label">Active Now</div>
+              </div>
+              <div class="stat-tile">
+                <span class="icon icon-star icon-fill" aria-hidden="true">star</span>
+                <div class="stat-tile-value">4.8</div>
+                <div class="stat-tile-label">Rating</div>
+              </div>
+              <div class="stat-tile stat-tile--accent">
+                <span class="icon" aria-hidden="true">work</span>
+                <div class="stat-tile-value">2</div>
+                <div class="stat-tile-label">Open Jobs</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-list">
+              <div class="contact-item">
+                <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">mail</span></div>
+                <div class="contact-text">
+                  <div class="contact-label">Email</div>
+                  <div class="contact-value">anura.p@lankabuild.lk</div>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">location_on</span></div>
+                <div class="contact-text">
+                  <div class="contact-label">HQ Address</div>
+                  <div class="contact-value">No. 45 Baseline Rd, Colombo 08</div>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">phone</span></div>
+                <div class="contact-text">
+                  <div class="contact-label">Phone</div>
+                  <div class="contact-value">+94 11 234 5678</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dashboard Summary Stats -->
+      <div class="stats-row">
+        <div class="summary-stat">
+          <div class="summary-stat-label">Active Rentals</div>
+          <div class="summary-stat-value">5</div>
+        </div>
+        <div class="summary-stat">
+          <div class="summary-stat-label">Total Spend</div>
+          <div class="summary-stat-value">Rs. 142K</div>
+        </div>
+        <div class="summary-stat">
+          <div class="summary-stat-label">Saved Items</div>
+          <div class="summary-stat-value">12</div>
+        </div>
+        <div class="summary-stat">
+          <div class="summary-stat-label">Open Jobs</div>
+          <div class="summary-stat-value">2</div>
+        </div>
+      </div>
+
+      <!-- Active Rentals Overview -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="type-headline-md">Active Rentals Overview</h2>
+          <a class="link-action" href="../Rental History/index.html">
+            View All Rentals <span class="icon icon-sm" aria-hidden="true">arrow_forward</span>
+          </a>
+        </div>
+        <div class="card-grid">
+
+          <!-- Active Rental Card 1 -->
+          <div class="card card--hover entity-card">
+            <div class="entity-card-head">
+              <div class="entity-card-main">
+                <div class="entity-thumb">
+                  <span class="icon icon-xl" aria-hidden="true">agriculture</span>
+                </div>
+                <div>
+                  <h3 class="type-headline-sm entity-title">CAT 320D Excavator</h3>
+                  <p class="type-body-sm entity-subtitle">Site: Kottawa Highway Project</p>
+                </div>
+              </div>
+              <span class="badge-status badge-status--active">
+                <span class="badge-status__dot" aria-hidden="true"></span> Deployed
+              </span>
+            </div>
+            <div class="entity-detail-grid">
+              <div class="detail-cell">
+                <div class="detail-cell-label">Start Date</div>
+                <div class="detail-cell-value">Oct 12, 2023</div>
+              </div>
+              <div class="detail-cell">
+                <div class="detail-cell-label">End Date (Est.)</div>
+                <div class="detail-cell-value">Nov 28, 2023</div>
+              </div>
+            </div>
+            <div class="entity-footer">
+              <button class="btn-solid" type="button">
+                <span class="icon icon-sm" aria-hidden="true">calendar_month</span> Extend
+              </button>
+            </div>
+          </div>
+
+          <!-- Active Rental Card 2 -->
+          <div class="card card--hover entity-card">
+            <div class="entity-card-head">
+              <div class="entity-card-main">
+                <div class="entity-thumb">
+                  <span class="icon icon-xl" aria-hidden="true">electric_bolt</span>
+                </div>
+                <div>
+                  <h3 class="type-headline-sm entity-title">100kVA Generator</h3>
+                  <p class="type-body-sm entity-subtitle">Site: Colombo Port City</p>
+                </div>
+              </div>
+              <span class="badge-status badge-status--active">
+                <span class="badge-status__dot" aria-hidden="true"></span> Deployed
+              </span>
+            </div>
+            <div class="entity-detail-grid">
+              <div class="detail-cell">
+                <div class="detail-cell-label">Start Date</div>
+                <div class="detail-cell-value">Oct 20, 2023</div>
+              </div>
+              <div class="detail-cell">
+                <div class="detail-cell-label">End Date (Est.)</div>
+                <div class="detail-cell-value">Nov 05, 2023</div>
+              </div>
+            </div>
+            <div class="entity-footer">
+              <button class="btn-solid" type="button">
+                <span class="icon icon-sm" aria-hidden="true">calendar_month</span> Extend
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Open Jobs -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="type-headline-md">Open Jobs</h2>
+          <a class="link-action" href="../Job History/index.html">
+            View All Jobs <span class="icon icon-sm" aria-hidden="true">arrow_forward</span>
+          </a>
+        </div>
+        <div class="card-grid">
+
+          <!-- Job Card 1 -->
+          <div class="card card--hover entity-card">
+            <div class="entity-card-head">
+              <div class="entity-card-main">
+                <h3 class="type-headline-sm entity-title">Excavator Operator - Kottawa Highway</h3>
+              </div>
+              <span class="badge-status badge-status--pending">
+                <span class="badge-status__dot" aria-hidden="true"></span> Open
+              </span>
+            </div>
+            <div class="entity-meta-row">
+              <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
+              <span class="type-body-sm">Posted Oct 20, 2023</span>
+            </div>
+            <div class="entity-footer">
+              <button class="btn-outline" type="button">View Applications</button>
+            </div>
+          </div>
+
+          <!-- Job Card 2 -->
+          <div class="card card--hover entity-card">
+            <div class="entity-card-head">
+              <div class="entity-card-main">
+                <h3 class="type-headline-sm entity-title">Site Supervisor - Port City</h3>
+              </div>
+              <span class="badge-status badge-status--pending">
+                <span class="badge-status__dot" aria-hidden="true"></span> Open
+              </span>
+            </div>
+            <div class="entity-meta-row">
+              <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
+              <span class="type-body-sm">Posted Oct 22, 2023</span>
+            </div>
+            <div class="entity-footer">
+              <button class="btn-outline" type="button">View Applications</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Ratings & Reviews -->
+      <section class="section">
+        <div class="section-header">
+          <div class="section-header-left">
+            <h2 class="type-headline-md">Ratings &amp; Reviews</h2>
+            <div class="rating-chip">
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span>4.8 Average Trust Score (64 reviews)</span>
+            </div>
+          </div>
+          <button class="link-action" type="button">
+            View All Reviews <span class="icon icon-sm" aria-hidden="true">arrow_forward</span>
+          </button>
+        </div>
+
+        <div class="review-tabs" role="tablist">
+          <button class="review-tab is-active" type="button" role="tab" aria-selected="true">From Renting Parties</button>
+          <button class="review-tab" type="button" role="tab" aria-selected="false">From Freelancers</button>
+        </div>
+
+        <div class="card-grid">
+          <!-- Review Card 1 -->
+          <div class="card card--hover review-card">
+            <div class="review-head">
+              <div>
+                <div class="review-author">Lanka Equipment Rentals</div>
+                <div class="review-role">Equipment Provider</div>
+              </div>
+              <span class="review-time">2 weeks ago</span>
+            </div>
+            <div class="review-stars">
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+            </div>
+            <p class="review-quote">"Professional communication and timely returns. Highly recommended for any large scale project."</p>
+          </div>
+
+          <!-- Review Card 2 -->
+          <div class="card card--hover review-card">
+            <div class="review-head">
+              <div>
+                <div class="review-author">Saman Kumara</div>
+                <div class="review-role">Site Manager</div>
+              </div>
+              <span class="review-time">1 month ago</span>
+            </div>
+            <div class="review-stars">
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+            </div>
+            <p class="review-quote">"Excellent partner. They maintain their rented equipment well and are very responsive to site requirements."</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

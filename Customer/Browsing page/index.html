@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify — Browse Equipment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Top Nav Bar -->
+<header class="top-nav">
+  <div class="top-nav__inner">
+    <!-- Brand -->
+    <div class="brand">
+      <img src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g" alt="Equipify Logo" class="brand__logo">
+      <span class="brand__name">Equipify</span>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="nav-search">
+      <span class="icon nav-search__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </span>
+      <label for="nav-search-input" class="sr-only">Search heavy machinery, generators</label>
+      <input id="nav-search-input" type="text" placeholder="Search heavy machinery, generators..." class="nav-search__input">
+      <button type="button" class="nav-search__button">Search</button>
+    </div>
+
+    <!-- Trailing Actions -->
+    <div class="nav-actions">
+      <!-- Mobile-only: opens the search overlay -->
+      <button type="button" class="icon-btn icon-btn--mobile-only" id="mobile-search-toggle" aria-label="Open search" aria-expanded="false" aria-controls="mobile-search-panel">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </span>
+      </button>
+      <!-- Mobile-only: opens the filters sidebar -->
+      <button type="button" class="icon-btn icon-btn--mobile-only" id="mobile-filter-toggle" aria-label="Open filters" aria-expanded="false" aria-controls="filters-sidebar">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line><circle cx="9" cy="6" r="1.6" fill="currentColor" stroke="none"></circle><circle cx="15" cy="12" r="1.6" fill="currentColor" stroke="none"></circle><circle cx="11" cy="18" r="1.6" fill="currentColor" stroke="none"></circle></svg>
+        </span>
+      </button>
+      <button type="button" class="icon-btn" aria-label="Notifications">
+        <span class="icon icon--nav" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        </span>
+        <span class="icon-btn__badge" aria-hidden="true"></span>
+      </button>
+      <a class="icon-btn" href="../Wishlist/index.html" aria-label="Wishlist">
+        <span class="icon icon--nav" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"></path></svg>
+        </span>
+      </a>
+      <a class="icon-btn" href="../Profile/index.html" aria-label="Account">
+        <span class="icon icon--nav" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Mobile search panel (hidden by default, toggled by mobile-search-toggle) -->
+  <div class="mobile-search-panel" id="mobile-search-panel" hidden>
+    <span class="icon nav-search__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    </span>
+    <label for="mobile-search-input" class="sr-only">Search heavy machinery, generators</label>
+    <input id="mobile-search-input" type="text" placeholder="Search heavy machinery, generators..." class="nav-search__input">
+    <button type="button" class="nav-search__button">Search</button>
+  </div>
+</header>
+
+<!-- Main Layout Container -->
+<div class="page-container">
+
+  <!-- Backdrop shown behind the sidebar when it's open as a mobile overlay -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+
+  <!-- SideNavBar -->
+  <aside class="sidebar" id="filters-sidebar">
+    <div class="sidebar__heading">
+      <button type="button" class="sidebar__close" id="sidebar-close" aria-label="Close filters">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="6" y1="18" x2="18" y2="6"></line></svg></span>
+      </button>
+      <h2 class="sidebar__title">Filters</h2>
+      <p class="sidebar__subtitle">Refine your equipment search</p>
+    </div>
+
+    <!-- Filter: Categories -->
+    <div class="filter-section">
+      <div class="filter-section__header">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></span>
+        <h3 class="filter-section__title">Categories</h3>
+      </div>
+      <div class="filter-list">
+        <label class="filter-option">
+          <input type="checkbox" checked>
+          <span class="filter-option__label">Excavators</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox">
+          <span class="filter-option__label">Generators</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox">
+          <span class="filter-option__label">Scissor Lifts</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox">
+          <span class="filter-option__label">Loaders</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox">
+          <span class="filter-option__label">Compactors</span>
+        </label>
+      </div>
+    </div>
+
+    <hr class="filter-divider">
+
+    <!-- Filter: Price Range -->
+    <div class="filter-section">
+      <div class="filter-section__header">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle></svg></span>
+        <h3 class="filter-section__title">Price Range (LKR / day)</h3>
+      </div>
+      <div class="price-slider-wrap">
+        <label for="price-range" class="sr-only">Price range</label>
+        <input id="price-range" type="range" min="0" max="100000" value="50000" class="price-slider">
+        <div class="price-slider-labels">
+          <span>LKR 0</span>
+          <span>LKR 50k+</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="filter-divider">
+
+    <!-- Filter: Availability -->
+    <div class="filter-section">
+      <div class="filter-section__header">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg></span>
+        <h3 class="filter-section__title">Availability</h3>
+      </div>
+      <div class="filter-list">
+        <label class="filter-option">
+          <input type="checkbox" checked>
+          <span class="filter-option__label">Available Now</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox">
+          <span class="filter-option__label">Available Next 7 Days</span>
+        </label>
+      </div>
+    </div>
+
+    <hr class="filter-divider">
+
+    <!-- Filter: Location -->
+    <div class="filter-section">
+      <div class="filter-section__header">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
+        <h3 class="filter-section__title">Location</h3>
+      </div>
+      <div class="select-field-wrap">
+        <label for="location-select" class="sr-only">Location</label>
+        <select id="location-select" class="select-field">
+          <option>Any Location</option>
+          <option>Colombo District</option>
+          <option>Gampaha District</option>
+          <option>Kandy District</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="filter-divider">
+
+    <!-- Filter: Rating -->
+    <div class="filter-section">
+      <div class="filter-section__header">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+        <h3 class="filter-section__title">Provider Rating</h3>
+      </div>
+      <div class="filter-list" id="rating-filter-list" role="radiogroup" aria-label="Provider rating">
+        <label class="filter-option" data-rating-option="5">
+          <input type="radio" name="rating" value="5">
+          <span class="star-rating" data-stars="5">
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="star-rating__suffix">&amp; Up</span>
+          </span>
+        </label>
+        <label class="filter-option" data-rating-option="4">
+          <input type="radio" name="rating" value="4">
+          <span class="star-rating" data-stars="4">
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill icon--muted" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="star-rating__suffix">&amp; Up</span>
+          </span>
+        </label>
+        <label class="filter-option" data-rating-option="3">
+          <input type="radio" name="rating" value="3">
+          <span class="star-rating" data-stars="3">
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill icon--muted" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill icon--muted" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="star-rating__suffix">&amp; Up</span>
+          </span>
+        </label>
+        <label class="filter-option" data-rating-option="2">
+          <input type="radio" name="rating" value="2">
+          <span class="star-rating" data-stars="2">
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill icon--muted" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill icon--muted" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill icon--muted" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="star-rating__suffix">&amp; Up</span>
+          </span>
+        </label>
+        <label class="filter-option" data-rating-option="1">
+          <input type="radio" name="rating" value="1">
+          <span class="star-rating" data-stars="1">
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill icon--muted" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill icon--muted" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill icon--muted" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="icon icon--fill icon--muted" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="star-rating__suffix">&amp; Up</span>
+          </span>
+        </label>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <!-- Page Header & Actions -->
+    <div class="content-header">
+      <div>
+        <h1 class="content-header__title text-headline-lg">Browse Equipment</h1>
+        <p class="content-header__subtitle">Showing 1-8 of 500+ available machines</p>
+      </div>
+      <div class="sort-control">
+        <label for="sort" class="sort-control__label">Sort by:</label>
+        <select id="sort">
+          <option>Recommended</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Highest Rated</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Empty state, shown when no equipment matches the active filters -->
+    <p class="empty-state" id="empty-state" hidden>No equipment matches the selected rating. Try a different filter.</p>
+
+    <!-- Product Grid -->
+    <div class="equipment-grid" id="equipment-grid">
+
+      <!-- Equipment Card 1 -->
+      <article class="card" data-rating="4.9">
+        <div class="card__badge">Available Now</div>
+        <button type="button" class="card__wishlist" aria-label="Add to wishlist" data-wishlist-toggle>
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span>
+        </button>
+        <div class="card__image-wrap">
+          <img class="card__image" alt="A bright, high-resolution photograph of a yellow Caterpillar 320 excavator parked on a clean construction site." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAenzU8H9CEtI43HSB1PIaybM1xXuNwYu4T7Db30OhzZQfrS8TYA3LkgbPG7jJ_8BDpY2ScHLIkFJentINwbZUIA-Ek9NFygoD-APfmG1hiaU74U7PNPLOlphm5NIwmgH1mPky8F8a2_FmBDgmh3swNutdGRRWeO-8UL88_hP5XD_y1Z5JDFSsTI8X6zXRRLhGE1sarsS2f8ntj4RJZLtMmVaTg6OePJUKkorODBZ5acbRQmz0MoDGRB6kMPPOE7X7FXaqgLRpJQQta">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">Caterpillar 320 Hydraulic Excavator</h3>
+          <p class="card__provider">by <a href="#">Lanka Earthmovers</a></p>
+          <div class="card__rating">
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="card__rating-value">4.9</span>
+            <span class="card__rating-count">(34 reviews)</span>
+          </div>
+          <div class="card__price">LKR 28,000 <span class="card__price-unit">/ day</span></div>
+          <div class="card__footer">
+            <div class="card__location-row">
+              <span class="location-chip">
+                <span class="location-chip__dot location-chip__dot--green"></span> Colombo
+              </span>
+            </div>
+            <a class="btn btn--primary" href="../Detailed page/index.html">View Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Equipment Card 2 -->
+      <article class="card" data-rating="4.7">
+        <button type="button" class="card__wishlist" aria-label="Add to wishlist" data-wishlist-toggle>
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span>
+        </button>
+        <div class="card__image-wrap">
+          <img class="card__image" alt="A pristine, wide-angle shot of a large portable industrial diesel generator set positioned on a concrete pad." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABb06W_bkJgdcZRmJA6UhUjDSIV1yXyg0asz2jIPbSNhnWqGzDRNUJ3CEGE-FlxVqajGLEsHpidvURLe5DCggAhqVXLImBINKFbnztID2LhYhg4kPxHpn_a6ChGCNZUPWD1FUuXiLUM2NZU2ysW16hUvodll92a7fGk8AZ-UXwSLTxebUwj-4HAt2X6gUCZ3mWiiwUZ6fmdNCOuJz67ZfPo4cH-PwlKKwZdt4lTr9UJgIkQcreUo_9hrJx7shSOt8jeE6H9kqabV0v">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">Cummins 500kVA Diesel Generator</h3>
+          <p class="card__provider">by <a href="#">PowerGrid Solutions</a></p>
+          <div class="card__rating">
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="card__rating-value">4.7</span>
+            <span class="card__rating-count">(128 reviews)</span>
+          </div>
+          <div class="card__price">LKR 15,500 <span class="card__price-unit">/ day</span></div>
+          <div class="card__footer">
+            <div class="card__location-row">
+              <span class="location-chip">
+                <span class="location-chip__dot location-chip__dot--amber"></span> Gampaha
+              </span>
+            </div>
+            <a class="btn btn--outline" href="../Detailed page/index.html">Check Availability</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Equipment Card 3 -->
+      <article class="card" data-rating="5.0">
+        <div class="card__badge">Available Now</div>
+        <button type="button" class="card__wishlist is-active" aria-label="Remove from wishlist" data-wishlist-toggle>
+          <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span>
+        </button>
+        <div class="card__image-wrap">
+          <img class="card__image" alt="A vibrant, sharply focused image of an orange JLG electric scissor lift elevated inside a spacious, modern warehouse." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTrHopSzJgkW2EyxD774uo19RQvKrh4qnsmL-8brktHCay7YYsAH1CMPJ74xYCj6PCxsuo2qb1wkCn2963LoMB0W2plUQdd2NQO2AppEdB6AUpFwcbs3TONAXFsUFhIbgvZF6tIEEzUO7Kxubo9VOJI0M1TGUx6MHw_JzzCyxuhvuRXsxh0CqQZ7UKaqO7uRPs5pd0xFR6Q4Lj6D_-nuuZer9Ce08gRw0UbSdB8ppACJqc8Gx4QjE7Q-Zq8i27Cn5gqUMpU3vzdpbe">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">JLG 1930ES Electric Scissor Lift</h3>
+          <p class="card__provider">by <a href="#">Access Equip Pro</a></p>
+          <div class="card__rating">
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="card__rating-value">5.0</span>
+            <span class="card__rating-count">(12 reviews)</span>
+          </div>
+          <div class="card__price">LKR 8,000 <span class="card__price-unit">/ day</span></div>
+          <div class="card__footer">
+            <div class="card__location-row">
+              <span class="location-chip">
+                <span class="location-chip__dot location-chip__dot--green"></span> Colombo
+              </span>
+            </div>
+            <a class="btn btn--primary" href="../Detailed page/index.html">View Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Equipment Card 4 -->
+      <article class="card" data-rating="4.6">
+        <button type="button" class="card__wishlist" aria-label="Add to wishlist" data-wishlist-toggle>
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span>
+        </button>
+        <div class="card__image-wrap">
+          <img class="card__image" alt="A dynamic, low-angle shot of a compact Bobcat skid-steer loader working on a dirt patch." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfKb_qvRJGnY49-lMH4p7vXVM7jeBNE90ikrX6jEVdjdOHYaPZKVKC9IQs1A9FrKP6-PYCoL5OytlQXLup6givP75LkXMXCH3rF6ckKs6O-zo0SXpxDMgHSxAZdgwddKFZUSPzyGAdyYJUDjJwaew7mJ2exs68936Dzg650E7UoD7vnXL1mfJBjJCv3ZMMnES1tQ7vKwppe7U5AzxmzQCzEVMdXQwoV9BaN0dihtMW4KZSMkduukut4ZtSRQc5XEEaOxhyLJZxuu4t">
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">Bobcat S650 Skid-Steer Loader</h3>
+          <p class="card__provider">by <a href="#">Lanka Earthmovers</a></p>
+          <div class="card__rating">
+            <span class="icon icon--fill" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"></path></svg></span>
+            <span class="card__rating-value">4.6</span>
+            <span class="card__rating-count">(89 reviews)</span>
+          </div>
+          <div class="card__price">LKR 12,000 <span class="card__price-unit">/ day</span></div>
+          <div class="card__footer">
+            <div class="card__location-row">
+              <span class="location-chip">
+                <span class="location-chip__dot location-chip__dot--amber"></span> Kandy
+              </span>
+            </div>
+            <a class="btn btn--outline" href="../Detailed page/index.html">Check Availability</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Pagination -->
+    <nav class="pagination" aria-label="Pagination">
+      <button type="button" class="pagination__nav-btn" aria-label="Previous page" disabled>
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></span>
+      </button>
+      <button type="button" class="pagination__page is-active" aria-current="page">1</button>
+      <button type="button" class="pagination__page">2</button>
+      <button type="button" class="pagination__page">3</button>
+      <span class="pagination__ellipsis">…</span>
+      <button type="button" class="pagination__page">12</button>
+      <button type="button" class="pagination__nav-btn" aria-label="Next page">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+      </button>
+    </nav>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
