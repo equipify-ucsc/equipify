@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Customer Registration</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="auth-shell">
+
+  <!-- Left column: form -->
+  <main class="auth-form-col has-ambient-bg">
+
+    <!-- Ambient background: only visible below the desktop split-screen
+         breakpoint, sits behind the card, never affects layout/content -->
+    <div class="ambient-bg" aria-hidden="true">
+      <div class="ambient-blueprint"></div>
+      <div class="ambient-icon ambient-icon--1">
+        <span class="material-symbols-outlined">construction</span>
+      </div>
+      <div class="ambient-icon ambient-icon--2">
+        <span class="material-symbols-outlined">precision_manufacturing</span>
+      </div>
+      <div class="ambient-icon ambient-icon--3">
+        <span class="material-symbols-outlined">local_shipping</span>
+      </div>
+    </div>
+
+    <div class="auth-form-inner" style="align-items:center; max-width: 480px;">
+
+      <div style="margin-bottom: 32px;">
+        <img class="logo-mark" alt="Equipify Logo"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQYuD8cD7L-kTU4PnKeb8H1b99rfcg8gwVa-rzvqLT28XtY9HQfBRBR0TbEdXGXuY5zVoIwosJCcahrdyv_Lgfsn83TqeR4oxxzN5lS456ok7z2ebXRGqcZ_glF78LbBfpeFBLuefkdagp_8fifVOd0tW11YurmXMlq05_FRfBaxR71rNKhS6QZBwR_2Ob5XIe21Cyuk_wqF4rGF0Gu4swQ-RO_Derht8cfitfCxINUO3y9b_EAaVzfgOC_M0Uf8DeuiuU0MP19u0">
+      </div>
+
+      <div class="card">
+        <div style="margin-bottom: 32px; text-align:center;">
+          <h1 class="text-headline-md" style="color: var(--primary); margin: 0 0 8px 0;">Create your account</h1>
+          <p class="text-body-sm" style="color: var(--on-surface-variant); margin:0;">Rent equipment from verified providers</p>
+        </div>
+
+        <form id="registerForm" novalidate>
+
+          <div class="field" style="margin-bottom: 24px;">
+            <label class="text-label-md field-label">Profile Picture <span class="field-optional">(Optional)</span></label>
+            <div class="avatar-row">
+              <div class="avatar-preview">
+                <img id="profilePhotoPreview" alt="Profile placeholder"
+                     src="https://lh3.googleusercontent.com/aida/AP1WRLuW3lAHWSpun0htSp_VPj_m4zyIilggdCtbOR9rdexaxc04O_0A8oRU3mw-Eatm2mBe55EvBbRBbsdZSCrNTUuzyvYQL_LQ91nhSQ46LyDPZjTp13nWxlT8aW32xxwV2yIUDB-ifcOnvzc8iQ19UwvVOloOhpNnRvKBclqvu5B99AwT31jk4q3qplUPfWZPT4-mcOlWcn-SOKuoKNUFSRhipHGQbSziQu4duaBoHc4GYKlAwFO6YS5PHNw">
+              </div>
+              <button class="upload-btn" type="button" id="uploadPhotoBtn">Upload Photo</button>
+              <input type="file" id="profilePhotoInput" accept="image/*" class="visually-hidden">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="text-label-md field-label" for="fullName"><span class="field-required">*</span> Full Name</label>
+            <input class="input-standard" id="fullName" placeholder="e.g. Nuwan Perera" type="text" required>
+          </div>
+
+          <div class="field">
+            <label class="text-label-md field-label" for="email"><span class="field-required">*</span> Email Address</label>
+            <input class="input-standard" id="email" placeholder="name@company.com" type="email" required>
+          </div>
+
+          <div class="field">
+            <label class="text-label-md field-label" for="phone"><span class="field-required">*</span> Phone Number</label>
+            <input class="input-standard" id="phone" placeholder="+94 7X XXX XXXX" type="tel" required>
+          </div>
+
+          <div class="field">
+            <label class="text-label-md field-label" for="company">Company Name <span class="field-optional">(Optional)</span></label>
+            <input class="input-standard" id="company" placeholder="Enter company name" type="text">
+            <p class="field-hint">Add this later from your profile if you're signing up as an individual.</p>
+          </div>
+
+          <div class="field">
+            <label class="text-label-md field-label" for="address">Full Address <span class="field-optional">(Optional)</span></label>
+            <input class="input-standard" id="address" placeholder="Enter your full address" type="text">
+          </div>
+
+          <div class="field">
+            <label class="text-label-md field-label" for="district"><span class="field-required">*</span> District</label>
+            <select class="input-standard select-standard" id="district" required>
+              <option disabled selected value="">Select your district</option>
+              <option value="Ampara">Ampara</option>
+              <option value="Anuradhapura">Anuradhapura</option>
+              <option value="Badulla">Badulla</option>
+              <option value="Batticaloa">Batticaloa</option>
+              <option value="Colombo">Colombo</option>
+              <option value="Galle">Galle</option>
+              <option value="Gampaha">Gampaha</option>
+              <option value="Hambantota">Hambantota</option>
+              <option value="Jaffna">Jaffna</option>
+              <option value="Kalutara">Kalutara</option>
+              <option value="Kandy">Kandy</option>
+              <option value="Kegalle">Kegalle</option>
+              <option value="Kilinochchi">Kilinochchi</option>
+              <option value="Kurunegala">Kurunegala</option>
+              <option value="Mannar">Mannar</option>
+              <option value="Matale">Matale</option>
+              <option value="Matara">Matara</option>
+              <option value="Moneragala">Moneragala</option>
+              <option value="Mullaitivu">Mullaitivu</option>
+              <option value="Nuwara Eliya">Nuwara Eliya</option>
+              <option value="Polonnaruwa">Polonnaruwa</option>
+              <option value="Puttalam">Puttalam</option>
+              <option value="Ratnapura">Ratnapura</option>
+              <option value="Trincomalee">Trincomalee</option>
+              <option value="Vavuniya">Vavuniya</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="text-label-md field-label" for="password"><span class="field-required">*</span> Password</label>
+            <div class="password-wrap">
+              <input class="input-standard" id="password" placeholder="••••••••" type="password" required>
+              <button class="password-toggle" type="button" id="passwordToggle" aria-label="Show password">
+                <span class="material-symbols-outlined">visibility</span>
+              </button>
+            </div>
+            <div class="password-strength">
+              <div class="password-strength-bar"></div>
+              <div class="password-strength-bar"></div>
+              <div class="password-strength-bar"></div>
+              <div class="password-strength-bar"></div>
+            </div>
+            <p class="field-hint" id="passwordStrengthLabel">Add a password to get started.</p>
+          </div>
+
+          <div class="field">
+            <label class="text-label-md field-label" for="confirmPassword"><span class="field-required">*</span> Confirm Password</label>
+            <div class="password-wrap">
+              <input class="input-standard" id="confirmPassword" placeholder="••••••••" type="password" required>
+              <button class="password-toggle" type="button" id="confirmPasswordToggle" aria-label="Show password">
+                <span class="material-symbols-outlined">visibility</span>
+              </button>
+            </div>
+            <p class="error-message" id="confirmPasswordError" style="display:none;">
+              <span class="material-symbols-outlined">error</span>
+              Passwords do not match
+            </p>
+          </div>
+
+          <div class="checkbox-row">
+            <input id="terms" type="checkbox">
+            <label for="terms">
+              I agree to Equipify's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+            </label>
+          </div>
+
+          <button class="btn btn-cta" type="submit" style="margin-top: 8px;">Create Account</button>
+        </form>
+
+        <div class="auth-footer">
+          <p>Already have an account? <a class="link-teal" style="font-weight:500;" href="login.html">Log in</a></p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Right column: visual (desktop only, matches login page split-screen) -->
+  <aside class="auth-visual-col">
+    <img class="auth-visual-bg" alt="Industrial Equipment"
+         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZvnolQMcWAhWVgEV60n2Z0u8si-f7qpuMqy9HNF1VOgRSAL2umnkok52T7X6FhgvEby3DfHQxf6wtpM5SpSSlN7HL9VCGw0Y1eP-nmenw90_a2x5Ye3OejX7ZioXjc8EGxLKbPAwRwjuN7W20HCoPtwRrRkpchSQl02oObDoeJUJHvp2NA_WDxFLvHIfLCHTgEDye0LMkrX2FxPfN5pCSlTvOedKvaM2SSvk75zFE2_m8lQRi6HX3Wjp2NwzgpJVgOyZitP7_wBI">
+    <div class="auth-visual-overlay"></div>
+
+    <div class="auth-visual-content" style="align-self:flex-end;">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+        <span class="material-symbols-outlined" style="color: var(--brand-teal); font-size: 2.25rem;">verified</span>
+        <h2 class="text-headline-lg" style="margin:0;">Quality Guaranteed</h2>
+      </div>
+      <p class="text-body-lg" style="max-width: 28rem; opacity:0.9; margin:0;">Join the largest network of heavy equipment providers in Sri Lanka. Reliable, verified, and efficient.</p>
+    </div>
+
+    <div class="auth-visual-watermark">
+      <span class="material-symbols-outlined">construction</span>
+    </div>
+  </aside>
+
+</div>
+
+<script src="auth.js"></script>
+</body>
+</html>
+
