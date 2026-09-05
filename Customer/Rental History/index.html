@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Rental History</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhX5ZsCkUAabLvfBiFU1emXnwDD5e5YuiwJQ8tuk9-dbgvHm8SBA5iHLvkWrP4WwLeL5UB6f6FcTnS2bicjgLgBJYvLRvm0Vw7KxOdJy6oUmSDELgP4OXMKbewu8kkUaJz3CA9h2XDnURhWkJ6eVE-Bg5NzWBhIveYBNC28DXGY8QJ4SsyptaEyYDVHYMq0zOILgZ_7KHhgy8f9dgSlQoeaqRy5G_LdBjG3-0ALVLIGUOMd97X361Zf8dU2pkP53Zp50zTjqwygAG13bw">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Anura Perera</div>
+        <img alt="User Profile" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Wishlist/index.html">
+          <span class="icon" aria-hidden="true">favorite</span>
+          <span>Wishlist</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">construction</span>
+          <span>Rentals</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Job History/index.html">
+          <span class="icon" aria-hidden="true">history</span>
+          <span>Job History</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">chat_bubble</span>
+          <span>Messages</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidenav-cta-wrap">
+      <a class="btn-cta" href="../Browsing page/index.html">
+        <span class="icon icon-sm" aria-hidden="true">add_circle</span>
+        Rent Equipment
+      </a>
+    </div>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="type-page-title">Rental History</h1>
+          <p class="page-header__count" id="rental-history-count">8 rentals</p>
+        </div>
+      </div>
+
+      <!-- Rental History Grid -->
+      <div class="card-grid" id="rental-history-grid">
+
+        <!-- 1: Active -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div class="entity-thumb">
+                <img class="entity-thumb__image" alt="Caterpillar 320 hydraulic excavator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAenzU8H9CEtI43HSB1PIaybM1xXuNwYu4T7Db30OhzZQfrS8TYA3LkgbPG7jJ_8BDpY2ScHLIkFJentINwbZUIA-Ek9NFygoD-APfmG1hiaU74U7PNPLOlphm5NIwmgH1mPky8F8a2_FmBDgmh3swNutdGRRWeO-8UL88_hP5XD_y1Z5JDFSsTI8X6zXRRLhGE1sarsS2f8ntj4RJZLtMmVaTg6OePJUKkorODBZ5acbRQmz0MoDGRB6kMPPOE7X7FXaqgLRpJQQta">
+              </div>
+              <div>
+                <h3 class="type-headline-sm entity-title">Caterpillar 320 Hydraulic Excavator</h3>
+                <p class="type-body-sm entity-subtitle">Rented from Lanka Earthmovers</p>
+              </div>
+            </div>
+            <span class="badge-status badge-status--active">
+              <span class="badge-status__dot" aria-hidden="true"></span> Active
+            </span>
+          </div>
+          <div class="entity-detail-grid">
+            <div class="detail-cell">
+              <div class="detail-cell-label">Start Date</div>
+              <div class="detail-cell-value">Oct 12, 2025</div>
+            </div>
+            <div class="detail-cell">
+              <div class="detail-cell-label">End Date (Est.)</div>
+              <div class="detail-cell-value">Nov 28, 2025</div>
+            </div>
+          </div>
+          <p class="entity-price">LKR 28,000 <span class="entity-price__unit">/ day</span></p>
+          <div class="entity-footer">
+            <button class="btn-solid" type="button" data-action="extend">
+              <span class="icon icon-sm" aria-hidden="true">calendar_month</span> Extend
+            </button>
+          </div>
+        </article>
+
+        <!-- 2: Active -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div class="entity-thumb">
+                <img class="entity-thumb__image" alt="Cummins 500kVA diesel generator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABb06W_bkJgdcZRmJA6UhUjDSIV1yXyg0asz2jIPbSNhnWqGzDRNUJ3CEGE-FlxVqajGLEsHpidvURLe5DCggAhqVXLImBINKFbnztID2LhYhg4kPxHpn_a6ChGCNZUPWD1FUuXiLUM2NZU2ysW16hUvodll92a7fGk8AZ-UXwSLTxebUwj-4HAt2X6gUCZ3mWiiwUZ6fmdNCOuJz67ZfPo4cH-PwlKKwZdt4lTr9UJgIkQcreUo_9hrJx7shSOt8jeE6H9kqabV0v">
+              </div>
+              <div>
+                <h3 class="type-headline-sm entity-title">Cummins 500kVA Diesel Generator</h3>
+                <p class="type-body-sm entity-subtitle">Rented from PowerGrid Solutions</p>
+              </div>
+            </div>
+            <span class="badge-status badge-status--active">
+              <span class="badge-status__dot" aria-hidden="true"></span> Active
+            </span>
+          </div>
+          <div class="entity-detail-grid">
+            <div class="detail-cell">
+              <div class="detail-cell-label">Start Date</div>
+              <div class="detail-cell-value">Oct 20, 2025</div>
+            </div>
+            <div class="detail-cell">
+              <div class="detail-cell-label">End Date (Est.)</div>
+              <div class="detail-cell-value">Nov 05, 2025</div>
+            </div>
+          </div>
+          <p class="entity-price">LKR 15,500 <span class="entity-price__unit">/ day</span></p>
+          <div class="entity-footer">
+            <button class="btn-solid" type="button" data-action="extend">
+              <span class="icon icon-sm" aria-hidden="true">calendar_month</span> Extend
+            </button>
+          </div>
+        </article>
+
+        <!-- 3: Pending Confirmation -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div class="entity-thumb">
+                <img class="entity-thumb__image" alt="JLG 1930ES electric scissor lift" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTrHopSzJgkW2EyxD774uo19RQvKrh4qnsmL-8brktHCay7YYsAH1CMPJ74xYCj6PCxsuo2qb1wkCn2963LoMB0W2plUQdd2NQO2AppEdB6AUpFwcbs3TONAXFsUFhIbgvZF6tIEEzUO7Kxubo9VOJI0M1TGUx6MHw_JzzCyxuhvuRXsxh0CqQZ7UKaqO7uRPs5pd0xFR6Q4Lj6D_-nuuZer9Ce08gRw0UbSdB8ppACJqc8Gx4QjE7Q-Zq8i27Cn5gqUMpU3vzdpbe">
+              </div>
+              <div>
+                <h3 class="type-headline-sm entity-title">JLG 1930ES Electric Scissor Lift</h3>
+                <p class="type-body-sm entity-subtitle">Rented from Access Equip Pro</p>
+              </div>
+            </div>
+            <span class="badge-status badge-status--pending">
+              <span class="badge-status__dot" aria-hidden="true"></span> Pending Confirmation
+            </span>
+          </div>
+          <div class="entity-detail-grid">
+            <div class="detail-cell">
+              <div class="detail-cell-label">Requested Start</div>
+              <div class="detail-cell-value">Nov 02, 2025</div>
+            </div>
+            <div class="detail-cell">
+              <div class="detail-cell-label">Requested End</div>
+              <div class="detail-cell-value">Nov 09, 2025</div>
+            </div>
+          </div>
+          <p class="entity-price">LKR 8,000 <span class="entity-price__unit">/ day</span></p>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="cancel">Cancel Request</button>
+          </div>
+        </article>
+
+        <!-- 4: Pending Confirmation -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div class="entity-thumb">
+                <img class="entity-thumb__image" alt="Bobcat S650 skid-steer loader" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfKb_qvRJGnY49-lMH4p7vXVM7jeBNE90ikrX6jEVdjdOHYaPZKVKC9IQs1A9FrKP6-PYCoL5OytlQXLup6givP75LkXMXCH3rF6ckKs6O-zo0SXpxDMgHSxAZdgwddKFZUSPzyGAdyYJUDjJwaew7mJ2exs68936Dzg650E7UoD7vnXL1mfJBjJCv3ZMMnES1tQ7vKwppe7U5AzxmzQCzEVMdXQwoV9BaN0dihtMW4KZSMkduukut4ZtSRQc5XEEaOxhyLJZxuu4t">
+              </div>
+              <div>
+                <h3 class="type-headline-sm entity-title">Bobcat S650 Skid-Steer Loader</h3>
+                <p class="type-body-sm entity-subtitle">Rented from Lanka Earthmovers</p>
+              </div>
+            </div>
+            <span class="badge-status badge-status--pending">
+              <span class="badge-status__dot" aria-hidden="true"></span> Pending Confirmation
+            </span>
+          </div>
+          <div class="entity-detail-grid">
+            <div class="detail-cell">
+              <div class="detail-cell-label">Requested Start</div>
+              <div class="detail-cell-value">Nov 10, 2025</div>
+            </div>
+            <div class="detail-cell">
+              <div class="detail-cell-label">Requested End</div>
+              <div class="detail-cell-value">Nov 17, 2025</div>
+            </div>
+          </div>
+          <p class="entity-price">LKR 12,000 <span class="entity-price__unit">/ day</span></p>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="cancel">Cancel Request</button>
+          </div>
+        </article>
+
+        <!-- 5: Completed -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div class="entity-thumb">
+                <span class="icon icon-xl" aria-hidden="true">local_shipping</span>
+              </div>
+              <div>
+                <h3 class="type-headline-sm entity-title">Concrete Mixer Truck</h3>
+                <p class="type-body-sm entity-subtitle">Rented from Lanka Build Machinery</p>
+              </div>
+            </div>
+            <span class="badge-status badge-status--draft">
+              <span class="badge-status__dot" aria-hidden="true"></span> Completed
+            </span>
+          </div>
+          <div class="entity-detail-grid">
+            <div class="detail-cell">
+              <div class="detail-cell-label">Start Date</div>
+              <div class="detail-cell-value">Sep 02, 2025</div>
+            </div>
+            <div class="detail-cell">
+              <div class="detail-cell-label">Returned</div>
+              <div class="detail-cell-value">Sep 09, 2025</div>
+            </div>
+          </div>
+          <p class="entity-price">LKR 45,000 total</p>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="invoice">View Invoice</button>
+            <button class="link-action" type="button" data-action="rate">Rate Provider</button>
+          </div>
+        </article>
+
+        <!-- 6: Completed -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div class="entity-thumb">
+                <span class="icon icon-xl" aria-hidden="true">engineering</span>
+              </div>
+              <div>
+                <h3 class="type-headline-sm entity-title">Mobile Tower Crane</h3>
+                <p class="type-body-sm entity-subtitle">Rented from Colombo Heavy Lift</p>
+              </div>
+            </div>
+            <span class="badge-status badge-status--draft">
+              <span class="badge-status__dot" aria-hidden="true"></span> Completed
+            </span>
+          </div>
+          <div class="entity-detail-grid">
+            <div class="detail-cell">
+              <div class="detail-cell-label">Start Date</div>
+              <div class="detail-cell-value">Aug 14, 2025</div>
+            </div>
+            <div class="detail-cell">
+              <div class="detail-cell-label">Returned</div>
+              <div class="detail-cell-value">Aug 30, 2025</div>
+            </div>
+          </div>
+          <p class="entity-price">LKR 128,000 total</p>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="invoice">View Invoice</button>
+            <button class="link-action" type="button" data-action="rate">Rate Provider</button>
+          </div>
+        </article>
+
+        <!-- 7: Cancelled -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div class="entity-thumb">
+                <span class="icon icon-xl" aria-hidden="true">construction</span>
+              </div>
+              <div>
+                <h3 class="type-headline-sm entity-title">Road Roller 10-Ton</h3>
+                <p class="type-body-sm entity-subtitle">Rented from Lanka Build Machinery</p>
+              </div>
+            </div>
+            <span class="badge-status badge-status--rejected">
+              <span class="badge-status__dot" aria-hidden="true"></span> Cancelled
+            </span>
+          </div>
+          <div class="entity-detail-grid">
+            <div class="detail-cell">
+              <div class="detail-cell-label">Requested Start</div>
+              <div class="detail-cell-value">Jul 18, 2025</div>
+            </div>
+            <div class="detail-cell">
+              <div class="detail-cell-label">Cancelled On</div>
+              <div class="detail-cell-value">Jul 16, 2025</div>
+            </div>
+          </div>
+          <p class="entity-price">LKR 22,000 <span class="entity-price__unit">/ day</span></p>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="view">View Details</button>
+          </div>
+        </article>
+
+        <!-- 8: Cancelled -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div class="entity-thumb">
+                <span class="icon icon-xl" aria-hidden="true">height</span>
+              </div>
+              <div>
+                <h3 class="type-headline-sm entity-title">Boom Lift 45ft</h3>
+                <p class="type-body-sm entity-subtitle">Rented from Access Equip Pro</p>
+              </div>
+            </div>
+            <span class="badge-status badge-status--rejected">
+              <span class="badge-status__dot" aria-hidden="true"></span> Cancelled
+            </span>
+          </div>
+          <div class="entity-detail-grid">
+            <div class="detail-cell">
+              <div class="detail-cell-label">Requested Start</div>
+              <div class="detail-cell-value">Jun 05, 2025</div>
+            </div>
+            <div class="detail-cell">
+              <div class="detail-cell-label">Cancelled On</div>
+              <div class="detail-cell-value">Jun 04, 2025</div>
+            </div>
+          </div>
+          <p class="entity-price">LKR 9,500 <span class="entity-price__unit">/ day</span></p>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="view">View Details</button>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Empty state, shown when there is no rental history -->
+      <div class="empty-state" id="rental-history-empty" hidden>
+        <span class="icon empty-state__icon" aria-hidden="true">history</span>
+        <h2 class="type-section-heading">No rentals yet</h2>
+        <p class="empty-state__text">Once you rent equipment, your rental history will appear here.</p>
+        <a class="btn-outline btn-inline" href="../Browsing page/index.html">Browse Equipment</a>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

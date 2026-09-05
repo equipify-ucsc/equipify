@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Job History</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhX5ZsCkUAabLvfBiFU1emXnwDD5e5YuiwJQ8tuk9-dbgvHm8SBA5iHLvkWrP4WwLeL5UB6f6FcTnS2bicjgLgBJYvLRvm0Vw7KxOdJy6oUmSDELgP4OXMKbewu8kkUaJz3CA9h2XDnURhWkJ6eVE-Bg5NzWBhIveYBNC28DXGY8QJ4SsyptaEyYDVHYMq0zOILgZ_7KHhgy8f9dgSlQoeaqRy5G_LdBjG3-0ALVLIGUOMd97X361Zf8dU2pkP53Zp50zTjqwygAG13bw">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Anura Perera</div>
+        <img alt="User Profile" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Wishlist/index.html">
+          <span class="icon" aria-hidden="true">favorite</span>
+          <span>Wishlist</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Rental History/index.html">
+          <span class="icon" aria-hidden="true">construction</span>
+          <span>Rentals</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">history</span>
+          <span>Job History</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">chat_bubble</span>
+          <span>Messages</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidenav-cta-wrap">
+      <a class="btn-cta" href="../Browsing page/index.html">
+        <span class="icon icon-sm" aria-hidden="true">add_circle</span>
+        Rent Equipment
+      </a>
+    </div>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="type-page-title">Job History</h1>
+          <p class="page-header__count" id="job-history-count">6 jobs posted</p>
+        </div>
+      </div>
+
+      <!-- Job History Grid -->
+      <div class="card-grid" id="job-history-grid">
+
+        <!-- 1: Open -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div>
+                <span class="badge-label">Heavy Equipment Operator</span>
+                <h3 class="type-headline-sm entity-title">Excavator Operator – Kottawa Highway</h3>
+              </div>
+            </div>
+            <span class="badge-status badge-status--pending">
+              <span class="badge-status__dot" aria-hidden="true"></span> Open
+            </span>
+          </div>
+          <div class="entity-meta-row">
+            <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
+            <span class="type-body-sm">Posted Oct 20, 2025</span>
+          </div>
+          <div class="entity-meta-row">
+            <span class="icon icon-sm" aria-hidden="true">groups</span>
+            <span class="type-body-sm">6 applicants</span>
+          </div>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="view-applications">View Applications</button>
+          </div>
+        </article>
+
+        <!-- 2: Open -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div>
+                <span class="badge-label">Site Supervision</span>
+                <h3 class="type-headline-sm entity-title">Site Supervisor – Port City</h3>
+              </div>
+            </div>
+            <span class="badge-status badge-status--pending">
+              <span class="badge-status__dot" aria-hidden="true"></span> Open
+            </span>
+          </div>
+          <div class="entity-meta-row">
+            <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
+            <span class="type-body-sm">Posted Oct 22, 2025</span>
+          </div>
+          <div class="entity-meta-row">
+            <span class="icon icon-sm" aria-hidden="true">groups</span>
+            <span class="type-body-sm">3 applicants</span>
+          </div>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="view-applications">View Applications</button>
+          </div>
+        </article>
+
+        <!-- 3: Hired -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div>
+                <span class="badge-label">Crane Operation</span>
+                <h3 class="type-headline-sm entity-title">Crane Operator – Colombo 03 Tower</h3>
+              </div>
+            </div>
+            <span class="badge-status badge-status--active">
+              <span class="badge-status__dot" aria-hidden="true"></span> Hired
+            </span>
+          </div>
+          <div class="entity-meta-row">
+            <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
+            <span class="type-body-sm">Posted Sep 30, 2025</span>
+          </div>
+          <div class="entity-meta-row">
+            <span class="icon icon-sm" aria-hidden="true">person</span>
+            <span class="type-body-sm">Hired: Nimal Perera</span>
+          </div>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="view">View Details</button>
+          </div>
+        </article>
+
+        <!-- 4: Completed -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div>
+                <span class="badge-label">Generator Servicing</span>
+                <h3 class="type-headline-sm entity-title">Generator Technician – Weekend Cover</h3>
+              </div>
+            </div>
+            <span class="badge-status badge-status--completed">
+              <span class="badge-status__dot" aria-hidden="true"></span> Completed
+            </span>
+          </div>
+          <div class="entity-meta-row">
+            <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
+            <span class="type-body-sm">Posted Aug 02, 2025</span>
+          </div>
+          <div class="entity-meta-row">
+            <span class="icon icon-sm" aria-hidden="true">task_alt</span>
+            <span class="type-body-sm">Completed by: Kasun Silva</span>
+          </div>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="view">View Details</button>
+            <button class="link-action" type="button" data-action="rate">Rate Freelancer</button>
+          </div>
+        </article>
+
+        <!-- 5: Cancelled -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div>
+                <span class="badge-label">Warehouse Operations</span>
+                <h3 class="type-headline-sm entity-title">Forklift Operator – Warehouse Shift</h3>
+              </div>
+            </div>
+            <span class="badge-status badge-status--rejected">
+              <span class="badge-status__dot" aria-hidden="true"></span> Cancelled
+            </span>
+          </div>
+          <div class="entity-meta-row">
+            <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
+            <span class="type-body-sm">Posted Jul 14, 2025</span>
+          </div>
+          <div class="entity-meta-row">
+            <span class="icon icon-sm" aria-hidden="true">cancel</span>
+            <span class="type-body-sm">Cancelled Jul 20, 2025</span>
+          </div>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="view">View Details</button>
+          </div>
+        </article>
+
+        <!-- 6: Draft -->
+        <article class="card card--hover entity-card">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div>
+                <span class="badge-label">Logistics</span>
+                <h3 class="type-headline-sm entity-title">Delivery Driver – Heavy Haul</h3>
+              </div>
+            </div>
+            <span class="badge-status badge-status--draft">
+              <span class="badge-status__dot" aria-hidden="true"></span> Draft
+            </span>
+          </div>
+          <div class="entity-meta-row">
+            <span class="icon icon-sm" aria-hidden="true">visibility_off</span>
+            <span class="type-body-sm">Not yet published</span>
+          </div>
+          <div class="entity-footer">
+            <button class="btn-solid" type="button" data-action="publish">
+              <span class="icon icon-sm" aria-hidden="true">publish</span> Publish Job
+            </button>
+            <button class="link-action" type="button" data-action="edit">Edit</button>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Empty state, shown when there is no job history -->
+      <div class="empty-state" id="job-history-empty" hidden>
+        <span class="icon empty-state__icon" aria-hidden="true">work_off</span>
+        <h2 class="type-section-heading">No job posts yet</h2>
+        <p class="empty-state__text">When you post a job offer for a freelance worker, it will show up here.</p>
+        <a class="btn-outline btn-inline" href="#">Post a Job</a>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
