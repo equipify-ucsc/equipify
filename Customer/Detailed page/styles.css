@@ -7,9 +7,9 @@
 
 :root {
   /* Colors */
-  --surface: #f7f9fc;
+  --surface: #f5f7fa;
   --surface-dim: #d8dadd;
-  --surface-bright: #f7f9fc;
+  --surface-bright: #f5f7fa;
   --surface-container-lowest: #ffffff;
   --surface-container-low: #f2f4f7;
   --surface-container: #eceef1;
@@ -36,10 +36,9 @@
   --on-error: #ffffff;
   --error-container: #ffdad6;
   --on-error-container: #93000a;
-  --background: #f7f9fc;
+  --background: #f5f7fa;
   --on-background: #191c1e;
   --surface-variant: #e0e3e6;
-  --action-teal: #1d9e75;
 
   /* Typography */
   --font-brand: 'Plus Jakarta Sans', sans-serif;
@@ -102,6 +101,13 @@ img {
   max-width: 100%;
 }
 
+/* Visible keyboard focus — teal ring, matching the rest of the site */
+a:focus-visible,
+button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.35);
+}
+
 /* Material Symbols (self-contained icon font import kept minimal) */
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
@@ -160,9 +166,6 @@ img {
   height: 32px;
   width: auto;
   object-fit: contain;
-  background-color: var(--surface);
-  border-radius: var(--radius-default);
-  padding: 4px;
 }
 
 .brand__name {
@@ -234,7 +237,7 @@ img {
 }
 
 .nav-search__button:hover {
-  background-color: #00513a;
+  background-color: #005a41;
 }
 
 .nav-actions {
@@ -549,7 +552,7 @@ img {
   display: flex;
   align-items: center;
   gap: 4px;
-  color: #f59e0b;
+  color: #eab308;
 }
 
 .rating__star {
@@ -1018,7 +1021,7 @@ img {
 
 .btn-primary {
   width: 100%;
-  background-color: var(--action-teal);
+  background-color: var(--secondary);
   color: var(--on-secondary);
   font-size: 14px;
   font-weight: 600;
@@ -1035,7 +1038,7 @@ img {
 }
 
 .btn-primary:hover {
-  background-color: #178a63;
+  background-color: #005a41;
 }
 
 .widget-ctas__row {
@@ -1046,8 +1049,8 @@ img {
 
 .btn-outline {
   width: 100%;
-  border: 1px solid var(--primary);
-  color: var(--primary);
+  border: 1px solid var(--primary-container);
+  color: var(--primary-container);
   font-size: 14px;
   font-weight: 600;
   padding: 10px;
@@ -1121,9 +1124,6 @@ img {
   height: 32px;
   width: auto;
   object-fit: contain;
-  background-color: var(--surface);
-  border-radius: var(--radius-default);
-  padding: 4px;
 }
 
 .footer-brand__name {

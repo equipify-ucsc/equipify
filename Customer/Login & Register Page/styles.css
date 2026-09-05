@@ -6,9 +6,9 @@
 /* ---- Design Tokens -------------------------------------------------- */
 :root {
   /* Colors */
-  --surface: #f7f9fc;
+  --surface: #f5f7fa;
   --surface-dim: #d8dadd;
-  --surface-bright: #f7f9fc;
+  --surface-bright: #f5f7fa;
   --surface-container-lowest: #ffffff;
   --surface-container-low: #f2f4f7;
   --surface-container: #eceef1;
@@ -43,12 +43,12 @@
   --error-container: #ffdad6;
   --on-error-container: #93000a;
 
-  --background: #f7f9fc;
+  --background: #f5f7fa;
   --on-background: #191c1e;
   --surface-variant: #e0e3e6;
 
-  --brand-teal: #1d9e75;
-  --brand-teal-hover: #15805e;
+  --brand-teal: #006c4e;
+  --brand-teal-hover: #005a41;
 
   /* Typography */
   --font-display: 'Plus Jakarta Sans', sans-serif;

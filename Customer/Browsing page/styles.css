@@ -6,9 +6,9 @@
 /* ---- Design Tokens -------------------------------------------------- */
 :root {
   /* Colors */
-  --color-surface: #f7f9fc;
+  --color-surface: #f5f7fa;
   --color-surface-dim: #d8dadd;
-  --color-surface-bright: #f7f9fc;
+  --color-surface-bright: #f5f7fa;
   --color-surface-container-lowest: #ffffff;
   --color-surface-container-low: #f2f4f7;
   --color-surface-container: #eceef1;
@@ -45,17 +45,17 @@
   --color-secondary-fixed: #86f8c9;
   --color-secondary-fixed-dim: #68dbae;
   --color-on-secondary-fixed: #002115;
-  --color-on-secondary-fixed-variant: #00513a;
+  --color-on-secondary-fixed-variant: #005a41;
   --color-tertiary-fixed: #d7e3ff;
   --color-tertiary-fixed-dim: #b9c7e6;
   --color-on-tertiary-fixed: #0d1b33;
   --color-on-tertiary-fixed-variant: #394761;
-  --color-background: #f7f9fc;
+  --color-background: #f5f7fa;
   --color-on-background: #191c1e;
   --color-surface-variant: #e0e3e6;
 
   /* Extra accent colors used by cards (from original markup) */
-  --color-star: #f59e0b;
+  --color-star: #eab308;
 
   /* Typography */
   --font-display: 'Plus Jakarta Sans', sans-serif;
@@ -262,9 +262,6 @@ body {
   height: 32px;
   width: auto;
   object-fit: contain;
-  background-color: var(--color-surface);
-  border-radius: var(--radius);
-  padding: 4px;
 }
 
 .brand__name {
@@ -1044,7 +1041,7 @@ body {
 
 .btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-secondary);
 }
 
 .btn--primary {
@@ -1063,13 +1060,14 @@ body {
 
 .btn--outline {
   background-color: transparent;
-  border: 2px solid var(--color-outline);
-  color: var(--color-primary);
+  border: 2px solid var(--color-primary-container);
+  color: var(--color-primary-container);
   padding: 9px 15px;
 }
 
 .btn--outline:hover {
   border-color: var(--color-primary);
+  color: var(--color-primary);
   background-color: var(--color-surface-container-low);
 }
 
