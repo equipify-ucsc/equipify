@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Technician Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Kasun Perera</div>
+        <div class="avatar avatar--placeholder" aria-hidden="true">
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="avatar avatar--placeholder" aria-hidden="true">
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <h1 class="type-headline-lg page-title">Dashboard</h1>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="type-headline-md">Active Jobs</h2>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="filter-tabs" role="tablist" aria-label="Filter jobs by status">
+          <button class="filter-tab is-active" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
+          <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="active">Active</button>
+          <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="in-progress">In Progress</button>
+          <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="on-hold">On Hold</button>
+          <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="completed">Completed</button>
+        </div>
+
+        <div class="card-grid" id="job-grid">
+
+          <!-- Job Card 1 -->
+          <div class="card job-card" data-job-id="1" data-status="active">
+            <div class="job-card-head">
+              <div class="job-card-main">
+                <div class="job-thumb">
+                  <span class="icon icon-xl" aria-hidden="true">agriculture</span>
+                </div>
+                <div>
+                  <h3 class="type-headline-sm job-title">CAT 320D Excavator &ndash; Engine Diagnostics</h3>
+                  <p class="type-body-sm job-subtitle">Site: Kottawa Highway Project</p>
+                </div>
+              </div>
+              <span class="badge-status badge-status--active" data-status-badge>
+                <span class="badge-status__dot" aria-hidden="true"></span> Active
+              </span>
+            </div>
+            <div class="job-detail-grid">
+              <div class="detail-cell">
+                <div class="detail-cell-label">Scheduled</div>
+                <div class="detail-cell-value">Oct 12, 2023</div>
+              </div>
+              <div class="detail-cell">
+                <div class="detail-cell-label">Customer</div>
+                <div class="detail-cell-value">Lanka Build Construction</div>
+              </div>
+            </div>
+            <div class="job-footer">
+              <label class="status-label" for="status-1">Update Status</label>
+              <select class="status-select" id="status-1" data-status-select>
+                <option value="active" selected>Active</option>
+                <option value="in-progress">In Progress</option>
+                <option value="on-hold">On Hold</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Job Card 2 -->
+          <div class="card job-card" data-job-id="2" data-status="in-progress">
+            <div class="job-card-head">
+              <div class="job-card-main">
+                <div class="job-thumb">
+                  <span class="icon icon-xl" aria-hidden="true">electric_bolt</span>
+                </div>
+                <div>
+                  <h3 class="type-headline-sm job-title">100kVA Generator &ndash; Routine Maintenance</h3>
+                  <p class="type-body-sm job-subtitle">Site: Colombo Port City</p>
+                </div>
+              </div>
+              <span class="badge-status badge-status--pending" data-status-badge>
+                <span class="badge-status__dot" aria-hidden="true"></span> In Progress
+              </span>
+            </div>
+            <div class="job-detail-grid">
+              <div class="detail-cell">
+                <div class="detail-cell-label">Scheduled</div>
+                <div class="detail-cell-value">Oct 20, 2023</div>
+              </div>
+              <div class="detail-cell">
+                <div class="detail-cell-label">Customer</div>
+                <div class="detail-cell-value">Port City Development</div>
+              </div>
+            </div>
+            <div class="job-footer">
+              <label class="status-label" for="status-2">Update Status</label>
+              <select class="status-select" id="status-2" data-status-select>
+                <option value="active">Active</option>
+                <option value="in-progress" selected>In Progress</option>
+                <option value="on-hold">On Hold</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Job Card 3 -->
+          <div class="card job-card" data-job-id="3" data-status="on-hold">
+            <div class="job-card-head">
+              <div class="job-card-main">
+                <div class="job-thumb">
+                  <span class="icon icon-xl" aria-hidden="true">construction</span>
+                </div>
+                <div>
+                  <h3 class="type-headline-sm job-title">Concrete Mixer &ndash; Hydraulic Repair</h3>
+                  <p class="type-body-sm job-subtitle">Site: Nugegoda Site B</p>
+                </div>
+              </div>
+              <span class="badge-status badge-status--draft" data-status-badge>
+                <span class="badge-status__dot" aria-hidden="true"></span> On Hold
+              </span>
+            </div>
+            <div class="job-detail-grid">
+              <div class="detail-cell">
+                <div class="detail-cell-label">Scheduled</div>
+                <div class="detail-cell-value">Oct 22, 2023</div>
+              </div>
+              <div class="detail-cell">
+                <div class="detail-cell-label">Customer</div>
+                <div class="detail-cell-value">Nuge Builders (Pvt) Ltd</div>
+              </div>
+            </div>
+            <div class="job-footer">
+              <label class="status-label" for="status-3">Update Status</label>
+              <select class="status-select" id="status-3" data-status-select>
+                <option value="active">Active</option>
+                <option value="in-progress">In Progress</option>
+                <option value="on-hold" selected>On Hold</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Job Card 4 -->
+          <div class="card job-card" data-job-id="4" data-status="completed">
+            <div class="job-card-head">
+              <div class="job-card-main">
+                <div class="job-thumb">
+                  <span class="icon icon-xl" aria-hidden="true">forklift</span>
+                </div>
+                <div>
+                  <h3 class="type-headline-sm job-title">Backhoe Loader &ndash; Full Service</h3>
+                  <p class="type-body-sm job-subtitle">Site: Malabe Warehouse</p>
+                </div>
+              </div>
+              <span class="badge-status badge-status--completed" data-status-badge>
+                <span class="badge-status__dot" aria-hidden="true"></span> Completed
+              </span>
+            </div>
+            <div class="job-detail-grid">
+              <div class="detail-cell">
+                <div class="detail-cell-label">Scheduled</div>
+                <div class="detail-cell-value">Oct 25, 2023</div>
+              </div>
+              <div class="detail-cell">
+                <div class="detail-cell-label">Customer</div>
+                <div class="detail-cell-value">Malabe Logistics Hub</div>
+              </div>
+            </div>
+            <div class="job-footer">
+              <label class="status-label" for="status-4">Update Status</label>
+              <select class="status-select" id="status-4" data-status-select>
+                <option value="active">Active</option>
+                <option value="in-progress">In Progress</option>
+                <option value="on-hold">On Hold</option>
+                <option value="completed" selected>Completed</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Shown when the active filter matches no jobs -->
+        <p class="filter-empty" id="job-grid-no-results" hidden>No jobs match this filter.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
