@@ -132,21 +132,123 @@
     });
   });
 
+  // ---------- Searchable dropdowns (combobox) ----------
+  function initCombobox(combobox) {
+    var input = combobox.querySelector('.combobox-input');
+    var list = combobox.querySelector('.combobox-list');
+    var emptyState = list.querySelector('.combobox-empty');
+    var options = Array.prototype.slice.call(list.querySelectorAll('.combobox-option'));
+    var activeIndex = -1;
+
+    function setActiveOption(index) {
+      options.forEach(function (opt) { opt.classList.remove('is-active'); });
+      var visible = options.filter(function (opt) { return !opt.hidden; });
+      if (index >= 0 && index < visible.length) {
+        visible[index].classList.add('is-active');
+        visible[index].scrollIntoView({ block: 'nearest' });
+      }
+    }
+
+    function openList() {
+      list.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeList() {
+      list.hidden = true;
+      input.setAttribute('aria-expanded', 'false');
+      activeIndex = -1;
+      setActiveOption(-1);
+    }
+
+    function filterOptions() {
+      var query = input.value.trim().toLowerCase();
+      var anyVisible = false;
+      options.forEach(function (opt) {
+        var match = opt.textContent.toLowerCase().indexOf(query) !== -1;
+        opt.hidden = !match;
+        if (match) anyVisible = true;
+      });
+      if (emptyState) emptyState.hidden = anyVisible;
+      activeIndex = -1;
+      setActiveOption(-1);
+    }
+
+    function selectOption(option) {
+      input.value = option.textContent;
+      input.dataset.value = option.getAttribute('data-value');
+      closeList();
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      combobox.dispatchEvent(new CustomEvent('combobox:select', { bubbles: true }));
+    }
+
+    input.addEventListener('focus', function () {
+      filterOptions();
+      openList();
+    });
+
+    input.addEventListener('input', function () {
+      if (input.value !== (input.dataset.selectedLabel || '')) {
+        input.dataset.value = '';
+      }
+      filterOptions();
+      openList();
+    });
+
+    input.addEventListener('keydown', function (event) {
+      var visible = options.filter(function (opt) { return !opt.hidden; });
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        openList();
+        activeIndex = Math.min(activeIndex + 1, visible.length - 1);
+        setActiveOption(activeIndex);
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        activeIndex = Math.max(activeIndex - 1, 0);
+        setActiveOption(activeIndex);
+      } else if (event.key === 'Enter') {
+        if (!list.hidden && activeIndex >= 0 && visible[activeIndex]) {
+          event.preventDefault();
+          input.dataset.selectedLabel = visible[activeIndex].textContent;
+          selectOption(visible[activeIndex]);
+        }
+      } else if (event.key === 'Escape') {
+        closeList();
+      }
+    });
+
+    options.forEach(function (opt) {
+      opt.addEventListener('mousedown', function (event) {
+        event.preventDefault();
+        input.dataset.selectedLabel = opt.textContent;
+        selectOption(opt);
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      if (!combobox.contains(event.target)) closeList();
+    });
+  }
+
+  document.querySelectorAll('.combobox').forEach(initCombobox);
+
   // ---------- Technician assignment forms ----------
   document.querySelectorAll('.assignment-form').forEach(function (form) {
-    var technicianSelect = form.querySelector('.js-technician-select');
+    var technicianInput = form.querySelector('.js-technician-combobox .combobox-input');
     var submitBtn = form.querySelector('button[type="submit"]');
 
-    technicianSelect.addEventListener('change', function () {
-      submitBtn.disabled = !technicianSelect.value;
-    });
+    function updateSubmitState() {
+      submitBtn.disabled = !technicianInput.dataset.value;
+    }
+    form.addEventListener('input', updateSubmitState);
+    form.addEventListener('combobox:select', updateSubmitState);
 
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       var card = form.closest('.assignment-card');
       var summary = card.querySelector('.assignment-summary');
       var badge = card.querySelector('.badge-status');
-      var technicianName = technicianSelect.value;
+      var technicianName = technicianInput.dataset.value;
 
       summary.querySelector('.assigned-technician').textContent = technicianName;
 

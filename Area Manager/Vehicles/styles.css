@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Equipify — Delivery Assignments (Area Manager)
+   Equipify — Vehicles (Area Manager)
    Design system: "Industrial Integrity" (topbar + sidenav shell, matching
    the Area Manager Dashboard shell pattern)
    Vanilla CSS — no framework dependencies
@@ -122,6 +122,10 @@ h1, h2, h3, h4, p {
   margin: 0;
 }
 
+table {
+  border-collapse: collapse;
+}
+
 /* ---------- Typography ---------- */
 .type-label-md {
   font-family: var(--font-body);
@@ -146,11 +150,32 @@ h1, h2, h3, h4, p {
   }
 }
 
+.type-headline-md {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.type-headline-sm {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
 .type-body-md {
   font-family: var(--font-body);
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
+}
+
+.type-body-sm {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
 }
 
 /* ---------- Icons ---------- */
@@ -520,12 +545,6 @@ h1, h2, h3, h4, p {
 .btn-primary:hover {
   background-color: var(--color-teal-hover);
 }
-.btn-primary:disabled {
-  background-color: var(--color-outline-variant);
-  color: var(--color-on-surface-variant);
-  box-shadow: none;
-  cursor: not-allowed;
-}
 
 .btn-outline {
   background-color: transparent;
@@ -546,12 +565,30 @@ h1, h2, h3, h4, p {
 }
 
 .btn-sm {
-  padding: 7px 14px;
-  font-size: 13px;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.link-action {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-navy);
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  cursor: pointer;
+}
+.link-action:hover {
+  text-decoration: underline;
 }
 
 a.btn-primary:focus-visible,
-button:focus-visible {
+a.link-action:focus-visible,
+button:focus-visible,
+select:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.35);
 }
@@ -565,47 +602,51 @@ button:focus-visible {
   padding: var(--card-padding);
 }
 
-/* ---------- Filter tabs ---------- */
-.filter-tabs {
-  display: flex;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-  margin-bottom: var(--space-lg);
+/* ---------- Grid utilities ---------- */
+.admin-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+@media (min-width: 640px) {
+  .admin-grid--2,
+  .admin-grid--3,
+  .admin-grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .admin-grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .admin-grid--4 { grid-template-columns: repeat(4, 1fr); }
 }
 
-.filter-tab {
-  background-color: var(--color-surface-container-lowest);
-  color: var(--color-navy);
-  border: 1px solid var(--color-outline-variant);
-  border-radius: var(--radius-full);
-  padding: 8px 18px;
-  font-weight: 600;
-  font-size: 13px;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-.filter-tab:hover {
-  background-color: rgba(46, 64, 87, 0.06);
-}
-.filter-tab.is-active {
-  background-color: var(--color-teal);
-  border-color: var(--color-teal);
-  color: #ffffff;
-}
-
-/* ---------- Assignment list ---------- */
-.assignment-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.assignment-head {
+/* ---------- Stat cards ---------- */
+.stat-card {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-md);
+  justify-content: space-between;
+  gap: var(--space-sm);
 }
 
-.assignment-icon {
+.stat-card-label {
+  color: var(--color-on-surface-variant);
+  font-size: 13px;
+}
+
+.stat-card-value {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin: 8px 0 2px;
+}
+
+.stat-card-trend {
+  color: var(--color-on-surface-variant);
+  font-size: 13px;
+}
+
+.stat-card-icon {
   width: 44px;
   height: 44px;
   border-radius: var(--radius-lg);
@@ -617,129 +658,178 @@ button:focus-visible {
   flex-shrink: 0;
 }
 
-.assignment-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.assignment-title {
-  font-family: var(--font-heading);
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-on-surface);
-}
-
-.assignment-meta {
-  font-size: 13px;
-  color: var(--color-on-surface-variant);
-  margin-top: 2px;
-}
-
-.assignment-body {
-  margin-top: var(--space-md);
-  padding-top: var(--space-md);
-  border-top: 1px solid var(--color-surface-variant);
-}
-
-/* ---------- Assignment form ---------- */
-.assignment-form {
+/* ---------- Toolbar / search / filter ---------- */
+.toolbar {
   display: flex;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   flex-wrap: wrap;
-  align-items: flex-end;
+  margin-bottom: var(--space-md);
 }
 
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-  min-width: 200px;
-  max-width: 360px;
-}
-.form-field label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-on-surface-variant);
-}
-
-.select-field {
-  background-color: var(--color-surface-container-lowest);
-  color: var(--color-on-surface);
-  border: 1px solid var(--color-outline-variant);
-  border-radius: var(--radius-sm);
-  padding: 9px 36px 9px 12px;
-  font-size: 14px;
-  height: 40px;
-  width: 100%;
-}
-.select-field:focus-visible {
-  outline: none;
-  border-color: var(--color-teal);
-  box-shadow: 0 0 0 2px rgba(0, 108, 78, 0.25);
-}
-
-/* ---------- Searchable dropdown (combobox) ---------- */
-.combobox {
+.search-field {
   position: relative;
-  width: 100%;
-}
-
-.combobox-icon {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  color: var(--color-on-surface-variant);
-  pointer-events: none;
-}
-
-.combobox-list {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  z-index: 30;
-  background-color: var(--color-surface-container-lowest);
-  border: 1px solid var(--color-outline-variant);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-card);
-  max-height: 220px;
-  overflow-y: auto;
-  padding: 4px;
-}
-
-.combobox-option {
-  padding: 8px 10px;
-  border-radius: var(--radius-sm);
-  font-size: 14px;
-  color: var(--color-on-surface);
-  cursor: pointer;
-}
-.combobox-option:hover,
-.combobox-option.is-active {
-  background-color: var(--color-active-bg);
-  color: var(--color-active-fg);
-}
-
-.combobox-empty {
-  padding: 8px 10px;
-  font-size: 13px;
-  color: var(--color-on-surface-variant);
-}
-
-/* ---------- Assignment summary ---------- */
-.assignment-summary {
+  flex: 1;
+  min-width: 220px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
+}
+.search-field .icon {
+  position: absolute;
+  left: 12px;
+  color: var(--color-on-surface-variant);
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.search-input:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
+}
+
+.select-filter {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-size: 14px;
+  outline: none;
+}
+.select-filter:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
+}
+
+/* ---------- Table ---------- */
+.table-wrap {
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  min-width: 640px;
+}
+.table th,
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--color-surface-variant);
+  text-align: left;
+  font-size: 13px;
+  vertical-align: middle;
+}
+.table th {
+  color: var(--color-on-surface-variant);
+  font-weight: 700;
+  background-color: var(--color-surface-container-low);
+}
+.table tbody tr:hover td {
+  background-color: var(--color-surface-container-low);
+}
+.table td .row-actions {
+  display: flex;
+  gap: var(--space-xs);
   flex-wrap: wrap;
 }
 
-.assignment-summary-text {
-  font-size: 14px;
+/* ---------- Modal ---------- */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(26, 40, 64, 0.5);
+  z-index: 60;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+}
+.modal-backdrop.is-open {
+  display: flex;
+}
+
+.modal {
+  background-color: var(--color-surface-container-lowest);
+  width: min(560px, 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
+  padding: var(--space-lg);
+  max-height: calc(100vh - 2 * var(--space-lg));
+  overflow-y: auto;
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-close {
+  background-color: var(--color-surface-container-low);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  display: inline-flex;
+  color: var(--color-on-surface-variant);
+}
+.modal-close:hover {
+  background-color: var(--color-surface-container);
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* ---------- Form elements ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+@media (min-width: 640px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 700;
   color: var(--color-on-surface);
+}
+
+.input-standard {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  padding: 10px 12px;
+  color: var(--color-on-surface);
+  outline: none;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input-standard:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
 }
 
 /* ---------- Toast ---------- */
@@ -759,6 +849,14 @@ button:focus-visible {
 }
 .toast.is-visible {
   display: block;
+}
+
+/* ---------- Admin footer ---------- */
+.admin-footer {
+  padding: var(--space-lg) 0 0;
+  color: var(--color-on-surface-variant);
+  font-size: 12px;
+  text-align: center;
 }
 
 @media (prefers-reduced-motion: reduce) {
