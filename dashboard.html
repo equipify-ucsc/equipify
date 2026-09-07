@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>System Dashboard | Equipify</title><link rel="stylesheet" href="css/styles.css"></head><body><div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-mark">E</div><div><h1>Equipify</h1><small>Admin Console</small></div></div>
+  <div class="nav-section">Overview</div>
+  <a class="nav-link" data-nav href="dashboard.html" class="nav-link active">▦ <span>System Dashboard</span></a>
+  <div class="nav-section">Administration</div>
+  <a class="nav-link" data-nav href="profile.html">◉ <span>Admin Profile</span></a>
+  <a class="nav-link" data-nav href="complaints.html">⚑ <span>Complaints & Users</span></a>
+  <a class="nav-link" data-nav href="area-managers.html">♟ <span>Area Managers</span></a>
+  <a class="nav-link" data-nav href="documents.html">✓ <span>Document Verification</span></a>
+  <div class="nav-section">Account</div>
+  <a class="nav-link" data-nav href="login.html">↪ <span>Logout</span></a>
+</aside>
+<main class="main">
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button class="mobile-menu" aria-label="Open menu">☰</button>
+    <div><div class="top-title">Equipify Admin Portal</div><div class="top-sub">B2B Equipment Rental Platform</div></div>
+  </div>
+  <div class="user-menu"><div class="user-name"><strong>Dishanthan</strong><div class="top-sub">Super Administrator</div></div><div class="avatar">D</div></div>
+</header>
+<div class="container">
+<div class="page-head"><div><h2>System Dashboard</h2><p>Platform-wide overview for Equipify operations.</p></div><div class="actions"><button class="btn btn-light" onclick="showToast('Dashboard refreshed.')">↻ Refresh</button><a class="btn btn-primary" href="complaints.html">Review Reports</a></div></div>
+<div class="grid grid-4">
+<div class="card stat"><div><p>Total Users</p><h3>2,486</h3><p>+8.4% this month</p></div><div class="icon">◉</div></div>
+<div class="card stat"><div><p>Active Rentals</p><h3>318</h3><p>Across Sri Lanka</p></div><div class="icon">▣</div></div>
+<div class="card stat"><div><p>Pending Verification</p><h3>42</h3><p>Requires review</p></div><div class="icon">✓</div></div>
+<div class="card stat"><div><p>Open Complaints</p><h3>17</h3><p>5 high priority</p></div><div class="icon">⚑</div></div>
+</div>
+<div class="grid grid-2" style="margin-top:18px">
+<div class="card"><div class="section-title"><h3>Rental activity</h3><span class="badge badge-success">Last 7 days</span></div><div class="chart">
+<div class="bar-wrap"><span class="bar-value">42</span><div class="bar" style="height:35%"></div><span class="bar-label">Mon</span></div>
+<div class="bar-wrap"><span class="bar-value">58</span><div class="bar" style="height:48%"></div><span class="bar-label">Tue</span></div>
+<div class="bar-wrap"><span class="bar-value">51</span><div class="bar" style="height:43%"></div><span class="bar-label">Wed</span></div>
+<div class="bar-wrap"><span class="bar-value">76</span><div class="bar" style="height:64%"></div><span class="bar-label">Thu</span></div>
+<div class="bar-wrap"><span class="bar-value">88</span><div class="bar" style="height:74%"></div><span class="bar-label">Fri</span></div>
+<div class="bar-wrap"><span class="bar-value">96</span><div class="bar" style="height:82%"></div><span class="bar-label">Sat</span></div>
+<div class="bar-wrap"><span class="bar-value">73</span><div class="bar" style="height:61%"></div><span class="bar-label">Sun</span></div>
+</div></div>
+<div class="card"><div class="section-title"><h3>Verification progress</h3><span class="badge badge-info">42 pending</span></div>
+<div style="margin:20px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px"><span>Business owners</span><strong>78%</strong></div><div class="progress"><span style="width:78%"></span></div></div>
+<div style="margin:20px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px"><span>Operators</span><strong>64%</strong></div><div class="progress"><span style="width:64%"></span></div></div>
+<div style="margin:20px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px"><span>Delivery personnel</span><strong>86%</strong></div><div class="progress"><span style="width:86%"></span></div></div>
+<div style="margin:20px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px"><span>Maintenance technicians</span><strong>71%</strong></div><div class="progress"><span style="width:71%"></span></div></div>
+</div></div>
+<div class="card" style="margin-top:18px"><div class="section-title"><h3>Recent platform activity</h3><a href="complaints.html" class="btn btn-light btn-sm">View all</a></div><div class="table-wrap"><table class="table"><thead><tr><th>Activity</th><th>User</th><th>Time</th><th>Status</th></tr></thead><tbody>
+<tr><td>Document submitted</td><td>Nimal Construction</td><td>8 min ago</td><td><span class="badge badge-warning">Pending</span></td></tr>
+<tr><td>Complaint raised</td><td>BuildPro Lanka</td><td>22 min ago</td><td><span class="badge badge-danger">High</span></td></tr>
+<tr><td>Area manager registered</td><td>Kandy Region</td><td>1 hr ago</td><td><span class="badge badge-success">Active</span></td></tr>
+<tr><td>Rental completed</td><td>MediaWorks</td><td>2 hrs ago</td><td><span class="badge badge-success">Completed</span></td></tr>
+</tbody></table></div></div>
+</div><div class="footer">Equipify Admin Console · Group 49 · Academic Project</div></main></div><div id="toast" class="toast"></div><script src="js/app.js"></script></body></html>

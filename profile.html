@@ -1,0 +1,30 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Admin Profile | Equipify</title><link rel="stylesheet" href="css/styles.css"></head><body><div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-mark">E</div><div><h1>Equipify</h1><small>Admin Console</small></div></div>
+  <div class="nav-section">Overview</div>
+  <a class="nav-link" data-nav href="dashboard.html">▦ <span>System Dashboard</span></a>
+  <div class="nav-section">Administration</div>
+  <a class="nav-link" data-nav href="profile.html" class="nav-link active">◉ <span>Admin Profile</span></a>
+  <a class="nav-link" data-nav href="complaints.html">⚑ <span>Complaints & Users</span></a>
+  <a class="nav-link" data-nav href="area-managers.html">♟ <span>Area Managers</span></a>
+  <a class="nav-link" data-nav href="documents.html">✓ <span>Document Verification</span></a>
+  <div class="nav-section">Account</div>
+  <a class="nav-link" data-nav href="login.html">↪ <span>Logout</span></a>
+</aside>
+<main class="main">
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button class="mobile-menu" aria-label="Open menu">☰</button>
+    <div><div class="top-title">Equipify Admin Portal</div><div class="top-sub">B2B Equipment Rental Platform</div></div>
+  </div>
+  <div class="user-menu"><div class="user-name"><strong>Dishanthan</strong><div class="top-sub">Super Administrator</div></div><div class="avatar">D</div></div>
+</header>
+<div class="container">
+<div class="page-head"><div><h2>Admin Profile</h2><p>Manage your administrator identity and account preferences.</p></div><div class="actions"><button class="btn btn-primary" onclick="document.querySelector('#profileForm').requestSubmit()">Save Changes</button></div></div>
+<div class="profile">
+<div class="card profile-side"><div class="profile-avatar">D</div><h3 style="margin:5px 0">Dishanthan</h3><div class="meta">Super Administrator</div><div class="info-list">
+<div class="info-row"><strong>Email</strong>dishanthan@equipify.lk</div><div class="info-row"><strong>Access</strong>Full platform control</div><div class="info-row"><strong>Status</strong><span class="badge badge-success">Active</span></div><div class="info-row"><strong>Last login</strong>Today, 10:14 PM</div></div></div>
+<div class="card"><div class="section-title"><h3>Account information</h3><span class="badge badge-info">Administrator</span></div>
+<form id="profileForm"><div class="form-grid"><div class="field"><label>Full name</label><input required value="Dishanthan"></div><div class="field"><label>Email</label><input type="email" required value="dishanthan@equipify.lk"></div><div class="field"><label>Phone</label><input required value="+94 77 123 4567"></div><div class="field"><label>Role</label><input value="Super Administrator" disabled></div><div class="field full"><label>Profile summary</label><textarea rows="4">Responsible for platform-wide monitoring, verification, user management and administrative operations.</textarea></div></div></form></div>
+</div>
+</div><div class="footer">Equipify Admin Console · Group 49 · Academic Project</div></main></div><div id="toast" class="toast"></div><script src="js/app.js"></script></body></html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Document Verification | Equipify</title><link rel="stylesheet" href="css/styles.css"></head><body><div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-mark">E</div><div><h1>Equipify</h1><small>Admin Console</small></div></div>
+  <div class="nav-section">Overview</div>
+  <a class="nav-link" data-nav href="dashboard.html">▦ <span>System Dashboard</span></a>
+  <div class="nav-section">Administration</div>
+  <a class="nav-link" data-nav href="profile.html">◉ <span>Admin Profile</span></a>
+  <a class="nav-link" data-nav href="complaints.html">⚑ <span>Complaints & Users</span></a>
+  <a class="nav-link" data-nav href="area-managers.html">♟ <span>Area Managers</span></a>
+  <a class="nav-link" data-nav href="documents.html" class="nav-link active">✓ <span>Document Verification</span></a>
+  <div class="nav-section">Account</div>
+  <a class="nav-link" data-nav href="login.html">↪ <span>Logout</span></a>
+</aside>
+<main class="main">
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button class="mobile-menu" aria-label="Open menu">☰</button>
+    <div><div class="top-title">Equipify Admin Portal</div><div class="top-sub">B2B Equipment Rental Platform</div></div>
+  </div>
+  <div class="user-menu"><div class="user-name"><strong>Dishanthan</strong><div class="top-sub">Super Administrator</div></div><div class="avatar">D</div></div>
+</header>
+<div class="container">
+<div class="page-head"><div><h2>Document Verification</h2><p>Review credentials and supporting documents submitted by platform users.</p></div></div>
+<div class="grid grid-3">
+<div class="card"><p class="meta">Pending Review</p><h3 style="font-size:28px;margin:8px 0">42</h3><p class="meta">Documents awaiting decision</p></div>
+<div class="card"><p class="meta">Verified Today</p><h3 style="font-size:28px;margin:8px 0">28</h3><p class="meta">Successful verifications</p></div>
+<div class="card"><p class="meta">Rejected</p><h3 style="font-size:28px;margin:8px 0">6</h3><p class="meta">Require resubmission</p></div>
+</div>
+<div class="card" style="margin-top:18px"><div class="toolbar"><div class="search"><span>⌕</span><input data-filter-table="docsTable" placeholder="Search applicant, document or type..."></div><select data-status-filter="docsTable"><option value="">All statuses</option><option>Pending</option><option>Verified</option><option>Rejected</option></select></div>
+<div class="table-wrap"><table class="table" id="docsTable"><thead><tr><th>Applicant</th><th>Role</th><th>Document</th><th>Submitted</th><th>Status</th><th>Action</th></tr></thead><tbody>
+<tr data-status="Pending"><td><strong>Nimal Construction</strong></td><td>Renting Party</td><td>Business Registration</td><td>15 Aug 2026</td><td><span class="badge badge-warning">Pending</span></td><td><button class="btn btn-secondary btn-sm" data-action="approve">Approve</button> <button class="btn btn-danger btn-sm" data-action="reject">Reject</button></td></tr>
+<tr data-status="Pending"><td><strong>FastLift Operator</strong></td><td>Freelancer</td><td>Operator License</td><td>15 Aug 2026</td><td><span class="badge badge-warning">Pending</span></td><td><button class="btn btn-secondary btn-sm" data-action="approve">Approve</button> <button class="btn btn-danger btn-sm" data-action="reject">Reject</button></td></tr>
+<tr data-status="Verified"><td><strong>Metro Events</strong></td><td>Customer</td><td>Business ID</td><td>14 Aug 2026</td><td><span class="badge badge-success">Verified</span></td><td><button class="btn btn-light btn-sm" onclick="showToast('Document details opened.')">View</button></td></tr>
+<tr data-status="Rejected"><td><strong>QuickMove</strong></td><td>Delivery Personnel</td><td>Vehicle License</td><td>13 Aug 2026</td><td><span class="badge badge-danger">Rejected</span></td><td><button class="btn btn-light btn-sm" onclick="showToast('Resubmission request opened.')">Review</button></td></tr>
+</tbody></table></div></div>
+<div class="card" style="margin-top:18px"><div class="section-title"><h3>Verification checklist</h3></div><div class="grid grid-2"><div><strong>Business owners / renting parties</strong><p class="meta">Confirm business registration, authorized representative details and supporting identity documents.</p></div><div><strong>Freelance operators</strong><p class="meta">Review operator certifications, identity documents and relevant licenses.</p></div><div><strong>Delivery personnel</strong><p class="meta">Review identity, driving credentials and vehicle documentation.</p></div><div><strong>Maintenance technicians</strong><p class="meta">Review professional credentials and service-related supporting documents.</p></div></div></div>
+</div><div class="footer">Equipify Admin Console · Group 49 · Academic Project</div></main></div><div id="toast" class="toast"></div><script src="js/app.js"></script></body></html>
