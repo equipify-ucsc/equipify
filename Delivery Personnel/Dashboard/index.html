@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Delivery Personnel Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Nuwan Fernando</div>
+        <div class="avatar avatar--placeholder" aria-hidden="true">
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="avatar avatar--placeholder" aria-hidden="true">
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <h1 class="type-headline-lg page-title">Dashboard</h1>
+
+      <section class="section">
+        <div class="section-header">
+          <h2 class="type-headline-md">Active Deliveries</h2>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="filter-tabs" role="tablist" aria-label="Filter deliveries by status">
+          <button class="filter-tab is-active" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
+          <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="in-transit">In Transit</button>
+          <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="pending-pickup">Pending Pickup</button>
+          <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="delayed">Delayed</button>
+          <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="delivered">Delivered</button>
+        </div>
+
+        <div class="card-grid" id="delivery-grid">
+
+          <!-- Delivery Card 1 -->
+          <div class="card delivery-card" data-delivery-id="1" data-status="in-transit">
+            <div class="delivery-card-head">
+              <div class="delivery-card-main">
+                <div class="delivery-thumb">
+                  <span class="icon icon-xl" aria-hidden="true">local_shipping</span>
+                </div>
+                <div>
+                  <h3 class="type-headline-sm delivery-title">CAT 320D Excavator &ndash; Delivery to Kottawa Highway</h3>
+                  <p class="type-body-sm delivery-subtitle">Destination: Kottawa Highway Project</p>
+                </div>
+              </div>
+              <span class="badge-status badge-status--active" data-status-badge>
+                <span class="badge-status__dot" aria-hidden="true"></span> In Transit
+              </span>
+            </div>
+            <div class="delivery-detail-grid">
+              <div class="detail-cell">
+                <div class="detail-cell-label">Delivery Date</div>
+                <div class="detail-cell-value">Oct 12, 2023</div>
+              </div>
+              <div class="detail-cell">
+                <div class="detail-cell-label">Customer</div>
+                <div class="detail-cell-value">Lanka Build Construction</div>
+              </div>
+            </div>
+            <div class="delivery-footer">
+              <label class="status-label" for="status-1">Update Status</label>
+              <select class="status-select" id="status-1" data-status-select>
+                <option value="in-transit" selected>In Transit</option>
+                <option value="pending-pickup">Pending Pickup</option>
+                <option value="delayed">Delayed</option>
+                <option value="delivered">Delivered</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Delivery Card 2 -->
+          <div class="card delivery-card" data-delivery-id="2" data-status="pending-pickup">
+            <div class="delivery-card-head">
+              <div class="delivery-card-main">
+                <div class="delivery-thumb">
+                  <span class="icon icon-xl" aria-hidden="true">electric_bolt</span>
+                </div>
+                <div>
+                  <h3 class="type-headline-sm delivery-title">100kVA Generator &ndash; Delivery to Colombo Port City</h3>
+                  <p class="type-body-sm delivery-subtitle">Destination: Colombo Port City</p>
+                </div>
+              </div>
+              <span class="badge-status badge-status--pending" data-status-badge>
+                <span class="badge-status__dot" aria-hidden="true"></span> Pending Pickup
+              </span>
+            </div>
+            <div class="delivery-detail-grid">
+              <div class="detail-cell">
+                <div class="detail-cell-label">Delivery Date</div>
+                <div class="detail-cell-value">Oct 20, 2023</div>
+              </div>
+              <div class="detail-cell">
+                <div class="detail-cell-label">Customer</div>
+                <div class="detail-cell-value">Port City Development</div>
+              </div>
+            </div>
+            <div class="delivery-footer">
+              <label class="status-label" for="status-2">Update Status</label>
+              <select class="status-select" id="status-2" data-status-select>
+                <option value="in-transit">In Transit</option>
+                <option value="pending-pickup" selected>Pending Pickup</option>
+                <option value="delayed">Delayed</option>
+                <option value="delivered">Delivered</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Delivery Card 3 -->
+          <div class="card delivery-card" data-delivery-id="3" data-status="delayed">
+            <div class="delivery-card-head">
+              <div class="delivery-card-main">
+                <div class="delivery-thumb">
+                  <span class="icon icon-xl" aria-hidden="true">construction</span>
+                </div>
+                <div>
+                  <h3 class="type-headline-sm delivery-title">Concrete Mixer &ndash; Delivery to Nugegoda Site B</h3>
+                  <p class="type-body-sm delivery-subtitle">Destination: Nugegoda Site B</p>
+                </div>
+              </div>
+              <span class="badge-status badge-status--draft" data-status-badge>
+                <span class="badge-status__dot" aria-hidden="true"></span> Delayed
+              </span>
+            </div>
+            <div class="delivery-detail-grid">
+              <div class="detail-cell">
+                <div class="detail-cell-label">Delivery Date</div>
+                <div class="detail-cell-value">Oct 22, 2023</div>
+              </div>
+              <div class="detail-cell">
+                <div class="detail-cell-label">Customer</div>
+                <div class="detail-cell-value">Nuge Builders (Pvt) Ltd</div>
+              </div>
+            </div>
+            <div class="delivery-footer">
+              <label class="status-label" for="status-3">Update Status</label>
+              <select class="status-select" id="status-3" data-status-select>
+                <option value="in-transit">In Transit</option>
+                <option value="pending-pickup">Pending Pickup</option>
+                <option value="delayed" selected>Delayed</option>
+                <option value="delivered">Delivered</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Delivery Card 4 -->
+          <div class="card delivery-card" data-delivery-id="4" data-status="delivered">
+            <div class="delivery-card-head">
+              <div class="delivery-card-main">
+                <div class="delivery-thumb">
+                  <span class="icon icon-xl" aria-hidden="true">forklift</span>
+                </div>
+                <div>
+                  <h3 class="type-headline-sm delivery-title">Backhoe Loader &ndash; Delivery to Malabe Warehouse</h3>
+                  <p class="type-body-sm delivery-subtitle">Destination: Malabe Warehouse</p>
+                </div>
+              </div>
+              <span class="badge-status badge-status--completed" data-status-badge>
+                <span class="badge-status__dot" aria-hidden="true"></span> Delivered
+              </span>
+            </div>
+            <div class="delivery-detail-grid">
+              <div class="detail-cell">
+                <div class="detail-cell-label">Delivery Date</div>
+                <div class="detail-cell-value">Oct 25, 2023</div>
+              </div>
+              <div class="detail-cell">
+                <div class="detail-cell-label">Customer</div>
+                <div class="detail-cell-value">Malabe Logistics Hub</div>
+              </div>
+            </div>
+            <div class="delivery-footer">
+              <label class="status-label" for="status-4">Update Status</label>
+              <select class="status-select" id="status-4" data-status-select>
+                <option value="in-transit">In Transit</option>
+                <option value="pending-pickup">Pending Pickup</option>
+                <option value="delayed">Delayed</option>
+                <option value="delivered" selected>Delivered</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Shown when the active filter matches no deliveries -->
+        <p class="filter-empty" id="delivery-grid-no-results" hidden>No deliveries match this filter.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
