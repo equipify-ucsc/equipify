@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Delivery Personnel</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">K. Perera<span class="topbar-user-role">Area Manager · Colombo Region</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true">
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="avatar avatar--placeholder" aria-hidden="true">
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Dashboard/index.html">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Delivery Assignments/index.html">
+          <span class="icon" aria-hidden="true">assignment_ind</span>
+          <span>Delivery Assignments</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Maintenance Assignments/index.html">
+          <span class="icon" aria-hidden="true">engineering</span>
+          <span>Maintenance Assignments</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">local_shipping</span>
+          <span>Delivery Personnel</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Maintenance Technicians/index.html">
+          <span class="icon" aria-hidden="true">build</span>
+          <span>Maintenance Technicians</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Vehicles/index.html">
+          <span class="icon" aria-hidden="true">directions_car</span>
+          <span>Vehicles</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-stub" href="#" data-stub-label="Complaints">
+          <span class="icon" aria-hidden="true">flag</span>
+          <span>Complaints</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link is-stub" href="#" data-stub-label="Logout">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <div class="page-head">
+        <div>
+          <h1 class="type-headline-lg page-title">Delivery Personnel</h1>
+          <p class="type-body-md page-subtitle">Register and manage delivery personnel assigned to Colombo Region.</p>
+        </div>
+        <div class="page-head-actions">
+          <button class="btn-primary" type="button" data-modal-open="personnelModal">
+            <span class="icon icon-sm" aria-hidden="true">person_add</span> Register Personnel
+          </button>
+        </div>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="admin-grid admin-grid--3">
+        <div class="card">
+          <p class="stat-card-label">On Duty</p>
+          <h3 class="stat-card-value">30</h3>
+          <p class="stat-card-trend">Currently active in the field</p>
+        </div>
+        <div class="card">
+          <p class="stat-card-label">On Leave</p>
+          <h3 class="stat-card-value">2</h3>
+          <p class="stat-card-trend">Unavailable this week</p>
+        </div>
+        <div class="card">
+          <p class="stat-card-label">Total Registered</p>
+          <h3 class="stat-card-value">34</h3>
+          <p class="stat-card-trend">Across Colombo Region</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 18px;">
+        <div class="toolbar">
+          <div class="search-field">
+            <span class="icon icon-sm" aria-hidden="true">search</span>
+            <input class="search-input" type="text" data-filter-table="personnelTable" placeholder="Search personnel or vehicle...">
+          </div>
+          <select class="select-filter" id="statusFilter" data-filter-table-status="personnelTable">
+            <option value="">All statuses</option>
+            <option value="On Duty">On Duty</option>
+            <option value="Off Duty">Off Duty</option>
+            <option value="On Leave">On Leave</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="personnelTable">
+            <thead>
+              <tr><th>Personnel</th><th>Contact</th><th>Vehicle Assigned</th><th>Deliveries Completed</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              <tr data-status="On Duty">
+                <td><strong>S. Fernando</strong></td>
+                <td>0771 234 567</td>
+                <td>WP-CAJ-9091 — Lorry</td>
+                <td>128</td>
+                <td><span class="badge-status badge-status--active">On Duty</span></td>
+                <td>
+                  <div class="row-actions">
+                    <button class="btn-outline btn-sm" type="button" data-toast="S. Fernando's profile opened.">View</button>
+                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
+                  </div>
+                </td>
+              </tr>
+              <tr data-status="On Duty">
+                <td><strong>R. Jayasuriya</strong></td>
+                <td>0772 345 678</td>
+                <td>WP-CAB-2231 — Lorry</td>
+                <td>96</td>
+                <td><span class="badge-status badge-status--active">On Duty</span></td>
+                <td>
+                  <div class="row-actions">
+                    <button class="btn-outline btn-sm" type="button" data-toast="R. Jayasuriya's profile opened.">View</button>
+                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
+                  </div>
+                </td>
+              </tr>
+              <tr data-status="On Duty">
+                <td><strong>T. Bandara</strong></td>
+                <td>0773 456 789</td>
+                <td>WP-KA-4410 — Van</td>
+                <td>142</td>
+                <td><span class="badge-status badge-status--active">On Duty</span></td>
+                <td>
+                  <div class="row-actions">
+                    <button class="btn-outline btn-sm" type="button" data-toast="T. Bandara's profile opened.">View</button>
+                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
+                  </div>
+                </td>
+              </tr>
+              <tr data-status="Off Duty">
+                <td><strong>N. Perera</strong></td>
+                <td>0774 567 890</td>
+                <td>Unassigned</td>
+                <td>73</td>
+                <td><span class="badge-status badge-status--completed">Off Duty</span></td>
+                <td>
+                  <div class="row-actions">
+                    <button class="btn-outline btn-sm" type="button" data-toast="N. Perera's profile opened.">View</button>
+                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
+                  </div>
+                </td>
+              </tr>
+              <tr data-status="On Leave">
+                <td><strong>A. Silva</strong></td>
+                <td>0775 678 901</td>
+                <td>WP-NA-1123 — Van</td>
+                <td>61</td>
+                <td><span class="badge-status badge-status--pending">On Leave</span></td>
+                <td>
+                  <div class="row-actions">
+                    <button class="btn-outline btn-sm" type="button" data-toast="A. Silva's profile opened.">View</button>
+                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
+                  </div>
+                </td>
+              </tr>
+              <tr data-status="Off Duty">
+                <td><strong>M. Rathnayake</strong></td>
+                <td>0776 789 012</td>
+                <td>Unassigned</td>
+                <td>54</td>
+                <td><span class="badge-status badge-status--completed">Off Duty</span></td>
+                <td>
+                  <div class="row-actions">
+                    <button class="btn-outline btn-sm" type="button" data-toast="M. Rathnayake's profile opened.">View</button>
+                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Register personnel modal -->
+  <div class="modal-backdrop" id="personnelModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 class="type-headline-sm">Register Delivery Personnel</h3>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <form id="personnelForm" data-success-message="Delivery personnel registered successfully.">
+        <div class="form-grid" style="margin-top: 18px;">
+          <div class="field">
+            <label class="field-label" for="personnelName">Full name</label>
+            <input class="input-standard" id="personnelName" required placeholder="Personnel name">
+          </div>
+          <div class="field">
+            <label class="field-label" for="personnelEmail">Email</label>
+            <input class="input-standard" id="personnelEmail" type="email" required placeholder="name@equipify.lk">
+          </div>
+          <div class="field">
+            <label class="field-label" for="personnelPhone">Phone</label>
+            <input class="input-standard" id="personnelPhone" required placeholder="+94 ...">
+          </div>
+          <div class="field">
+            <label class="field-label" for="personnelLicense">Driving license no.</label>
+            <input class="input-standard" id="personnelLicense" required placeholder="License number">
+          </div>
+          <div class="field field--full">
+            <label class="field-label" for="personnelVehicle">Assign vehicle (optional)</label>
+            <select class="input-standard" id="personnelVehicle">
+              <option value="">Unassigned</option>
+              <option>WP-CAB-2231 — Lorry</option>
+              <option>WP-KA-4410 — Van</option>
+              <option>WP-CAJ-9091 — Lorry</option>
+              <option>WP-NA-1123 — Van</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label class="field-label" for="personnelPassword">Temporary password</label>
+            <input class="input-standard" id="personnelPassword" required minlength="6" type="password" placeholder="Minimum 6 characters">
+          </div>
+        </div>
+        <div class="modal-actions" style="margin-top: 20px;">
+          <button class="btn-outline" type="button" data-modal-close>Cancel</button>
+          <button class="btn-primary" type="submit">Register Personnel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

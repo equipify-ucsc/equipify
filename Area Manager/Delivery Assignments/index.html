@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Delivery Assignments</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">K. Perera<span class="topbar-user-role">Area Manager · Colombo Region</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true">
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="avatar avatar--placeholder" aria-hidden="true">
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Dashboard/index.html">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">assignment_ind</span>
+          <span>Delivery Assignments</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Maintenance Assignments/index.html">
+          <span class="icon" aria-hidden="true">engineering</span>
+          <span>Maintenance Assignments</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Delivery Personnel/index.html">
+          <span class="icon" aria-hidden="true">local_shipping</span>
+          <span>Delivery Personnel</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Maintenance Technicians/index.html">
+          <span class="icon" aria-hidden="true">build</span>
+          <span>Maintenance Technicians</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Vehicles/index.html">
+          <span class="icon" aria-hidden="true">directions_car</span>
+          <span>Vehicles</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-stub" href="#" data-stub-label="Complaints">
+          <span class="icon" aria-hidden="true">flag</span>
+          <span>Complaints</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link is-stub" href="#" data-stub-label="Logout">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <div class="page-head">
+        <div>
+          <h1 class="type-headline-lg page-title">Delivery Assignments</h1>
+          <p class="type-body-md page-subtitle">Assign a delivery person and a vehicle to each pending delivery request.</p>
+        </div>
+        <div class="page-head-actions">
+          <button class="btn-outline" type="button" id="refreshBtn">
+            <span class="icon icon-sm" aria-hidden="true">refresh</span> Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Status filter -->
+      <div class="filter-tabs" role="tablist" aria-label="Filter delivery requests">
+        <button class="filter-tab is-active" type="button" data-filter="all">All</button>
+        <button class="filter-tab" type="button" data-filter="pending">Pending</button>
+        <button class="filter-tab" type="button" data-filter="assigned">Assigned</button>
+      </div>
+
+      <!-- Delivery request assignments -->
+      <ul class="assignment-list">
+
+        <li class="assignment-card card" data-status="pending">
+          <div class="assignment-head">
+            <div class="assignment-icon"><span class="icon" aria-hidden="true">local_shipping</span></div>
+            <div class="assignment-info">
+              <h3 class="assignment-title">#DR-2291 · Excavator delivery for BuildPro Lanka</h3>
+              <p class="assignment-meta">Colombo 05 · Requested 22 min ago</p>
+            </div>
+            <span class="badge-status badge-status--pending">Pending</span>
+          </div>
+          <div class="assignment-body">
+            <form class="assignment-form">
+              <div class="form-field">
+                <label for="personnel-2291">Delivery personnel</label>
+                <div class="combobox js-personnel-combobox">
+                  <input type="text" class="select-field combobox-input" id="personnel-2291" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="personnel-2291-listbox" autocomplete="off" placeholder="Search personnel…">
+                  <span class="icon icon-sm combobox-icon" aria-hidden="true">search</span>
+                  <ul class="combobox-list" id="personnel-2291-listbox" role="listbox" hidden>
+                    <li class="combobox-option" role="option" data-value="S. Fernando">S. Fernando</li>
+                    <li class="combobox-option" role="option" data-value="R. Jayasuriya">R. Jayasuriya</li>
+                    <li class="combobox-option" role="option" data-value="T. Bandara">T. Bandara</li>
+                    <li class="combobox-option" role="option" data-value="N. Perera">N. Perera</li>
+                    <li class="combobox-option" role="option" data-value="A. Silva">A. Silva</li>
+                    <li class="combobox-empty" hidden>No matches found</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="vehicle-2291">Vehicle</label>
+                <div class="combobox js-vehicle-combobox">
+                  <input type="text" class="select-field combobox-input" id="vehicle-2291" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="vehicle-2291-listbox" autocomplete="off" placeholder="Search vehicle…">
+                  <span class="icon icon-sm combobox-icon" aria-hidden="true">search</span>
+                  <ul class="combobox-list" id="vehicle-2291-listbox" role="listbox" hidden>
+                    <li class="combobox-option" role="option" data-value="WP-CAB-2231 — Lorry">WP-CAB-2231 — Lorry</li>
+                    <li class="combobox-option" role="option" data-value="WP-KA-4410 — Van">WP-KA-4410 — Van</li>
+                    <li class="combobox-option" role="option" data-value="WP-CAJ-9091 — Lorry">WP-CAJ-9091 — Lorry</li>
+                    <li class="combobox-option" role="option" data-value="WP-NA-1123 — Van">WP-NA-1123 — Van</li>
+                    <li class="combobox-empty" hidden>No matches found</li>
+                  </ul>
+                </div>
+              </div>
+              <button class="btn-primary btn-sm" type="submit" disabled>Assign</button>
+            </form>
+            <div class="assignment-summary" hidden>
+              <p class="assignment-summary-text">Assigned to <strong class="assigned-personnel"></strong> with vehicle <strong class="assigned-vehicle"></strong></p>
+              <button class="btn-outline btn-sm assignment-reassign-btn" type="button">Reassign</button>
+            </div>
+          </div>
+        </li>
+
+        <li class="assignment-card card" data-status="pending">
+          <div class="assignment-head">
+            <div class="assignment-icon"><span class="icon" aria-hidden="true">local_shipping</span></div>
+            <div class="assignment-info">
+              <h3 class="assignment-title">#DR-2288 · Generator delivery for MediaWorks</h3>
+              <p class="assignment-meta">Colombo 03 · Requested 1 hr ago</p>
+            </div>
+            <span class="badge-status badge-status--pending">Pending</span>
+          </div>
+          <div class="assignment-body">
+            <form class="assignment-form">
+              <div class="form-field">
+                <label for="personnel-2288">Delivery personnel</label>
+                <div class="combobox js-personnel-combobox">
+                  <input type="text" class="select-field combobox-input" id="personnel-2288" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="personnel-2288-listbox" autocomplete="off" placeholder="Search personnel…">
+                  <span class="icon icon-sm combobox-icon" aria-hidden="true">search</span>
+                  <ul class="combobox-list" id="personnel-2288-listbox" role="listbox" hidden>
+                    <li class="combobox-option" role="option" data-value="S. Fernando">S. Fernando</li>
+                    <li class="combobox-option" role="option" data-value="R. Jayasuriya">R. Jayasuriya</li>
+                    <li class="combobox-option" role="option" data-value="T. Bandara">T. Bandara</li>
+                    <li class="combobox-option" role="option" data-value="N. Perera">N. Perera</li>
+                    <li class="combobox-option" role="option" data-value="A. Silva">A. Silva</li>
+                    <li class="combobox-empty" hidden>No matches found</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="vehicle-2288">Vehicle</label>
+                <div class="combobox js-vehicle-combobox">
+                  <input type="text" class="select-field combobox-input" id="vehicle-2288" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="vehicle-2288-listbox" autocomplete="off" placeholder="Search vehicle…">
+                  <span class="icon icon-sm combobox-icon" aria-hidden="true">search</span>
+                  <ul class="combobox-list" id="vehicle-2288-listbox" role="listbox" hidden>
+                    <li class="combobox-option" role="option" data-value="WP-CAB-2231 — Lorry">WP-CAB-2231 — Lorry</li>
+                    <li class="combobox-option" role="option" data-value="WP-KA-4410 — Van">WP-KA-4410 — Van</li>
+                    <li class="combobox-option" role="option" data-value="WP-CAJ-9091 — Lorry">WP-CAJ-9091 — Lorry</li>
+                    <li class="combobox-option" role="option" data-value="WP-NA-1123 — Van">WP-NA-1123 — Van</li>
+                    <li class="combobox-empty" hidden>No matches found</li>
+                  </ul>
+                </div>
+              </div>
+              <button class="btn-primary btn-sm" type="submit" disabled>Assign</button>
+            </form>
+            <div class="assignment-summary" hidden>
+              <p class="assignment-summary-text">Assigned to <strong class="assigned-personnel"></strong> with vehicle <strong class="assigned-vehicle"></strong></p>
+              <button class="btn-outline btn-sm assignment-reassign-btn" type="button">Reassign</button>
+            </div>
+          </div>
+        </li>
+
+        <li class="assignment-card card" data-status="assigned">
+          <div class="assignment-head">
+            <div class="assignment-icon"><span class="icon" aria-hidden="true">local_shipping</span></div>
+            <div class="assignment-info">
+              <h3 class="assignment-title">#DR-2276 · Concrete mixer delivery for Nimal Construction</h3>
+              <p class="assignment-meta">Colombo 07 · Requested 3 hrs ago</p>
+            </div>
+            <span class="badge-status badge-status--active">Assigned</span>
+          </div>
+          <div class="assignment-body">
+            <form class="assignment-form" hidden>
+              <div class="form-field">
+                <label for="personnel-2276">Delivery personnel</label>
+                <div class="combobox js-personnel-combobox">
+                  <input type="text" class="select-field combobox-input" id="personnel-2276" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="personnel-2276-listbox" autocomplete="off" placeholder="Search personnel…">
+                  <span class="icon icon-sm combobox-icon" aria-hidden="true">search</span>
+                  <ul class="combobox-list" id="personnel-2276-listbox" role="listbox" hidden>
+                    <li class="combobox-option" role="option" data-value="S. Fernando">S. Fernando</li>
+                    <li class="combobox-option" role="option" data-value="R. Jayasuriya">R. Jayasuriya</li>
+                    <li class="combobox-option" role="option" data-value="T. Bandara">T. Bandara</li>
+                    <li class="combobox-option" role="option" data-value="N. Perera">N. Perera</li>
+                    <li class="combobox-option" role="option" data-value="A. Silva">A. Silva</li>
+                    <li class="combobox-empty" hidden>No matches found</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="vehicle-2276">Vehicle</label>
+                <div class="combobox js-vehicle-combobox">
+                  <input type="text" class="select-field combobox-input" id="vehicle-2276" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="vehicle-2276-listbox" autocomplete="off" placeholder="Search vehicle…">
+                  <span class="icon icon-sm combobox-icon" aria-hidden="true">search</span>
+                  <ul class="combobox-list" id="vehicle-2276-listbox" role="listbox" hidden>
+                    <li class="combobox-option" role="option" data-value="WP-CAB-2231 — Lorry">WP-CAB-2231 — Lorry</li>
+                    <li class="combobox-option" role="option" data-value="WP-KA-4410 — Van">WP-KA-4410 — Van</li>
+                    <li class="combobox-option" role="option" data-value="WP-CAJ-9091 — Lorry">WP-CAJ-9091 — Lorry</li>
+                    <li class="combobox-option" role="option" data-value="WP-NA-1123 — Van">WP-NA-1123 — Van</li>
+                    <li class="combobox-empty" hidden>No matches found</li>
+                  </ul>
+                </div>
+              </div>
+              <button class="btn-primary btn-sm" type="submit" disabled>Assign</button>
+            </form>
+            <div class="assignment-summary">
+              <p class="assignment-summary-text">Assigned to <strong class="assigned-personnel">R. Jayasuriya</strong> with vehicle <strong class="assigned-vehicle">WP-CAB-2231 — Lorry</strong></p>
+              <button class="btn-outline btn-sm assignment-reassign-btn" type="button">Reassign</button>
+            </div>
+          </div>
+        </li>
+
+        <li class="assignment-card card" data-status="assigned">
+          <div class="assignment-head">
+            <div class="assignment-icon"><span class="icon" aria-hidden="true">local_shipping</span></div>
+            <div class="assignment-info">
+              <h3 class="assignment-title">#DR-2270 · Scaffolding delivery for Silva Traders</h3>
+              <p class="assignment-meta">Colombo 04 · Requested 5 hrs ago</p>
+            </div>
+            <span class="badge-status badge-status--active">Assigned</span>
+          </div>
+          <div class="assignment-body">
+            <form class="assignment-form" hidden>
+              <div class="form-field">
+                <label for="personnel-2270">Delivery personnel</label>
+                <div class="combobox js-personnel-combobox">
+                  <input type="text" class="select-field combobox-input" id="personnel-2270" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="personnel-2270-listbox" autocomplete="off" placeholder="Search personnel…">
+                  <span class="icon icon-sm combobox-icon" aria-hidden="true">search</span>
+                  <ul class="combobox-list" id="personnel-2270-listbox" role="listbox" hidden>
+                    <li class="combobox-option" role="option" data-value="S. Fernando">S. Fernando</li>
+                    <li class="combobox-option" role="option" data-value="R. Jayasuriya">R. Jayasuriya</li>
+                    <li class="combobox-option" role="option" data-value="T. Bandara">T. Bandara</li>
+                    <li class="combobox-option" role="option" data-value="N. Perera">N. Perera</li>
+                    <li class="combobox-option" role="option" data-value="A. Silva">A. Silva</li>
+                    <li class="combobox-empty" hidden>No matches found</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="vehicle-2270">Vehicle</label>
+                <div class="combobox js-vehicle-combobox">
+                  <input type="text" class="select-field combobox-input" id="vehicle-2270" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="vehicle-2270-listbox" autocomplete="off" placeholder="Search vehicle…">
+                  <span class="icon icon-sm combobox-icon" aria-hidden="true">search</span>
+                  <ul class="combobox-list" id="vehicle-2270-listbox" role="listbox" hidden>
+                    <li class="combobox-option" role="option" data-value="WP-CAB-2231 — Lorry">WP-CAB-2231 — Lorry</li>
+                    <li class="combobox-option" role="option" data-value="WP-KA-4410 — Van">WP-KA-4410 — Van</li>
+                    <li class="combobox-option" role="option" data-value="WP-CAJ-9091 — Lorry">WP-CAJ-9091 — Lorry</li>
+                    <li class="combobox-option" role="option" data-value="WP-NA-1123 — Van">WP-NA-1123 — Van</li>
+                    <li class="combobox-empty" hidden>No matches found</li>
+                  </ul>
+                </div>
+              </div>
+              <button class="btn-primary btn-sm" type="submit" disabled>Assign</button>
+            </form>
+            <div class="assignment-summary">
+              <p class="assignment-summary-text">Assigned to <strong class="assigned-personnel">T. Bandara</strong> with vehicle <strong class="assigned-vehicle">WP-KA-4410 — Van</strong></p>
+              <button class="btn-outline btn-sm assignment-reassign-btn" type="button">Reassign</button>
+            </div>
+          </div>
+        </li>
+
+        <li class="assignment-card card" data-status="pending">
+          <div class="assignment-head">
+            <div class="assignment-icon"><span class="icon" aria-hidden="true">local_shipping</span></div>
+            <div class="assignment-info">
+              <h3 class="assignment-title">#DR-2265 · Power tools delivery for Home Renovators</h3>
+              <p class="assignment-meta">Colombo 06 · Requested yesterday</p>
+            </div>
+            <span class="badge-status badge-status--pending">Pending</span>
+          </div>
+          <div class="assignment-body">
+            <form class="assignment-form">
+              <div class="form-field">
+                <label for="personnel-2265">Delivery personnel</label>
+                <div class="combobox js-personnel-combobox">
+                  <input type="text" class="select-field combobox-input" id="personnel-2265" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="personnel-2265-listbox" autocomplete="off" placeholder="Search personnel…">
+                  <span class="icon icon-sm combobox-icon" aria-hidden="true">search</span>
+                  <ul class="combobox-list" id="personnel-2265-listbox" role="listbox" hidden>
+                    <li class="combobox-option" role="option" data-value="S. Fernando">S. Fernando</li>
+                    <li class="combobox-option" role="option" data-value="R. Jayasuriya">R. Jayasuriya</li>
+                    <li class="combobox-option" role="option" data-value="T. Bandara">T. Bandara</li>
+                    <li class="combobox-option" role="option" data-value="N. Perera">N. Perera</li>
+                    <li class="combobox-option" role="option" data-value="A. Silva">A. Silva</li>
+                    <li class="combobox-empty" hidden>No matches found</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="vehicle-2265">Vehicle</label>
+                <div class="combobox js-vehicle-combobox">
+                  <input type="text" class="select-field combobox-input" id="vehicle-2265" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="vehicle-2265-listbox" autocomplete="off" placeholder="Search vehicle…">
+                  <span class="icon icon-sm combobox-icon" aria-hidden="true">search</span>
+                  <ul class="combobox-list" id="vehicle-2265-listbox" role="listbox" hidden>
+                    <li class="combobox-option" role="option" data-value="WP-CAB-2231 — Lorry">WP-CAB-2231 — Lorry</li>
+                    <li class="combobox-option" role="option" data-value="WP-KA-4410 — Van">WP-KA-4410 — Van</li>
+                    <li class="combobox-option" role="option" data-value="WP-CAJ-9091 — Lorry">WP-CAJ-9091 — Lorry</li>
+                    <li class="combobox-option" role="option" data-value="WP-NA-1123 — Van">WP-NA-1123 — Van</li>
+                    <li class="combobox-empty" hidden>No matches found</li>
+                  </ul>
+                </div>
+              </div>
+              <button class="btn-primary btn-sm" type="submit" disabled>Assign</button>
+            </form>
+            <div class="assignment-summary" hidden>
+              <p class="assignment-summary-text">Assigned to <strong class="assigned-personnel"></strong> with vehicle <strong class="assigned-vehicle"></strong></p>
+              <button class="btn-outline btn-sm assignment-reassign-btn" type="button">Reassign</button>
+            </div>
+          </div>
+        </li>
+
+        <li class="assignment-card card" data-status="assigned">
+          <div class="assignment-head">
+            <div class="assignment-icon"><span class="icon" aria-hidden="true">local_shipping</span></div>
+            <div class="assignment-info">
+              <h3 class="assignment-title">#DR-2260 · Crane attachment delivery for Skyline Builders</h3>
+              <p class="assignment-meta">Colombo 02 · Requested yesterday</p>
+            </div>
+            <span class="badge-status badge-status--active">Assigned</span>
+          </div>
+          <div class="assignment-body">
+            <form class="assignment-form" hidden>
+              <div class="form-field">
+                <label for="personnel-2260">Delivery personnel</label>
+                <div class="combobox js-personnel-combobox">
+                  <input type="text" class="select-field combobox-input" id="personnel-2260" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="personnel-2260-listbox" autocomplete="off" placeholder="Search personnel…">
+                  <span class="icon icon-sm combobox-icon" aria-hidden="true">search</span>
+                  <ul class="combobox-list" id="personnel-2260-listbox" role="listbox" hidden>
+                    <li class="combobox-option" role="option" data-value="S. Fernando">S. Fernando</li>
+                    <li class="combobox-option" role="option" data-value="R. Jayasuriya">R. Jayasuriya</li>
+                    <li class="combobox-option" role="option" data-value="T. Bandara">T. Bandara</li>
+                    <li class="combobox-option" role="option" data-value="N. Perera">N. Perera</li>
+                    <li class="combobox-option" role="option" data-value="A. Silva">A. Silva</li>
+                    <li class="combobox-empty" hidden>No matches found</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="vehicle-2260">Vehicle</label>
+                <div class="combobox js-vehicle-combobox">
+                  <input type="text" class="select-field combobox-input" id="vehicle-2260" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="vehicle-2260-listbox" autocomplete="off" placeholder="Search vehicle…">
+                  <span class="icon icon-sm combobox-icon" aria-hidden="true">search</span>
+                  <ul class="combobox-list" id="vehicle-2260-listbox" role="listbox" hidden>
+                    <li class="combobox-option" role="option" data-value="WP-CAB-2231 — Lorry">WP-CAB-2231 — Lorry</li>
+                    <li class="combobox-option" role="option" data-value="WP-KA-4410 — Van">WP-KA-4410 — Van</li>
+                    <li class="combobox-option" role="option" data-value="WP-CAJ-9091 — Lorry">WP-CAJ-9091 — Lorry</li>
+                    <li class="combobox-option" role="option" data-value="WP-NA-1123 — Van">WP-NA-1123 — Van</li>
+                    <li class="combobox-empty" hidden>No matches found</li>
+                  </ul>
+                </div>
+              </div>
+              <button class="btn-primary btn-sm" type="submit" disabled>Assign</button>
+            </form>
+            <div class="assignment-summary">
+              <p class="assignment-summary-text">Assigned to <strong class="assigned-personnel">S. Fernando</strong> with vehicle <strong class="assigned-vehicle">WP-CAJ-9091 — Lorry</strong></p>
+              <button class="btn-outline btn-sm assignment-reassign-btn" type="button">Reassign</button>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

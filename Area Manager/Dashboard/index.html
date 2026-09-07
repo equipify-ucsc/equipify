@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Area Manager Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">K. Perera<span class="topbar-user-role">Area Manager · Colombo Region</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true">
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="avatar avatar--placeholder" aria-hidden="true">
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Delivery Assignments/index.html">
+          <span class="icon" aria-hidden="true">assignment_ind</span>
+          <span>Delivery Assignments</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Maintenance Assignments/index.html">
+          <span class="icon" aria-hidden="true">engineering</span>
+          <span>Maintenance Assignments</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Delivery Personnel/index.html">
+          <span class="icon" aria-hidden="true">local_shipping</span>
+          <span>Delivery Personnel</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Maintenance Technicians/index.html">
+          <span class="icon" aria-hidden="true">build</span>
+          <span>Maintenance Technicians</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Vehicles/index.html">
+          <span class="icon" aria-hidden="true">directions_car</span>
+          <span>Vehicles</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-stub" href="#" data-stub-label="Complaints">
+          <span class="icon" aria-hidden="true">flag</span>
+          <span>Complaints</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link is-stub" href="#" data-stub-label="Logout">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <div class="page-head">
+        <div>
+          <h1 class="type-headline-lg page-title">Area Manager Dashboard</h1>
+          <p class="type-body-md page-subtitle">Regional overview for Colombo Region — personnel, fleet, assignments, and complaints.</p>
+        </div>
+        <div class="page-head-actions">
+          <button class="btn-outline" type="button" id="refreshBtn">
+            <span class="icon icon-sm" aria-hidden="true">refresh</span> Refresh
+          </button>
+          <a class="btn-primary" href="../Delivery Assignments/index.html">Assign Deliveries</a>
+        </div>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="admin-grid admin-grid--4">
+        <div class="card stat-card">
+          <div class="stat-card-body">
+            <p class="stat-card-label">Active Deliveries</p>
+            <h3 class="stat-card-value">28</h3>
+          </div>
+          <div class="stat-card-icon"><span class="icon" aria-hidden="true">local_shipping</span></div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-card-body">
+            <p class="stat-card-label">Pending Delivery Requests</p>
+            <h3 class="stat-card-value">12</h3>
+          </div>
+          <div class="stat-card-icon"><span class="icon" aria-hidden="true">assignment_ind</span></div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-card-body">
+            <p class="stat-card-label">Pending Maintenance Requests</p>
+            <h3 class="stat-card-value">7</h3>
+          </div>
+          <div class="stat-card-icon"><span class="icon" aria-hidden="true">engineering</span></div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-card-body">
+            <p class="stat-card-label">Delivery Personnel</p>
+            <h3 class="stat-card-value">34</h3>
+          </div>
+          <div class="stat-card-icon"><span class="icon" aria-hidden="true">local_shipping</span></div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-card-body">
+            <p class="stat-card-label">Maintenance Technicians</p>
+            <h3 class="stat-card-value">19</h3>
+          </div>
+          <div class="stat-card-icon"><span class="icon" aria-hidden="true">build</span></div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-card-body">
+            <p class="stat-card-label">Vehicles</p>
+            <h3 class="stat-card-value">21</h3>
+          </div>
+          <div class="stat-card-icon"><span class="icon" aria-hidden="true">directions_car</span></div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-card-body">
+            <p class="stat-card-label">Open Complaints</p>
+            <h3 class="stat-card-value">5</h3>
+          </div>
+          <div class="stat-card-icon"><span class="icon" aria-hidden="true">flag</span></div>
+        </div>
+      </div>
+
+      <!-- Summary widgets -->
+      <div class="admin-grid admin-grid--2" style="margin-top: 18px;">
+        <div class="card">
+          <div class="section-title">
+            <h3 class="type-headline-sm">Delivery activity</h3>
+            <select class="filter-select" id="deliveryActivityFilter" aria-label="Delivery activity period">
+              <option value="this-week" selected>This week</option>
+              <option value="last-week">Last week</option>
+              <option value="this-month">This month</option>
+              <option value="last-month">Last month</option>
+              <option value="last-year">Last year</option>
+            </select>
+          </div>
+          <div class="chart">
+            <div class="bar-wrap"><span class="bar-value">18</span><div class="bar" style="height:38%"></div><span class="bar-label">Mon</span></div>
+            <div class="bar-wrap"><span class="bar-value">24</span><div class="bar" style="height:50%"></div><span class="bar-label">Tue</span></div>
+            <div class="bar-wrap"><span class="bar-value">21</span><div class="bar" style="height:44%"></div><span class="bar-label">Wed</span></div>
+            <div class="bar-wrap"><span class="bar-value">29</span><div class="bar" style="height:60%"></div><span class="bar-label">Thu</span></div>
+            <div class="bar-wrap"><span class="bar-value">34</span><div class="bar" style="height:71%"></div><span class="bar-label">Fri</span></div>
+            <div class="bar-wrap"><span class="bar-value">40</span><div class="bar" style="height:83%"></div><span class="bar-label">Sat</span></div>
+            <div class="bar-wrap"><span class="bar-value">30</span><div class="bar" style="height:63%"></div><span class="bar-label">Sun</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title">
+            <h3 class="type-headline-sm">Fleet &amp; personnel status</h3>
+            <span class="badge-status badge-status--completed">Live</span>
+          </div>
+          <div class="progress-row">
+            <div class="progress-row-head"><span>Delivery personnel on duty</span><strong>30 / 34</strong></div>
+            <div class="progress"><span style="width:88%"></span></div>
+          </div>
+          <div class="progress-row">
+            <div class="progress-row-head"><span>Technicians on duty</span><strong>16 / 19</strong></div>
+            <div class="progress"><span style="width:84%"></span></div>
+          </div>
+          <div class="progress-row">
+            <div class="progress-row-head"><span>Vehicles available</span><strong>18 / 21</strong></div>
+            <div class="progress"><span style="width:86%"></span></div>
+          </div>
+          <div class="progress-row">
+            <div class="progress-row-head"><span>Complaints resolved this week</span><strong>9 / 14</strong></div>
+            <div class="progress"><span style="width:64%"></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

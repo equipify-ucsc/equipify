@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Equipify - Admin Profile</title>
+<title>Equipify - Area Manager Profile</title>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -20,7 +20,7 @@
     </div>
     <div class="topbar-actions">
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">Dishanthan<span class="topbar-user-role">Super Administrator</span></div>
+        <div class="topbar-user-name type-label-md">K. Perera<span class="topbar-user-role">Area Manager · Colombo Region</span></div>
         <div class="avatar avatar--placeholder" aria-hidden="true">
           <span class="icon icon-base">person</span>
         </div>
@@ -61,34 +61,52 @@
         </a>
       </li>
       <li>
+        <a class="sidenav-link" href="../Delivery Assignments/index.html">
+          <span class="icon" aria-hidden="true">assignment_ind</span>
+          <span>Delivery Assignments</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Maintenance Assignments/index.html">
+          <span class="icon" aria-hidden="true">engineering</span>
+          <span>Maintenance Assignments</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Delivery Personnel/index.html">
+          <span class="icon" aria-hidden="true">local_shipping</span>
+          <span>Delivery Personnel</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Maintenance Technicians/index.html">
+          <span class="icon" aria-hidden="true">build</span>
+          <span>Maintenance Technicians</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Vehicles/index.html">
+          <span class="icon" aria-hidden="true">directions_car</span>
+          <span>Vehicles</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-stub" href="#" data-stub-label="Complaints">
+          <span class="icon" aria-hidden="true">flag</span>
+          <span>Complaints</span>
+        </a>
+      </li>
+      <li>
         <a class="sidenav-link is-active" href="index.html" aria-current="page">
           <span class="icon" aria-hidden="true">account_circle</span>
           <span>Profile</span>
-        </a>
-      </li>
-      <li>
-        <a class="sidenav-link" href="../Complaints &amp; Users/index.html">
-          <span class="icon" aria-hidden="true">flag</span>
-          <span>Complaints &amp; Users</span>
-        </a>
-      </li>
-      <li>
-        <a class="sidenav-link" href="../Area Managers/index.html">
-          <span class="icon" aria-hidden="true">groups</span>
-          <span>Area Managers</span>
-        </a>
-      </li>
-      <li>
-        <a class="sidenav-link" href="../Document Verification/index.html">
-          <span class="icon" aria-hidden="true">fact_check</span>
-          <span>Document Verification</span>
         </a>
       </li>
     </ul>
 
     <ul class="sidenav-footer">
       <li>
-        <a class="sidenav-link" href="../Login/index.html">
+        <a class="sidenav-link is-stub" href="#" data-stub-label="Logout">
           <span class="icon" aria-hidden="true">logout</span>
           <span>Logout</span>
         </a>
@@ -102,8 +120,8 @@
 
       <div class="page-head">
         <div>
-          <h1 class="type-headline-lg page-title">Admin Profile</h1>
-          <p class="type-body-md page-subtitle">Manage your administrator identity and account preferences.</p>
+          <h1 class="type-headline-lg page-title">Area Manager Profile</h1>
+          <p class="type-body-md page-subtitle">Manage your area manager identity and regional assignment.</p>
         </div>
         <div class="page-head-actions">
           <button class="btn-primary" type="button" id="saveProfileBtn">Save Changes</button>
@@ -114,44 +132,55 @@
 
         <div class="card profile-side">
           <div class="profile-photo">
-            <span class="icon icon-photo" aria-hidden="true">person</span>
+            <img alt="K. Perera" src="https://lh3.googleusercontent.com/d/1XQc_Ps5_P5yuzb1vSwIRU_yhaRwtMdg0">
           </div>
-          <h3 class="type-headline-sm profile-side-name">Dishanthan</h3>
-          <p class="profile-side-role">Super Administrator</p>
+          <h3 class="type-headline-sm profile-side-name">K. Perera</h3>
+          <p class="profile-side-role">Area Manager · Colombo Region</p>
           <div class="info-list">
-            <div class="info-row"><strong>Email</strong>dishanthan@equipify.lk</div>
-            <div class="info-row"><strong>Access</strong>Full platform control</div>
+            <div class="info-row"><strong>Email</strong>k.perera@equipify.lk</div>
+            <div class="info-row"><strong>Region</strong>Colombo Region</div>
             <div class="info-row"><strong>Status</strong><span class="badge-status badge-status--active">Active</span></div>
-            <div class="info-row"><strong>Last login</strong>Today, 10:14 PM</div>
+            <div class="info-row"><strong>Last login</strong>Today, 9:42 AM</div>
           </div>
         </div>
 
         <div class="card">
           <div class="section-title">
             <h3 class="type-headline-sm">Account information</h3>
-            <span class="badge-status badge-status--completed">Administrator</span>
+            <span class="badge-status badge-status--completed">Area Manager</span>
           </div>
           <form id="profileForm">
             <div class="form-grid">
               <div class="field">
                 <label class="field-label" for="fullName">Full name</label>
-                <input class="input-standard" id="fullName" required value="Dishanthan">
+                <input class="input-standard" id="fullName" required value="K. Perera">
               </div>
               <div class="field">
                 <label class="field-label" for="profileEmail">Email</label>
-                <input class="input-standard" id="profileEmail" type="email" required value="dishanthan@equipify.lk">
+                <input class="input-standard" id="profileEmail" type="email" required value="k.perera@equipify.lk">
               </div>
               <div class="field">
                 <label class="field-label" for="profilePhone">Phone</label>
-                <input class="input-standard" id="profilePhone" required value="+94 77 123 4567">
+                <input class="input-standard" id="profilePhone" required value="+94 77 234 5678">
               </div>
               <div class="field">
                 <label class="field-label" for="profileRole">Role</label>
-                <input class="input-standard" id="profileRole" value="Super Administrator" disabled>
+                <input class="input-standard" id="profileRole" value="Area Manager" disabled>
+              </div>
+              <div class="field field--full">
+                <label class="field-label" for="profileRegion">Assigned region</label>
+                <select class="input-standard" id="profileRegion" required>
+                  <option selected>Colombo Region</option>
+                  <option>Western</option>
+                  <option>Central</option>
+                  <option>Southern</option>
+                  <option>Northern</option>
+                  <option>Eastern</option>
+                </select>
               </div>
               <div class="field field--full">
                 <label class="field-label" for="profileSummary">Profile summary</label>
-                <textarea class="input-standard" id="profileSummary" rows="4">Responsible for platform-wide monitoring, verification, user management and administrative operations.</textarea>
+                <textarea class="input-standard" id="profileSummary" rows="4">Oversees delivery personnel, maintenance technicians, and the vehicle fleet for the Colombo Region, coordinating assignments and monitoring day-to-day operations.</textarea>
               </div>
             </div>
           </form>
