@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Area Managers</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Dishanthan<span class="topbar-user-role">Super Administrator</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true">
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="avatar avatar--placeholder" aria-hidden="true">
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Dashboard/index.html">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Complaints &amp; Users/index.html">
+          <span class="icon" aria-hidden="true">flag</span>
+          <span>Complaints &amp; Users</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">groups</span>
+          <span>Area Managers</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Document Verification/index.html">
+          <span class="icon" aria-hidden="true">fact_check</span>
+          <span>Document Verification</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="../Login/index.html">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <div class="page-head">
+        <div>
+          <h1 class="type-headline-lg page-title">Area Manager Management</h1>
+          <p class="type-body-md page-subtitle">Register and manage regional managers responsible for local operations.</p>
+        </div>
+        <div class="page-head-actions">
+          <button class="btn-primary" type="button" data-modal-open="managerModal">
+            <span class="icon icon-sm" aria-hidden="true">add_circle</span> Register Area Manager
+          </button>
+        </div>
+      </div>
+
+      <div class="admin-grid admin-grid--3">
+        <div class="card">
+          <p class="stat-card-label">Active Managers</p>
+          <h3 class="stat-card-value">12</h3>
+          <p class="stat-card-trend">Across operational regions</p>
+        </div>
+        <div class="card">
+          <p class="stat-card-label">Pending Approval</p>
+          <h3 class="stat-card-value">3</h3>
+          <p class="stat-card-trend">Awaiting admin review</p>
+        </div>
+        <div class="card">
+          <p class="stat-card-label">Regions Covered</p>
+          <h3 class="stat-card-value">9</h3>
+          <p class="stat-card-trend">Current service areas</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 18px;">
+        <div class="toolbar">
+          <div class="search-field">
+            <span class="icon icon-sm" aria-hidden="true">search</span>
+            <input class="search-input" type="text" data-filter-table="managerTable" placeholder="Search managers or regions...">
+          </div>
+          <select class="select-filter">
+            <option>All regions</option>
+            <option>Western</option>
+            <option>Central</option>
+            <option>Southern</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="managerTable">
+            <thead>
+              <tr><th>Manager</th><th>Region</th><th>Email</th><th>Assigned Users</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Kasun Perera</strong></td>
+                <td>Western</td>
+                <td>kasun@equipify.lk</td>
+                <td>486</td>
+                <td><span class="badge-status badge-status--active">Active</span></td>
+                <td><button class="btn-outline btn-sm" type="button" data-toast="Manager details opened.">View</button></td>
+              </tr>
+              <tr>
+                <td><strong>Tharushi Silva</strong></td>
+                <td>Central</td>
+                <td>tharushi@equipify.lk</td>
+                <td>312</td>
+                <td><span class="badge-status badge-status--active">Active</span></td>
+                <td><button class="btn-outline btn-sm" type="button" data-toast="Manager details opened.">View</button></td>
+              </tr>
+              <tr>
+                <td><strong>Ravindu Fernando</strong></td>
+                <td>Southern</td>
+                <td>ravindu@equipify.lk</td>
+                <td>205</td>
+                <td><span class="badge-status badge-status--pending">Pending</span></td>
+                <td><button class="btn-primary btn-sm" type="button" data-toast="Area manager approved.">Approve</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="admin-footer">Equipify Admin Console · Group 49 · Academic Project</p>
+
+    </div>
+  </main>
+
+  <!-- Register area manager modal -->
+  <div class="modal-backdrop" id="managerModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 class="type-headline-sm">Register Area Manager</h3>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <form id="managerForm" data-success-message="Area manager registered successfully.">
+        <div class="form-grid" style="margin-top: 18px;">
+          <div class="field">
+            <label class="field-label" for="managerName">Full name</label>
+            <input class="input-standard" id="managerName" required placeholder="Manager name">
+          </div>
+          <div class="field">
+            <label class="field-label" for="managerEmail">Email</label>
+            <input class="input-standard" id="managerEmail" type="email" required placeholder="manager@equipify.lk">
+          </div>
+          <div class="field">
+            <label class="field-label" for="managerPhone">Phone</label>
+            <input class="input-standard" id="managerPhone" required placeholder="+94 ...">
+          </div>
+          <div class="field">
+            <label class="field-label" for="managerRegion">Region</label>
+            <select class="input-standard" id="managerRegion" required>
+              <option value="">Select region</option>
+              <option>Western</option>
+              <option>Central</option>
+              <option>Southern</option>
+              <option>Northern</option>
+              <option>Eastern</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label class="field-label" for="managerPassword">Temporary password</label>
+            <input class="input-standard" id="managerPassword" required minlength="6" type="password" placeholder="Minimum 6 characters">
+          </div>
+        </div>
+        <div class="modal-actions" style="margin-top: 20px;">
+          <button class="btn-outline" type="button" data-modal-close>Cancel</button>
+          <button class="btn-primary" type="submit">Register Manager</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

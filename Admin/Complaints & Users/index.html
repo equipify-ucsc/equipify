@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Complaints &amp; Users</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Dishanthan<span class="topbar-user-role">Super Administrator</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true">
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="avatar avatar--placeholder" aria-hidden="true">
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Dashboard/index.html">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">flag</span>
+          <span>Complaints &amp; Users</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Area Managers/index.html">
+          <span class="icon" aria-hidden="true">groups</span>
+          <span>Area Managers</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Document Verification/index.html">
+          <span class="icon" aria-hidden="true">fact_check</span>
+          <span>Document Verification</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="../Login/index.html">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <div class="page-head">
+        <div>
+          <h1 class="type-headline-lg page-title">Complaints &amp; User Management</h1>
+          <p class="type-body-md page-subtitle">Monitor reports and take appropriate action on platform users.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="toolbar">
+          <div class="search-field">
+            <span class="icon icon-sm" aria-hidden="true">search</span>
+            <input class="search-input" type="text" data-filter-table="complaintsTable" placeholder="Search complaints, users or subjects...">
+          </div>
+          <select class="select-filter" data-status-filter="complaintsTable">
+            <option value="">All statuses</option>
+            <option>Open</option>
+            <option>Under Review</option>
+            <option>Resolved</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="complaintsTable">
+            <thead>
+              <tr><th>ID</th><th>User / Company</th><th>Subject</th><th>Priority</th><th>Status</th><th>Reported</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+              <tr data-status="Open">
+                <td>#CMP-1042</td>
+                <td><strong>BuildPro Lanka</strong><br><span class="table-subtext">Customer</span></td>
+                <td>Equipment condition dispute</td>
+                <td><span class="badge-status badge-status--rejected">High</span></td>
+                <td><span class="badge-status badge-status--pending">Open</span></td>
+                <td>15 Aug 2026</td>
+                <td><button class="btn-outline btn-sm" type="button" data-modal-open="complaintModal">Review</button></td>
+              </tr>
+              <tr data-status="Under Review">
+                <td>#CMP-1041</td>
+                <td><strong>Rana Equipment</strong><br><span class="table-subtext">Renting Party</span></td>
+                <td>Payment disagreement</td>
+                <td><span class="badge-status badge-status--pending">Medium</span></td>
+                <td><span class="badge-status badge-status--pending">Under Review</span></td>
+                <td>14 Aug 2026</td>
+                <td><button class="btn-outline btn-sm" type="button" data-modal-open="complaintModal">Review</button></td>
+              </tr>
+              <tr data-status="Open">
+                <td>#CMP-1038</td>
+                <td><strong>FastLift Operator</strong><br><span class="table-subtext">Freelancer</span></td>
+                <td>Policy violation report</td>
+                <td><span class="badge-status badge-status--rejected">High</span></td>
+                <td><span class="badge-status badge-status--pending">Open</span></td>
+                <td>14 Aug 2026</td>
+                <td><button class="btn-outline btn-sm" type="button" data-modal-open="complaintModal">Review</button></td>
+              </tr>
+              <tr data-status="Resolved">
+                <td>#CMP-1032</td>
+                <td><strong>Metro Events</strong><br><span class="table-subtext">Customer</span></td>
+                <td>Late delivery</td>
+                <td><span class="badge-status badge-status--completed">Low</span></td>
+                <td><span class="badge-status badge-status--active">Resolved</span></td>
+                <td>12 Aug 2026</td>
+                <td><button class="btn-outline btn-sm" type="button" data-modal-open="complaintModal">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 18px;">
+        <div class="section-title">
+          <h3 class="type-headline-sm">Users requiring action</h3>
+          <span class="badge-status badge-status--rejected">3 flagged</span>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr><th>User</th><th>Role</th><th>Policy status</th><th>Active rentals</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>FastLift Operator</strong></td>
+                <td>Freelancer</td>
+                <td><span class="badge-status badge-status--rejected">Flagged</span></td>
+                <td>1</td>
+                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-action="suspend">Suspend</button> <button class="btn-danger btn-sm" type="button" data-action="ban">Ban</button></td>
+              </tr>
+              <tr>
+                <td><strong>Rana Equipment</strong></td>
+                <td>Renting Party</td>
+                <td><span class="badge-status badge-status--pending">Review</span></td>
+                <td>4</td>
+                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-action="suspend">Suspend</button> <button class="btn-danger btn-sm" type="button" data-action="ban">Ban</button></td>
+              </tr>
+              <tr>
+                <td><strong>PrimeBuild</strong></td>
+                <td>Customer</td>
+                <td><span class="badge-status badge-status--active">Good</span></td>
+                <td>2</td>
+                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-toast="User profile opened.">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="admin-footer">Equipify Admin Console · Group 49 · Academic Project</p>
+
+    </div>
+  </main>
+
+  <!-- Complaint review modal -->
+  <div class="modal-backdrop" id="complaintModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 class="type-headline-sm">Complaint Review</h3>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <p class="modal-meta">#CMP-1042 · BuildPro Lanka</p>
+      <div class="modal-detail-card">
+        <strong>Equipment condition dispute</strong>
+        <p>Customer reports that the returned excavator did not match the documented pre-rental condition.</p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-outline" type="button" data-modal-close>Close</button>
+        <button class="btn-solid" type="button" data-modal-action="under-review">Mark Under Review</button>
+        <button class="btn-primary" type="button" data-modal-action="resolve">Resolve</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
