@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Equipment Details</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Lanka Heavy Equipment</div>
+        <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Dashboard/index.html">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="../My Equipment/index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">inventory_2</span>
+          <span>My Equipment</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Rental Requests/index.html">
+          <span class="icon" aria-hidden="true">receipt_long</span>
+          <span>Rental Requests</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">storefront</span>
+          <span>Business Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">build</span>
+          <span>Maintenance</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidenav-cta-wrap">
+      <a class="btn-cta" href="index.html">
+        <span class="icon icon-sm" aria-hidden="true">add_circle</span>
+        Add Equipment
+      </a>
+    </div>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Login & Register Page/login.html">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <a href="../My Equipment/index.html" class="back-link">
+        <span class="icon" aria-hidden="true">arrow_back</span> Back to My Equipment
+      </a>
+
+      <!-- Title Section -->
+      <div class="page-title-section">
+        <div class="title-text-group">
+          <div class="title-with-badge">
+            <h2 class="main-heading">Caterpillar 320 GC Excavator</h2>
+            <span class="badge-status badge-status--active">Available</span>
+          </div>
+          <p class="sub-heading">ID: EQ-4092 &bull; Category: Heavy Excavator</p>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn-outline" id="cancelBtn" type="button">Cancel</button>
+          <button class="btn-primary" id="saveBtn" type="button"><span class="icon icon-sm" aria-hidden="true">check</span> Save Changes</button>
+        </div>
+      </div>
+
+      <!-- Details Grid Layout -->
+      <div class="details-grid">
+
+        <!-- Left Main Details Column -->
+        <div class="left-column">
+
+          <!-- Gallery Card -->
+          <div class="card gallery-card">
+            <div class="main-gallery-view">
+              <img id="mainGalleryImg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAenzU8H9CEtI43HSB1PIaybM1xXuNwYu4T7Db30OhzZQfrS8TYA3LkgbPG7jJ_8BDpY2ScHLIkFJentINwbZUIA-Ek9NFygoD-APfmG1hiaU74U7PNPLOlphm5NIwmgH1mPky8F8a2_FmBDgmh3swNutdGRRWeO-8UL88_hP5XD_y1Z5JDFSsTI8X6zXRRLhGE1sarsS2f8ntj4RJZLtMmVaTg6OePJUKkorODBZ5acbRQmz0MoDGRB6kMPPOE7X7FXaqgLRpJQQta" alt="Caterpillar Excavator">
+              <button class="btn-gallery-upload" type="button" title="Upload New Image">
+                <span class="icon icon-sm" aria-hidden="true">photo_camera</span> Change Cover
+              </button>
+            </div>
+
+            <div class="thumbnails-grid">
+              <div class="thumb-item active" data-image="https://lh3.googleusercontent.com/aida-public/AB6AXuAenzU8H9CEtI43HSB1PIaybM1xXuNwYu4T7Db30OhzZQfrS8TYA3LkgbPG7jJ_8BDpY2ScHLIkFJentINwbZUIA-Ek9NFygoD-APfmG1hiaU74U7PNPLOlphm5NIwmgH1mPky8F8a2_FmBDgmh3swNutdGRRWeO-8UL88_hP5XD_y1Z5JDFSsTI8X6zXRRLhGE1sarsS2f8ntj4RJZLtMmVaTg6OePJUKkorODBZ5acbRQmz0MoDGRB6kMPPOE7X7FXaqgLRpJQQta">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAenzU8H9CEtI43HSB1PIaybM1xXuNwYu4T7Db30OhzZQfrS8TYA3LkgbPG7jJ_8BDpY2ScHLIkFJentINwbZUIA-Ek9NFygoD-APfmG1hiaU74U7PNPLOlphm5NIwmgH1mPky8F8a2_FmBDgmh3swNutdGRRWeO-8UL88_hP5XD_y1Z5JDFSsTI8X6zXRRLhGE1sarsS2f8ntj4RJZLtMmVaTg6OePJUKkorODBZ5acbRQmz0MoDGRB6kMPPOE7X7FXaqgLRpJQQta" alt="Excavator front view">
+              </div>
+              <div class="thumb-item" data-image="https://lh3.googleusercontent.com/aida-public/AB6AXuCJFFWBzWRX5HQ_Z56oUIZJV1FJHJTE5HagliPELhVC2YLe1hS60-lke5lRz5GIsV5emGkI-2pmf1qVBF7hEJ0zBsjN-ZObK8Pni4a67ycXbChN1YG7szZSJUSoQZLLtjMTQSizqo8mW6Ayu_3NGl_Him_Yg6OgY2K6jS1IRnLAlPqnksKcmeciFi95cc_uTeyjajXqzldZW6-AOqaJ0QyEc0R7MzPg4tKiz9nAblnteUwoh2adfTUQrxbWumDFSg7aL7wz-INArocq">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJFFWBzWRX5HQ_Z56oUIZJV1FJHJTE5HagliPELhVC2YLe1hS60-lke5lRz5GIsV5emGkI-2pmf1qVBF7hEJ0zBsjN-ZObK8Pni4a67ycXbChN1YG7szZSJUSoQZLLtjMTQSizqo8mW6Ayu_3NGl_Him_Yg6OgY2K6jS1IRnLAlPqnksKcmeciFi95cc_uTeyjajXqzldZW6-AOqaJ0QyEc0R7MzPg4tKiz9nAblnteUwoh2adfTUQrxbWumDFSg7aL7wz-INArocq" alt="Excavator side view">
+              </div>
+              <div class="thumb-item" data-image="https://lh3.googleusercontent.com/aida-public/AB6AXuDaHmpZisgp0wPRR-6NaIwPNCIfe4YwtsrPY37YoUeEm7xhPyWEAOtwgR1SiMsgZht62_zu8W9SMNbQY-MrOWpeVQhLsp-Kt86VhsQdZhXG87UICFHmxeX4dadGZYnaXXVaQtNllksg8BFoPINU-oEvDIrhBuXZ14-tPASxHpsORof-Eis6nqX97rgij4WobyAzaH0WiROsXsE-VlIGVQ-LydW3sSsvEMY1zHpsLjQMUlokk4gupQFt5mN3AOtK4opzfhoLnYq8Ntw_">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaHmpZisgp0wPRR-6NaIwPNCIfe4YwtsrPY37YoUeEm7xhPyWEAOtwgR1SiMsgZht62_zu8W9SMNbQY-MrOWpeVQhLsp-Kt86VhsQdZhXG87UICFHmxeX4dadGZYnaXXVaQtNllksg8BFoPINU-oEvDIrhBuXZ14-tPASxHpsORof-Eis6nqX97rgij4WobyAzaH0WiROsXsE-VlIGVQ-LydW3sSsvEMY1zHpsLjQMUlokk4gupQFt5mN3AOtK4opzfhoLnYq8Ntw_" alt="Excavator bucket detail">
+              </div>
+              <button class="thumb-item add-thumb-btn" type="button">
+                <span class="icon" aria-hidden="true">add</span>
+                <span>Add Photo</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Form Details Card -->
+          <div class="card form-card">
+            <h3 class="card-section-title">Equipment Information</h3>
+
+            <form class="equipment-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="eqTitle">Equipment Title</label>
+                  <input type="text" id="eqTitle" value="Caterpillar 320 GC Excavator">
+                </div>
+                <div class="form-group">
+                  <label for="eqSerial">Serial / Tag ID</label>
+                  <input type="text" id="eqSerial" value="CAT-320GC-2022-881">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="eqCategory">Category</label>
+                  <div class="dropdown-select-wrapper">
+                    <select id="eqCategory">
+                      <option value="excavators" selected>Excavators</option>
+                      <option value="loaders">Loaders</option>
+                      <option value="cranes">Cranes</option>
+                      <option value="lifts">Lifts</option>
+                    </select>
+                    <span class="icon select-icon" aria-hidden="true">expand_more</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="eqLocation">Current Yard / Location</label>
+                  <input type="text" id="eqLocation" value="Yard 4, Colombo">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="dailyRate">Daily Rate ($)</label>
+                  <input type="number" id="dailyRate" value="600.00">
+                </div>
+                <div class="form-group">
+                  <label for="weeklyRate">Weekly Rate ($)</label>
+                  <input type="number" id="weeklyRate" value="3200.00">
+                </div>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="eqSpecs">Specifications &amp; Notes</label>
+                <textarea id="eqSpecs" rows="4">Operating Weight: 20,500 kg. Max Digging Depth: 6.72 m. Engine Power: 107 kW. Equipped with grade control and automated bucket control system.</textarea>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+        <!-- Right Status & History Sidebar Column -->
+        <div class="right-column">
+
+          <!-- Availability & Specs Status Card -->
+          <div class="card sidebar-card">
+            <h3 class="card-section-title">Operational Status</h3>
+
+            <div class="status-meta-list">
+              <div class="meta-item">
+                <span class="meta-label">Condition</span>
+                <span class="meta-value text-teal"><span class="icon icon-sm icon-fill" aria-hidden="true">check_circle</span> Excellent</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Total Meter Hours</span>
+                <span class="meta-value">1,240 hrs</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Next Maintenance</span>
+                <span class="meta-value">Nov 12, 2026</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Assigned Operator</span>
+                <span class="meta-value">David Ross</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity Card -->
+          <div class="card sidebar-card">
+            <div class="logistics-header">
+              <h3 class="card-section-title">Recent Rental History</h3>
+              <span class="count-chip">3 Records</span>
+            </div>
+
+            <div class="logistics-list">
+              <div class="logistics-item">
+                <div class="logistics-icon-wrapper icon-teal">
+                  <span class="icon" aria-hidden="true">description</span>
+                </div>
+                <div class="logistics-details">
+                  <span class="logistics-item-title">Summit Build Co.</span>
+                  <span class="logistics-item-sub">Oct 15 - Oct 22 &bull; 7 Days</span>
+                  <div class="company-tag">
+                    <span class="micro-avatar">SA</span>
+                    <span>Sarah Jenkins</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="logistics-item">
+                <div class="logistics-icon-wrapper icon-gray">
+                  <span class="icon" aria-hidden="true">history</span>
+                </div>
+                <div class="logistics-details">
+                  <span class="logistics-item-title">Apex Infrastructure</span>
+                  <span class="logistics-item-sub">Sep 01 - Sep 14 &bull; 14 Days</span>
+                  <div class="company-tag">
+                    <span class="micro-avatar">JB</span>
+                    <span>James Brown</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-view-logistics" type="button">
+              View Full Logs
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
