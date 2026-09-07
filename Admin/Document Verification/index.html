@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Document Verification</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Dishanthan<span class="topbar-user-role">Super Administrator</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true">
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="avatar avatar--placeholder" aria-hidden="true">
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Dashboard/index.html">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Complaints &amp; Users/index.html">
+          <span class="icon" aria-hidden="true">flag</span>
+          <span>Complaints &amp; Users</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Area Managers/index.html">
+          <span class="icon" aria-hidden="true">groups</span>
+          <span>Area Managers</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">fact_check</span>
+          <span>Document Verification</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="../Login/index.html">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <div class="page-head">
+        <div>
+          <h1 class="type-headline-lg page-title">Document Verification</h1>
+          <p class="type-body-md page-subtitle">Review credentials and supporting documents submitted by platform users.</p>
+        </div>
+      </div>
+
+      <div class="admin-grid admin-grid--3">
+        <div class="card">
+          <p class="stat-card-label">Pending Review</p>
+          <h3 class="stat-card-value">42</h3>
+          <p class="stat-card-trend">Documents awaiting decision</p>
+        </div>
+        <div class="card">
+          <p class="stat-card-label">Verified Today</p>
+          <h3 class="stat-card-value">28</h3>
+          <p class="stat-card-trend">Successful verifications</p>
+        </div>
+        <div class="card">
+          <p class="stat-card-label">Rejected</p>
+          <h3 class="stat-card-value">6</h3>
+          <p class="stat-card-trend">Require resubmission</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 18px;">
+        <div class="toolbar">
+          <div class="search-field">
+            <span class="icon icon-sm" aria-hidden="true">search</span>
+            <input class="search-input" type="text" data-filter-table="docsTable" placeholder="Search applicant, document or type...">
+          </div>
+          <select class="select-filter" data-status-filter="docsTable">
+            <option value="">All statuses</option>
+            <option>Pending</option>
+            <option>Verified</option>
+            <option>Rejected</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="docsTable">
+            <thead>
+              <tr><th>Applicant</th><th>Role</th><th>Document</th><th>Submitted</th><th>Status</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+              <tr data-status="Pending">
+                <td><strong>Nimal Construction</strong></td>
+                <td>Renting Party</td>
+                <td>Business Registration</td>
+                <td>15 Aug 2026</td>
+                <td><span class="badge-status badge-status--pending">Pending</span></td>
+                <td class="table-actions"><button class="btn-primary btn-sm" type="button" data-action="approve">Approve</button> <button class="btn-danger btn-sm" type="button" data-action="reject">Reject</button></td>
+              </tr>
+              <tr data-status="Pending">
+                <td><strong>FastLift Operator</strong></td>
+                <td>Freelancer</td>
+                <td>Operator License</td>
+                <td>15 Aug 2026</td>
+                <td><span class="badge-status badge-status--pending">Pending</span></td>
+                <td class="table-actions"><button class="btn-primary btn-sm" type="button" data-action="approve">Approve</button> <button class="btn-danger btn-sm" type="button" data-action="reject">Reject</button></td>
+              </tr>
+              <tr data-status="Verified">
+                <td><strong>Metro Events</strong></td>
+                <td>Customer</td>
+                <td>Business ID</td>
+                <td>14 Aug 2026</td>
+                <td><span class="badge-status badge-status--active">Verified</span></td>
+                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-toast="Document details opened.">View</button></td>
+              </tr>
+              <tr data-status="Rejected">
+                <td><strong>QuickMove</strong></td>
+                <td>Delivery Personnel</td>
+                <td>Vehicle License</td>
+                <td>13 Aug 2026</td>
+                <td><span class="badge-status badge-status--rejected">Rejected</span></td>
+                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-toast="Resubmission request opened.">Review</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 18px;">
+        <div class="section-title">
+          <h3 class="type-headline-sm">Verification checklist</h3>
+        </div>
+        <div class="admin-grid admin-grid--2">
+          <div>
+            <strong class="checklist-role">Business owners / renting parties</strong>
+            <p class="checklist-text">Confirm business registration, authorized representative details and supporting identity documents.</p>
+          </div>
+          <div>
+            <strong class="checklist-role">Freelance operators</strong>
+            <p class="checklist-text">Review operator certifications, identity documents and relevant licenses.</p>
+          </div>
+          <div>
+            <strong class="checklist-role">Delivery personnel</strong>
+            <p class="checklist-text">Review identity, driving credentials and vehicle documentation.</p>
+          </div>
+          <div>
+            <strong class="checklist-role">Maintenance technicians</strong>
+            <p class="checklist-text">Review professional credentials and service-related supporting documents.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="admin-footer">Equipify Admin Console · Group 49 · Academic Project</p>
+
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

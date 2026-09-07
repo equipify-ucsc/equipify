@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Admin Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Dishanthan<span class="topbar-user-role">Super Administrator</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true">
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="avatar avatar--placeholder" aria-hidden="true">
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Dashboard/index.html">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Complaints &amp; Users/index.html">
+          <span class="icon" aria-hidden="true">flag</span>
+          <span>Complaints &amp; Users</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Area Managers/index.html">
+          <span class="icon" aria-hidden="true">groups</span>
+          <span>Area Managers</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Document Verification/index.html">
+          <span class="icon" aria-hidden="true">fact_check</span>
+          <span>Document Verification</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="../Login/index.html">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <div class="page-head">
+        <div>
+          <h1 class="type-headline-lg page-title">Admin Profile</h1>
+          <p class="type-body-md page-subtitle">Manage your administrator identity and account preferences.</p>
+        </div>
+        <div class="page-head-actions">
+          <button class="btn-primary" type="button" id="saveProfileBtn">Save Changes</button>
+        </div>
+      </div>
+
+      <div class="profile-layout">
+
+        <div class="card profile-side">
+          <div class="profile-photo">
+            <span class="icon icon-photo" aria-hidden="true">person</span>
+          </div>
+          <h3 class="type-headline-sm profile-side-name">Dishanthan</h3>
+          <p class="profile-side-role">Super Administrator</p>
+          <div class="info-list">
+            <div class="info-row"><strong>Email</strong>dishanthan@equipify.lk</div>
+            <div class="info-row"><strong>Access</strong>Full platform control</div>
+            <div class="info-row"><strong>Status</strong><span class="badge-status badge-status--active">Active</span></div>
+            <div class="info-row"><strong>Last login</strong>Today, 10:14 PM</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <h3 class="type-headline-sm">Account information</h3>
+            <span class="badge-status badge-status--completed">Administrator</span>
+          </div>
+          <form id="profileForm">
+            <div class="form-grid">
+              <div class="field">
+                <label class="field-label" for="fullName">Full name</label>
+                <input class="input-standard" id="fullName" required value="Dishanthan">
+              </div>
+              <div class="field">
+                <label class="field-label" for="profileEmail">Email</label>
+                <input class="input-standard" id="profileEmail" type="email" required value="dishanthan@equipify.lk">
+              </div>
+              <div class="field">
+                <label class="field-label" for="profilePhone">Phone</label>
+                <input class="input-standard" id="profilePhone" required value="+94 77 123 4567">
+              </div>
+              <div class="field">
+                <label class="field-label" for="profileRole">Role</label>
+                <input class="input-standard" id="profileRole" value="Super Administrator" disabled>
+              </div>
+              <div class="field field--full">
+                <label class="field-label" for="profileSummary">Profile summary</label>
+                <textarea class="input-standard" id="profileSummary" rows="4">Responsible for platform-wide monitoring, verification, user management and administrative operations.</textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+      <p class="admin-footer">Equipify Admin Console · Group 49 · Academic Project</p>
+
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
