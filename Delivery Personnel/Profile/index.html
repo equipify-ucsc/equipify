@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Delivery Personnel Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Nuwan Fernando</div>
+        <div class="avatar avatar--placeholder" aria-hidden="true">
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="avatar avatar--placeholder" aria-hidden="true">
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Dashboard/index.html">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <!-- Profile Header -->
+      <section class="card profile-card">
+        <div class="profile-top">
+          <div class="profile-identity">
+            <div class="profile-photo">
+              <img alt="Nuwan Fernando" src="https://lh3.googleusercontent.com/d/1YC-ssS5vG9o5eWawjzpemXcDqvdfolb2">
+            </div>
+            <div>
+              <h1 class="type-headline-lg profile-name">Nuwan Fernando</h1>
+              <div class="profile-meta type-body-md">
+                <span class="role">Delivery Personnel</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="profile-bio type-body-md">
+          Experienced delivery driver specializing in the safe, on-time transport of
+          heavy equipment and machinery to construction and industrial sites across
+          the region.
+        </p>
+
+        <div class="contact-card">
+          <div class="contact-list">
+            <div class="contact-item">
+              <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">location_on</span></div>
+              <div class="contact-text">
+                <div class="contact-label">Location</div>
+                <div class="contact-value">Colombo, Sri Lanka</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">work_history</span></div>
+              <div class="contact-text">
+                <div class="contact-label">Years of Experience</div>
+                <div class="contact-value">5 Years</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">mail</span></div>
+              <div class="contact-text">
+                <div class="contact-label">Email</div>
+                <div class="contact-value">nuwan.fernando@equipify.lk</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">phone</span></div>
+              <div class="contact-text">
+                <div class="contact-label">Phone</div>
+                <div class="contact-value">+94 77 987 6543</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">local_shipping</span></div>
+              <div class="contact-text">
+                <div class="contact-label">Vehicle Type</div>
+                <div class="contact-value">6-Wheeler Flatbed Truck</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
