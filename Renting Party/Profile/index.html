@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Business Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Lanka Heavy Equipment</div>
+        <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Dashboard/index.html">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../My Equipment/index.html">
+          <span class="icon" aria-hidden="true">inventory_2</span>
+          <span>My Equipment</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Rental Requests/index.html">
+          <span class="icon" aria-hidden="true">receipt_long</span>
+          <span>Rental Requests</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">storefront</span>
+          <span>Business Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">build</span>
+          <span>Maintenance</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidenav-cta-wrap">
+      <a class="btn-cta" href="../Equipment Details/index.html">
+        <span class="icon icon-sm" aria-hidden="true">add_circle</span>
+        Add Equipment
+      </a>
+    </div>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Login & Register Page/login.html">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <!-- Page Title & Main Action Buttons -->
+      <div class="page-header">
+        <div class="page-title-group">
+          <h2>Business Profile</h2>
+          <p>Manage your company information, verify documents, and view performance metrics.</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn-outline" type="button" id="editProfileBtn">
+            <span class="icon icon-sm" aria-hidden="true">edit</span> Edit Profile
+          </button>
+          <button class="btn-primary" type="button" id="saveProfileBtn">
+            <span class="icon icon-sm" aria-hidden="true">save</span> Save Changes
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Profile Dashboard Grid -->
+      <div class="profile-grid">
+
+        <!-- Left Column (Forms & Company Details) -->
+        <div class="profile-main-col">
+
+          <!-- Top Form Block (2-Column Form Fields) -->
+          <div class="form-columns-container">
+
+            <!-- Company Info Column -->
+            <div class="card form-card">
+              <div class="company-brand-header">
+                <div class="company-logo-box">
+                  <span class="icon" aria-hidden="true">architecture</span>
+                </div>
+                <div class="company-brand-info">
+                  <h3>Lanka Heavy Equipment</h3>
+                  <span class="badge-status badge-status--completed">Heavy Machinery</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="regNumber">Business Registration Number</label>
+                <input type="text" id="regNumber" value="PV-90210-445" readonly>
+              </div>
+
+              <div class="form-group">
+                <label for="primaryEmail">Primary Email</label>
+                <div class="input-with-icon">
+                  <span class="icon" aria-hidden="true">mail</span>
+                  <input type="email" id="primaryEmail" value="contact@lankaheavy.lk">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <div class="input-with-icon">
+                  <span class="icon" aria-hidden="true">call</span>
+                  <input type="text" id="phoneNumber" value="+94 77 019 2837">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="website">Website</label>
+                <div class="input-with-icon">
+                  <span class="icon" aria-hidden="true">language</span>
+                  <input type="text" id="website" value="https://www.lankaheavy.lk">
+                </div>
+              </div>
+            </div>
+
+            <!-- Location & Tax Column -->
+            <div class="card form-card">
+              <div class="card-header-action">
+                <label class="form-section-title">Business Address</label>
+                <button class="icon-edit-btn" type="button" title="Edit Address"><span class="icon" aria-hidden="true">edit</span></button>
+              </div>
+
+              <div class="form-group">
+                <textarea rows="2">4500 Industrial Estate, Colombo 10&#10;Western Province</textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="operatingDistrict">Operating District</label>
+                <div class="select-wrapper">
+                  <select id="operatingDistrict">
+                    <option>Colombo</option>
+                    <option>Gampaha</option>
+                    <option>Kandy</option>
+                  </select>
+                  <span class="icon select-arrow" aria-hidden="true">expand_more</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Operating Hours</label>
+                <div class="hours-group">
+                  <input type="text" value="06:00 AM" class="time-input">
+                  <span class="hours-sep">to</span>
+                  <input type="text" value="08:00 PM" class="time-input">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="taxInfo">Tax Information (VAT)</label>
+                <input type="text" id="taxInfo" value="LK-XXXX992">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Company Description Card -->
+          <div class="card company-desc-card">
+            <label class="form-section-title">Company Description</label>
+            <div class="form-group">
+              <textarea rows="3">Lanka Heavy Equipment provides top-tier industrial machinery for commercial construction projects across the Western Province. Specializing in excavators, loaders, and specialized lifting equipment.</textarea>
+            </div>
+          </div>
+
+          <!-- Verification & Documents Card -->
+          <div class="card verification-card">
+            <div class="verification-header">
+              <h3>Verification &amp; Documents</h3>
+              <span class="badge-status badge-status--active">
+                <span class="icon icon-sm icon-fill" aria-hidden="true">verified</span> Verified Partner
+              </span>
+            </div>
+
+            <div class="documents-grid">
+
+              <!-- Doc 1 -->
+              <div class="document-item">
+                <div class="doc-icon-box">
+                  <span class="icon" aria-hidden="true">description</span>
+                </div>
+                <div class="doc-details">
+                  <span class="doc-title">Business Registration Certificate</span>
+                  <span class="doc-meta">PDF &bull; 2.4 MB &bull; Uploaded Jan 12</span>
+                </div>
+                <button class="doc-action-btn" type="button" title="Download"><span class="icon" aria-hidden="true">download</span></button>
+              </div>
+
+              <!-- Doc 2 -->
+              <div class="document-item">
+                <div class="doc-icon-box">
+                  <span class="icon" aria-hidden="true">shield</span>
+                </div>
+                <div class="doc-details">
+                  <span class="doc-title">Liability Insurance</span>
+                  <span class="doc-meta">PDF &bull; 4.1 MB &bull; Valid till Dec 2026</span>
+                </div>
+                <button class="doc-action-btn" type="button" title="Download"><span class="icon" aria-hidden="true">download</span></button>
+              </div>
+
+            </div>
+
+            <div class="upload-btn-container">
+              <button class="btn-upload" type="button">
+                <span class="icon icon-sm" aria-hidden="true">upload</span> Upload Documents
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column (Performance Metrics & Tips) -->
+        <div class="profile-side-col">
+
+          <!-- Dark Performance Panel -->
+          <div class="card performance-card">
+            <div class="performance-header">
+              <span class="icon" aria-hidden="true">trending_up</span>
+              <h3>Performance Overview</h3>
+            </div>
+
+            <div class="metrics-list">
+              <div class="metric-box">
+                <div class="metric-icon-box"><span class="icon icon-sm" aria-hidden="true">handshake</span></div>
+                <div class="metric-label">Total Rentals</div>
+                <div class="metric-value">1,248</div>
+              </div>
+
+              <div class="metric-box">
+                <div class="metric-icon-box"><span class="icon icon-sm" aria-hidden="true">star</span></div>
+                <div class="metric-label">Average Rating</div>
+                <div class="metric-value">4.9 <span class="sub-value">/ 5.0</span></div>
+              </div>
+
+              <div class="metric-box">
+                <div class="metric-icon-box"><span class="icon icon-sm" aria-hidden="true">forum</span></div>
+                <div class="metric-label">Response Rate</div>
+                <div class="metric-value">98%</div>
+              </div>
+            </div>
+
+            <div class="performance-footer">
+              <span class="period-text">Last 30 days</span>
+              <a href="#" class="report-link">View detailed report</a>
+            </div>
+          </div>
+
+          <!-- Optimize Profile Tip Box -->
+          <div class="card tip-card">
+            <div class="tip-content">
+              <div class="tip-icon">
+                <span class="icon" aria-hidden="true">lightbulb</span>
+              </div>
+              <div class="tip-body">
+                <h4>Optimize Your Profile</h4>
+                <p>Businesses with complete descriptions and up-to-date insurance documents receive 40% more rental inquiries.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

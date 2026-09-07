@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Rental Requests</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Lanka Heavy Equipment</div>
+        <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Dashboard/index.html">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../My Equipment/index.html">
+          <span class="icon" aria-hidden="true">inventory_2</span>
+          <span>My Equipment</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">receipt_long</span>
+          <span>Rental Requests</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">storefront</span>
+          <span>Business Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">build</span>
+          <span>Maintenance</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidenav-cta-wrap">
+      <a class="btn-cta" href="../Equipment Details/index.html">
+        <span class="icon icon-sm" aria-hidden="true">add_circle</span>
+        Add Equipment
+      </a>
+    </div>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Login & Register Page/login.html">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <!-- Page Header / Controls -->
+      <div class="page-header">
+        <div class="page-title-group">
+          <h2>Rental Requests</h2>
+          <p>Manage incoming equipment bookings and active rentals.</p>
+        </div>
+
+        <div class="filter-controls">
+          <div class="select-wrapper">
+            <select id="statusFilter">
+              <option value="all">All Statuses</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+            </select>
+            <span class="icon select-arrow" aria-hidden="true">expand_more</span>
+          </div>
+
+          <div class="date-range-chip">
+            <span class="icon" aria-hidden="true">calendar_month</span>
+            <span>Oct 12 - Oct 19</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Split Grid -->
+      <div class="requests-grid">
+
+        <!-- Left Column: Rentals Data Table -->
+        <div class="card table-card">
+          <div class="table-responsive">
+            <table class="rentals-table">
+              <thead>
+                <tr>
+                  <th>CUSTOMER</th>
+                  <th>EQUIPMENT</th>
+                  <th>RENTAL PERIOD</th>
+                  <th>TOTAL</th>
+                  <th>STATUS</th>
+                  <th>ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="customer-cell">
+                      <div class="avatar-circle">SA</div>
+                      <div class="customer-info">
+                        <span class="company-name">Summit Build Co.</span>
+                        <span class="contact-name">Sarah Jenkins</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="equipment-info">
+                      <span class="equipment-title">Excavator CAT 320</span>
+                      <span class="equipment-id">ID: EQ-4092</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="period-info">
+                      <span class="date-range">Oct 15 - Oct 22</span>
+                      <span class="days-count">7 Days</span>
+                    </div>
+                  </td>
+                  <td class="amount-cell">$4,200.00</td>
+                  <td>
+                    <span class="badge-status badge-status--pending">Pending</span>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="row-actions">
+                      <button class="action-btn approve" type="button" title="Approve"><span class="icon" aria-hidden="true">check</span></button>
+                      <button class="action-btn decline" type="button" title="Decline"><span class="icon" aria-hidden="true">close</span></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="customer-cell">
+                      <div class="avatar-circle">MR</div>
+                      <div class="customer-info">
+                        <span class="company-name">Metro Roads LLC</span>
+                        <span class="contact-name">Mike Richards</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="equipment-info">
+                      <span class="equipment-title">Asphalt Paver Volvo</span>
+                      <span class="equipment-id">ID: EQ-1120</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="period-info">
+                      <span class="date-range">Oct 16 - Oct 18</span>
+                      <span class="days-count">3 Days</span>
+                    </div>
+                  </td>
+                  <td class="amount-cell">$2,850.00</td>
+                  <td>
+                    <span class="badge-status badge-status--active">Approved</span>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="row-actions">
+                      <a class="action-btn" href="../Equipment Details/index.html" title="View equipment"><span class="icon" aria-hidden="true">visibility</span></a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Pagination Footer -->
+          <div class="table-footer">
+            <span class="pagination-info">Showing 1 to 2 of 24 entries</span>
+            <div class="pagination-controls">
+              <button class="pagination-btn disabled" type="button" disabled>Prev</button>
+              <button class="pagination-btn active" type="button">1</button>
+              <button class="pagination-btn" type="button">2</button>
+              <button class="pagination-btn" type="button">Next</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Today's Logistics Sidebar Card -->
+        <aside class="card logistics-card">
+          <div class="logistics-header">
+            <h3>Today's Logistics</h3>
+            <span class="count-chip">3 Items</span>
+          </div>
+
+          <div class="logistics-list">
+
+            <!-- Item 1: Pickup -->
+            <div class="logistics-item">
+              <div class="item-icon-box pickup">
+                <span class="icon" aria-hidden="true">local_shipping</span>
+              </div>
+              <div class="item-content">
+                <h4 class="item-title">Pickup: Scissor Lift 19ft</h4>
+                <p class="item-details">Downtown Site A &bull; 09:00 AM</p>
+                <div class="item-subtext">
+                  <span class="mini-avatar">JB</span>
+                  <span>Apex Builders</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 2: Return -->
+            <div class="logistics-item">
+              <div class="item-icon-box return">
+                <span class="icon" aria-hidden="true">keyboard_return</span>
+              </div>
+              <div class="item-content">
+                <h4 class="item-title">Return: Backhoe Loader</h4>
+                <p class="item-details">Yard 2 &bull; 02:30 PM</p>
+                <div class="item-subtext">
+                  <span class="mini-avatar">TC</span>
+                  <span>TerraCorp</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <button class="btn-view-logistics" type="button">
+            View All Logistics
+          </button>
+        </aside>
+
+      </div>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Renting Party Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md">Lanka Heavy Equipment</div>
+        <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../My Equipment/index.html">
+          <span class="icon" aria-hidden="true">inventory_2</span>
+          <span>My Equipment</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Rental Requests/index.html">
+          <span class="icon" aria-hidden="true">receipt_long</span>
+          <span>Rental Requests</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">storefront</span>
+          <span>Business Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">build</span>
+          <span>Maintenance</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidenav-cta-wrap">
+      <a class="btn-cta" href="../Equipment Details/index.html">
+        <span class="icon icon-sm" aria-hidden="true">add_circle</span>
+        Add Equipment
+      </a>
+    </div>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Login & Register Page/login.html">
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <!-- Welcome Banner & Quick Action Buttons -->
+      <section class="welcome-header">
+        <div class="welcome-text">
+          <h1>Welcome back, Lanka Heavy Equipment</h1>
+          <p>Your equipment fleet is performing at 86% capacity today.</p>
+        </div>
+        <div class="action-buttons">
+          <a class="btn-primary" href="../Equipment Details/index.html">
+            <span class="icon icon-sm" aria-hidden="true">add</span> Add Equipment
+          </a>
+          <a class="btn-outline" href="../Rental Requests/index.html">
+            <span class="icon icon-sm" aria-hidden="true">task_alt</span> View Requests
+          </a>
+          <a class="btn-outline" href="#">
+            <span class="icon icon-sm" aria-hidden="true">engineering</span> Hire Maintenance
+          </a>
+        </div>
+      </section>
+
+      <!-- KPI Metric Cards -->
+      <section class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-top">
+            <div class="metric-icon icon-slate"><span class="icon" aria-hidden="true">inventory_2</span></div>
+            <span class="badge-status badge-status--active">+3 this month</span>
+          </div>
+          <span class="metric-label">Total Equipment</span>
+          <h2 class="metric-value">124</h2>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <div class="metric-icon icon-teal"><span class="icon" aria-hidden="true">handshake</span></div>
+            <span class="badge-status badge-status--completed">86% utilization</span>
+          </div>
+          <span class="metric-label">Active Rentals</span>
+          <h2 class="metric-value">42</h2>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <div class="metric-icon icon-green"><span class="icon" aria-hidden="true">payments</span></div>
+            <span class="badge-status badge-status--active">+12%</span>
+          </div>
+          <span class="metric-label">Monthly Revenue</span>
+          <h2 class="metric-value">$12,450</h2>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <div class="metric-icon icon-red"><span class="icon" aria-hidden="true">priority_high</span></div>
+            <span class="badge-status badge-status--rejected">Urgent: 5</span>
+          </div>
+          <span class="metric-label">Pending Requests</span>
+          <h2 class="metric-value">18</h2>
+        </div>
+      </section>
+
+      <!-- Charts Middle Grid -->
+      <section class="charts-grid">
+        <!-- Revenue Line Chart (hand-authored inline SVG, no chart library) -->
+        <div class="card chart-card">
+          <div class="card-header">
+            <h3>Revenue Overview</h3>
+            <select class="time-filter">
+              <option>Last 6 months</option>
+              <option>Last 30 days</option>
+              <option>This Year</option>
+            </select>
+          </div>
+          <div class="chart-wrapper">
+            <svg viewBox="0 0 640 200" role="img" aria-label="Monthly revenue: January $4,200, February $3,800, March $2,900, April $8,500, May $4,800, June $12,450">
+              <defs>
+                <linearGradient id="revenueFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#006c4e" stop-opacity="0.28"></stop>
+                  <stop offset="100%" stop-color="#006c4e" stop-opacity="0"></stop>
+                </linearGradient>
+              </defs>
+              <line x1="20" y1="150" x2="620" y2="150" stroke="#e0e3e6" stroke-width="1"></line>
+              <path d="M20,150 L20,103 L140,107 L260,117 L380,54 L500,96 L620,10 L620,150 Z" fill="url(#revenueFill)"></path>
+              <polyline points="20,103 140,107 260,117 380,54 500,96 620,10" fill="none" stroke="#006c4e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
+              <circle cx="20" cy="103" r="4" fill="#ffffff" stroke="#006c4e" stroke-width="2.5"></circle>
+              <circle cx="140" cy="107" r="4" fill="#ffffff" stroke="#006c4e" stroke-width="2.5"></circle>
+              <circle cx="260" cy="117" r="4" fill="#ffffff" stroke="#006c4e" stroke-width="2.5"></circle>
+              <circle cx="380" cy="54" r="4" fill="#ffffff" stroke="#006c4e" stroke-width="2.5"></circle>
+              <circle cx="500" cy="96" r="4" fill="#ffffff" stroke="#006c4e" stroke-width="2.5"></circle>
+              <circle cx="620" cy="10" r="5" fill="#006c4e" stroke="#ffffff" stroke-width="2"></circle>
+              <text x="20" y="175" font-family="Inter, sans-serif" font-size="11" fill="#5b5f66" text-anchor="middle">Jan</text>
+              <text x="140" y="175" font-family="Inter, sans-serif" font-size="11" fill="#5b5f66" text-anchor="middle">Feb</text>
+              <text x="260" y="175" font-family="Inter, sans-serif" font-size="11" fill="#5b5f66" text-anchor="middle">Mar</text>
+              <text x="380" y="175" font-family="Inter, sans-serif" font-size="11" fill="#5b5f66" text-anchor="middle">Apr</text>
+              <text x="500" y="175" font-family="Inter, sans-serif" font-size="11" fill="#5b5f66" text-anchor="middle">May</text>
+              <text x="620" y="175" font-family="Inter, sans-serif" font-size="11" fill="#5b5f66" text-anchor="middle">Jun</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Equipment Availability Donut Chart (CSS conic-gradient, no library) -->
+        <div class="card availability-card">
+          <div class="card-header">
+            <h3>Equipment Availability</h3>
+          </div>
+          <div class="donut-wrapper">
+            <div class="donut-chart" role="img" aria-label="Equipment availability: 81 rented, 28 available, 15 in maintenance, out of 124 total">
+              <div class="donut-center">
+                <span class="total-count">124</span>
+                <span class="total-label">TOTAL</span>
+              </div>
+            </div>
+          </div>
+          <div class="availability-legend">
+            <div class="legend-item">
+              <span class="dot dot-navy"></span>
+              <span class="legend-text">Rented</span>
+              <span class="legend-val">81</span>
+            </div>
+            <div class="legend-item">
+              <span class="dot dot-teal"></span>
+              <span class="legend-text">Available</span>
+              <span class="legend-val">28</span>
+            </div>
+            <div class="legend-item">
+              <span class="dot dot-red"></span>
+              <span class="legend-text">Maintenance</span>
+              <span class="legend-val">15</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom Lists Grid -->
+      <section class="lists-grid">
+
+        <!-- Recent Rental Activities Table -->
+        <div class="card table-card">
+          <div class="card-header">
+            <h3>Recent Rental Activities</h3>
+            <a href="../Rental Requests/index.html" class="view-all-link">View All</a>
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>CUSTOMER</th>
+                  <th>EQUIPMENT</th>
+                  <th>PERIOD</th>
+                  <th>STATUS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="customer-cell">
+                      <div class="avatar-circle bg-teal">JS</div>
+                      <div>
+                        <div class="cust-name">James Smith</div>
+                        <div class="cust-sub">Industrial Corp</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="eq-title">Caterpillar 320 GC</div>
+                    <div class="eq-id">ID: EQ-4092</div>
+                  </td>
+                  <td>Mar 12 - Mar 25</td>
+                  <td><span class="badge-status badge-status--active">Active</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="customer-cell">
+                      <div class="avatar-circle bg-blue">MW</div>
+                      <div>
+                        <div class="cust-name">Maria Williams</div>
+                        <div class="cust-sub">BuildRight Ltd.</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="eq-title">Skid Steer Loader</div>
+                    <div class="eq-id">ID: EQ-1122</div>
+                  </td>
+                  <td>Mar 15 - Mar 18</td>
+                  <td><span class="badge-status badge-status--pending">Pending</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="customer-cell">
+                      <div class="avatar-circle bg-purple">RB</div>
+                      <div>
+                        <div class="cust-name">Robert Brown</div>
+                        <div class="cust-sub">Coastal Dredging</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="eq-title">Concrete Mixer</div>
+                    <div class="eq-id">ID: EQ-8843</div>
+                  </td>
+                  <td>Mar 01 - Mar 10</td>
+                  <td><span class="badge-status badge-status--completed">Returned</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Upcoming Maintenance Timeline -->
+        <div class="card maintenance-card">
+          <div class="card-header">
+            <h3>Upcoming Maintenance</h3>
+          </div>
+          <div class="maintenance-list">
+
+            <div class="maintenance-item">
+              <div class="date-badge">
+                <span class="month">MAR</span>
+                <span class="day">20</span>
+              </div>
+              <div class="maint-info">
+                <h4>Boom Lift Service</h4>
+                <p>ID: BL-442 | Hydr. Check</p>
+              </div>
+              <span class="icon chevron-icon" aria-hidden="true">chevron_right</span>
+            </div>
+
+            <div class="maintenance-item">
+              <div class="date-badge">
+                <span class="month">MAR</span>
+                <span class="day">22</span>
+              </div>
+              <div class="maint-info">
+                <h4>Forklift Inspection</h4>
+                <p>ID: FL-098 | Annual Cert</p>
+              </div>
+              <span class="icon chevron-icon" aria-hidden="true">chevron_right</span>
+            </div>
+
+            <div class="maintenance-item">
+              <div class="date-badge">
+                <span class="month">MAR</span>
+                <span class="day">28</span>
+              </div>
+              <div class="maint-info">
+                <h4>Generator Repair</h4>
+                <p>ID: GN-771 | Filter Change</p>
+              </div>
+              <span class="icon chevron-icon" aria-hidden="true">chevron_right</span>
+            </div>
+
+          </div>
+          <button class="btn-dashed" type="button">
+            <span class="icon icon-sm" aria-hidden="true">event_available</span> Schedule New Checkup
+          </button>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
