@@ -31,3 +31,4 @@ error_log
 # Claude Code / local reference docs
 CLAUDE.md
 /Information/
+.claude/
