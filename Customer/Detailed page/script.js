@@ -2,6 +2,25 @@
   'use strict';
 
   /* ==========================================================================
+     Top Nav — mobile search toggle
+     ========================================================================== */
+
+  var searchToggle = document.getElementById('mobile-search-toggle');
+  var searchPanel = document.getElementById('mobile-search-panel');
+
+  if (searchToggle && searchPanel) {
+    searchToggle.addEventListener('click', function () {
+      var isOpen = !searchPanel.hidden;
+      searchPanel.hidden = isOpen;
+      searchToggle.setAttribute('aria-expanded', String(!isOpen));
+      if (!isOpen) {
+        var input = searchPanel.querySelector('input');
+        if (input) input.focus();
+      }
+    });
+  }
+
+  /* ==========================================================================
      Image Gallery — arrow navigation + thumbnail click, in sync
      ========================================================================== */
 
