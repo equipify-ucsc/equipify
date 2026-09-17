@@ -19,6 +19,38 @@ The platform enables:
 | Backend | PHP |
 | Database | MySQL |
 
+## Database
+
+The database is built step by step from numbered migration files in `schema/`, named `NNN_verb_object.sql` (e.g. `001_create_users.sql`, `003_add_users_status_changed_by_fk.sql`).
+
+- **Run in order:** run `000_create_database.sql` once, then every later file in numeric order with the `equipify` database selected.
+- **Append-only:** never edit a migration once it is committed. To change the schema, add a new file with the next number (e.g. an `ALTER TABLE`).
+- **Conventions:** InnoDB, `utf8mb4` / `utf8mb4_unicode_ci`, plural snake_case table names, `BIGINT UNSIGNED` ids, and named constraints (`pk_<table>`, `fk_<table>_<col>`, `uq_<table>_<col>`, `idx_<table>_<col>`, `chk_<table>_<rule>`).
+
+MySQL CLI, from the `schema/` folder:
+
+```bash
+mysql -u root -p < 000_create_database.sql
+mysql -u root -p equipify < 001_create_users.sql
+```
+
+…and so on for each file in order. In phpMyAdmin, select the `equipify` database and **Import** each file in order.
+
+### Connecting from PHP
+
+PHP code gets its connection from `getDbConnection()` in `backend/config/db_config.php` (PDO) instead of opening its own:
+
+```php
+require_once __DIR__ . '/../config/db_config.php';
+$db = getDbConnection();
+```
+
+The file is committed with XAMPP's defaults (`root`, empty password). If your local MySQL uses a different password, change it locally but **never commit a real password**.
+
+Notes:
+- The connection turns on strict SQL mode and Sri Lanka time (`+05:30`). XAMPP's default mode silently stores invalid `ENUM` values as `''` instead of raising an error, so keep that in mind when running SQL by hand in phpMyAdmin or the CLI.
+- `delivery_personnel.area_id` from the ERD is deferred until an `areas` table exists.
+
 ## Branching strategy
  
 - `main` — stable, always working. No direct commits.
