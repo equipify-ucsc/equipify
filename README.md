@@ -36,8 +36,19 @@ mysql -u root -p equipify < 001_create_users.sql
 
 …and so on for each file in order. In phpMyAdmin, select the `equipify` database and **Import** each file in order.
 
+### Connecting from PHP
+
+PHP code gets its connection from `getDbConnection()` in `backend/config/db_config.php` (PDO) instead of opening its own:
+
+```php
+require_once __DIR__ . '/../config/db_config.php';
+$db = getDbConnection();
+```
+
+The file is committed with XAMPP's defaults (`root`, empty password). If your local MySQL uses a different password, change it locally but **never commit a real password**.
+
 Notes:
-- Use strict SQL mode (`STRICT_TRANS_TABLES`) on the app's database connection. XAMPP's default mode silently stores invalid `ENUM` values as `''` instead of raising an error.
+- The connection turns on strict SQL mode and Sri Lanka time (`+05:30`). XAMPP's default mode silently stores invalid `ENUM` values as `''` instead of raising an error, so keep that in mind when running SQL by hand in phpMyAdmin or the CLI.
 - `delivery_personnel.area_id` from the ERD is deferred until an `areas` table exists.
 
 ## Branching strategy
