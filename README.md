@@ -49,7 +49,6 @@ The file is committed with XAMPP's defaults (`root`, empty password). If your lo
 
 Notes:
 - The connection turns on strict SQL mode and Sri Lanka time (`+05:30`). XAMPP's default mode silently stores invalid `ENUM` values as `''` instead of raising an error, so keep that in mind when running SQL by hand in phpMyAdmin or the CLI.
-- `delivery_personnel.area_id` from the ERD is deferred until an `areas` table exists.
 
 ## Branching strategy
  
