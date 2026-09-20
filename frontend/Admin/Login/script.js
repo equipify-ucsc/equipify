@@ -55,7 +55,7 @@
           window.location.href = '../Dashboard/index.html';
           return;
         }
-        submitBtn.textContent = 'Log In';
+        submitBtn.textContent = 'Sign In';
         submitBtn.disabled = false;
         if (errorText) errorText.textContent = res.error;
         EquipifyAuth.showFieldError(passwordInput, passwordError);
