@@ -1,7 +1,10 @@
 /* ==========================================================================
    Equipify — Maintenance Technicians (Area Manager)
-   Mobile navigation drawer, roster table search/filter, register-technician
-   modal, and remove-row action (vanilla JS, no dependencies)
+   Mobile navigation drawer, roster table search/filter, and the
+   register-technician modal wired to the API (vanilla JS, no dependencies).
+
+   The roster is whatever GET /area-manager/technicians returns for the
+   signed-in area manager; registering posts to the same path.
    ========================================================================== */
 
 (function () {
@@ -29,15 +32,9 @@
     });
   });
 
-  // ---------- Generic "View" style buttons ----------
-  document.querySelectorAll('[data-toast]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      window.showToast(btn.dataset.toast);
-    });
-  });
-
   // ---------- Table search + status filter ----------
   var table = document.getElementById('technicianTable');
+  var tableBody = table ? table.querySelector('tbody') : null;
   var searchInput = document.querySelector('[data-filter-table="technicianTable"]');
   var statusFilter = document.getElementById('statusFilter');
 
@@ -74,60 +71,129 @@
     });
   });
 
-  // ---------- Register technician form ----------
+  // ---------- Roster ----------
+  // availability_status -> the label and badge modifier the design system uses.
+  var STATUS = {
+    available:   { label: 'Available',   badge: 'active' },
+    busy:        { label: 'Busy',        badge: 'pending' },
+    unavailable: { label: 'Unavailable', badge: 'rejected' }
+  };
+
+  function cell(text, strong) {
+    var td = document.createElement('td');
+    if (strong) {
+      var b = document.createElement('strong');
+      b.textContent = text;
+      td.appendChild(b);
+    } else {
+      td.textContent = text;
+    }
+    return td;
+  }
+
+  function messageRow(text) {
+    var tr = document.createElement('tr');
+    var td = cell(text);
+    td.colSpan = 5;
+    tr.appendChild(td);
+    return tr;
+  }
+
+  function renderTechnicians(technicians) {
+    tableBody.textContent = '';
+    if (technicians.length === 0) {
+      tableBody.appendChild(messageRow('No maintenance technicians registered yet.'));
+      return;
+    }
+    technicians.forEach(function (t) {
+      var status = STATUS[t.availability_status] ||
+        { label: t.availability_status, badge: 'pending' };
+
+      var categories = t.specialization || '';
+      if (t.years_experience !== null && t.years_experience !== undefined) {
+        categories += ' · ' + t.years_experience + ' yrs experience';
+      }
+
+      var tr = document.createElement('tr');
+      tr.setAttribute('data-status', t.availability_status);
+      tr.appendChild(cell(t.full_name, true));
+      tr.appendChild(cell(t.phone + ' · ' + t.email));
+      tr.appendChild(cell(categories));
+
+      var statusCell = document.createElement('td');
+      var badge = document.createElement('span');
+      badge.className = 'badge-status badge-status--' + status.badge;
+      badge.textContent = status.label;
+      statusCell.appendChild(badge);
+      tr.appendChild(statusCell);
+
+      var actions = document.createElement('td');
+      var wrap = document.createElement('div');
+      wrap.className = 'row-actions';
+      var view = document.createElement('button');
+      view.className = 'btn-outline btn-sm';
+      view.type = 'button';
+      view.textContent = 'View';
+      view.addEventListener('click', function () {
+        window.showToast(t.full_name + ' — profile view is coming soon.');
+      });
+      wrap.appendChild(view);
+      actions.appendChild(wrap);
+      tr.appendChild(actions);
+
+      tableBody.appendChild(tr);
+    });
+    applyFilters();
+  }
+
+  function loadTechnicians() {
+    EquipifyApi.get('/area-manager/technicians').then(function (res) {
+      if (res.ok) {
+        renderTechnicians(res.data);
+      } else {
+        tableBody.textContent = '';
+        tableBody.appendChild(messageRow(res.error));
+      }
+    });
+  }
+  if (tableBody) loadTechnicians();
+
+  // ---------- Register maintenance technician form ----------
   var technicianForm = document.getElementById('technicianForm');
-  if (technicianForm && table) {
+  if (technicianForm && tableBody) {
+    var formError = document.getElementById('technicianFormError');
+    var submitBtn = technicianForm.querySelector('button[type="submit"]');
+
     technicianForm.addEventListener('submit', function (event) {
       event.preventDefault();
+      formError.hidden = true;
       if (!technicianForm.checkValidity()) {
         technicianForm.reportValidity();
         return;
       }
-
-      var name = document.getElementById('technicianName').value.trim();
-      var phone = document.getElementById('technicianPhone').value.trim();
-      var categories = document.getElementById('technicianCategories').value.trim();
-
-      var tbody = table.querySelector('tbody');
-      var row = document.createElement('tr');
-      row.setAttribute('data-status', 'Active');
-      row.innerHTML =
-        '<td><strong></strong></td>' +
-        '<td></td>' +
-        '<td></td>' +
-        '<td>0</td>' +
-        '<td><span class="badge-status badge-status--active">Active</span></td>' +
-        '<td><div class="row-actions">' +
-        '<button class="btn-outline btn-sm" type="button">View</button>' +
-        '<button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>' +
-        '</div></td>';
-      row.querySelector('strong').textContent = name;
-      row.querySelectorAll('td')[1].textContent = phone;
-      row.querySelectorAll('td')[2].textContent = categories;
-      row.querySelector('.btn-outline.btn-sm:not(.row-remove-btn)').addEventListener('click', function () {
-        window.showToast(name + "'s profile opened.");
+      submitBtn.disabled = true;
+      EquipifyApi.post('/area-manager/technicians', {
+        full_name: technicianForm.elements.full_name.value,
+        email: technicianForm.elements.email.value,
+        phone: technicianForm.elements.phone.value,
+        specialization: technicianForm.elements.specialization.value,
+        // Optional field: send null rather than '' when it was left blank.
+        years_experience: technicianForm.elements.years_experience.value || null,
+        password: technicianForm.elements.password.value
+      }).then(function (res) {
+        submitBtn.disabled = false;
+        if (!res.ok) {
+          // The API answers with a per-field map; show them all at once.
+          var details = Object.keys(res.fields).map(function (k) { return res.fields[k]; });
+          formError.textContent = details.length ? details.join(' ') : res.error;
+          formError.hidden = false;
+          return;
+        }
+        window.showToast(technicianForm.dataset.successMessage);
+        technicianForm.closest('.modal-backdrop').classList.remove('is-open');
+        technicianForm.reset();
+        loadTechnicians();
       });
-      row.querySelector('.row-remove-btn').addEventListener('click', onRemoveRow);
-      tbody.appendChild(row);
-      applyFilters();
-
-      window.showToast(technicianForm.dataset.successMessage || 'Changes saved successfully.');
-      var modal = technicianForm.closest('.modal-backdrop');
-      if (modal) modal.classList.remove('is-open');
-      technicianForm.reset();
     });
   }
-
-  // ---------- Remove row ----------
-  function onRemoveRow() {
-    var row = this.closest('tr');
-    var name = row.querySelector('strong') ? row.querySelector('strong').textContent : 'Technician';
-    if (window.confirm('Remove ' + name + ' from the technician roster?')) {
-      row.remove();
-      window.showToast(name + ' removed from the roster.');
-    }
-  }
-  document.querySelectorAll('.row-remove-btn').forEach(function (btn) {
-    btn.addEventListener('click', onRemoveRow);
-  });
 })();

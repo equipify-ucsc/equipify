@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="../../shared/styles.css">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-require-auth="admin" data-login-url="../Login/index.html">
 
   <!-- Desktop Top Bar -->
   <header class="topbar topbar--desktop">
@@ -85,16 +85,14 @@
           <span>Document Verification</span>
         </a>
       </li>
-    </ul>
-
-    <ul class="sidenav-footer">
       <li>
-        <a class="sidenav-link" href="../Login/index.html">
+        <a class="sidenav-link" href="../Login/index.html" data-logout>
           <span class="icon" aria-hidden="true">logout</span>
           <span>Logout</span>
         </a>
       </li>
     </ul>
+
   </nav>
 
   <!-- Main Content -->
@@ -117,7 +115,7 @@
         <div class="card">
           <p class="stat-card-label">Active Managers</p>
           <h3 class="stat-card-value">12</h3>
-          <p class="stat-card-trend">Across operational regions</p>
+          <p class="stat-card-trend">Across operational districts</p>
         </div>
         <div class="card">
           <p class="stat-card-label">Pending Approval</p>
@@ -125,8 +123,8 @@
           <p class="stat-card-trend">Awaiting admin review</p>
         </div>
         <div class="card">
-          <p class="stat-card-label">Regions Covered</p>
-          <h3 class="stat-card-value">9</h3>
+          <p class="stat-card-label">Districts Covered</p>
+          <h3 class="stat-card-value">25</h3>
           <p class="stat-card-trend">Current service areas</p>
         </div>
       </div>
@@ -135,45 +133,44 @@
         <div class="toolbar">
           <div class="search-field">
             <span class="icon icon-sm" aria-hidden="true">search</span>
-            <input class="search-input" type="text" data-filter-table="managerTable" placeholder="Search managers or regions...">
+            <input class="search-input" type="text" data-filter-table="managerTable" placeholder="Search managers or districts...">
           </div>
           <select class="select-filter">
-            <option>All regions</option>
-            <option>Western</option>
-            <option>Central</option>
-            <option>Southern</option>
+            <option>All districts</option>
+            <option>Ampara</option>
+            <option>Anuradhapura</option>
+            <option>Badulla</option>
+            <option>Batticaloa</option>
+            <option>Colombo</option>
+            <option>Galle</option>
+            <option>Gampaha</option>
+            <option>Hambantota</option>
+            <option>Jaffna</option>
+            <option>Kalutara</option>
+            <option>Kandy</option>
+            <option>Kegalle</option>
+            <option>Kilinochchi</option>
+            <option>Kurunegala</option>
+            <option>Mannar</option>
+            <option>Matale</option>
+            <option>Matara</option>
+            <option>Moneragala</option>
+            <option>Mullaitivu</option>
+            <option>Nuwara Eliya</option>
+            <option>Polonnaruwa</option>
+            <option>Puttalam</option>
+            <option>Ratnapura</option>
+            <option>Trincomalee</option>
+            <option>Vavuniya</option>
           </select>
         </div>
         <div class="table-wrap">
           <table class="table" id="managerTable">
             <thead>
-              <tr><th>Manager</th><th>Region</th><th>Email</th><th>Assigned Users</th><th>Status</th><th>Actions</th></tr>
+              <tr><th>Manager</th><th>District</th><th>Email</th><th>Phone</th><th>Status</th></tr>
             </thead>
             <tbody>
-              <tr>
-                <td><strong>Kasun Perera</strong></td>
-                <td>Western</td>
-                <td>kasun@equipify.lk</td>
-                <td>486</td>
-                <td><span class="badge-status badge-status--active">Active</span></td>
-                <td><button class="btn-outline btn-sm" type="button" data-toast="Manager details opened.">View</button></td>
-              </tr>
-              <tr>
-                <td><strong>Tharushi Silva</strong></td>
-                <td>Central</td>
-                <td>tharushi@equipify.lk</td>
-                <td>312</td>
-                <td><span class="badge-status badge-status--active">Active</span></td>
-                <td><button class="btn-outline btn-sm" type="button" data-toast="Manager details opened.">View</button></td>
-              </tr>
-              <tr>
-                <td><strong>Ravindu Fernando</strong></td>
-                <td>Southern</td>
-                <td>ravindu@equipify.lk</td>
-                <td>205</td>
-                <td><span class="badge-status badge-status--pending">Pending</span></td>
-                <td><button class="btn-primary btn-sm" type="button" data-toast="Area manager approved.">Approve</button></td>
-              </tr>
+              <tr><td colspan="5">Loading…</td></tr>
             </tbody>
           </table>
         </div>
@@ -192,33 +189,54 @@
         </button>
       </div>
       <form id="managerForm" data-success-message="Area manager registered successfully.">
+        <p class="field-error" id="managerFormError" role="alert" hidden style="color:#b3261e;margin:12px 0 0;"></p>
         <div class="form-grid" style="margin-top: 18px;">
           <div class="field">
             <label class="field-label" for="managerName">Full name</label>
-            <input class="input-standard" id="managerName" required placeholder="Manager name">
+            <input class="input-standard" id="managerName" name="full_name" required placeholder="Manager name">
           </div>
           <div class="field">
             <label class="field-label" for="managerEmail">Email</label>
-            <input class="input-standard" id="managerEmail" type="email" required placeholder="manager@equipify.lk">
+            <input class="input-standard" id="managerEmail" name="email" type="email" required placeholder="manager@equipify.lk">
           </div>
           <div class="field">
             <label class="field-label" for="managerPhone">Phone</label>
-            <input class="input-standard" id="managerPhone" required placeholder="+94 ...">
+            <input class="input-standard" id="managerPhone" name="phone" required placeholder="+94 ...">
           </div>
           <div class="field">
-            <label class="field-label" for="managerRegion">Region</label>
-            <select class="input-standard" id="managerRegion" required>
-              <option value="">Select region</option>
-              <option>Western</option>
-              <option>Central</option>
-              <option>Southern</option>
-              <option>Northern</option>
-              <option>Eastern</option>
+            <label class="field-label" for="managerRegion">District</label>
+            <select class="input-standard" id="managerRegion" name="district" required>
+              <option value="">Select district</option>
+              <option>Ampara</option>
+              <option>Anuradhapura</option>
+              <option>Badulla</option>
+              <option>Batticaloa</option>
+              <option>Colombo</option>
+              <option>Galle</option>
+              <option>Gampaha</option>
+              <option>Hambantota</option>
+              <option>Jaffna</option>
+              <option>Kalutara</option>
+              <option>Kandy</option>
+              <option>Kegalle</option>
+              <option>Kilinochchi</option>
+              <option>Kurunegala</option>
+              <option>Mannar</option>
+              <option>Matale</option>
+              <option>Matara</option>
+              <option>Moneragala</option>
+              <option>Mullaitivu</option>
+              <option>Nuwara Eliya</option>
+              <option>Polonnaruwa</option>
+              <option>Puttalam</option>
+              <option>Ratnapura</option>
+              <option>Trincomalee</option>
+              <option>Vavuniya</option>
             </select>
           </div>
           <div class="field field--full">
             <label class="field-label" for="managerPassword">Temporary password</label>
-            <input class="input-standard" id="managerPassword" required minlength="6" type="password" placeholder="Minimum 6 characters">
+            <input class="input-standard" id="managerPassword" name="password" required minlength="8" type="password" placeholder="8+ characters, letter and number">
           </div>
         </div>
         <div class="modal-actions" style="margin-top: 20px;">
@@ -231,6 +249,8 @@
 
   <div class="toast" id="toast"></div>
 
+  <script src="../../shared/api.js"></script>
+  <script src="../../shared/session.js"></script>
   <script src="../../shared/script.js"></script>
   <script src="script.js"></script>
 </body>

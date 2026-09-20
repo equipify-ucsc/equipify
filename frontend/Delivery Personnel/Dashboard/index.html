@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="../../shared/styles.css">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-require-auth="delivery_personnel" data-login-url="../Login/index.html">
 
   <!-- Desktop Top Bar -->
   <header class="topbar topbar--desktop">
@@ -79,6 +79,12 @@
           <span>Profile</span>
         </a>
       </li>
+      <li>
+        <a class="sidenav-link" href="../Login/index.html" data-logout>
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
     </ul>
 
     <ul class="sidenav-footer">
@@ -86,12 +92,6 @@
         <a class="sidenav-link" href="#">
           <span class="icon" aria-hidden="true">settings</span>
           <span>Settings</span>
-        </a>
-      </li>
-      <li>
-        <a class="sidenav-link" href="#">
-          <span class="icon" aria-hidden="true">logout</span>
-          <span>Logout</span>
         </a>
       </li>
     </ul>
@@ -276,6 +276,8 @@
     </div>
   </main>
 
+  <script src="../../shared/api.js"></script>
+  <script src="../../shared/session.js"></script>
   <script src="../../shared/script.js"></script>
   <script src="script.js"></script>
 </body>

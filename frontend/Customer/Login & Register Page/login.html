@@ -48,13 +48,13 @@
           </div>
           <p class="error-message" id="passwordError" style="display:none;">
             <span class="material-symbols-outlined">error</span>
-            Incorrect email or password
+            <span class="error-text">Incorrect email or password</span>
           </p>
         </div>
 
         <div class="field-row-between" style="margin-bottom: 8px;">
           <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-            <input type="checkbox" style="width:16px; height:16px; accent-color: var(--brand-teal);">
+            <input type="checkbox" id="remember" style="width:16px; height:16px; accent-color: var(--brand-teal);">
             <span class="text-body-sm" style="color: var(--on-surface-variant);">Remember me</span>
           </label>
           <a class="link-teal label" href="#">Forgot password?</a>
@@ -66,8 +66,7 @@
       <div class="auth-footer">
         <p>Don't have an account?
           <a class="link-teal" style="font-weight:600;" href="register.html">Sign up now</a>
-        </p>
-      </div>
+        </p>      </div>
 
       <p class="mobile-copyright">© 2026 Equipify Sri Lanka. Industrial Reliability.</p>
     </div>
@@ -99,6 +98,7 @@
 
 </div>
 
+<script src="../../shared/api.js"></script>
 <script src="../../shared/auth.js"></script>
 <script src="auth.js"></script>
 </body>

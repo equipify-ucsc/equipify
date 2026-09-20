@@ -1,7 +1,10 @@
 /* ==========================================================================
    Equipify — Technician Login
    Page-specific form wiring only. Password-toggle and field-error helpers
-   live in ../../shared/auth.js as window.EquipifyAuth. No backend calls.
+   live in ../../shared/auth.js as window.EquipifyAuth.
+
+   Signs in through POST /auth/login with portal 'maintenance_tech', so an
+   account of any other role is rejected here.
    ========================================================================== */
 
 (function () {
@@ -27,21 +30,36 @@
 
     form.addEventListener('submit', function (event) {
       event.preventDefault();
-      // UI-only demo: no backend. Simply demonstrate the validation
-      // states are wired correctly rather than actually authenticating.
+
       var emailInput = document.getElementById('email');
       var emailValid = emailInput && emailInput.checkValidity();
       var passwordValid = passwordInput && passwordInput.value.length > 0;
 
       if (!emailValid || !passwordValid) {
-        if (passwordInput && !passwordValid) {
+        if (passwordInput) {
           EquipifyAuth.showFieldError(passwordInput, passwordError);
         }
         return;
       }
 
-      // Placeholder success behavior (no backend wired up).
-      form.querySelector('button[type="submit"]').textContent = 'Logging in…';
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var errorText = passwordError.querySelector('.error-text');
+      submitBtn.textContent = 'Signing in…';
+      submitBtn.disabled = true;
+      EquipifyApi.post('/auth/login', {
+        email: emailInput.value.trim(),
+        password: passwordInput.value,
+        portal: 'maintenance_tech'
+      }).then(function (res) {
+        if (res.ok) {
+          window.location.href = '../Dashboard/index.html';
+          return;
+        }
+        submitBtn.textContent = 'Log In';
+        submitBtn.disabled = false;
+        if (errorText) errorText.textContent = res.error;
+        EquipifyAuth.showFieldError(passwordInput, passwordError);
+      });
     });
   });
 })();

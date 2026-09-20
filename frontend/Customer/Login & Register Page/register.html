@@ -83,7 +83,7 @@
           </div>
 
           <div class="field">
-            <label class="text-label-md field-label" for="address">Full Address <span class="field-optional">(Optional)</span></label>
+            <label class="text-label-md field-label" for="address"><span class="field-required">*</span> Full Address</label>
             <input class="input-standard" id="address" placeholder="Enter your full address" type="text">
           </div>
 
@@ -157,6 +157,11 @@
             </label>
           </div>
 
+          <p class="error-message" id="formError" role="alert" style="display:none;">
+            <span class="material-symbols-outlined">error</span>
+            <span class="error-text"></span>
+          </p>
+
           <button class="btn btn-cta" type="submit" style="margin-top: 8px;">Create Account</button>
         </form>
 
@@ -189,6 +194,7 @@
 
 </div>
 
+<script src="../../shared/api.js"></script>
 <script src="../../shared/auth.js"></script>
 <script src="auth.js"></script>
 </body>
