@@ -42,14 +42,24 @@
         return;
       }
 
-      // Demo behavior (no backend): confirm success, then redirect to the
-      // Area Manager dashboard.
       var submitBtn = form.querySelector('button[type="submit"]');
-      submitBtn.textContent = 'Logging in…';
+      var errorText = passwordError.querySelector('.error-text');
+      submitBtn.textContent = 'Signing in…';
       submitBtn.disabled = true;
-      setTimeout(function () {
-        window.location.href = '../Dashboard/index.html';
-      }, 900);
+      EquipifyApi.post('/auth/login', {
+        email: emailInput.value.trim(),
+        password: passwordInput.value,
+        portal: 'area_manager'
+      }).then(function (res) {
+        if (res.ok) {
+          window.location.href = '../Dashboard/index.html';
+          return;
+        }
+        submitBtn.textContent = 'Log In';
+        submitBtn.disabled = false;
+        if (errorText) errorText.textContent = res.error;
+        EquipifyAuth.showFieldError(passwordInput, passwordError);
+      });
     });
   });
 })();

@@ -13,6 +13,7 @@ require_once __DIR__ . '/../core/Validator.php';
 require_once __DIR__ . '/../core/Router.php';
 require_once __DIR__ . '/../config/db_config.php';
 require_once __DIR__ . '/../controllers/AuthController.php';
+require_once __DIR__ . '/../controllers/AreaManagerController.php';
 
 try {
     session_set_cookie_params([
@@ -39,7 +40,8 @@ try {
     // Path relative to this script's folder, e.g. /equipify/backend/api/auth/me -> /auth/me
     $uriPath = (string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
     $base    = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
-    $path    = rawurldecode(strpos($uriPath, $base) === 0 ? substr($uriPath, strlen($base)) : $uriPath);
+    // Case-insensitive: Windows serves /equipify/... and /Equipify/... alike.
+    $path    = rawurldecode(stripos($uriPath, $base) === 0 ? substr($uriPath, strlen($base)) : $uriPath);
     if (strpos($path, '/index.php') === 0) {
         $path = substr($path, strlen('/index.php'));
     }

@@ -15,7 +15,9 @@
 (function () {
   'use strict';
 
-  var LOGIN_URL = '../Login & Register Page/login.html';
+  // Customer default; other roles set <body data-login-url="...">.
+  var LOGIN_URL = (document.body && document.body.getAttribute('data-login-url')) ||
+    '../Login & Register Page/login.html';
 
   function goToLogin() {
     window.location.replace(LOGIN_URL);

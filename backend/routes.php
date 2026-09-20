@@ -12,3 +12,7 @@ $router->add('POST', '/auth/register/renting-party', [AuthController::class, 're
 $router->add('POST', '/auth/login',   [AuthController::class, 'login']);
 $router->add('POST', '/auth/logout',   [AuthController::class, 'logout']);
 $router->add('GET',  '/auth/me',       [AuthController::class, 'me']);
+
+// Admin: area manager registration (no public sign-up for this role)
+$router->add('GET',  '/admin/area-managers', [AreaManagerController::class, 'index'], ['admin']);
+$router->add('POST', '/admin/area-managers', [AreaManagerController::class, 'store'], ['admin']);
