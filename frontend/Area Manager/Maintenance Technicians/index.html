@@ -155,82 +155,18 @@
           </div>
           <select class="select-filter" id="statusFilter" data-filter-table-status="technicianTable">
             <option value="">All statuses</option>
-            <option value="Active">Active</option>
-            <option value="On Leave">On Leave</option>
-            <option value="Inactive">Inactive</option>
+            <option value="available">Available</option>
+            <option value="busy">Busy</option>
+            <option value="unavailable">Unavailable</option>
           </select>
         </div>
         <div class="table-wrap">
           <table class="table" id="technicianTable">
             <thead>
-              <tr><th>Technician</th><th>Contact</th><th>Categories Serviced</th><th>Appointments Completed</th><th>Status</th><th>Actions</th></tr>
+              <tr><th>Technician</th><th>Contact</th><th>Categories Serviced</th><th>Status</th><th>Actions</th></tr>
             </thead>
             <tbody>
-              <tr data-status="Active">
-                <td><strong>N. Wickramasinghe</strong></td>
-                <td>0771 122 334</td>
-                <td>Heavy Machinery, Generators</td>
-                <td>84</td>
-                <td><span class="badge-status badge-status--active">Active</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm" type="button" data-toast="N. Wickramasinghe's profile opened.">View</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="Active">
-                <td><strong>K. Dissanayake</strong></td>
-                <td>0772 233 445</td>
-                <td>Power Tools, Scaffolding</td>
-                <td>67</td>
-                <td><span class="badge-status badge-status--active">Active</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm" type="button" data-toast="K. Dissanayake's profile opened.">View</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="Active">
-                <td><strong>P. Gunasekara</strong></td>
-                <td>0773 344 556</td>
-                <td>Concrete Equipment</td>
-                <td>52</td>
-                <td><span class="badge-status badge-status--active">Active</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm" type="button" data-toast="P. Gunasekara's profile opened.">View</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="On Leave">
-                <td><strong>D. Weerasinghe</strong></td>
-                <td>0774 455 667</td>
-                <td>Generators, Compressors</td>
-                <td>39</td>
-                <td><span class="badge-status badge-status--pending">On Leave</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm" type="button" data-toast="D. Weerasinghe's profile opened.">View</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="Inactive">
-                <td><strong>H. Abeywardena</strong></td>
-                <td>0775 566 778</td>
-                <td>Power Tools</td>
-                <td>21</td>
-                <td><span class="badge-status badge-status--rejected">Inactive</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm" type="button" data-toast="H. Abeywardena's profile opened.">View</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
+              <tr><td colspan="5">Loading technicians…</td></tr>
             </tbody>
           </table>
         </div>
@@ -249,26 +185,31 @@
         </button>
       </div>
       <form id="technicianForm" data-success-message="Maintenance technician registered successfully.">
+        <p class="field-error" id="technicianFormError" role="alert" hidden style="color:#b3261e;margin:12px 0 0;"></p>
         <div class="form-grid" style="margin-top: 18px;">
           <div class="field">
             <label class="field-label" for="technicianName">Full name</label>
-            <input class="input-standard" id="technicianName" required placeholder="Technician name">
+            <input class="input-standard" id="technicianName" name="full_name" required placeholder="Technician name">
           </div>
           <div class="field">
             <label class="field-label" for="technicianEmail">Email</label>
-            <input class="input-standard" id="technicianEmail" type="email" required placeholder="name@equipify.lk">
+            <input class="input-standard" id="technicianEmail" name="email" type="email" required placeholder="name@equipify.lk">
           </div>
           <div class="field">
             <label class="field-label" for="technicianPhone">Phone</label>
-            <input class="input-standard" id="technicianPhone" required placeholder="+94 ...">
+            <input class="input-standard" id="technicianPhone" name="phone" required placeholder="+94 ...">
           </div>
           <div class="field">
             <label class="field-label" for="technicianCategories">Categories serviced</label>
-            <input class="input-standard" id="technicianCategories" required placeholder="e.g. Power Tools, Generators">
+            <input class="input-standard" id="technicianCategories" name="specialization" required maxlength="150" placeholder="e.g. Power Tools, Generators">
+          </div>
+          <div class="field">
+            <label class="field-label" for="technicianExperience">Years of experience (optional)</label>
+            <input class="input-standard" id="technicianExperience" name="years_experience" type="number" min="0" max="70" step="1" placeholder="e.g. 5">
           </div>
           <div class="field field--full">
             <label class="field-label" for="technicianPassword">Temporary password</label>
-            <input class="input-standard" id="technicianPassword" required minlength="6" type="password" placeholder="Minimum 6 characters">
+            <input class="input-standard" id="technicianPassword" name="password" required minlength="8" type="password" placeholder="8+ characters, letter and number">
           </div>
         </div>
         <div class="modal-actions" style="margin-top: 20px;">

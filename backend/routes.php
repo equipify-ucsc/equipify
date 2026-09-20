@@ -16,3 +16,9 @@ $router->add('GET',  '/auth/me',       [AuthController::class, 'me']);
 // Admin: area manager registration (no public sign-up for this role)
 $router->add('GET',  '/admin/area-managers', [AreaManagerController::class, 'index'], ['admin']);
 $router->add('POST', '/admin/area-managers', [AreaManagerController::class, 'store'], ['admin']);
+
+// Area manager: staff registration (no public sign-up for either role)
+$router->add('GET',  '/area-manager/delivery-personnel', [DeliveryPersonnelController::class, 'index'], ['area_manager']);
+$router->add('POST', '/area-manager/delivery-personnel', [DeliveryPersonnelController::class, 'store'], ['area_manager']);
+$router->add('GET',  '/area-manager/technicians',        [MaintenanceTechController::class, 'index'],   ['area_manager']);
+$router->add('POST', '/area-manager/technicians',        [MaintenanceTechController::class, 'store'],   ['area_manager']);

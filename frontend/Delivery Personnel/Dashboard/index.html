@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="../../shared/styles.css">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-require-auth="delivery_personnel" data-login-url="../Login/index.html">
 
   <!-- Desktop Top Bar -->
   <header class="topbar topbar--desktop">
@@ -276,6 +276,8 @@
     </div>
   </main>
 
+  <script src="../../shared/api.js"></script>
+  <script src="../../shared/session.js"></script>
   <script src="../../shared/script.js"></script>
   <script src="script.js"></script>
 </body>

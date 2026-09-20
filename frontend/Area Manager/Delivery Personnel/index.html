@@ -155,95 +155,18 @@
           </div>
           <select class="select-filter" id="statusFilter" data-filter-table-status="personnelTable">
             <option value="">All statuses</option>
-            <option value="On Duty">On Duty</option>
-            <option value="Off Duty">Off Duty</option>
-            <option value="On Leave">On Leave</option>
+            <option value="available">Available</option>
+            <option value="busy">Busy</option>
+            <option value="unavailable">Unavailable</option>
           </select>
         </div>
         <div class="table-wrap">
           <table class="table" id="personnelTable">
             <thead>
-              <tr><th>Personnel</th><th>Contact</th><th>Vehicle Assigned</th><th>Deliveries Completed</th><th>Status</th><th>Actions</th></tr>
+              <tr><th>Personnel</th><th>Contact</th><th>License</th><th>Status</th><th>Actions</th></tr>
             </thead>
             <tbody>
-              <tr data-status="On Duty">
-                <td><strong>S. Fernando</strong></td>
-                <td>0771 234 567</td>
-                <td>WP-CAJ-9091 — Lorry</td>
-                <td>128</td>
-                <td><span class="badge-status badge-status--active">On Duty</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm" type="button" data-toast="S. Fernando's profile opened.">View</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="On Duty">
-                <td><strong>R. Jayasuriya</strong></td>
-                <td>0772 345 678</td>
-                <td>WP-CAB-2231 — Lorry</td>
-                <td>96</td>
-                <td><span class="badge-status badge-status--active">On Duty</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm" type="button" data-toast="R. Jayasuriya's profile opened.">View</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="On Duty">
-                <td><strong>T. Bandara</strong></td>
-                <td>0773 456 789</td>
-                <td>WP-KA-4410 — Van</td>
-                <td>142</td>
-                <td><span class="badge-status badge-status--active">On Duty</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm" type="button" data-toast="T. Bandara's profile opened.">View</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="Off Duty">
-                <td><strong>N. Perera</strong></td>
-                <td>0774 567 890</td>
-                <td>Unassigned</td>
-                <td>73</td>
-                <td><span class="badge-status badge-status--completed">Off Duty</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm" type="button" data-toast="N. Perera's profile opened.">View</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="On Leave">
-                <td><strong>A. Silva</strong></td>
-                <td>0775 678 901</td>
-                <td>WP-NA-1123 — Van</td>
-                <td>61</td>
-                <td><span class="badge-status badge-status--pending">On Leave</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm" type="button" data-toast="A. Silva's profile opened.">View</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="Off Duty">
-                <td><strong>M. Rathnayake</strong></td>
-                <td>0776 789 012</td>
-                <td>Unassigned</td>
-                <td>54</td>
-                <td><span class="badge-status badge-status--completed">Off Duty</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm" type="button" data-toast="M. Rathnayake's profile opened.">View</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
+              <tr><td colspan="5">Loading personnel…</td></tr>
             </tbody>
           </table>
         </div>
@@ -262,36 +185,50 @@
         </button>
       </div>
       <form id="personnelForm" data-success-message="Delivery personnel registered successfully.">
+        <p class="field-error" id="personnelFormError" role="alert" hidden style="color:#b3261e;margin:12px 0 0;"></p>
         <div class="form-grid" style="margin-top: 18px;">
           <div class="field">
             <label class="field-label" for="personnelName">Full name</label>
-            <input class="input-standard" id="personnelName" required placeholder="Personnel name">
+            <input class="input-standard" id="personnelName" name="full_name" required placeholder="Personnel name">
           </div>
           <div class="field">
             <label class="field-label" for="personnelEmail">Email</label>
-            <input class="input-standard" id="personnelEmail" type="email" required placeholder="name@equipify.lk">
+            <input class="input-standard" id="personnelEmail" name="email" type="email" required placeholder="name@equipify.lk">
           </div>
           <div class="field">
             <label class="field-label" for="personnelPhone">Phone</label>
-            <input class="input-standard" id="personnelPhone" required placeholder="+94 ...">
+            <input class="input-standard" id="personnelPhone" name="phone" required placeholder="+94 ...">
           </div>
           <div class="field">
             <label class="field-label" for="personnelLicense">Driving license no.</label>
-            <input class="input-standard" id="personnelLicense" required placeholder="License number">
+            <input class="input-standard" id="personnelLicense" name="driving_license_no" required maxlength="20" placeholder="License number">
           </div>
-          <div class="field field--full">
-            <label class="field-label" for="personnelVehicle">Assign vehicle (optional)</label>
-            <select class="input-standard" id="personnelVehicle">
-              <option value="">Unassigned</option>
-              <option>WP-CAB-2231 — Lorry</option>
-              <option>WP-KA-4410 — Van</option>
-              <option>WP-CAJ-9091 — Lorry</option>
-              <option>WP-NA-1123 — Van</option>
+          <div class="field">
+            <label class="field-label" for="personnelLicenseClass">License class</label>
+            <select class="input-standard" id="personnelLicenseClass" name="license_class" required>
+              <option value="">Select class</option>
+              <option>A1</option>
+              <option>A</option>
+              <option>B1</option>
+              <option>B</option>
+              <option>C1</option>
+              <option>C</option>
+              <option>CE</option>
+              <option>D1</option>
+              <option>D</option>
+              <option>DE</option>
+              <option>G1</option>
+              <option>G</option>
+              <option>J</option>
             </select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="personnelLicenseExpiry">License expiry</label>
+            <input class="input-standard" id="personnelLicenseExpiry" name="license_expiry" type="date" required>
           </div>
           <div class="field field--full">
             <label class="field-label" for="personnelPassword">Temporary password</label>
-            <input class="input-standard" id="personnelPassword" required minlength="6" type="password" placeholder="Minimum 6 characters">
+            <input class="input-standard" id="personnelPassword" name="password" required minlength="8" type="password" placeholder="8+ characters, letter and number">
           </div>
         </div>
         <div class="modal-actions" style="margin-top: 20px;">

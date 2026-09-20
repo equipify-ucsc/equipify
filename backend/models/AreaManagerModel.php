@@ -17,6 +17,24 @@ final class AreaManagerModel
         $stmt->execute([':user_id' => $userId, ':registered_by' => $registeredBy]);
     }
 
+    /**
+     * The district the area manager covers, or null if the user is not an area
+     * manager. Staff they register inherit it, since neither registration form
+     * asks for a district.
+     */
+    public static function districtOf(int $userId): ?string
+    {
+        $stmt = getDbConnection()->prepare(
+            'SELECT u.district
+               FROM area_managers am
+               JOIN users u ON u.user_id = am.user_id
+              WHERE am.user_id = :id LIMIT 1'
+        );
+        $stmt->execute([':id' => $userId]);
+        $district = $stmt->fetchColumn();
+        return $district === false || $district === null ? null : (string) $district;
+    }
+
     /** @return array<int,array<string,mixed>> */
     public static function all(): array
     {

@@ -195,7 +195,8 @@ final class AuthController
 
         // Each login page only signs in its own kind of account; omitted = customer.
         $role = $in['portal'] ?? 'customer';
-        if (!in_array($role, ['customer', 'renting_party', 'area_manager', 'admin'], true)) {
+        $portals = ['customer', 'renting_party', 'delivery_personnel', 'maintenance_tech', 'area_manager', 'admin'];
+        if (!in_array($role, $portals, true)) {
             Response::error('Unknown login portal.', 422);
         }
 

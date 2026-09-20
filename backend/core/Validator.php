@@ -86,6 +86,39 @@ final class Validator
     }
 
     /**
+     * A real calendar date written as YYYY-MM-DD (the format <input type="date">
+     * submits and MySQL DATE stores).
+     *
+     * @param mixed $value
+     */
+    public static function date($value, string $label): ?string
+    {
+        if ($m = self::required($value, $label)) {
+            return $m;
+        }
+        $date = DateTimeImmutable::createFromFormat('!Y-m-d', trim($value));
+        // createFromFormat accepts overflow like 2026-02-31 and rolls it over,
+        // so compare the reformatted date back to the input.
+        if ($date === false || $date->format('Y-m-d') !== trim($value)) {
+            return $label . ' must be a valid date.';
+        }
+        return null;
+    }
+
+    /** A valid date that is today or later. @param mixed $value */
+    public static function futureDate($value, string $label): ?string
+    {
+        if ($m = self::date($value, $label)) {
+            return $m;
+        }
+        $today = new DateTimeImmutable('today');
+        if (DateTimeImmutable::createFromFormat('!Y-m-d', trim($value)) < $today) {
+            return $label . ' cannot be in the past.';
+        }
+        return null;
+    }
+
+    /**
      * @param mixed    $value
      * @param string[] $allowed
      */
