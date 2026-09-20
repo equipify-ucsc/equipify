@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 // Auth
 $router->add('POST', '/auth/register', [AuthController::class, 'register']);
-$router->add('POST', '/auth/login',    [AuthController::class, 'login']);
+$router->add('POST', '/auth/register/renting-party', [AuthController::class, 'registerRentingParty']);
+$router->add('POST', '/auth/login',   [AuthController::class, 'login']);
 $router->add('POST', '/auth/logout',   [AuthController::class, 'logout']);
 $router->add('GET',  '/auth/me',       [AuthController::class, 'me']);
