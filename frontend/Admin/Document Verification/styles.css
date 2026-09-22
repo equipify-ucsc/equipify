@@ -83,7 +83,6 @@
   gap: var(--space-lg);
 }
 @media (min-width: 640px) {
-  .admin-grid--2,
   .admin-grid--3 {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -187,18 +186,6 @@
   display: flex;
   gap: var(--space-xs);
   flex-wrap: wrap;
-}
-
-/* ---------- Verification checklist ---------- */
-.checklist-role {
-  color: var(--color-on-surface);
-  font-size: 14px;
-}
-.checklist-text {
-  margin-top: 6px;
-  color: var(--color-on-surface-variant);
-  font-size: 13px;
-  line-height: 1.5;
 }
 
 /* ---------- Toast ---------- */

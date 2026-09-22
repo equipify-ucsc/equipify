@@ -136,6 +136,14 @@
             <option>Verified</option>
             <option>Rejected</option>
           </select>
+          <select class="select-filter" data-role-filter="docsTable">
+            <option value="">All Roles</option>
+            <option>Customer</option>
+            <option>Renting Party</option>
+            <option>Freelancer</option>
+            <option>Delivery Personnel</option>
+            <option>Maintenance Technician</option>
+          </select>
         </div>
         <div class="table-wrap">
           <table class="table" id="docsTable">
@@ -143,7 +151,7 @@
               <tr><th>Applicant</th><th>Role</th><th>Document</th><th>Submitted</th><th>Status</th><th>Action</th></tr>
             </thead>
             <tbody>
-              <tr data-status="Pending">
+              <tr data-status="Pending" data-role="Renting Party">
                 <td><strong>Nimal Construction</strong></td>
                 <td>Renting Party</td>
                 <td>Business Registration</td>
@@ -151,7 +159,7 @@
                 <td><span class="badge-status badge-status--pending">Pending</span></td>
                 <td class="table-actions"><button class="btn-primary btn-sm" type="button" data-action="approve">Approve</button> <button class="btn-danger btn-sm" type="button" data-action="reject">Reject</button></td>
               </tr>
-              <tr data-status="Pending">
+              <tr data-status="Pending" data-role="Freelancer">
                 <td><strong>FastLift Operator</strong></td>
                 <td>Freelancer</td>
                 <td>Operator License</td>
@@ -159,15 +167,15 @@
                 <td><span class="badge-status badge-status--pending">Pending</span></td>
                 <td class="table-actions"><button class="btn-primary btn-sm" type="button" data-action="approve">Approve</button> <button class="btn-danger btn-sm" type="button" data-action="reject">Reject</button></td>
               </tr>
-              <tr data-status="Verified">
+              <tr data-status="Verified" data-role="Customer">
                 <td><strong>Metro Events</strong></td>
                 <td>Customer</td>
                 <td>Business ID</td>
                 <td>14 Aug 2026</td>
                 <td><span class="badge-status badge-status--active">Verified</span></td>
-                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-toast="Document details opened.">View</button></td>
+                <td class="table-actions"><a class="btn-outline btn-sm" href="../../../backend/storage/uploads/" target="_blank" rel="noopener">View</a></td>
               </tr>
-              <tr data-status="Rejected">
+              <tr data-status="Rejected" data-role="Delivery Personnel">
                 <td><strong>QuickMove</strong></td>
                 <td>Delivery Personnel</td>
                 <td>Vehicle License</td>
@@ -177,30 +185,6 @@
               </tr>
             </tbody>
           </table>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top: 18px;">
-        <div class="section-title">
-          <h3 class="type-headline-sm">Verification checklist</h3>
-        </div>
-        <div class="admin-grid admin-grid--2">
-          <div>
-            <strong class="checklist-role">Business owners / renting parties</strong>
-            <p class="checklist-text">Confirm business registration, authorized representative details and supporting identity documents.</p>
-          </div>
-          <div>
-            <strong class="checklist-role">Freelance operators</strong>
-            <p class="checklist-text">Review operator certifications, identity documents and relevant licenses.</p>
-          </div>
-          <div>
-            <strong class="checklist-role">Delivery personnel</strong>
-            <p class="checklist-text">Review identity, driving credentials and vehicle documentation.</p>
-          </div>
-          <div>
-            <strong class="checklist-role">Maintenance technicians</strong>
-            <p class="checklist-text">Review professional credentials and service-related supporting documents.</p>
-          </div>
         </div>
       </div>
 
