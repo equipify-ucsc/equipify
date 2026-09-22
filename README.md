@@ -79,12 +79,14 @@ backend/
 │   ├── .htaccess      sends every /api/... URL to index.php
 │   └── index.php      front controller: the only entry point for the browser
 ├── config/
-│   └── db_config.php  database settings and getDbConnection()
+│   ├── db_config.php  database settings and getDbConnection()
+│   └── app_key.php    encryption key, generated on first use — git ignored, never committed
 ├── core/              small hand-written framework, built once and reused everywhere
 │   ├── Router.php     matches method + URL to a controller method and runs the role check
 │   ├── Response.php   sends JSON replies with the correct HTTP status code
 │   ├── Auth.php       reads the logged-in user and role from the session; blocks with 401/403
-│   └── Validator.php  reusable input checks (integers, emails, lengths, dates, allowed values)
+│   ├── Validator.php  reusable input checks (integers, emails, lengths, dates, allowed values)
+│   └── Crypto.php     authenticated encryption for stored secrets (payout account details)
 ├── routes.php         list of every API endpoint, its handler, and the roles allowed to call it
 ├── controllers/       one controller per module; handles requests
 ├── models/            one model per main table; the only place that runs SQL
@@ -97,7 +99,7 @@ backend/
 | Folder / file | Responsibility | Must not |
 |---|---|---|
 | `api/` | Receive every request, start the session, catch errors | Contain feature logic |
-| `config/` | Hold settings and the shared database connection | Contain real passwords in git |
+| `config/` | Hold settings, the shared database connection and the encryption key | Contain real passwords or keys in git |
 | `core/` | Routing, JSON responses, authentication, validation | Know about specific features |
 | `routes.php` | Map each URL to a controller method and its allowed roles | Contain logic |
 | `controllers/` | Read input → validate → call model/service → respond | Run SQL or output HTML |

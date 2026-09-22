@@ -159,6 +159,21 @@
       </div>
 
       <div class="card" style="margin-top: 18px;">
+        <div class="section-head">
+          <div>
+            <h2 class="card-title">Payout methods</h2>
+            <p class="type-body-md page-subtitle" style="margin: 0;">Where PayHere sends your earnings. Your account details are encrypted before they are saved, so nobody here can read them back.</p>
+          </div>
+          <div class="section-head-actions">
+            <button class="btn-primary btn-sm" type="button" id="addPayoutBtn">
+              <span class="icon icon-sm" aria-hidden="true">add</span> Add method
+            </button>
+          </div>
+        </div>
+        <div class="record-list record-list--2" id="payoutList"></div>
+      </div>
+
+      <div class="card" style="margin-top: 18px;">
         <div class="toolbar">
           <div class="search-field">
             <span class="icon icon-sm" aria-hidden="true">search</span>
@@ -188,6 +203,74 @@
 
     </div>
   </main>
+
+  <!-- Add a payout method -->
+  <div class="modal-backdrop" id="payoutModal" role="dialog" aria-modal="true" aria-labelledby="payoutModalTitle">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 class="card-title" id="payoutModalTitle" style="margin-bottom:0;">Add a payout method</h2>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+
+      <form id="payoutForm" novalidate data-success-message="Payout method saved.">
+        <div class="form-grid" style="margin-top: 16px;">
+          <div class="field">
+            <label class="field-label" for="payoutLabel">Name this method</label>
+            <input class="input-standard" id="payoutLabel" name="label" type="text" maxlength="60"
+                   placeholder="e.g. Salary account" required>
+            <span class="field-hint">Just for you, so you can tell them apart.</span>
+          </div>
+          <div class="field">
+            <label class="field-label" for="payoutProvider">Payout method</label>
+            <select class="input-standard" id="payoutProvider" name="provider" required>
+              <option value="">Loading…</option>
+            </select>
+          </div>
+
+          <div class="field field--full">
+            <label class="field-label" for="payoutAccountName">Account holder name</label>
+            <input class="input-standard" id="payoutAccountName" name="account_name" type="text" maxlength="150"
+                   placeholder="Exactly as it appears on the account" required>
+          </div>
+
+          <!-- Bank-only fields; shown by script.js when the chosen method is a bank. -->
+          <div class="field" data-payout-fields="bank_account" hidden>
+            <label class="field-label" for="payoutAccountNumber">Account number</label>
+            <input class="input-standard" id="payoutAccountNumber" name="account_number" type="text"
+                   inputmode="numeric" maxlength="24" autocomplete="off" placeholder="6 to 20 digits">
+          </div>
+          <div class="field" data-payout-fields="bank_account" hidden>
+            <label class="field-label" for="payoutBranch">Branch</label>
+            <input class="input-standard" id="payoutBranch" name="branch" type="text" maxlength="100"
+                   placeholder="e.g. Kollupitiya">
+          </div>
+
+          <!-- Wallet-only field, for the same reason. -->
+          <div class="field" data-payout-fields="mobile_wallet digital_wallet" hidden>
+            <label class="field-label" for="payoutMobile">Registered mobile number</label>
+            <input class="input-standard" id="payoutMobile" name="mobile_number" type="tel"
+                   maxlength="15" autocomplete="off" placeholder="07X XXX XXXX">
+          </div>
+
+          <div class="field field--full">
+            <label class="checkbox-field">
+              <input id="payoutDefault" name="is_default" type="checkbox">
+              <span>Send my earnings here by default</span>
+            </label>
+          </div>
+        </div>
+
+        <p class="form-error" id="payoutFormError" role="alert" hidden></p>
+
+        <div class="modal-actions">
+          <button class="btn-outline" type="button" data-modal-close>Cancel</button>
+          <button class="btn-primary" type="submit">Save method</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Invoice -->
   <div class="modal-backdrop" id="invoiceModal">

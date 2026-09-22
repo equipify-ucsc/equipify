@@ -19,6 +19,7 @@ require_once __DIR__ . '/../controllers/DeliveryPersonnelController.php';
 require_once __DIR__ . '/../controllers/MaintenanceTechController.php';
 require_once __DIR__ . '/../controllers/FreelanceWorkerController.php';
 require_once __DIR__ . '/../controllers/FreelanceWorkerMockController.php';
+require_once __DIR__ . '/../controllers/PayoutMethodController.php';
 
 try {
     session_set_cookie_params([

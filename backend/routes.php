@@ -35,6 +35,16 @@ $router->add('GET',  '/freelancer/portfolio',    [FreelanceWorkerController::cla
 $router->add('POST', '/freelancer/portfolio',    [FreelanceWorkerController::class, 'storePortfolio'],     ['freelance_worker']);
 $router->add('GET',  '/freelancer/portfolio/{id}/image', [FreelanceWorkerController::class, 'showPortfolioImage'], ['freelance_worker']);
 
+// Freelance worker: payout destinations for PayHere. Account details are stored
+// encrypted and are never read back, so there is no endpoint that returns one.
+// The table is keyed on user_id, so delivery personnel can be added to these
+// role lists when their payments page is built, with no other change.
+$router->add('GET',    '/freelancer/payout-providers',        [PayoutMethodController::class, 'indexProviders'], ['freelance_worker']);
+$router->add('GET',    '/freelancer/payout-methods',          [PayoutMethodController::class, 'index'],          ['freelance_worker']);
+$router->add('POST',   '/freelancer/payout-methods',          [PayoutMethodController::class, 'store'],          ['freelance_worker']);
+$router->add('POST',   '/freelancer/payout-methods/{id}/default', [PayoutMethodController::class, 'makeDefault'], ['freelance_worker']);
+$router->add('DELETE', '/freelancer/payout-methods/{id}',     [PayoutMethodController::class, 'destroy'],        ['freelance_worker']);
+
 // Freelance worker: placeholder data until the jobs/bids/payments/messaging
 // tables exist. Same response shapes as the real endpoints — see the controller.
 $router->add('GET',  '/freelancer/dashboard',                [FreelanceWorkerMockController::class, 'dashboard'],             ['freelance_worker']);

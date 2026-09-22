@@ -89,6 +89,10 @@
     get: function (path) { return request('GET', path); },
     query: function (path, params) { return request('GET', withQuery(path, params)); },
     post: function (path, body) { return request('POST', path, body === undefined ? {} : body); },
-    put: function (path, body) { return request('PUT', path, body === undefined ? {} : body); }
+    put: function (path, body) { return request('PUT', path, body === undefined ? {} : body); },
+    // An empty object rather than no body: the API rejects a state-changing
+    // request that isn't application/json, and the header only goes out when
+    // there is something to send.
+    del: function (path, body) { return request('DELETE', path, body === undefined ? {} : body); }
   };
 })();
