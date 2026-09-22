@@ -1,0 +1,1171 @@
+/* ==========================================================================
+   Equipify — Freelance Worker portal shell
+   Design system: "Industrial Integrity"
+   Vanilla CSS — no framework dependencies
+
+   Loaded by every page in this folder, after ../../shared/styles.css (tokens,
+   reset, typography, topbar, sidenav, buttons, badges, card base) and before
+   the page's own styles.css.
+
+   The other role folders repeat these dashboard-page rules (page head, grids,
+   stat cards, toolbar, table, modal, form, toast) inside each page's
+   styles.css. This portal has ten pages, so they live here once instead, and
+   each page's styles.css is left for what is genuinely specific to it.
+   ========================================================================== */
+
+/* ---------- Topbar ---------- */
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* ---------- Side navigation ---------- */
+.sidenav-footer {
+  margin-top: auto;
+}
+
+/* ---------- Page head ---------- */
+.page-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+@media (min-width: 768px) {
+  .page-head {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.page-title {
+  color: var(--color-navy);
+  margin-bottom: 4px;
+}
+
+.page-subtitle {
+  color: var(--color-on-surface-variant);
+}
+
+.page-head-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+/* ---------- Card base ---------- */
+.card {
+  padding: var(--card-padding);
+}
+
+.card + .card {
+  margin-top: var(--space-lg);
+}
+
+/* A card's title with an action beside it (the modal head's layout, but a
+   card is not a modal, so it gets its own name). */
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.section-head-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin: 0 0 var(--space-md);
+}
+
+/* ---------- Grid utilities ---------- */
+.admin-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+@media (min-width: 640px) {
+  .admin-grid--2,
+  .admin-grid--3,
+  .admin-grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .admin-grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .admin-grid--4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ---------- Stat cards ---------- */
+.stat-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.stat-card-label {
+  color: var(--color-on-surface-variant);
+  font-size: 13px;
+  margin: 0;
+}
+
+.stat-card-value {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin: 8px 0 2px;
+}
+
+.stat-card-trend {
+  color: var(--color-on-surface-variant);
+  font-size: 13px;
+  margin: 0;
+}
+
+.stat-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-active-bg);
+  color: var(--color-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---------- Toolbar / search / filter ---------- */
+.toolbar {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.search-field {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  align-items: center;
+}
+.search-field .icon {
+  position: absolute;
+  left: 12px;
+  color: var(--color-on-surface-variant);
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.search-input:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
+}
+
+/* shared/styles.css suppresses the browser's own dropdown arrow and paints the
+   chevron itself, so the text starts at the same 12px as the search box beside
+   it. The right-hand room for that chevron has to be repeated here, because
+   this shorthand would otherwise reset it. */
+.select-filter {
+  padding: 10px 34px 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-size: 14px;
+  outline: none;
+}
+.select-filter:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
+}
+
+/* A date bound in a range filter, sized to sit beside the selects. */
+.date-filter {
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-size: 14px;
+  outline: none;
+}
+.date-filter:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
+}
+
+.toolbar-check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 14px;
+  color: var(--color-on-surface-variant);
+  white-space: nowrap;
+}
+
+/* ---------- Filter tabs ---------- */
+.filter-tabs {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-surface-variant);
+}
+
+.filter-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 10px var(--space-md);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-on-surface-variant);
+  cursor: pointer;
+}
+.filter-tab:hover {
+  color: var(--color-on-surface);
+}
+.filter-tab.is-active {
+  color: var(--color-teal);
+  border-bottom-color: var(--color-teal);
+}
+
+/* ---------- Table ---------- */
+.table-wrap {
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+}
+.table th,
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--color-surface-variant);
+  text-align: left;
+  font-size: 13px;
+  vertical-align: middle;
+}
+.table th {
+  color: var(--color-on-surface-variant);
+  font-weight: 700;
+  background-color: var(--color-surface-container-low);
+}
+.table tbody tr:hover td {
+  background-color: var(--color-surface-container-low);
+}
+.table td .row-actions {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.cell-muted {
+  color: var(--color-on-surface-variant);
+}
+
+/* ---------- List states (loading / empty / error) ---------- */
+.list-state {
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--color-on-surface-variant);
+  font-size: 14px;
+}
+.list-state--error {
+  color: var(--color-rejected-fg);
+}
+/* Inside a table the state is a <td>, which already has table padding. */
+td.list-state {
+  text-align: center;
+}
+
+/* ---------- Pager ----------
+   Numbered pages: ‹ 1 … 4 [5] 6 … 20 ›. Every button is the same square so the
+   row stays even, and the whole strip scrolls sideways rather than wrapping
+   into a second line on a narrow screen. */
+.pager {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-md);
+  min-height: 24px;
+}
+
+.pager-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  max-width: 100%;
+  overflow-x: auto;
+  /* Room for the focus ring, which would otherwise be clipped by the scroller. */
+  padding: 3px;
+  scrollbar-width: none;
+}
+.pager-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.pager-btn,
+.pager-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-navy);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.pager-btn:hover:not(:disabled),
+.pager-num:hover:not(:disabled) {
+  background-color: var(--color-surface-container-low);
+  border-color: var(--color-teal);
+}
+.pager-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* The current page is a marker, not a target: disabled, but at full contrast. */
+.pager-num.is-current {
+  background-color: var(--color-teal);
+  border-color: var(--color-teal);
+  color: #ffffff;
+  opacity: 1;
+  cursor: default;
+}
+
+.pager-gap {
+  padding: 0 2px;
+  color: var(--color-on-surface-variant);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.result-count {
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+  white-space: nowrap;
+}
+
+/* ---------- Modal ---------- */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(26, 40, 64, 0.5);
+  z-index: 60;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+}
+.modal-backdrop.is-open {
+  display: flex;
+}
+
+.modal {
+  background-color: var(--color-surface-container-lowest);
+  width: min(560px, 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
+  padding: var(--space-lg);
+  max-height: calc(100vh - 2 * var(--space-lg));
+  overflow-y: auto;
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.modal-close {
+  background-color: var(--color-surface-container-low);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  display: inline-flex;
+  color: var(--color-on-surface-variant);
+  cursor: pointer;
+}
+.modal-close:hover {
+  background-color: var(--color-surface-container);
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: var(--space-lg);
+}
+
+/* ---------- Form elements ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+@media (min-width: 640px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.field-hint {
+  font-size: 12px;
+  color: var(--color-on-surface-variant);
+}
+
+.input-standard {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  padding: 10px 12px;
+  color: var(--color-on-surface);
+  outline: none;
+  font-size: 14px;
+  font-family: var(--font-body);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input-standard:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
+}
+textarea.input-standard {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/* .input-standard also dresses inputs and textareas, which have no arrow to
+   make room for. Only the selects need the extra right-hand padding that
+   shared/styles.css reserves. */
+select.input-standard {
+  padding-right: 34px;
+}
+
+.form-error {
+  color: var(--color-rejected-fg);
+  font-size: 13px;
+  margin: var(--space-sm) 0 0;
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  background-color: var(--color-deep-navy);
+  color: #ffffff;
+  padding: 13px 16px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+  font-size: 14px;
+  font-weight: 600;
+  display: none;
+  z-index: 80;
+  max-width: min(360px, calc(100vw - 44px));
+}
+.toast.is-visible {
+  display: block;
+}
+
+/* ---------- Banner (verification prompt) ---------- */
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-lg);
+  background-color: var(--color-pending-bg);
+  color: var(--color-pending-fg);
+}
+.banner--rejected {
+  background-color: var(--color-rejected-bg);
+  color: var(--color-rejected-fg);
+}
+.banner--verified {
+  background-color: var(--color-active-bg);
+  color: var(--color-active-fg);
+}
+.banner-body {
+  flex: 1;
+}
+.banner-title {
+  font-weight: 700;
+  font-size: 14px;
+  margin: 0 0 2px;
+}
+.banner-text {
+  font-size: 13px;
+  margin: 0;
+}
+.banner a {
+  color: inherit;
+  font-weight: 700;
+}
+
+/* ---------- Job / record cards ---------- */
+.record-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+@media (min-width: 1024px) {
+  .record-list--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.record-card {
+  border: 1px solid var(--color-surface-variant);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  background-color: var(--color-surface-container-lowest);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.record-card:hover {
+  border-color: var(--color-outline-variant);
+  box-shadow: var(--shadow-card);
+}
+
+.record-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.record-title {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin: 0;
+}
+
+.record-ref {
+  font-size: 12px;
+  color: var(--color-on-surface-variant);
+  margin: 2px 0 0;
+}
+
+.record-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+  margin: 0;
+}
+.record-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.record-amount {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-teal);
+  font-size: 15px;
+}
+
+.record-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-top: var(--space-xs);
+}
+
+/* ---------- Portfolio ---------- */
+.portfolio-grid {
+  display: grid;
+  /* As many cards as fit at 220px or wider, so the grid reflows on its own
+     from one column on a phone to three or four on a wide screen. */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-md);
+}
+/* The list helper's loading / empty / error line spans the whole grid. */
+.portfolio-grid > .list-state {
+  grid-column: 1 / -1;
+}
+
+.portfolio-card {
+  border: 1px solid var(--color-surface-variant);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface-container-lowest);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.portfolio-card:hover {
+  border-color: var(--color-outline-variant);
+  box-shadow: var(--shadow-card);
+}
+
+.portfolio-media {
+  aspect-ratio: 4 / 3;
+  background-color: var(--color-surface-container-low);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.portfolio-media img {
+  width: 100%;
+  height: 100%;
+  /* Fill the tile without distortion; portrait and landscape photos both sit
+     in the same box, so the grid stays even. */
+  object-fit: cover;
+  display: block;
+}
+.portfolio-media--empty {
+  color: var(--color-outline-variant);
+}
+.portfolio-media--empty .icon {
+  font-size: 40px;
+}
+
+.portfolio-body {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.portfolio-text {
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+  margin: 0;
+}
+
+/* The photo chosen in the Add-sample modal, before it is uploaded. */
+.image-preview {
+  margin-top: var(--space-xs);
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-surface-variant);
+  display: block;
+}
+
+/* File inputs ignore most of .input-standard's box; this keeps the row the
+   same height as the text fields beside it. */
+input[type="file"].input-standard {
+  padding: 8px 12px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* ---------- Star rating ---------- */
+.stars {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--color-star);
+}
+.stars .icon {
+  font-size: 18px;
+}
+.stars--muted {
+  color: var(--color-outline-variant);
+}
+
+.star-picker {
+  display: flex;
+  gap: var(--space-xs);
+}
+.star-picker button {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: var(--color-outline-variant);
+  line-height: 1;
+}
+.star-picker button.is-on {
+  color: var(--color-star);
+}
+.star-picker .icon {
+  font-size: 30px;
+}
+
+/* ---------- Definition rows (profile, invoice) ---------- */
+.detail-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+  margin: 0;
+}
+@media (min-width: 640px) {
+  .detail-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-surface-variant);
+  font-size: 13px;
+}
+.detail-row dt {
+  color: var(--color-on-surface-variant);
+  margin: 0;
+}
+.detail-row dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-on-surface);
+  text-align: right;
+}
+
+/* ---------- Bar chart (earnings) ---------- */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-sm);
+  height: 180px;
+  padding-top: var(--space-sm);
+}
+.bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  height: 100%;
+  justify-content: flex-end;
+}
+.bar {
+  width: 100%;
+  max-width: 34px;
+  background-color: var(--color-teal);
+  border-radius: 4px 4px 0 0;
+  min-height: 4px;
+}
+.bar-label {
+  font-size: 11px;
+  color: var(--color-on-surface-variant);
+}
+
+/* ---------- Messaging ---------- */
+.messenger {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+@media (min-width: 1024px) {
+  .messenger {
+    grid-template-columns: 320px 1fr;
+    align-items: start;
+  }
+}
+
+.conversation-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  max-height: 460px;
+  overflow-y: auto;
+}
+
+.conversation {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  cursor: pointer;
+}
+.conversation:hover {
+  background-color: var(--color-surface-container-low);
+}
+.conversation.is-active {
+  background-color: var(--color-active-bg);
+  border-color: var(--color-teal);
+}
+
+.conversation-top {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  align-items: center;
+}
+.conversation-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-on-surface);
+}
+.conversation-when {
+  font-size: 11px;
+  color: var(--color-on-surface-variant);
+}
+.conversation-preview {
+  font-size: 12px;
+  color: var(--color-on-surface-variant);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.unread-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-teal);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-height: 320px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: var(--space-xs);
+}
+
+.bubble {
+  max-width: 78%;
+  padding: 10px 12px;
+  border-radius: var(--radius-lg);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.bubble--them {
+  align-self: flex-start;
+  background-color: var(--color-surface-container-low);
+  color: var(--color-on-surface);
+  border-bottom-left-radius: 4px;
+}
+.bubble--me {
+  align-self: flex-end;
+  background-color: var(--color-teal);
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+}
+.bubble-when {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+.composer {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  align-items: flex-end;
+}
+.composer .input-standard {
+  min-height: 44px;
+}
+
+/* ---------- Notifications feed ---------- */
+.feed {
+  display: flex;
+  flex-direction: column;
+  /* The rows are inset by their own padding, so pull the feed out to the card's
+     edges: the tint on an unread row then runs the full width of the card
+     instead of stopping short of it. */
+  margin: 0 calc(-1 * var(--card-padding));
+}
+
+.feed-item {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--card-padding);
+  border-bottom: 1px solid var(--color-surface-variant);
+  align-items: flex-start;
+}
+.feed-item:last-child {
+  border-bottom: none;
+}
+.feed-item.is-unread {
+  background-color: var(--color-active-bg);
+}
+/* A teal edge so an unread row reads as unread without relying on the tint
+   alone, which is very close to the card behind it. */
+.feed-item.is-unread::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--color-teal);
+}
+.feed-item.is-unread {
+  position: relative;
+}
+
+/* The timestamp and the "Mark read" button, stacked at the end of the row. */
+.feed-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.feed-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-color: var(--color-surface-container-low);
+  color: var(--color-navy);
+}
+.feed-icon--job     { background-color: var(--color-active-bg);    color: var(--color-active-fg); }
+.feed-icon--bid     { background-color: var(--color-pending-bg);   color: var(--color-pending-fg); }
+.feed-icon--payment { background-color: var(--color-completed-bg); color: var(--color-completed-fg); }
+
+.feed-body {
+  flex: 1;
+  min-width: 0;
+}
+.feed-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin: 0 0 2px;
+}
+.feed-text {
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+  margin: 0;
+}
+.feed-when {
+  font-size: 11px;
+  color: var(--color-on-surface-variant);
+  white-space: nowrap;
+}
+
+/* ---------- Footer ---------- */
+.admin-footer {
+  padding: var(--space-lg) 0 0;
+  color: var(--color-on-surface-variant);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* ==========================================================================
+   Small screens
+
+   The shell (topbar, drawer, content padding) is already responsive in
+   shared/styles.css. What follows is the page content inside it: the places
+   where a fixed width, a two-column row or a long unbroken string would push
+   the layout wider than the viewport and leave the whole page scrolling
+   sideways.
+   ========================================================================== */
+
+/* Nothing in this portal is wide enough to justify a sideways scroll of the
+   page itself. Anything that genuinely is wide (a table, the earnings chart,
+   the pager) scrolls inside its own box instead. */
+.main-content {
+  overflow-x: hidden;
+}
+
+/* A long email, NIC or job reference has no spaces to break at, so it would
+   otherwise force its container wider than the screen. */
+.record-title,
+.record-ref,
+.feed-title,
+.feed-text,
+.portfolio-text,
+.detail-row dd,
+.conversation-name,
+.bubble {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 639px) {
+  /* Buy back 16px of width on each side of every card. The feed's negative
+     margin is written against this same token, so it follows automatically. */
+  :root {
+    --card-padding: 16px;
+  }
+
+  .content-inner {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  /* Stacked, full-width controls beat three half-width ones that each clip
+     their own text. */
+  .toolbar {
+    gap: var(--space-sm);
+  }
+  .toolbar > .search-field,
+  .toolbar > .select-filter,
+  .toolbar > .date-filter {
+    flex: 1 1 100%;
+    min-width: 0;
+    width: 100%;
+  }
+  .toolbar > .result-count {
+    flex: 1 1 100%;
+  }
+
+  /* Full-width buttons in the page head and in modals: easier to hit, and no
+     awkward half-row of wrapped buttons. */
+  .page-head-actions,
+  .modal-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .page-head-actions > .btn-primary,
+  .page-head-actions > .btn-outline,
+  .modal-actions > .btn-primary,
+  .modal-actions > .btn-outline {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* A modal should use the screen it has. */
+  .modal-backdrop {
+    padding: var(--space-sm);
+    align-items: flex-end;
+  }
+  .modal {
+    padding: var(--space-md);
+    max-height: calc(100vh - 2 * var(--space-sm));
+    border-radius: var(--radius-lg);
+  }
+
+  /* The status badge keeps its size; the title takes what is left. */
+  .record-head {
+    flex-wrap: wrap;
+  }
+  .record-head > .badge-status {
+    flex-shrink: 0;
+  }
+  .record-actions > button {
+    flex: 1 1 auto;
+  }
+
+  /* Twelve weeks will not fit across a phone. Keep the bars readable and let
+     the chart scroll inside the card rather than shrink to hairlines. */
+  .bar-chart {
+    overflow-x: auto;
+    padding-bottom: var(--space-xs);
+  }
+  .bar-col {
+    flex: 0 0 34px;
+  }
+
+  /* Label above, value below: side by side leaves neither enough room. */
+  .detail-row {
+    flex-direction: column;
+    gap: 2px;
+  }
+  .detail-row dd {
+    text-align: left;
+  }
+
+  /* The timestamp and "Mark read" move under the text, aligned with it. */
+  .feed-item {
+    flex-wrap: wrap;
+  }
+  .feed-body {
+    flex: 1 1 calc(100% - 54px);
+  }
+  .feed-side {
+    width: 100%;
+    /* 38px icon + 16px gap: line the row up with the text above it. */
+    padding-left: 54px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Send stays a fixed square beside the growing textarea. */
+  .composer .btn-primary {
+    flex-shrink: 0;
+  }
+
+  /* Five 30px stars plus gaps overflow a narrow modal. */
+  .star-picker .icon {
+    font-size: 26px;
+  }
+
+  .stat-card-value {
+    font-size: 24px;
+  }
+}
+
+/* Between a phone and a tablet the sidenav is still a drawer, so the content
+   has the whole width, but not yet the 48px desktop gutter. */
+@media (min-width: 640px) and (max-width: 767px) {
+  .content-inner {
+    padding: var(--space-md);
+  }
+}

@@ -142,7 +142,7 @@
 }
 
 .select-filter {
-  padding: 10px 12px;
+  padding: 10px 34px 10px 12px;
   border-radius: var(--radius-sm);
   border: 1.5px solid var(--color-outline-variant);
   background-color: var(--color-surface-container-lowest);
@@ -270,6 +270,14 @@
   border-color: var(--color-teal);
   box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
 }
+
+/* .input-standard also dresses inputs and textareas, which have no arrow to
+   make room for — only the selects need the extra right-hand padding that
+   shared/styles.css reserves. */
+select.input-standard {
+  padding-right: 34px;
+}
+
 
 /* ---------- Toast ---------- */
 .toast {

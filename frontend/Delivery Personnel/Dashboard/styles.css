@@ -176,7 +176,7 @@
 .status-select {
   flex: 1;
   min-width: 140px;
-  padding: 8px var(--space-sm);
+  padding: 8px 34px 8px var(--space-sm);
   border-radius: var(--radius-sm);
   border: 1.5px solid var(--color-outline-variant);
   background-color: var(--color-surface-container-lowest);

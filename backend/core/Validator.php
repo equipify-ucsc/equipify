@@ -119,6 +119,79 @@ final class Validator
     }
 
     /**
+     * A Sri Lankan NIC: the old 9 digits + V/X, or the new 12 digits. Use
+     * normalizeNic() to get the stored (uppercased) form.
+     *
+     * @param mixed $value
+     */
+    public static function nic($value): ?string
+    {
+        if ($m = self::required($value, 'NIC number')) {
+            return $m;
+        }
+        if (self::normalizeNic($value) === null) {
+            return 'Enter a valid NIC number (9 digits with V/X, or 12 digits).';
+        }
+        return null;
+    }
+
+    /** Returns the uppercased NIC, or null if it isn't a valid Sri Lankan NIC. */
+    public static function normalizeNic(string $value): ?string
+    {
+        $nic = strtoupper(preg_replace('/\s+/', '', $value));
+        if (preg_match('/^(?:\d{9}[VX]|\d{12})$/', (string) $nic) !== 1) {
+            return null;
+        }
+        return $nic;
+    }
+
+    /**
+     * A whole number within a range. An empty value passes: use required()
+     * alongside it when the field is mandatory.
+     *
+     * @param mixed $value
+     */
+    public static function intRange($value, int $min, int $max, string $label): ?string
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+        if (filter_var($value, FILTER_VALIDATE_INT) === false) {
+            return $label . ' must be a whole number.';
+        }
+        $number = (int) $value;
+        if ($number < $min || $number > $max) {
+            return $label . ' must be between ' . $min . ' and ' . $max . '.';
+        }
+        return null;
+    }
+
+    /**
+     * A money amount that fits DECIMAL(10,2) and is not negative. An empty
+     * value passes: rates are optional on a freelancer profile.
+     *
+     * @param mixed $value
+     */
+    public static function money($value, string $label): ?string
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+        if (!is_numeric($value)) {
+            return $label . ' must be an amount.';
+        }
+        $amount = (float) $value;
+        if ($amount < 0) {
+            return $label . ' cannot be negative.';
+        }
+        // DECIMAL(10,2): at most 8 digits before the decimal point.
+        if ($amount > 99999999.99) {
+            return $label . ' is too large.';
+        }
+        return null;
+    }
+
+    /**
      * @param mixed    $value
      * @param string[] $allowed
      */
