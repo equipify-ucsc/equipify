@@ -54,9 +54,45 @@
     });
   }
 
+  /**
+   * Appends a query string to a path, skipping empty values so a cleared search
+   * box or an "All statuses" filter simply isn't sent.
+   *
+   * @param {string} path   e.g. '/freelancer/jobs'
+   * @param {Object} params e.g. { q: 'crane', status: '', page: 2 }
+   * @returns {string}      e.g. '/freelancer/jobs?q=crane&page=2'
+   */
+  function withQuery(path, params) {
+    var parts = [];
+    Object.keys(params || {}).forEach(function (key) {
+      var value = params[key];
+      if (value === undefined || value === null || value === '') return;
+      parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+    });
+    return parts.length ? path + '?' + parts.join('&') : path;
+  }
+
+  /**
+   * The browser-usable URL for an endpoint, for the few places that are not a
+   * fetch — an <img src> pointing at an endpoint that streams a stored file.
+   *
+   * @param {string} path e.g. '/freelancer/portfolio/7/image'
+   */
+  function url(path) {
+    return BASE + path;
+  }
+
   window.EquipifyApi = {
     request: request,
+    withQuery: withQuery,
+    url: url,
     get: function (path) { return request('GET', path); },
-    post: function (path, body) { return request('POST', path, body === undefined ? {} : body); }
+    query: function (path, params) { return request('GET', withQuery(path, params)); },
+    post: function (path, body) { return request('POST', path, body === undefined ? {} : body); },
+    put: function (path, body) { return request('PUT', path, body === undefined ? {} : body); },
+    // An empty object rather than no body: the API rejects a state-changing
+    // request that isn't application/json, and the header only goes out when
+    // there is something to send.
+    del: function (path, body) { return request('DELETE', path, body === undefined ? {} : body); }
   };
 })();

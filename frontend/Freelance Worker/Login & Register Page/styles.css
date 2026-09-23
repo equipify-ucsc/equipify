@@ -1,0 +1,228 @@
+/* ==========================================================================
+   Equipify — Freelance Worker Login & Register
+   Page-specific styles only. Design tokens, reset, typography scale,
+   Material Symbols sizing, the auth-visual column, card, form elements,
+   checkbox row, and buttons live in ../../shared/auth.css.
+
+   The layout rules match the Renting Party sign-up rather than the Customer
+   one, for the same reason: this is a long form, so `.auth-shell` /
+   `.auth-form-col` use min-height and natural page scrolling instead of a
+   fixed 100dvh with overflow:hidden and an internal scroll area.
+
+   The upload-card rules at the end are unused on these two pages (a
+   freelancer uploads credentials later, from the Credentials page) but are
+   kept so the registration form can grow a document step without diverging
+   from the other sign-ups.
+   ========================================================================== */
+
+/* ---- Layout ----------------------------------------------------- */
+.auth-shell {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.auth-form-col {
+  flex: 1 1 50%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-margin-mobile);
+  background: var(--surface-container-lowest);
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .auth-form-col {
+    padding: 64px var(--space-margin-desktop);
+  }
+}
+
+/* ---- Registration page: dynamic ambient background on small screens --- */
+.auth-form-col.has-ambient-bg {
+  overflow-x: hidden;
+}
+
+.ambient-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+@media (min-width: 900px) {
+  .ambient-bg {
+    display: none;
+  }
+}
+
+.ambient-bg::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(46, 64, 87, 0.10), transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(0, 108, 78, 0.12), transparent 40%),
+    radial-gradient(circle at 75% 85%, rgba(23, 42, 64, 0.08), transparent 45%);
+}
+
+.ambient-bg .ambient-blueprint {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgba(23, 42, 64, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 42, 64, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: ambient-drift 40s linear infinite;
+}
+
+@keyframes ambient-drift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(40px, 40px); }
+}
+
+.ambient-icon {
+  position: absolute;
+  color: var(--primary-container);
+  opacity: 0.06;
+}
+
+.ambient-icon .material-symbols-outlined {
+  display: block;
+}
+
+.ambient-icon--1 {
+  top: 6%;
+  left: -4%;
+  font-size: 160px;
+  transform: rotate(-12deg);
+}
+
+.ambient-icon--2 {
+  bottom: 4%;
+  right: -6%;
+  font-size: 200px;
+  transform: rotate(9deg);
+}
+
+.ambient-icon--3 {
+  top: 42%;
+  right: 6%;
+  font-size: 90px;
+  transform: rotate(15deg);
+  color: var(--brand-teal);
+  opacity: 0.08;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-bg .ambient-blueprint {
+    animation: none;
+  }
+}
+
+.auth-form-col.has-ambient-bg .auth-form-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Form section grouping (registration) ------------------------------ */
+.form-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 32px 0 16px;
+}
+
+.form-section-title:first-of-type {
+  margin-top: 0;
+}
+
+.form-section-title span {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary-container);
+  white-space: nowrap;
+}
+
+.form-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--outline-variant);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 560px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-row .field {
+  margin-bottom: 0;
+}
+
+/* ---- File upload card (business logo / registration certificate) ------- */
+.upload-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  border: 1.5px dashed var(--outline-variant);
+  border-radius: var(--radius);
+  background: var(--surface-container-low);
+  padding: 20px 12px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.upload-card:hover,
+.upload-card:focus-visible {
+  border-color: var(--brand-teal);
+  background: rgba(0, 108, 78, 0.05);
+}
+
+.upload-card:focus-visible {
+  outline: 2px solid var(--brand-teal);
+  outline-offset: 2px;
+}
+
+.upload-card.has-file {
+  border-style: solid;
+  border-color: var(--brand-teal);
+  background: rgba(0, 108, 78, 0.05);
+}
+
+.upload-card .material-symbols-outlined {
+  font-size: 28px;
+  color: var(--outline);
+}
+
+.upload-card.has-file .material-symbols-outlined {
+  color: var(--brand-teal);
+}
+
+.upload-card-text {
+  font-size: 13px;
+  color: var(--on-surface-variant);
+  overflow-wrap: anywhere;
+}
+
+.upload-card.has-file .upload-card-text {
+  color: var(--on-surface);
+  font-weight: 500;
+}

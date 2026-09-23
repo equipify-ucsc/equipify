@@ -9,6 +9,11 @@ composer.lock
 .env.local
 config.php
 
+# Encryption key for stored payout details (core/Crypto.php generates it on
+# first use). Committing it would make the encrypted columns readable by anyone
+# with the repo, which is the whole point of encrypting them.
+backend/config/app_key.php
+
 # IDE / editor
 .vscode/
 .idea/
@@ -31,3 +36,5 @@ error_log
 CLAUDE.md
 /Information/
 .claude/
+
+dev-router.php

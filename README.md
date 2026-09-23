@@ -79,12 +79,14 @@ backend/
 │   ├── .htaccess      sends every /api/... URL to index.php
 │   └── index.php      front controller: the only entry point for the browser
 ├── config/
-│   └── db_config.php  database settings and getDbConnection()
+│   ├── db_config.php  database settings and getDbConnection()
+│   └── app_key.php    encryption key, generated on first use — git ignored, never committed
 ├── core/              small hand-written framework, built once and reused everywhere
 │   ├── Router.php     matches method + URL to a controller method and runs the role check
 │   ├── Response.php   sends JSON replies with the correct HTTP status code
 │   ├── Auth.php       reads the logged-in user and role from the session; blocks with 401/403
-│   └── Validator.php  reusable input checks (integers, emails, lengths, dates, allowed values)
+│   ├── Validator.php  reusable input checks (integers, emails, lengths, dates, allowed values)
+│   └── Crypto.php     authenticated encryption for stored secrets (payout account details)
 ├── routes.php         list of every API endpoint, its handler, and the roles allowed to call it
 ├── controllers/       one controller per module; handles requests
 ├── models/            one model per main table; the only place that runs SQL
@@ -97,7 +99,7 @@ backend/
 | Folder / file | Responsibility | Must not |
 |---|---|---|
 | `api/` | Receive every request, start the session, catch errors | Contain feature logic |
-| `config/` | Hold settings and the shared database connection | Contain real passwords in git |
+| `config/` | Hold settings, the shared database connection and the encryption key | Contain real passwords or keys in git |
 | `core/` | Routing, JSON responses, authentication, validation | Know about specific features |
 | `routes.php` | Map each URL to a controller method and its allowed roles | Contain logic |
 | `controllers/` | Read input → validate → call model/service → respond | Run SQL or output HTML |
@@ -117,7 +119,34 @@ Build each feature through every layer on its own `feature/<name>` branch:
 
 ### Running locally
 
-Place the repository in XAMPP's web root (for example `C:\xampp\htdocs\equipify`) and open pages through `http://localhost/equipify/frontend/...`, not by double-clicking the file. `fetch()` and PHP session cookies only work over HTTP. Because the frontend and backend share the same origin, no CORS setup is needed.
+Open pages over HTTP, never by double-clicking the file: `fetch()` and PHP session cookies only work over HTTP. Because the frontend and backend share the same origin, no CORS setup is needed either way.
+
+**With XAMPP (Windows).** Place the repository in XAMPP's web root (for example `C:\xampp\htdocs\equipify`), start Apache and MySQL, and open `http://localhost/equipify/frontend/...`.
+
+**Without XAMPP (Linux/macOS).** PHP's built-in server can serve the whole project, using `dev-router.php` in place of the two `.htaccess` files Apache would apply:
+
+```bash
+php -S localhost:8000 -t . dev-router.php
+```
+
+Then open `http://localhost:8000/frontend/Customer/Login%20&%20Register%20Page/login.html` (or any other page). `dev-router.php` is a development convenience only — Apache uses the committed `.htaccess` files and ignores it.
+
+You still need a MySQL on `127.0.0.1:3306` matching `backend/config/db_config.php`. Either install MySQL locally, or run one in Docker:
+
+```bash
+docker run -d --name equipify-mysql \
+  -e MYSQL_ALLOW_EMPTY_PASSWORD=yes \
+  -p 127.0.0.1:3306:3306 mysql:8.0
+
+# load the schema once the container is accepting connections
+cd schema
+docker exec -i equipify-mysql mysql -uroot < 000_create_database.sql
+for f in $(ls [0-9][0-9][0-9]_*.sql | grep -v '^000_'); do
+  docker exec -i equipify-mysql mysql -uroot equipify < "$f"
+done
+```
+
+Afterwards, `docker stop equipify-mysql` and `docker start equipify-mysql` keep the data between sessions.
 
 ## Database
 
