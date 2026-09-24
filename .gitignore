@@ -28,6 +28,11 @@ Thumbs.db
 /uploads/
 /tmp/
 
+# Files uploaded through the app (credential documents, portfolio and
+# equipment photos). Keep .gitkeep so the folder exists in a fresh clone.
+backend/storage/uploads/*
+!backend/storage/uploads/.gitkeep
+
 # Logs and cache
 *.cache
 error_log

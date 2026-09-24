@@ -18,6 +18,51 @@ $router->add('GET',  '/auth/me',       [AuthController::class, 'me']);
 $router->add('GET',  '/admin/area-managers', [AreaManagerController::class, 'index'], ['admin']);
 $router->add('POST', '/admin/area-managers', [AreaManagerController::class, 'store'], ['admin']);
 
+// Public: the equipment catalogue (categories -> types -> spec fields). Read
+// only and needs no login, so logged-out visitors can browse and filter.
+$router->add('GET', '/catalogue',                  [CatalogueController::class, 'index']);
+$router->add('GET', '/catalogue/types/{id}/fields', [CatalogueController::class, 'fields']);
+
+// Admin: manage the catalogue. Nothing is deleted, only deactivated, because
+// listings point at their type and types at their category.
+$router->add('GET',  '/admin/catalogue',                           [AdminCatalogueController::class, 'index'],              ['admin']);
+$router->add('POST', '/admin/catalogue/categories',                [AdminCatalogueController::class, 'storeCategory'],      ['admin']);
+$router->add('PUT',  '/admin/catalogue/categories/{id}',           [AdminCatalogueController::class, 'updateCategory'],     ['admin']);
+$router->add('POST', '/admin/catalogue/categories/{id}/deactivate', [AdminCatalogueController::class, 'deactivateCategory'], ['admin']);
+$router->add('POST', '/admin/catalogue/categories/{id}/activate',  [AdminCatalogueController::class, 'activateCategory'],   ['admin']);
+$router->add('POST', '/admin/catalogue/types',                     [AdminCatalogueController::class, 'storeType'],          ['admin']);
+$router->add('GET',  '/admin/catalogue/types/{id}',                [AdminCatalogueController::class, 'showType'],           ['admin']);
+$router->add('PUT',  '/admin/catalogue/types/{id}',                [AdminCatalogueController::class, 'updateType'],         ['admin']);
+$router->add('POST', '/admin/catalogue/types/{id}/deactivate',     [AdminCatalogueController::class, 'deactivateType'],     ['admin']);
+$router->add('POST', '/admin/catalogue/types/{id}/activate',       [AdminCatalogueController::class, 'activateType'],       ['admin']);
+
+// Public: browse listings (search + step-by-step filters), one listing, and
+// listing photos (a hidden listing's photos are served to its owner only).
+$router->add('GET', '/equipment',                          [EquipmentBrowseController::class, 'index']);
+$router->add('GET', '/equipment/{id}',                     [EquipmentBrowseController::class, 'show']);
+$router->add('GET', '/equipment/{id}/photos/{photoId}',    [EquipmentBrowseController::class, 'photo']);
+
+// Renting party: own equipment listings. Removing a listing with rental
+// history retires it instead of deleting it. Photos are uploaded one per
+// request once the listing exists.
+$router->add('GET',    '/renting-party/equipment',                               [RentingPartyEquipmentController::class, 'index'],        ['renting_party']);
+$router->add('POST',   '/renting-party/equipment',                               [RentingPartyEquipmentController::class, 'store'],        ['renting_party']);
+$router->add('GET',    '/renting-party/equipment/{id}',                          [RentingPartyEquipmentController::class, 'show'],         ['renting_party']);
+$router->add('PUT',    '/renting-party/equipment/{id}',                          [RentingPartyEquipmentController::class, 'update'],       ['renting_party']);
+$router->add('DELETE', '/renting-party/equipment/{id}',                          [RentingPartyEquipmentController::class, 'destroy'],      ['renting_party']);
+$router->add('POST',   '/renting-party/equipment/{id}/status',                   [RentingPartyEquipmentController::class, 'updateStatus'], ['renting_party']);
+$router->add('POST',   '/renting-party/equipment/{id}/photos',                   [RentingPartyEquipmentController::class, 'storePhoto'],   ['renting_party']);
+$router->add('POST',   '/renting-party/equipment/{id}/photos/{photoId}/cover',   [RentingPartyEquipmentController::class, 'coverPhoto'],   ['renting_party']);
+$router->add('DELETE', '/renting-party/equipment/{id}/photos/{photoId}',         [RentingPartyEquipmentController::class, 'destroyPhoto'], ['renting_party']);
+
+// New equipment-type requests: a renting party asks, an admin approves (which
+// creates the type) or rejects with a note.
+$router->add('GET',  '/renting-party/type-requests',       [EquipmentTypeRequestController::class, 'mine'],    ['renting_party']);
+$router->add('POST', '/renting-party/type-requests',       [EquipmentTypeRequestController::class, 'store'],   ['renting_party']);
+$router->add('GET',  '/admin/type-requests',               [EquipmentTypeRequestController::class, 'index'],   ['admin']);
+$router->add('POST', '/admin/type-requests/{id}/approve',  [EquipmentTypeRequestController::class, 'approve'], ['admin']);
+$router->add('POST', '/admin/type-requests/{id}/reject',   [EquipmentTypeRequestController::class, 'reject'],  ['admin']);
+
 // Area manager: staff registration (no public sign-up for either role)
 $router->add('GET',  '/area-manager/delivery-personnel', [DeliveryPersonnelController::class, 'index'], ['area_manager']);
 $router->add('POST', '/area-manager/delivery-personnel', [DeliveryPersonnelController::class, 'store'], ['area_manager']);
