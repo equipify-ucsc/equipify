@@ -7,7 +7,7 @@
  * active type in an active category — see EquipmentModel::PUBLIC_WHERE).
  *
  * Filters follow the catalogue's steps: the common ones (price, district,
- * availability, delivery) always apply; category narrows to a family; type
+ * availability, delivery, provider rating) always apply; category narrows to a family; type
  * narrows to one kind; and only once a type is chosen are its filterable spec
  * fields (at most 3) accepted, as
  *   spec_<key>=value                      select, yes/no, multiselect ("has")
@@ -47,6 +47,7 @@ final class EquipmentBrowseController
             'delivery'  => ListQuery::flag('delivery'),
             'min_price' => self::amount('min_price'),
             'max_price' => self::amount('max_price'),
+            'min_rating' => (int) ListQuery::enum('min_rating', ['1', '2', '3', '4', '5']),
             'specs'     => [],
         ];
 
@@ -72,9 +73,7 @@ final class EquipmentBrowseController
         $rows  = EquipmentModel::publicPage($filters, $sort === '' ? 'recent' : $sort, $perPage, ($page - 1) * $perPage);
 
         $data = ListQuery::envelope(array_map(static function (array $row): array {
-            return RentingPartyEquipmentController::presentSummary($row) + [
-                'business_name' => $row['business_name'],
-            ];
+            return RentingPartyEquipmentController::presentSummary($row) + self::presentOwnerRating($row);
         }, $rows), $page, $perPage, $total);
         $data['spec_filters'] = $specFilters;
         Response::ok($data);
@@ -109,8 +108,8 @@ final class EquipmentBrowseController
                 'business_name' => $row['business_name'],
                 'district'      => $row['owner_district'],
                 'verified'      => $row['verification_status'] === 'verified',
-                'avg_rating'    => (float) $row['avg_rating'],
-                'rating_count'  => (int) $row['rating_count'],
+                'avg_rating'    => (float) $row['owner_rating'],
+                'rating_count'  => (int) $row['owner_rating_count'],
                 'member_since'  => substr((string) $row['owner_since'], 0, 4),
             ],
         ]);
@@ -200,6 +199,23 @@ final class EquipmentBrowseController
             return [];
         }
         return [[$id, $field['data_type'] === 'multiselect' ? 'has' : 'eq', $value]];
+    }
+
+    /**
+     * The provider (renting party) name and rating shown on a card. There is
+     * no per-listing review yet, so the rating customers see and filter by is
+     * the renting party's.
+     *
+     * @param array<string,mixed> $row
+     * @return array<string,mixed>
+     */
+    private static function presentOwnerRating(array $row): array
+    {
+        return [
+            'business_name'      => $row['business_name'],
+            'owner_rating'       => (float) $row['owner_rating'],
+            'owner_rating_count' => (int) $row['owner_rating_count'],
+        ];
     }
 
     /** A positive integer id from the query string, or 0. */

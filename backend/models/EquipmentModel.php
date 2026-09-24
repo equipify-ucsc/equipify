@@ -15,7 +15,11 @@ require_once __DIR__ . '/../config/db_config.php';
 
 final class EquipmentModel
 {
-    /** Listing columns plus its type/category names and its cover photo id. */
+    /**
+     * Listing columns plus its type/category names, its owner's business name
+     * and rating (renting_parties.avg_rating, the provider rating customers
+     * filter by), and its cover photo id.
+     */
     private const SELECT =
         'SELECT e.equipment_id, e.owner_id, e.type_id, e.title, e.brand, e.model,
                 e.year_made, e.serial_no, e.condition_grade, e.district, e.address,
@@ -23,13 +27,16 @@ final class EquipmentModel
                 e.description, e.extra_specs, e.status, e.created_at, e.updated_at,
                 t.name AS type_name, t.is_other, t.is_active AS type_active,
                 c.category_id, c.name AS category_name, c.icon AS category_icon,
+                rp.business_name, rp.avg_rating AS owner_rating,
+                rp.rating_count AS owner_rating_count,
                 (SELECT p.photo_id FROM equipment_photos p
                   WHERE p.equipment_id = e.equipment_id
                   ORDER BY p.is_cover DESC, p.sort_order, p.photo_id
                   LIMIT 1) AS cover_photo_id
            FROM equipment e
            JOIN equipment_types t      ON t.type_id = e.type_id
-           JOIN equipment_categories c ON c.category_id = t.category_id';
+           JOIN equipment_categories c ON c.category_id = t.category_id
+           JOIN renting_parties rp     ON rp.user_id = e.owner_id';
 
     /** Owner list sort keys => ORDER BY. */
     public const OWNER_SORTS = [
@@ -47,6 +54,7 @@ final class EquipmentModel
         'recent'     => 'e.created_at DESC, e.equipment_id DESC',
         'price_asc'  => 'e.daily_rate_lkr ASC, e.equipment_id DESC',
         'price_desc' => 'e.daily_rate_lkr DESC, e.equipment_id DESC',
+        'rating'     => 'rp.avg_rating DESC, rp.rating_count DESC, e.equipment_id DESC',
     ];
 
     // ---------------------------------------------------------------- owner
@@ -174,8 +182,7 @@ final class EquipmentModel
     public static function findPublic(int $equipmentId): ?array
     {
         $stmt = getDbConnection()->prepare(
-            'SELECT x.*, rp.business_name, rp.district AS owner_district,
-                    rp.verification_status, rp.avg_rating, rp.rating_count,
+            'SELECT x.*, rp.district AS owner_district, rp.verification_status,
                     u.created_at AS owner_since
                FROM (' . self::SELECT . ' WHERE e.equipment_id = :id AND ' . self::PUBLIC_WHERE . ') x
                JOIN renting_parties rp ON rp.user_id = x.owner_id
@@ -188,19 +195,16 @@ final class EquipmentModel
 
     /**
      * @param array<string,mixed> $filters see publicConditions()
-     * @return array<int,array<string,mixed>> listings with the owner's business name
+     * @return array<int,array<string,mixed>> listings with the owner's business name and rating
      */
     public static function publicPage(array $filters, string $sort, int $limit, int $offset): array
     {
         [$where, $bind] = self::publicConditions($filters);
         $order = self::PUBLIC_SORTS[$sort] ?? self::PUBLIC_SORTS['recent'];
         $stmt  = getDbConnection()->prepare(
-            'SELECT x.*, rp.business_name
-               FROM (' . self::SELECT . ' WHERE ' . $where . '
-                     ORDER BY ' . $order . '
-                     LIMIT ' . $limit . ' OFFSET ' . $offset . ') x
-               JOIN renting_parties rp ON rp.user_id = x.owner_id
-              ORDER BY ' . str_replace('e.', 'x.', $order)
+            self::SELECT . ' WHERE ' . $where . '
+              ORDER BY ' . $order . '
+              LIMIT ' . $limit . ' OFFSET ' . $offset
         );
         $stmt->execute($bind);
         return $stmt->fetchAll();
@@ -213,6 +217,7 @@ final class EquipmentModel
             'SELECT COUNT(*) FROM equipment e
                JOIN equipment_types t      ON t.type_id = e.type_id
                JOIN equipment_categories c ON c.category_id = t.category_id
+               JOIN renting_parties rp     ON rp.user_id = e.owner_id
               WHERE ' . $where
         );
         $stmt->execute($bind);
@@ -264,6 +269,7 @@ final class EquipmentModel
      *   district   exact district        available true = status 'available' only
      *   delivery   true = delivery_available only
      *   min_price / max_price  daily rate bounds (LKR)
+     *   min_rating provider (renting party) rating of at least this many stars
      *   specs      list of [spec_field_id, op, value], op one of
      *              'eq' (value_text = value), 'has' (multiselect contains value),
      *              'min' / 'max' (value_number bound). The controller builds this
@@ -301,6 +307,12 @@ final class EquipmentModel
         if (($filters['max_price'] ?? '') !== '') {
             $where[] = 'e.daily_rate_lkr <= :max_price';
             $bind[':max_price'] = (string) $filters['max_price'];
+        }
+        if (!empty($filters['min_rating'])) {
+            // A provider with no ratings yet has avg_rating 0, so any star
+            // filter leaves them out rather than treating them as top-rated.
+            $where[] = 'rp.rating_count > 0 AND rp.avg_rating >= :min_rating';
+            $bind[':min_rating'] = (int) $filters['min_rating'];
         }
         if (($filters['q'] ?? '') !== '') {
             self::addSearch($where, $bind, (string) $filters['q'], true);

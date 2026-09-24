@@ -2,7 +2,7 @@
 //
 // Search first, then filters in steps, so a customer never faces more than a
 // handful of choices at once:
-//   always   daily rate, district, available now, delivery
+//   always   daily rate, district, available now, delivery, provider rating
 //   step 1   category (only categories that have listings, with counts)
 //   step 2   equipment type of that category (shown once a category is picked)
 //   step 3   up to 3 spec filters of that type (shown once a type is picked;
@@ -14,7 +14,7 @@
 (function () {
   'use strict';
 
-  const FIXED_KEYS = ['q', 'category', 'type', 'district', 'min_price', 'max_price', 'available', 'delivery', 'sort'];
+  const FIXED_KEYS = ['q', 'category', 'type', 'district', 'min_price', 'max_price', 'available', 'delivery', 'min_rating', 'sort'];
 
   const grid = document.getElementById('equipment-grid');
   if (!grid) return;
@@ -30,6 +30,7 @@
     available: document.getElementById('available-only'),
     delivery: document.getElementById('delivery-only'),
     district: document.getElementById('location-select'),
+    ratingFilter: document.getElementById('rating-filter'),
     sort: document.getElementById('sort'),
     tiles: document.getElementById('category-tiles'),
     crumbs: document.getElementById('filter-crumbs'),
@@ -57,6 +58,18 @@
   }
   function lkr(amount) {
     return 'LKR ' + Number(amount).toLocaleString('en-LK', { maximumFractionDigits: 2 });
+  }
+  /** Five star glyphs, the first `filled` of them coloured in. */
+  function stars(filled, label) {
+    const wrap = el('span', 'rating-stars');
+    wrap.setAttribute('role', 'img');
+    wrap.setAttribute('aria-label', label);
+    for (let i = 1; i <= 5; i++) {
+      const star = msym('star');
+      if (i <= Math.round(filled)) star.classList.add('is-on');
+      wrap.appendChild(star);
+    }
+    return wrap;
   }
 
   // ---------- URL <-> params ----------
@@ -304,6 +317,17 @@
     provider.appendChild(el('span', null, item.business_name));
     body.appendChild(provider);
 
+    // The renting party's rating (there are no per-listing reviews yet).
+    const rating = el('div', 'card__rating');
+    if (item.owner_rating_count > 0) {
+      rating.appendChild(stars(item.owner_rating, 'Provider rated ' + item.owner_rating.toFixed(1) + ' out of 5'));
+      rating.appendChild(el('span', 'card__rating-value', item.owner_rating.toFixed(1)));
+      rating.appendChild(el('span', 'card__rating-count', '(' + item.owner_rating_count + (item.owner_rating_count === 1 ? ' review)' : ' reviews)')));
+    } else {
+      rating.appendChild(el('span', 'card__rating-none', 'Provider not rated yet'));
+    }
+    body.appendChild(rating);
+
     const price = el('div', 'card__price', lkr(item.daily_rate_lkr) + ' ');
     price.appendChild(el('span', 'card__price-unit', '/ day'));
     body.appendChild(price);
@@ -323,6 +347,25 @@
     return card;
   }
 
+  // ---------- provider rating filter ----------
+  function renderRatingFilter() {
+    els.ratingFilter.textContent = '';
+    const current = params.min_rating || '';
+    const any = radio('min_rating', '', 'Any rating', null, current === '', pickRating);
+    els.ratingFilter.appendChild(any);
+    [5, 4, 3, 2, 1].forEach((n) => {
+      const option = radio('min_rating', String(n), n === 5 ? '' : '& up', null, current === String(n), pickRating);
+      const label = option.querySelector('.filter-option__label');
+      option.insertBefore(stars(n, n === 5 ? '5 stars' : n + ' stars and up'), label);
+      option.querySelector('input').setAttribute('aria-label', n === 5 ? '5 stars' : n + ' stars and up');
+      els.ratingFilter.appendChild(option);
+    });
+  }
+  function pickRating(value) {
+    set('min_rating', value);
+    refresh();
+  }
+
   // ---------- always-shown filters ----------
   function bindFixed() {
     els.minPrice.value = params.min_price || '';
@@ -332,6 +375,7 @@
     els.district.value = params.district || '';
     els.sort.value = params.sort || 'recent';
     els.searchInputs.forEach((i) => { if (i) i.value = params.q || ''; });
+    renderRatingFilter();
 
     els.minPrice.addEventListener('change', () => { set('min_price', els.minPrice.value.trim()); refresh(); });
     els.maxPrice.addEventListener('change', () => { set('max_price', els.maxPrice.value.trim()); refresh(); });
@@ -372,6 +416,7 @@
     els.district.value = '';
     els.sort.value = 'recent';
     els.searchInputs.forEach((i) => { if (i) i.value = ''; });
+    renderRatingFilter();
   }
 
   // ---------- mobile panels (search overlay + filter drawer) ----------

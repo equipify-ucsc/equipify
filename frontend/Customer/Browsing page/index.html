@@ -204,6 +204,16 @@
       </div>
     </div>
 
+    <hr class="filter-divider">
+
+    <!-- Always shown: provider (renting party) rating, filled by script.js -->
+    <div class="filter-section">
+      <div class="filter-section__header">
+        <h3 class="filter-section__title" id="rating-filter-title">Provider Rating</h3>
+      </div>
+      <div class="filter-list" id="rating-filter" role="radiogroup" aria-labelledby="rating-filter-title"></div>
+    </div>
+
     <button type="button" class="clear-filters" id="clear-filters">Clear all filters</button>
   </aside>
 
@@ -221,6 +231,7 @@
           <option value="recent">Newest first</option>
           <option value="price_asc">Daily rate: Low to High</option>
           <option value="price_desc">Daily rate: High to Low</option>
+          <option value="rating">Highest rated provider</option>
         </select>
       </div>
     </div>
