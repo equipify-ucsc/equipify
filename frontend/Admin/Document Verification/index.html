@@ -148,7 +148,7 @@
         <div class="table-wrap">
           <table class="table" id="docsTable">
             <thead>
-              <tr><th>Applicant</th><th>Role</th><th>Document</th><th>Submitted</th><th>Status</th><th>Action</th></tr>
+              <tr><th>Applicant</th><th>Role</th><th>Document</th><th>Submitted</th><th>Status</th><th>Actions</th></tr>
             </thead>
             <tbody>
               <tr data-status="Pending" data-role="Renting Party">
@@ -157,7 +157,10 @@
                 <td>Business Registration</td>
                 <td>15 Aug 2026</td>
                 <td><span class="badge-status badge-status--pending">Pending</span></td>
-                <td class="table-actions"><button class="btn-primary btn-sm" type="button" data-action="approve">Approve</button> <button class="btn-danger btn-sm" type="button" data-action="reject">Reject</button></td>
+                <td class="table-actions">
+                  <!-- Temporary local PDF for frontend testing only. -->
+                  <a href="test-document.pdf" class="btn-outline btn-sm" data-document-link target="_blank" rel="noopener noreferrer">View Document</a>
+                  <button class="btn-primary btn-sm" type="button" data-action="approve">Approve</button> <button class="btn-danger btn-sm" type="button" data-action="reject">Reject</button></td>
               </tr>
               <tr data-status="Pending" data-role="Freelancer">
                 <td><strong>FastLift Operator</strong></td>
@@ -165,15 +168,15 @@
                 <td>Operator License</td>
                 <td>15 Aug 2026</td>
                 <td><span class="badge-status badge-status--pending">Pending</span></td>
-                <td class="table-actions"><button class="btn-primary btn-sm" type="button" data-action="approve">Approve</button> <button class="btn-danger btn-sm" type="button" data-action="reject">Reject</button></td>
+                <td class="table-actions"><a class="btn-outline btn-sm" data-document-link aria-disabled="true" title="No document URL is available">Document unavailable</a> <button class="btn-primary btn-sm" type="button" data-action="approve">Approve</button> <button class="btn-danger btn-sm" type="button" data-action="reject">Reject</button></td>
               </tr>
-              <tr data-status="Verified" data-role="Customer">
+              <tr data-status="Verified" data-role="Freelancer">
                 <td><strong>Metro Events</strong></td>
-                <td>Customer</td>
+                <td>Freelancer</td>
                 <td>Business ID</td>
                 <td>14 Aug 2026</td>
                 <td><span class="badge-status badge-status--active">Verified</span></td>
-                <td class="table-actions"><a class="btn-outline btn-sm" href="../../../backend/storage/uploads/" target="_blank" rel="noopener">View</a></td>
+                <td class="table-actions"><a class="btn-outline btn-sm" data-document-link aria-disabled="true" title="No document URL is available">Document unavailable</a></td>
               </tr>
               <tr data-status="Rejected" data-role="Delivery Personnel">
                 <td><strong>QuickMove</strong></td>
@@ -181,7 +184,7 @@
                 <td>Vehicle License</td>
                 <td>13 Aug 2026</td>
                 <td><span class="badge-status badge-status--rejected">Rejected</span></td>
-                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-toast="Resubmission request opened.">Review</button></td>
+                <td class="table-actions"><a class="btn-outline btn-sm" data-document-link aria-disabled="true" title="No document URL is available">Document unavailable</a></td>
               </tr>
             </tbody>
           </table>

@@ -188,6 +188,12 @@
   flex-wrap: wrap;
 }
 
+.table-actions [aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+}
+
 /* ---------- Toast ---------- */
 .toast {
   position: fixed;
