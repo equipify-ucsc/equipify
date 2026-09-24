@@ -9,13 +9,14 @@
 
    An operator cannot take a job directly. The only way onto one is a bid: the
    customer compares the bids and awards the job, which is what makes an offer
-   'accepted'. So an open offer here has two actions: bid, or decline it and
-   stop seeing it. There is deliberately no Accept button and no accept
-   endpoint behind one.
+   'accepted'. So an open offer here has two actions: bid, or decline it (it
+   then reads Declined for this worker only). There is deliberately no Accept
+   button and no accept endpoint behind one.
 
-   The jobs and bids tables don't exist in the schema yet, so the endpoint
-   serves placeholder rows; declining and bidding validate on the server and
-   report back without storing anything.
+   Every job is fixed-price: budget_lkr is the customer's total for the whole
+   job, and a bid is the worker's total. The server allows one bid per job, so
+   an open offer the worker already bid on shows their bid instead of the
+   actions.
    ========================================================================== */
 
 (function () {
@@ -115,8 +116,15 @@
     budget.appendChild(Portal.element('span', null, 'Posted ' + Portal.date(offer.posted_at)));
     card.appendChild(budget);
 
-    // Only an open offer can still be acted on; the rest are history.
-    if (offer.status === 'open') {
+    if (offer.my_bid_amount_lkr !== null) {
+      var mine = Portal.element('p', 'record-meta');
+      mine.appendChild(metaItem('gavel', 'Your bid: ' + Portal.money(offer.my_bid_amount_lkr)));
+      card.appendChild(mine);
+    }
+
+    // Only an open offer the worker hasn't bid on yet can still be acted on;
+    // the rest are history (or waiting on the customer).
+    if (offer.status === 'open' && offer.my_bid_amount_lkr === null) {
       var actions = Portal.element('div', 'record-actions');
       actions.appendChild(Portal.button('Place bid', 'btn-primary btn-sm', function () {
         openBidModal(offer);
@@ -141,6 +149,7 @@
 
     var amount = Portal.element('p', 'record-meta');
     amount.appendChild(Portal.element('span', 'record-amount', Portal.money(bid.bid_amount_lkr)));
+    amount.appendChild(Portal.element('span', null, 'for the whole job · customer’s price ' + Portal.money(bid.budget_lkr)));
     card.appendChild(amount);
 
     if (bid.message) {

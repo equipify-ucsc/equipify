@@ -8,9 +8,16 @@
 /* ---------- Page header ---------- */
 .page-header {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-md);
+  margin-bottom: var(--section-gap);
+}
+.page-header > div {
+  display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-bottom: var(--section-gap);
 }
 
 .page-header__count {
@@ -102,6 +109,13 @@
   overflow-wrap: anywhere;
 }
 
+.entity-ref {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+  overflow-wrap: anywhere;
+}
+
 .entity-meta-row {
   display: flex;
   align-items: center;
@@ -144,4 +158,232 @@
   color: var(--color-on-surface-variant);
   max-width: 420px;
   margin-bottom: var(--space-md);
+}
+
+/* ---------- Card actions ---------- */
+.link-action--danger {
+  color: var(--color-rejected-fg);
+}
+.btn-outline:disabled,
+.btn-solid:disabled,
+.link-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+/* ---------- Modal ---------- */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(26, 40, 64, 0.5);
+  z-index: 60;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+}
+.modal-backdrop.is-open {
+  display: flex;
+}
+
+.modal {
+  background-color: var(--color-surface-container-lowest);
+  width: min(600px, 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
+  padding: var(--space-lg);
+  max-height: calc(100vh - 2 * var(--space-lg));
+  overflow-y: auto;
+}
+.modal--wide {
+  width: min(720px, 100%);
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.modal-subtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+}
+
+.modal-close {
+  background-color: var(--color-surface-container-low);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  display: inline-flex;
+  color: var(--color-on-surface-variant);
+}
+.modal-close:hover {
+  background-color: var(--color-surface-container);
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+/* ---------- Form elements ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  margin-top: 18px;
+}
+@media (min-width: 640px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.field-hint {
+  font-size: 12px;
+  color: var(--color-on-surface-variant);
+}
+
+.form-error {
+  color: var(--color-rejected-fg);
+  font-size: 13px;
+  margin: 12px 0 0;
+}
+
+.input-standard {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  padding: 10px 12px;
+  color: var(--color-on-surface);
+  outline: none;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input-standard:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
+}
+
+textarea.input-standard {
+  resize: vertical;
+  min-height: 96px;
+}
+
+/* .input-standard also dresses inputs and textareas, which have no arrow to
+   make room for — only the selects need the extra right-hand padding that
+   shared/styles.css reserves. */
+select.input-standard {
+  padding-right: 34px;
+}
+
+/* ---------- Bids list ---------- */
+.bid-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: 18px;
+}
+
+.bid-list__state {
+  padding: var(--space-lg) 0;
+  text-align: center;
+  color: var(--color-on-surface-variant);
+}
+
+.bid-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border: 1px solid var(--color-surface-variant);
+  border-radius: var(--radius-sm);
+}
+
+.bid-row__info {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.bid-row__name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.bid-row__verified {
+  color: var(--color-teal);
+}
+
+.bid-row__facts {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+}
+
+.bid-row__message {
+  margin-top: var(--space-sm);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+
+.bid-row__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-sm);
+}
+
+.bid-row__amount {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  max-width: calc(100vw - 44px);
+  background-color: var(--color-deep-navy);
+  color: #ffffff;
+  padding: 13px 16px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+  font-size: 14px;
+  font-weight: 600;
+  display: none;
+  z-index: 80;
+}
+.toast.is-visible {
+  display: block;
 }

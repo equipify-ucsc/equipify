@@ -165,7 +165,7 @@
               </div>
               <div class="stat-tile stat-tile--accent">
                 <span class="icon" aria-hidden="true">work</span>
-                <div class="stat-tile-value">2</div>
+                <div class="stat-tile-value" data-open-job-count>–</div>
                 <div class="stat-tile-label">Open Jobs</div>
               </div>
             </div>
@@ -215,7 +215,7 @@
         </div>
         <div class="summary-stat">
           <div class="summary-stat-label">Open Jobs</div>
-          <div class="summary-stat-value">2</div>
+          <div class="summary-stat-value" data-open-job-count>–</div>
         </div>
       </div>
 
@@ -306,46 +306,9 @@
             View All Jobs <span class="icon icon-sm" aria-hidden="true">arrow_forward</span>
           </a>
         </div>
-        <div class="card-grid">
-
-          <!-- Job Card 1 -->
-          <div class="card card--hover entity-card">
-            <div class="entity-card-head">
-              <div class="entity-card-main">
-                <h3 class="type-headline-sm entity-title">Excavator Operator - Kottawa Highway</h3>
-              </div>
-              <span class="badge-status badge-status--pending">
-                <span class="badge-status__dot" aria-hidden="true"></span> Open
-              </span>
-            </div>
-            <div class="entity-meta-row">
-              <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
-              <span class="type-body-sm">Posted Oct 20, 2023</span>
-            </div>
-            <div class="entity-footer">
-              <button class="btn-outline" type="button">View Applications</button>
-            </div>
-          </div>
-
-          <!-- Job Card 2 -->
-          <div class="card card--hover entity-card">
-            <div class="entity-card-head">
-              <div class="entity-card-main">
-                <h3 class="type-headline-sm entity-title">Site Supervisor - Port City</h3>
-              </div>
-              <span class="badge-status badge-status--pending">
-                <span class="badge-status__dot" aria-hidden="true"></span> Open
-              </span>
-            </div>
-            <div class="entity-meta-row">
-              <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
-              <span class="type-body-sm">Posted Oct 22, 2023</span>
-            </div>
-            <div class="entity-footer">
-              <button class="btn-outline" type="button">View Applications</button>
-            </div>
-          </div>
-
+        <!-- Filled by script.js with the first open jobs from GET /customer/jobs -->
+        <div class="card-grid" id="openJobsGrid">
+          <p class="open-jobs-state">Loading jobs…</p>
         </div>
       </section>
 
@@ -416,6 +379,6 @@
   <script src="../../shared/api.js"></script>
   <script src="../../shared/session.js"></script>
   <script src="../../shared/script.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

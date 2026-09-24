@@ -17,7 +17,7 @@ require_once __DIR__ . '/../models/FreelanceWorkerModel.php';
 final class FreelanceWorkerRegistrationService
 {
     /**
-     * @param array{email:string,password:string,full_name:string,phone:string,nic_number:?string,address:string,district:string,bio:?string,years_experience:?int,hourly_rate:?string,daily_rate:?string} $in
+     * @param array{email:string,password:string,full_name:string,phone:string,nic_number:?string,address:string,district:string,bio:?string,years_experience:?int} $in
      *        already validated and normalised by the controller
      * @return int the new user_id
      * @throws PDOException on any database failure (rolled back); duplicate
@@ -41,8 +41,6 @@ final class FreelanceWorkerRegistrationService
             FreelanceWorkerModel::insert($userId, [
                 'bio'              => $in['bio'],
                 'years_experience' => $in['years_experience'],
-                'hourly_rate'      => $in['hourly_rate'],
-                'daily_rate'       => $in['daily_rate'],
             ]);
             $db->commit();
             return $userId;

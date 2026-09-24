@@ -54,14 +54,28 @@ $router->add('POST',   '/freelancer/payout-methods',          [PayoutMethodContr
 $router->add('POST',   '/freelancer/payout-methods/{id}/default', [PayoutMethodController::class, 'makeDefault'], ['freelance_worker']);
 $router->add('DELETE', '/freelancer/payout-methods/{id}',     [PayoutMethodController::class, 'destroy'],        ['freelance_worker']);
 
-// Freelance worker: placeholder data until the jobs/bids/payments/messaging
+// Customer: fixed-price job offers for freelance workers. Deleting an open job
+// cancels it instead (see JobController::destroy); hiring picks one bid.
+$router->add('GET',    '/customer/jobs',               [JobController::class, 'index'],    ['customer']);
+$router->add('POST',   '/customer/jobs',               [JobController::class, 'store'],    ['customer']);
+$router->add('GET',    '/customer/jobs/{id}',          [JobController::class, 'show'],     ['customer']);
+$router->add('PUT',    '/customer/jobs/{id}',          [JobController::class, 'update'],   ['customer']);
+$router->add('DELETE', '/customer/jobs/{id}',          [JobController::class, 'destroy'],  ['customer']);
+$router->add('POST',   '/customer/jobs/{id}/publish',  [JobController::class, 'publish'],  ['customer']);
+$router->add('GET',    '/customer/jobs/{id}/bids',     [JobController::class, 'bids'],     ['customer']);
+$router->add('POST',   '/customer/jobs/{id}/hire',     [JobController::class, 'hire'],     ['customer']);
+$router->add('POST',   '/customer/jobs/{id}/complete', [JobController::class, 'complete'], ['customer']);
+
+// Freelance worker: the published jobs, their own bids, and declines.
+// No "accept" route: an operator competes for a job by bidding, and it is the
+// customer who awards it. Declining only marks the offer Declined for them.
+$router->add('GET',  '/freelancer/job-offers',              [JobOfferController::class, 'jobOffers'],    ['freelance_worker']);
+$router->add('POST', '/freelancer/job-offers/{id}/decline', [JobOfferController::class, 'declineOffer'], ['freelance_worker']);
+$router->add('POST', '/freelancer/bids',                    [JobOfferController::class, 'placeBid'],     ['freelance_worker']);
+
+// Freelance worker: placeholder data until the job history/payments/messaging
 // tables exist. Same response shapes as the real endpoints — see the controller.
 $router->add('GET',  '/freelancer/dashboard',                [FreelanceWorkerMockController::class, 'dashboard'],             ['freelance_worker']);
-$router->add('GET',  '/freelancer/job-offers',               [FreelanceWorkerMockController::class, 'jobOffers'],             ['freelance_worker']);
-// No "accept" route: an operator competes for a job by bidding, and it is the
-// customer who awards it. Declining only removes the offer from their own list.
-$router->add('POST', '/freelancer/job-offers/{id}/decline',  [FreelanceWorkerMockController::class, 'declineOffer'],          ['freelance_worker']);
-$router->add('POST', '/freelancer/bids',                     [FreelanceWorkerMockController::class, 'placeBid'],              ['freelance_worker']);
 $router->add('GET',  '/freelancer/jobs',                     [FreelanceWorkerMockController::class, 'jobs'],                  ['freelance_worker']);
 $router->add('POST', '/freelancer/jobs/{id}/rating',         [FreelanceWorkerMockController::class, 'rateCustomer'],          ['freelance_worker']);
 $router->add('GET',  '/freelancer/payments',                 [FreelanceWorkerMockController::class, 'payments'],              ['freelance_worker']);

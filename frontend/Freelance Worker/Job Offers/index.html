@@ -126,7 +126,7 @@
       <div class="page-head">
         <div>
           <h1 class="type-headline-lg page-title">Job Offers</h1>
-          <p class="type-body-md page-subtitle">Bid on the jobs that suit you. The customer compares the bids and picks who gets the work.</p>
+          <p class="type-body-md page-subtitle">Bid your price for the whole job. The customer compares the bids and picks who gets the work.</p>
         </div>
 
       </div>
@@ -147,14 +147,31 @@
           </select>
           <select class="select-filter" id="districtFilter" aria-label="Filter by district">
             <option value="">All districts</option>
+            <option>Ampara</option>
+            <option>Anuradhapura</option>
+            <option>Badulla</option>
+            <option>Batticaloa</option>
             <option>Colombo</option>
-            <option>Gampaha</option>
-            <option>Kandy</option>
             <option>Galle</option>
-            <option>Kurunegala</option>
-            <option>Matara</option>
+            <option>Gampaha</option>
+            <option>Hambantota</option>
             <option>Jaffna</option>
+            <option>Kalutara</option>
+            <option>Kandy</option>
+            <option>Kegalle</option>
+            <option>Kilinochchi</option>
+            <option>Kurunegala</option>
+            <option>Mannar</option>
+            <option>Matale</option>
+            <option>Matara</option>
+            <option>Moneragala</option>
+            <option>Mullaitivu</option>
+            <option>Nuwara Eliya</option>
+            <option>Polonnaruwa</option>
+            <option>Puttalam</option>
             <option>Ratnapura</option>
+            <option>Trincomalee</option>
+            <option>Vavuniya</option>
           </select>
           <span class="result-count" id="offerCount"></span>
         </div>
@@ -180,11 +197,11 @@
         <p class="type-body-md" id="bidJobSummary" style="margin: 12px 0 0; color: var(--color-on-surface-variant);"></p>
         <div class="form-grid" style="margin-top: 18px;">
           <div class="field">
-            <label class="field-label" for="bidAmount">Your bid (LKR)</label>
+            <label class="field-label" for="bidAmount">Your price for the whole job (LKR)</label>
             <input class="input-standard" id="bidAmount" name="bid_amount_lkr" type="number" min="1" step="0.01" required placeholder="e.g. 42000">
           </div>
           <div class="field">
-            <label class="field-label" for="bidBudget">Customer budget</label>
+            <label class="field-label" for="bidBudget">Customer&rsquo;s price</label>
             <input class="input-standard" id="bidBudget" type="text" readonly>
           </div>
           <div class="field field--full">
@@ -208,6 +225,6 @@
   <script src="../../shared/script.js"></script>
   <script src="../../shared/list.js"></script>
   <script src="../portal.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>
