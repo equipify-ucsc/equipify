@@ -324,7 +324,6 @@
     f.deposit_lkr.value = listing.deposit_lkr || '';
     f.district.value = listing.district;
     f.address.value = listing.address;
-    f.delivery_available.checked = listing.delivery_available;
     if (listing.status !== 'retired') f.status.value = listing.status;
 
     categorySelect.value = String(listing.category_id);
@@ -387,7 +386,6 @@
       deposit_lkr: f.deposit_lkr.value,
       district: f.district.value,
       address: f.address.value,
-      delivery_available: f.delivery_available.checked,
       status: f.status.value,
       specs: state.specs ? state.specs.read() : {}
     };

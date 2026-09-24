@@ -475,16 +475,14 @@
   flex-wrap: wrap;
   gap: var(--space-sm) var(--space-md);
 }
-.spec-check,
-.check-row {
+.spec-check {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   font-size: 14px;
   color: var(--color-on-surface);
 }
-.spec-check input,
-.check-row input {
+.spec-check input {
   width: 16px;
   height: 16px;
   accent-color: var(--color-teal);

@@ -141,6 +141,10 @@
     if (owner.rating_count > 0) partyBits.push('★ ' + owner.avg_rating.toFixed(1) + ' (' + owner.rating_count + ' reviews)');
     document.getElementById('partySub').textContent = partyBits.join(' • ');
 
+    // Self pickup happens at the renting party's district.
+    document.getElementById('pickupDesc').textContent =
+      'Collect it from the renting party in ' + item.district + ' and return it with your own transport.';
+
     // Price + availability
     document.getElementById('dailyPrice').textContent = formatLKR(item.daily_rate_lkr);
     var availability = document.getElementById('availabilityText');
@@ -168,7 +172,6 @@
     if (item.year_made) add('calendar_month', 'Year', String(item.year_made));
     add('verified', 'Condition', item.condition_label);
     if (item.quantity > 1) add('inventory_2', 'Units available', String(item.quantity));
-    add('local_shipping', 'Owner delivery', item.delivery_available ? 'Available' : 'Not offered');
 
     if (item.extra_specs) {
       document.getElementById('extraSpecsText').textContent = item.extra_specs;

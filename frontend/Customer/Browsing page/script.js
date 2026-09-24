@@ -2,7 +2,7 @@
 //
 // Search first, then filters in steps, so a customer never faces more than a
 // handful of choices at once:
-//   always   daily rate, district, available now, delivery, provider rating
+//   always   daily rate, district, available now, provider rating
 //   step 1   category (only categories that have listings, with counts)
 //   step 2   equipment type of that category (shown once a category is picked)
 //   step 3   up to 3 spec filters of that type (shown once a type is picked;
@@ -14,7 +14,7 @@
 (function () {
   'use strict';
 
-  const FIXED_KEYS = ['q', 'category', 'type', 'district', 'min_price', 'max_price', 'available', 'delivery', 'min_rating', 'sort'];
+  const FIXED_KEYS = ['q', 'category', 'type', 'district', 'min_price', 'max_price', 'available', 'min_rating', 'sort'];
 
   const grid = document.getElementById('equipment-grid');
   if (!grid) return;
@@ -28,7 +28,6 @@
     minPrice: document.getElementById('min-price'),
     maxPrice: document.getElementById('max-price'),
     available: document.getElementById('available-only'),
-    delivery: document.getElementById('delivery-only'),
     district: document.getElementById('location-select'),
     ratingFilter: document.getElementById('rating-filter'),
     sort: document.getElementById('sort'),
@@ -371,7 +370,6 @@
     els.minPrice.value = params.min_price || '';
     els.maxPrice.value = params.max_price || '';
     els.available.checked = params.available === '1';
-    els.delivery.checked = params.delivery === '1';
     els.district.value = params.district || '';
     els.sort.value = params.sort || 'recent';
     els.searchInputs.forEach((i) => { if (i) i.value = params.q || ''; });
@@ -380,7 +378,6 @@
     els.minPrice.addEventListener('change', () => { set('min_price', els.minPrice.value.trim()); refresh(); });
     els.maxPrice.addEventListener('change', () => { set('max_price', els.maxPrice.value.trim()); refresh(); });
     els.available.addEventListener('change', () => { set('available', els.available.checked ? '1' : ''); refresh(); });
-    els.delivery.addEventListener('change', () => { set('delivery', els.delivery.checked ? '1' : ''); refresh(); });
     els.district.addEventListener('change', () => { set('district', els.district.value); refresh(); });
     els.sort.addEventListener('change', () => { set('sort', els.sort.value === 'recent' ? '' : els.sort.value); refresh(); });
 
@@ -412,7 +409,6 @@
     els.minPrice.value = '';
     els.maxPrice.value = '';
     els.available.checked = false;
-    els.delivery.checked = false;
     els.district.value = '';
     els.sort.value = 'recent';
     els.searchInputs.forEach((i) => { if (i) i.value = ''; });

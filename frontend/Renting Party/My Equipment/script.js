@@ -86,7 +86,7 @@
     meta.appendChild(row1);
     var row2 = el('div', 'meta-row');
     row2.appendChild(icon('verified'));
-    row2.appendChild(el('span', null, item.condition_label + ' condition' + (item.delivery_available ? ' · Delivery available' : '')));
+    row2.appendChild(el('span', null, item.condition_label + ' condition'));
     meta.appendChild(row2);
     body.appendChild(meta);
 

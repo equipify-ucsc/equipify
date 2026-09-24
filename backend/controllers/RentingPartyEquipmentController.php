@@ -261,7 +261,6 @@ final class RentingPartyEquipmentController
         $description = self::str($in, 'description');
         $extraSpecs  = self::str($in, 'extra_specs');
         $status      = self::str($in, 'status');
-        $delivery    = ($in['delivery_available'] ?? false) === true;
 
         $checks = [
             'title'           => Validator::required($title, 'Title') ?? Validator::maxLength($title, 150, 'Title'),
@@ -314,7 +313,6 @@ final class RentingPartyEquipmentController
             'daily_rate_lkr'     => $rate,
             'deposit_lkr'        => $deposit === '' ? '0' : $deposit,
             'quantity'           => $quantity === '' ? 1 : (int) $quantity,
-            'delivery_available' => $delivery,
             'description'        => $description === '' ? null : $description,
             // Only "Other ..." types describe their specs in free text.
             'extra_specs'        => ((bool) $type['is_other'] && $extraSpecs !== '') ? $extraSpecs : null,
@@ -351,7 +349,6 @@ final class RentingPartyEquipmentController
             'daily_rate_lkr'     => (float) $row['daily_rate_lkr'],
             'deposit_lkr'        => (float) $row['deposit_lkr'],
             'quantity'           => (int) $row['quantity'],
-            'delivery_available' => (bool) $row['delivery_available'],
             'status'             => $status,
             'status_label'       => self::STATUSES[$status] ?? $status,
             'cover_photo_url'    => $row['cover_photo_id'] === null

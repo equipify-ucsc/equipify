@@ -7,7 +7,7 @@
  * active type in an active category — see EquipmentModel::PUBLIC_WHERE).
  *
  * Filters follow the catalogue's steps: the common ones (price, district,
- * availability, delivery, provider rating) always apply; category narrows to a family; type
+ * availability, provider rating) always apply; category narrows to a family; type
  * narrows to one kind; and only once a type is chosen are its filterable spec
  * fields (at most 3) accepted, as
  *   spec_<key>=value                      select, yes/no, multiselect ("has")
@@ -44,7 +44,6 @@ final class EquipmentBrowseController
             'type'      => self::id('type'),
             'district'  => ListQuery::enum('district', RentingPartyEquipmentController::DISTRICTS),
             'available' => ListQuery::flag('available'),
-            'delivery'  => ListQuery::flag('delivery'),
             'min_price' => self::amount('min_price'),
             'max_price' => self::amount('max_price'),
             'min_rating' => (int) ListQuery::enum('min_rating', ['1', '2', '3', '4', '5']),

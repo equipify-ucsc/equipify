@@ -23,7 +23,7 @@ final class EquipmentModel
     private const SELECT =
         'SELECT e.equipment_id, e.owner_id, e.type_id, e.title, e.brand, e.model,
                 e.year_made, e.serial_no, e.condition_grade, e.district, e.address,
-                e.daily_rate_lkr, e.deposit_lkr, e.quantity, e.delivery_available,
+                e.daily_rate_lkr, e.deposit_lkr, e.quantity,
                 e.description, e.extra_specs, e.status, e.created_at, e.updated_at,
                 t.name AS type_name, t.is_other, t.is_active AS type_active,
                 c.category_id, c.name AS category_name, c.icon AS category_icon,
@@ -127,10 +127,10 @@ final class EquipmentModel
             'INSERT INTO equipment
                  (owner_id, type_id, title, brand, model, year_made, serial_no,
                   condition_grade, district, address, daily_rate_lkr, deposit_lkr,
-                  quantity, delivery_available, description, extra_specs, status)
+                  quantity, description, extra_specs, status)
              VALUES (:owner_id, :type_id, :title, :brand, :model, :year_made, :serial_no,
                      :condition_grade, :district, :address, :daily_rate_lkr, :deposit_lkr,
-                     :quantity, :delivery_available, :description, :extra_specs, :status)'
+                     :quantity, :description, :extra_specs, :status)'
         );
         $stmt->execute(self::bind($v) + [':owner_id' => $ownerId]);
         return (int) $db->lastInsertId();
@@ -146,7 +146,6 @@ final class EquipmentModel
                     condition_grade = :condition_grade, district = :district,
                     address = :address, daily_rate_lkr = :daily_rate_lkr,
                     deposit_lkr = :deposit_lkr, quantity = :quantity,
-                    delivery_available = :delivery_available,
                     description = :description, extra_specs = :extra_specs,
                     status = :status
               WHERE equipment_id = :id AND owner_id = :owner_id'
@@ -267,7 +266,6 @@ final class EquipmentModel
      *   q          text in title, brand, model, type or category name
      *   category   category_id           type      type_id
      *   district   exact district        available true = status 'available' only
-     *   delivery   true = delivery_available only
      *   min_price / max_price  daily rate bounds (LKR)
      *   min_rating provider (renting party) rating of at least this many stars
      *   specs      list of [spec_field_id, op, value], op one of
@@ -296,9 +294,6 @@ final class EquipmentModel
         }
         if (!empty($filters['available'])) {
             $where[] = "e.status = 'available'";
-        }
-        if (!empty($filters['delivery'])) {
-            $where[] = 'e.delivery_available = 1';
         }
         if (($filters['min_price'] ?? '') !== '') {
             $where[] = 'e.daily_rate_lkr >= :min_price';
@@ -380,7 +375,6 @@ final class EquipmentModel
             ':daily_rate_lkr'     => $v['daily_rate_lkr'],
             ':deposit_lkr'        => $v['deposit_lkr'],
             ':quantity'           => $v['quantity'],
-            ':delivery_available' => $v['delivery_available'] ? 1 : 0,
             ':description'        => $v['description'],
             ':extra_specs'        => $v['extra_specs'],
             ':status'             => $v['status'],
