@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Equipify - Equipment Details</title>
+<title>Equipify - Equipment Listing</title>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../shared/styles.css">
@@ -99,7 +99,7 @@
     </ul>
 
     <div class="sidenav-cta-wrap">
-      <a class="btn-cta" href="../My Equipment/index.html">
+      <a class="btn-cta" href="../Equipment Details/index.html">
         <span class="icon icon-sm" aria-hidden="true">add_circle</span>
         Add Equipment
       </a>
@@ -127,184 +127,290 @@
       <div class="page-title-section">
         <div class="title-text-group">
           <div class="title-with-badge">
-            <h2 class="main-heading">Caterpillar 320 GC Excavator</h2>
-            <span class="badge-status badge-status--active">Available</span>
+            <h2 class="main-heading" id="pageHeading">Add Equipment</h2>
+            <span class="badge-status" id="statusBadge" hidden></span>
           </div>
-          <p class="sub-heading">ID: EQ-4092 &bull; Category: Heavy Excavator</p>
+          <p class="sub-heading" id="pageSubheading">Pick what you are listing, then describe it. Customers filter by these details.</p>
         </div>
 
         <div class="header-actions">
-          <button class="btn-outline" id="cancelBtn" type="button">Cancel</button>
-          <button class="btn-primary" id="saveBtn" type="button"><span class="icon icon-sm" aria-hidden="true">check</span> Save Changes</button>
+          <a class="btn-outline" id="cancelBtn" href="../My Equipment/index.html">Cancel</a>
+          <button class="btn-primary" id="saveBtn" type="submit" form="equipmentForm"><span class="icon icon-sm" aria-hidden="true">check</span> <span id="saveLabel">Save Listing</span></button>
         </div>
       </div>
 
-      <!-- Details Grid Layout -->
-      <div class="details-grid">
+      <p class="form-alert" id="formAlert" role="alert" hidden></p>
+
+      <form id="equipmentForm" class="details-grid" novalidate>
 
         <!-- Left Main Details Column -->
         <div class="left-column">
 
-          <!-- Gallery Card -->
-          <div class="card gallery-card">
-            <div class="main-gallery-view">
-              <img id="mainGalleryImg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAenzU8H9CEtI43HSB1PIaybM1xXuNwYu4T7Db30OhzZQfrS8TYA3LkgbPG7jJ_8BDpY2ScHLIkFJentINwbZUIA-Ek9NFygoD-APfmG1hiaU74U7PNPLOlphm5NIwmgH1mPky8F8a2_FmBDgmh3swNutdGRRWeO-8UL88_hP5XD_y1Z5JDFSsTI8X6zXRRLhGE1sarsS2f8ntj4RJZLtMmVaTg6OePJUKkorODBZ5acbRQmz0MoDGRB6kMPPOE7X7FXaqgLRpJQQta" alt="Caterpillar Excavator">
-              <button class="btn-gallery-upload" type="button" title="Upload New Image">
-                <span class="icon icon-sm" aria-hidden="true">photo_camera</span> Change Cover
-              </button>
+          <!-- Step 1: what is it? -->
+          <div class="card form-card">
+            <h3 class="card-section-title">1. Equipment Type</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="eqCategory">Category *</label>
+                <div class="dropdown-select-wrapper">
+                  <select id="eqCategory" required>
+                    <option value="">Loading categories…</option>
+                  </select>
+                  <span class="icon select-icon" aria-hidden="true">expand_more</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="eqType">Equipment type *</label>
+                <div class="dropdown-select-wrapper">
+                  <select id="eqType" name="type_id" required disabled>
+                    <option value="">Select a category first</option>
+                  </select>
+                  <span class="icon select-icon" aria-hidden="true">expand_more</span>
+                </div>
+                <p class="field-error" data-error-for="type_id" hidden></p>
+              </div>
             </div>
+            <p class="form-hint">Can't find your type? List it under the category's "Other" type, and
+              <button class="link-button" type="button" id="requestTypeBtn">ask us to add it</button>.</p>
+          </div>
 
-            <div class="thumbnails-grid">
-              <div class="thumb-item active" data-image="https://lh3.googleusercontent.com/aida-public/AB6AXuAenzU8H9CEtI43HSB1PIaybM1xXuNwYu4T7Db30OhzZQfrS8TYA3LkgbPG7jJ_8BDpY2ScHLIkFJentINwbZUIA-Ek9NFygoD-APfmG1hiaU74U7PNPLOlphm5NIwmgH1mPky8F8a2_FmBDgmh3swNutdGRRWeO-8UL88_hP5XD_y1Z5JDFSsTI8X6zXRRLhGE1sarsS2f8ntj4RJZLtMmVaTg6OePJUKkorODBZ5acbRQmz0MoDGRB6kMPPOE7X7FXaqgLRpJQQta">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAenzU8H9CEtI43HSB1PIaybM1xXuNwYu4T7Db30OhzZQfrS8TYA3LkgbPG7jJ_8BDpY2ScHLIkFJentINwbZUIA-Ek9NFygoD-APfmG1hiaU74U7PNPLOlphm5NIwmgH1mPky8F8a2_FmBDgmh3swNutdGRRWeO-8UL88_hP5XD_y1Z5JDFSsTI8X6zXRRLhGE1sarsS2f8ntj4RJZLtMmVaTg6OePJUKkorODBZ5acbRQmz0MoDGRB6kMPPOE7X7FXaqgLRpJQQta" alt="Excavator front view">
-              </div>
-              <div class="thumb-item" data-image="https://lh3.googleusercontent.com/aida-public/AB6AXuCJFFWBzWRX5HQ_Z56oUIZJV1FJHJTE5HagliPELhVC2YLe1hS60-lke5lRz5GIsV5emGkI-2pmf1qVBF7hEJ0zBsjN-ZObK8Pni4a67ycXbChN1YG7szZSJUSoQZLLtjMTQSizqo8mW6Ayu_3NGl_Him_Yg6OgY2K6jS1IRnLAlPqnksKcmeciFi95cc_uTeyjajXqzldZW6-AOqaJ0QyEc0R7MzPg4tKiz9nAblnteUwoh2adfTUQrxbWumDFSg7aL7wz-INArocq">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJFFWBzWRX5HQ_Z56oUIZJV1FJHJTE5HagliPELhVC2YLe1hS60-lke5lRz5GIsV5emGkI-2pmf1qVBF7hEJ0zBsjN-ZObK8Pni4a67ycXbChN1YG7szZSJUSoQZLLtjMTQSizqo8mW6Ayu_3NGl_Him_Yg6OgY2K6jS1IRnLAlPqnksKcmeciFi95cc_uTeyjajXqzldZW6-AOqaJ0QyEc0R7MzPg4tKiz9nAblnteUwoh2adfTUQrxbWumDFSg7aL7wz-INArocq" alt="Excavator side view">
-              </div>
-              <div class="thumb-item" data-image="https://lh3.googleusercontent.com/aida-public/AB6AXuDaHmpZisgp0wPRR-6NaIwPNCIfe4YwtsrPY37YoUeEm7xhPyWEAOtwgR1SiMsgZht62_zu8W9SMNbQY-MrOWpeVQhLsp-Kt86VhsQdZhXG87UICFHmxeX4dadGZYnaXXVaQtNllksg8BFoPINU-oEvDIrhBuXZ14-tPASxHpsORof-Eis6nqX97rgij4WobyAzaH0WiROsXsE-VlIGVQ-LydW3sSsvEMY1zHpsLjQMUlokk4gupQFt5mN3AOtK4opzfhoLnYq8Ntw_">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaHmpZisgp0wPRR-6NaIwPNCIfe4YwtsrPY37YoUeEm7xhPyWEAOtwgR1SiMsgZht62_zu8W9SMNbQY-MrOWpeVQhLsp-Kt86VhsQdZhXG87UICFHmxeX4dadGZYnaXXVaQtNllksg8BFoPINU-oEvDIrhBuXZ14-tPASxHpsORof-Eis6nqX97rgij4WobyAzaH0WiROsXsE-VlIGVQ-LydW3sSsvEMY1zHpsLjQMUlokk4gupQFt5mN3AOtK4opzfhoLnYq8Ntw_" alt="Excavator bucket detail">
-              </div>
-              <button class="thumb-item add-thumb-btn" type="button">
-                <span class="icon" aria-hidden="true">add</span>
-                <span>Add Photo</span>
-              </button>
+          <!-- Step 2: specs of that type -->
+          <div class="card form-card">
+            <h3 class="card-section-title">2. Specifications</h3>
+            <p class="form-hint" id="specHint">Choose an equipment type to see the specifications customers look for.</p>
+            <div class="spec-grid" id="specFields"></div>
+            <div class="form-group full-width" id="extraSpecsGroup" hidden>
+              <label for="eqExtraSpecs">Specifications</label>
+              <textarea id="eqExtraSpecs" name="extra_specs" rows="4" maxlength="1000" placeholder="Size, capacity, power and anything else a customer should know."></textarea>
+              <p class="field-error" data-error-for="extra_specs" hidden></p>
             </div>
           </div>
 
-          <!-- Form Details Card -->
+          <!-- Step 3: the item itself -->
           <div class="card form-card">
-            <h3 class="card-section-title">Equipment Information</h3>
-
-            <form class="equipment-form">
+            <h3 class="card-section-title">3. Equipment Information</h3>
+            <div class="equipment-form">
+              <div class="form-group full-width">
+                <label for="eqTitle">Listing title *</label>
+                <input type="text" id="eqTitle" name="title" required maxlength="150" placeholder="e.g. Cummins 125 kVA Silent Generator">
+                <p class="field-error" data-error-for="title" hidden></p>
+              </div>
               <div class="form-row">
                 <div class="form-group">
-                  <label for="eqTitle">Equipment Title</label>
-                  <input type="text" id="eqTitle" value="Caterpillar 320 GC Excavator">
+                  <label for="eqBrand">Brand</label>
+                  <input type="text" id="eqBrand" name="brand" maxlength="80" placeholder="e.g. Cummins">
+                  <p class="field-error" data-error-for="brand" hidden></p>
+                </div>
+                <div class="form-group">
+                  <label for="eqModel">Model</label>
+                  <input type="text" id="eqModel" name="model" maxlength="80" placeholder="e.g. C125D5">
+                  <p class="field-error" data-error-for="model" hidden></p>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="eqYear">Year of manufacture</label>
+                  <input type="number" id="eqYear" name="year_made" min="1950" step="1" placeholder="e.g. 2021">
+                  <p class="field-error" data-error-for="year_made" hidden></p>
                 </div>
                 <div class="form-group">
                   <label for="eqSerial">Serial / Tag ID</label>
-                  <input type="text" id="eqSerial" value="CAT-320GC-2022-881">
+                  <input type="text" id="eqSerial" name="serial_no" maxlength="80" placeholder="Shown only to you">
+                  <p class="field-error" data-error-for="serial_no" hidden></p>
                 </div>
               </div>
-
               <div class="form-row">
                 <div class="form-group">
-                  <label for="eqCategory">Category</label>
+                  <label for="eqCondition">Condition *</label>
                   <div class="dropdown-select-wrapper">
-                    <select id="eqCategory">
-                      <option value="excavators" selected>Excavators</option>
-                      <option value="loaders">Loaders</option>
-                      <option value="cranes">Cranes</option>
-                      <option value="lifts">Lifts</option>
+                    <select id="eqCondition" name="condition_grade" required>
+                      <option value="">Select condition</option>
+                      <option value="excellent">Excellent</option>
+                      <option value="good">Good</option>
+                      <option value="fair">Fair</option>
                     </select>
                     <span class="icon select-icon" aria-hidden="true">expand_more</span>
                   </div>
+                  <p class="field-error" data-error-for="condition_grade" hidden></p>
                 </div>
                 <div class="form-group">
-                  <label for="eqLocation">Current Yard / Location</label>
-                  <input type="text" id="eqLocation" value="Yard 4, Colombo">
+                  <label for="eqQuantity">Quantity</label>
+                  <input type="number" id="eqQuantity" name="quantity" min="1" step="1" value="1">
+                  <p class="field-error" data-error-for="quantity" hidden></p>
                 </div>
               </div>
+              <div class="form-group full-width">
+                <label for="eqDescription">Description</label>
+                <textarea id="eqDescription" name="description" rows="4" maxlength="2000" placeholder="What is it good for? What is included?"></textarea>
+                <p class="field-error" data-error-for="description" hidden></p>
+              </div>
+            </div>
+          </div>
 
+          <!-- Step 4: price and where it is -->
+          <div class="card form-card">
+            <h3 class="card-section-title">4. Daily Rate &amp; Location</h3>
+            <div class="equipment-form">
               <div class="form-row">
                 <div class="form-group">
-                  <label for="dailyRate">Daily Rate ($)</label>
-                  <input type="number" id="dailyRate" value="600.00">
+                  <label for="dailyRate">Daily rate (LKR) *</label>
+                  <input type="number" id="dailyRate" name="daily_rate_lkr" required min="1" step="0.01" placeholder="e.g. 18500">
+                  <p class="field-error" data-error-for="daily_rate_lkr" hidden></p>
                 </div>
                 <div class="form-group">
-                  <label for="weeklyRate">Weekly Rate ($)</label>
-                  <input type="number" id="weeklyRate" value="3200.00">
+                  <label for="deposit">Security deposit (LKR)</label>
+                  <input type="number" id="deposit" name="deposit_lkr" min="0" step="0.01" placeholder="0 = no deposit">
+                  <p class="field-error" data-error-for="deposit_lkr" hidden></p>
                 </div>
               </div>
-
-              <div class="form-group full-width">
-                <label for="eqSpecs">Specifications &amp; Notes</label>
-                <textarea id="eqSpecs" rows="4">Operating Weight: 20,500 kg. Max Digging Depth: 6.72 m. Engine Power: 107 kW. Equipped with grade control and automated bucket control system.</textarea>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="eqDistrict">District *</label>
+                  <div class="dropdown-select-wrapper">
+                    <select id="eqDistrict" name="district" required>
+                      <option value="">Select district</option>
+                      <option>Ampara</option>
+                      <option>Anuradhapura</option>
+                      <option>Badulla</option>
+                      <option>Batticaloa</option>
+                      <option>Colombo</option>
+                      <option>Galle</option>
+                      <option>Gampaha</option>
+                      <option>Hambantota</option>
+                      <option>Jaffna</option>
+                      <option>Kalutara</option>
+                      <option>Kandy</option>
+                      <option>Kegalle</option>
+                      <option>Kilinochchi</option>
+                      <option>Kurunegala</option>
+                      <option>Mannar</option>
+                      <option>Matale</option>
+                      <option>Matara</option>
+                      <option>Moneragala</option>
+                      <option>Mullaitivu</option>
+                      <option>Nuwara Eliya</option>
+                      <option>Polonnaruwa</option>
+                      <option>Puttalam</option>
+                      <option>Ratnapura</option>
+                      <option>Trincomalee</option>
+                      <option>Vavuniya</option>
+                    </select>
+                    <span class="icon select-icon" aria-hidden="true">expand_more</span>
+                  </div>
+                  <p class="field-error" data-error-for="district" hidden></p>
+                </div>
+                <div class="form-group">
+                  <label for="eqAddress">Yard / address *</label>
+                  <input type="text" id="eqAddress" name="address" required maxlength="255" placeholder="e.g. Yard 4, Kelaniya">
+                  <p class="field-error" data-error-for="address" hidden></p>
+                </div>
               </div>
-            </form>
+              <label class="check-row">
+                <input type="checkbox" id="eqDelivery" name="delivery_available">
+                <span>I can deliver this equipment to the customer's site</span>
+              </label>
+            </div>
           </div>
 
         </div>
 
-        <!-- Right Status & History Sidebar Column -->
+        <!-- Right Sidebar Column -->
         <div class="right-column">
 
-          <!-- Availability & Specs Status Card -->
-          <div class="card sidebar-card">
-            <h3 class="card-section-title">Operational Status</h3>
-
-            <div class="status-meta-list">
-              <div class="meta-item">
-                <span class="meta-label">Condition</span>
-                <span class="meta-value text-teal"><span class="icon icon-sm icon-fill" aria-hidden="true">check_circle</span> Excellent</span>
+          <!-- Photos -->
+          <div class="card gallery-card">
+            <h3 class="card-section-title">Photos</h3>
+            <div class="main-gallery-view" id="mainGallery">
+              <div class="gallery-empty" id="galleryEmpty">
+                <span class="icon" aria-hidden="true">add_photo_alternate</span>
+                <span>No photos yet</span>
               </div>
-              <div class="meta-item">
-                <span class="meta-label">Total Meter Hours</span>
-                <span class="meta-value">1,240 hrs</span>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Next Maintenance</span>
-                <span class="meta-value">Nov 12, 2026</span>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Assigned Operator</span>
-                <span class="meta-value">David Ross</span>
-              </div>
+              <img id="mainGalleryImg" alt="" hidden>
             </div>
+            <div class="thumbnails-grid" id="thumbnails"></div>
+            <label class="btn-outline photo-add" for="photoInput">
+              <span class="icon icon-sm" aria-hidden="true">photo_camera</span> Add photos
+            </label>
+            <input class="sr-only" type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" multiple>
+            <p class="form-hint">Up to 8 photos, JPG/PNG/WEBP, 3 MB each. The starred photo is shown on cards.</p>
+            <p class="field-error" id="photoError" role="alert" hidden></p>
           </div>
 
-          <!-- Recent Activity Card -->
+          <!-- Status -->
           <div class="card sidebar-card">
-            <div class="logistics-header">
-              <h3 class="card-section-title">Recent Rental History</h3>
-              <span class="count-chip">3 Records</span>
-            </div>
-
-            <div class="logistics-list">
-              <div class="logistics-item">
-                <div class="logistics-icon-wrapper icon-teal">
-                  <span class="icon" aria-hidden="true">description</span>
-                </div>
-                <div class="logistics-details">
-                  <span class="logistics-item-title">Summit Build Co.</span>
-                  <span class="logistics-item-sub">Oct 15 - Oct 22 &bull; 7 Days</span>
-                  <div class="company-tag">
-                    <span class="micro-avatar">SA</span>
-                    <span>Sarah Jenkins</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="logistics-item">
-                <div class="logistics-icon-wrapper icon-gray">
-                  <span class="icon" aria-hidden="true">history</span>
-                </div>
-                <div class="logistics-details">
-                  <span class="logistics-item-title">Apex Infrastructure</span>
-                  <span class="logistics-item-sub">Sep 01 - Sep 14 &bull; 14 Days</span>
-                  <div class="company-tag">
-                    <span class="micro-avatar">JB</span>
-                    <span>James Brown</span>
-                  </div>
-                </div>
+            <h3 class="card-section-title">Availability</h3>
+            <div class="form-group">
+              <label for="eqStatus">Status</label>
+              <div class="dropdown-select-wrapper">
+                <select id="eqStatus" name="status">
+                  <option value="available">Available</option>
+                  <option value="on_rent">On Rent</option>
+                  <option value="maintenance">Maintenance</option>
+                </select>
+                <span class="icon select-icon" aria-hidden="true">expand_more</span>
               </div>
             </div>
+            <p class="form-hint">Available and maintenance listings are shown to customers; only available ones can be booked.</p>
+          </div>
 
-            <button class="btn-view-logistics" type="button">
-              View Full Logs
+          <div class="card sidebar-card" id="dangerCard" hidden>
+            <h3 class="card-section-title">Remove listing</h3>
+            <p class="form-hint">Customers will no longer see it. Listings with rental history are hidden instead of deleted.</p>
+            <button class="btn-danger" type="button" id="removeBtn">
+              <span class="icon icon-sm" aria-hidden="true">delete</span> Remove listing
             </button>
           </div>
 
         </div>
-
-      </div>
+      </form>
 
     </div>
   </main>
 
+  <!-- Request a new equipment type -->
+  <div class="modal-backdrop" id="requestModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="requestModalTitle">
+      <div class="modal-head">
+        <h3 class="card-section-title" id="requestModalTitle">Request a new equipment type</h3>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <form id="requestForm" class="equipment-form" novalidate>
+        <p class="field-error" id="requestError" role="alert" hidden></p>
+        <div class="form-group">
+          <label for="requestCategory">Category *</label>
+          <div class="dropdown-select-wrapper">
+            <select id="requestCategory" name="category_id" required></select>
+            <span class="icon select-icon" aria-hidden="true">expand_more</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="requestName">Type name *</label>
+          <input type="text" id="requestName" name="proposed_name" required maxlength="80" placeholder="e.g. Hydraulic Post Driver">
+        </div>
+        <div class="form-group">
+          <label for="requestReason">Why is it needed?</label>
+          <textarea id="requestReason" name="reason" rows="3" maxlength="500" placeholder="What makes it different from the existing types?"></textarea>
+        </div>
+        <div class="request-history" id="requestHistory" hidden>
+          <h4 class="request-history-title">Your requests</h4>
+          <ul id="requestList"></ul>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-outline" type="button" data-modal-close>Cancel</button>
+          <button class="btn-primary" type="submit">Send Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script src="../../shared/api.js"></script>
   <script src="../../shared/session.js"></script>
   <script src="../../shared/script.js"></script>
+  <script src="../../shared/catalogue.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

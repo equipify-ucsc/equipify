@@ -11,6 +11,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../models/UserModel.php';
 require_once __DIR__ . '/../models/AreaManagerModel.php';
 require_once __DIR__ . '/../models/MaintenanceTechModel.php';
+require_once __DIR__ . '/../models/EquipmentCategoryModel.php';
 require_once __DIR__ . '/../services/MaintenanceTechRegistrationService.php';
 
 final class MaintenanceTechController
@@ -35,7 +36,6 @@ final class MaintenanceTechController
         $fullName       = self::str($in, 'full_name');
         $email          = strtolower(self::str($in, 'email'));
         $phoneRaw       = self::str($in, 'phone');
-        $specialization = self::str($in, 'specialization');
         $password       = is_string($in['password'] ?? null) ? $in['password'] : '';
 
         $errors = [];
@@ -43,13 +43,19 @@ final class MaintenanceTechController
             'full_name'      => Validator::required($fullName, 'Full name') ?? Validator::maxLength($fullName, 150, 'Full name'),
             'email'          => Validator::email($email),
             'phone'          => Validator::phone($phoneRaw),
-            'specialization' => Validator::required($specialization, 'Categories serviced') ?? Validator::maxLength($specialization, 150, 'Categories serviced'),
             'password'       => Validator::password($password),
         ];
         foreach ($checks as $field => $message) {
             if ($message !== null) {
                 $errors[$field] = $message;
             }
+        }
+
+        // Categories serviced: picked from the equipment catalogue. The names
+        // are also kept as display text in maintenance_techs.specialization.
+        [$categoryIds, $specialization] = self::readCategories($in['category_ids'] ?? null);
+        if ($categoryIds === []) {
+            $errors['category_ids'] = 'Select at least one equipment category this technician services.';
         }
 
         // Optional: the form does not ask for it yet, but the column exists.
@@ -86,6 +92,7 @@ final class MaintenanceTechController
                 'district'         => AreaManagerModel::districtOf($managerId),
                 'specialization'   => $specialization,
                 'years_experience' => $years,
+                'category_ids'     => $categoryIds,
             ], $managerId);
         } catch (PDOException $e) {
             // Lost a race with another registration for the same email/phone.
@@ -96,6 +103,34 @@ final class MaintenanceTechController
         }
 
         Response::ok(['user_id' => $userId, 'role' => 'maintenance_tech', 'full_name' => $fullName], 201);
+    }
+
+    /**
+     * Keeps only ids of active catalogue categories, de-duplicated, and builds
+     * the display text from their names (cut to fit VARCHAR(150)).
+     *
+     * @param mixed $raw
+     * @return array{0:int[],1:string} category ids and "Name, Name, ..."
+     */
+    private static function readCategories($raw): array
+    {
+        if (!is_array($raw)) {
+            return [[], ''];
+        }
+        $active = [];
+        foreach (EquipmentCategoryModel::categories(true) as $category) {
+            $active[(int) $category['category_id']] = (string) $category['name'];
+        }
+        $ids = [];
+        foreach ($raw as $value) {
+            $id = filter_var($value, FILTER_VALIDATE_INT);
+            if ($id !== false && isset($active[$id])) {
+                $ids[$id] = $id;
+            }
+        }
+        $ids   = array_values($ids);
+        $names = implode(', ', array_map(static fn (int $id): string => $active[$id], $ids));
+        return [$ids, mb_strlen($names) > 150 ? mb_substr($names, 0, 149) . '…' : $names];
     }
 
     /** Trimmed string input, or '' when missing / not a string. */

@@ -199,9 +199,11 @@
             <label class="field-label" for="technicianPhone">Phone</label>
             <input class="input-standard" id="technicianPhone" name="phone" required placeholder="+94 ...">
           </div>
-          <div class="field">
-            <label class="field-label" for="technicianCategories">Categories serviced</label>
-            <input class="input-standard" id="technicianCategories" name="specialization" required maxlength="150" placeholder="e.g. Power Tools, Generators">
+          <div class="field field--full">
+            <span class="field-label" id="technicianCategoriesLabel">Equipment categories serviced</span>
+            <div class="category-checks" id="technicianCategories" role="group" aria-labelledby="technicianCategoriesLabel">
+              <span class="category-checks__note">Loading categories…</span>
+            </div>
           </div>
           <div class="field">
             <label class="field-label" for="technicianExperience">Years of experience (optional)</label>
@@ -225,6 +227,7 @@
   <script src="../../shared/api.js"></script>
   <script src="../../shared/session.js"></script>
   <script src="../../shared/script.js"></script>
+  <script src="../../shared/catalogue.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

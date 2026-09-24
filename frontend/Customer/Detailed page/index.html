@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CAT 320D Excavator | Equipify</title>
+<title>Equipment | Equipify</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
@@ -76,22 +76,23 @@
 <!-- Main Content -->
 <main class="page-main">
 
-  <nav aria-label="Breadcrumb" class="breadcrumbs">
-    <a href="../Browsing page/index.html">Home</a>
-    <span class="material-symbols-outlined breadcrumbs__sep">chevron_right</span>
-    <a href="../Browsing page/index.html">Excavators</a>
-    <span class="material-symbols-outlined breadcrumbs__sep">chevron_right</span>
-    <span class="breadcrumbs__current">CAT 320D Excavator</span>
+  <nav aria-label="Breadcrumb" class="breadcrumbs" id="breadcrumbs">
+    <a href="../Browsing page/index.html">Browse</a>
   </nav>
 
-  <div class="detail-grid">
+  <p class="load-state" id="loadState" role="status">Loading equipment…</p>
+
+  <div class="detail-grid" id="detailGrid" hidden>
 
       <!-- Image Gallery -->
       <div class="gallery" id="gallery">
         <div class="gallery__main">
-          <img id="galleryMainImage" alt="CAT 320D Excavator Main View"
-               src="https://lh3.googleusercontent.com/aida/AP1WRLtI0FCRgmeXBtaOnzWn6vBkotJ5DZhzUlrp7xAXtaDMvLDPMFeJqe_8vq9c2ygZXE1Nhe487TfOlqrr47xV1Kp4xSYt3o819_73d08o0yrTcK65ksQCP2tJcvNLquZsVNezFMqO_3EJEOaZ9VgmlS7CVIhhDuwqfg2dMPp9JeTKlwvWu7oh0r-1LIvWq6P4Ecjr6Ema41dbpcW6kif0wCAEdfb4_gKgz0_awkK9EqGY0e0GvmQ-TW4Ojexo">
-          <div class="gallery__nav">
+          <img id="galleryMainImage" alt="" hidden>
+          <div class="gallery__empty" id="galleryEmpty">
+            <span class="material-symbols-outlined" id="galleryEmptyIcon">construction</span>
+            <span>No photos yet</span>
+          </div>
+          <div class="gallery__nav" id="galleryNav" hidden>
             <button class="gallery__nav-btn" type="button" id="galleryPrev" aria-label="Previous image">
               <span class="material-symbols-outlined">chevron_left</span>
             </button>
@@ -100,90 +101,52 @@
             </button>
           </div>
         </div>
-
-        <div class="gallery__thumbs" id="galleryThumbs">
-          <button class="gallery__thumb is-active" type="button" data-index="0">
-            <img alt="CAT 320D Excavator — full machine view on site"
-                 src="https://lh3.googleusercontent.com/aida/AP1WRLtI0FCRgmeXBtaOnzWn6vBkotJ5DZhzUlrp7xAXtaDMvLDPMFeJqe_8vq9c2ygZXE1Nhe487TfOlqrr47xV1Kp4xSYt3o819_73d08o0yrTcK65ksQCP2tJcvNLquZsVNezFMqO_3EJEOaZ9VgmlS7CVIhhDuwqfg2dMPp9JeTKlwvWu7oh0r-1LIvWq6P4Ecjr6Ema41dbpcW6kif0wCAEdfb4_gKgz0_awkK9EqGY0e0GvmQ-TW4Ojexo">
-          </button>
-          <button class="gallery__thumb" type="button" data-index="1">
-            <img alt="Close up shot of the heavy duty steel tracks of a yellow CAT excavator resting on dirt in a bright construction site."
-                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJFFWBzWRX5HQ_Z56oUIZJV1FJHJTE5HagliPELhVC2YLe1hS60-lke5lRz5GIsV5emGkI-2pmf1qVBF7hEJ0zBsjN-ZObK8Pni4a67ycXbChN1YG7szZSJUSoQZLLtjMTQSizqo8mW6Ayu_3NGl_Him_Yg6OgY2K6jS1IRnLAlPqnksKcmeciFi95cc_uTeyjajXqzldZW6-AOqaJ0QyEc0R7MzPg4tKiz9nAblnteUwoh2adfTUQrxbWumDFSg7aL7wz-INArocq">
-          </button>
-          <button class="gallery__thumb" type="button" data-index="2">
-            <img alt="Detailed view of the massive steel digging bucket of an excavator with prominent teeth, resting on a pile of gravel."
-                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaHmpZisgp0wPRR-6NaIwPNCIfe4YwtsrPY37YoUeEm7xhPyWEAOtwgR1SiMsgZht62_zu8W9SMNbQY-MrOWpeVQhLsp-Kt86VhsQdZhXG87UICFHmxeX4dadGZYnaXXVaQtNllksg8BFoPINU-oEvDIrhBuXZ14-tPASxHpsORof-Eis6nqX97rgij4WobyAzaH0WiROsXsE-VlIGVQ-LydW3sSsvEMY1zHpsLjQMUlokk4gupQFt5mN3AOtK4opzfhoLnYq8Ntw_">
-          </button>
-          <button class="gallery__thumb" type="button" data-index="3">
-            <img alt="Interior view of the modern, ergonomic cabin of a heavy construction excavator, showing joysticks and digital display panels."
-                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzTlUdT5LWtWq3m5AHxm4ED620TGfNp3tbhkf13yHfC33-I86Tkh3UR_HpG3d-iSsS5j05ca1toRpMZa6v_-wDP1qTQFbEzxdJA6nZaXGJXCUM9lTqdYRUtLDGhVbU9JQ2Hg5PvQWrqP2mKTOjsxaRAuKICQ0_5ra28oxd3jN9t1VRhdrA9_uRmnNJwuFOXmNSHO5tb9loAFRIrjig0e5eIaJ9eruQyfM8GRZWitAlKBVNuD6ok3roMw7KUJeUsXs3I8dIEXOeRMmk">
-            <span class="gallery__thumb-more">+3 More</span>
-          </button>
-        </div>
+        <div class="gallery__thumbs" id="galleryThumbs"></div>
       </div>
 
       <!-- Header Info -->
       <div class="equipment-header">
         <div class="equipment-header__meta">
-          <span class="badge-category">Excavators</span>
-          <div class="rating">
-            <span class="material-symbols-outlined rating__star">star</span>
-            <span class="rating__score">4.9</span>
-            <span class="rating__count">(124 reviews)</span>
-          </div>
+          <span class="badge-category" id="typeBadge"></span>
+          <span class="meta-chip" id="conditionChip"></span>
+          <span class="meta-chip"><span class="material-symbols-outlined">location_on</span> <span id="districtText"></span></span>
         </div>
-        <h1>CAT 320D Excavator</h1>
+        <h1 id="equipmentTitle"></h1>
+        <p class="equipment-header__sub" id="equipmentSub"></p>
       </div>
 
-      <!-- Key Specs -->
+      <!-- Key Specs: common facts + the type's own spec fields -->
       <div class="specs-card">
         <h3>Key Specifications</h3>
-        <div class="specs-grid">
-          <div class="spec-item">
-            <span class="spec-item__label"><span class="material-symbols-outlined">weight</span> Weight</span>
-            <span class="spec-item__value">22,000 kg</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-item__label"><span class="material-symbols-outlined">bolt</span> Power</span>
-            <span class="spec-item__value">110 kW</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-item__label"><span class="material-symbols-outlined">shopping_basket</span> Bucket Capacity</span>
-            <span class="spec-item__value">1.2 m³</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-item__label"><span class="material-symbols-outlined">schedule</span> Operating Hours</span>
-            <span class="spec-item__value">1,200 hrs</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-item__label"><span class="material-symbols-outlined">calendar_month</span> Year</span>
-            <span class="spec-item__value">2021</span>
-          </div>
+        <div class="specs-grid" id="specsGrid"></div>
+        <div class="extra-specs" id="extraSpecs" hidden>
+          <h4>Specifications from the owner</h4>
+          <p id="extraSpecsText"></p>
         </div>
       </div>
 
       <!-- About -->
-      <div class="about-section">
+      <div class="about-section" id="aboutSection" hidden>
         <h3>About this Equipment</h3>
         <div class="about-section__body">
-          <p>The CAT 320D Excavator delivers exceptional performance and versatility for demanding construction and earthmoving projects. Engineered for maximum efficiency, it features an advanced hydraulic system that ensures precise control and high digging forces, making it ideal for trenching, loading, and material handling.</p>
-          <p>This unit has been meticulously maintained under a strict B2B fleet management protocol, ensuring reliability and minimal downtime. With only 1,200 operating hours, the engine and hydraulic components are in peak condition, ready to tackle heavy-duty tasks with improved fuel efficiency.</p>
+          <p id="descriptionText"></p>
         </div>
       </div>
 
       <!-- Renting Party -->
       <div class="party-card">
         <div class="party-card__info">
-          <div class="party-card__avatar">HR</div>
+          <div class="party-card__avatar" id="partyInitials"></div>
           <div>
             <div class="party-card__name-row">
-              <h4 class="party-card__name">HeavyRentals Corp</h4>
+              <h4 class="party-card__name" id="partyName"></h4>
+              <span class="verified-chip" id="partyVerified" hidden>
+                <span class="material-symbols-outlined">verified</span> Verified
+              </span>
             </div>
-            <p class="party-card__sub">Joined 2019 &bull; 50+ successful rentals</p>
-            <a class="party-card__link" href="#">View Fleet Policies</a>
+            <p class="party-card__sub" id="partySub"></p>
           </div>
         </div>
-        <button class="party-card__btn" type="button">View Profile</button>
       </div>
 
       <!-- Booking Widget -->
@@ -192,10 +155,10 @@
         <div class="pricing-header">
           <div>
             <div class="pricing-header__amount">
-              <span class="price">LKR 28,000</span>
+              <span class="price" id="dailyPrice"></span>
               <span class="unit">/ day</span>
             </div>
-            <div class="pricing-header__status">Available Now</div>
+            <div class="pricing-header__status" id="availabilityText"></div>
           </div>
         </div>
 
@@ -218,6 +181,14 @@
         </div>
         <p class="date-error" id="dateError">End date must be after the start date.</p>
 
+        <!-- Units, for listings that cover several identical items -->
+        <div class="date-field quantity-field" id="quantityField" hidden>
+          <label class="date-field__label" for="unitCount">Units <span id="unitMax"></span></label>
+          <div class="date-field__control">
+            <input class="date-field__value" type="number" id="unitCount" min="1" value="1">
+          </div>
+        </div>
+
         <!-- Logistics -->
         <div class="logistics">
           <label class="logistics__label">Logistics Handover</label>
@@ -225,8 +196,8 @@
           <label class="logistics__option is-selected" id="logisticsDelivery">
             <input checked type="radio" name="logistics" value="delivery" id="logisticsDeliveryRadio">
             <div>
-              <span class="logistics__option-title">Platform Return Delivery</span>
-              <span class="logistics__option-desc">Equipify handles transport to/from your site. (+LKR 15,000)</span>
+              <span class="logistics__option-title">Delivery to your site</span>
+              <span class="logistics__option-desc">Transport to and from your site. (+LKR 15,000)</span>
             </div>
           </label>
 
@@ -234,7 +205,7 @@
             <input type="radio" name="logistics" value="self" id="logisticsSelfRadio">
             <div>
               <span class="logistics__option-title">Self-Handover</span>
-              <span class="logistics__option-desc">Pick up and return using your own flatbed transport.</span>
+              <span class="logistics__option-desc">Pick up and return using your own transport.</span>
             </div>
           </label>
         </div>
@@ -242,8 +213,8 @@
         <!-- Price Breakdown -->
         <div class="price-breakdown">
           <div class="price-breakdown__row">
-            <span id="rateLine">LKR 28,000 x 3 days</span>
-            <span id="rateTotal">LKR 84,000</span>
+            <span id="rateLine"></span>
+            <span id="rateTotal"></span>
           </div>
           <div class="price-breakdown__row">
             <span>Platform Fee</span>
@@ -253,9 +224,13 @@
             <span>Delivery (Est.)</span>
             <span>LKR 15,000</span>
           </div>
+          <div class="price-breakdown__row" id="depositRow" hidden>
+            <span>Refundable deposit</span>
+            <span id="depositValue"></span>
+          </div>
           <div class="price-breakdown__total">
             <span class="price-breakdown__total-label">Total Estimated</span>
-            <span class="price-breakdown__total-value" id="grandTotal">LKR 101,500</span>
+            <span class="price-breakdown__total-value" id="grandTotal"></span>
           </div>
         </div>
 

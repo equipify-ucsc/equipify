@@ -31,6 +31,23 @@ final class MaintenanceTechModel
     }
 
     /**
+     * Records which equipment categories the technician services. Does not
+     * manage a transaction: the registration service wraps it.
+     *
+     * @param int[] $categoryIds
+     */
+    public static function insertCategories(int $userId, array $categoryIds): void
+    {
+        $stmt = getDbConnection()->prepare(
+            'INSERT INTO maintenance_tech_categories (user_id, category_id)
+             VALUES (:user_id, :category_id)'
+        );
+        foreach ($categoryIds as $categoryId) {
+            $stmt->execute([':user_id' => $userId, ':category_id' => $categoryId]);
+        }
+    }
+
+    /**
      * The roster of one area manager only — an area manager never sees another
      * region's technicians.
      *

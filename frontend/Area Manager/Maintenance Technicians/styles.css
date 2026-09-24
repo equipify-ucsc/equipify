@@ -333,3 +333,33 @@
   font-size: 12px;
   text-align: center;
 }
+
+/* ---------- Categories serviced (checkboxes from the equipment catalogue) ---------- */
+.category-checks {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px 16px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--color-outline-variant);
+  border-radius: var(--radius-sm);
+}
+@media (min-width: 640px) {
+  .category-checks {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.category-checks label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.category-checks input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-teal);
+}
+.category-checks__note {
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+}

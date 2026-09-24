@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Equipment Catalogue</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/styles.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-require-auth="admin" data-login-url="../Login/index.html">
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md"><span data-user-name>Administrator</span><span class="topbar-user-role">Administrator</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true">
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="avatar avatar--placeholder" aria-hidden="true">
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Dashboard/index.html">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Complaints &amp; Users/index.html">
+          <span class="icon" aria-hidden="true">flag</span>
+          <span>Complaints &amp; Users</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Area Managers/index.html">
+          <span class="icon" aria-hidden="true">groups</span>
+          <span>Area Managers</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">category</span>
+          <span>Equipment Catalogue</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Document Verification/index.html">
+          <span class="icon" aria-hidden="true">fact_check</span>
+          <span>Document Verification</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Login/index.html" data-logout>
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <div class="page-head">
+        <div>
+          <h1 class="type-headline-lg page-title">Equipment Catalogue</h1>
+          <p class="type-body-md page-subtitle">Categories, equipment types and the spec fields each type asks renting parties for.</p>
+        </div>
+        <div class="page-head-actions">
+          <button class="btn-outline" type="button" id="addCategoryBtn">
+            <span class="icon icon-sm" aria-hidden="true">create_new_folder</span> Add Category
+          </button>
+          <button class="btn-primary" type="button" id="addTypeBtn">
+            <span class="icon icon-sm" aria-hidden="true">add_circle</span> Add Equipment Type
+          </button>
+        </div>
+      </div>
+
+      <div class="admin-grid admin-grid--3">
+        <div class="card">
+          <p class="stat-card-label">Categories</p>
+          <h3 class="stat-card-value" id="statCategories">–</h3>
+          <p class="stat-card-trend">Keep this list short — grow with types instead</p>
+        </div>
+        <div class="card">
+          <p class="stat-card-label">Equipment Types</p>
+          <h3 class="stat-card-value" id="statTypes">–</h3>
+          <p class="stat-card-trend">Not counting the "Other" types</p>
+        </div>
+        <div class="card">
+          <p class="stat-card-label">Live Listings</p>
+          <h3 class="stat-card-value" id="statListings">–</h3>
+          <p class="stat-card-trend">Listings customers can currently see</p>
+        </div>
+      </div>
+
+      <div class="tab-bar" role="tablist" aria-label="Catalogue sections">
+        <button class="tab-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="catalogPanel" id="catalogTab">Catalogue</button>
+        <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="requestsPanel" id="requestsTab">
+          New-type requests <span class="count-chip" id="requestCount" hidden></span>
+        </button>
+      </div>
+
+      <section id="catalogPanel" role="tabpanel" aria-labelledby="catalogTab">
+        <p class="list-state list-state--error" id="catalogError" hidden></p>
+        <div class="catalog-layout">
+          <div class="card category-card">
+            <h2 class="type-headline-sm card-title">Categories</h2>
+            <ul class="category-list" id="categoryList">
+              <li class="list-state">Loading…</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="category-head">
+              <div class="category-head-title">
+                <span class="icon category-head-icon" id="categoryIcon" aria-hidden="true">category</span>
+                <div>
+                  <h2 class="type-headline-sm card-title" id="categoryName">Select a category</h2>
+                  <p class="supporting" id="categoryMeta"></p>
+                </div>
+              </div>
+              <div class="category-head-actions" id="categoryActions" hidden>
+                <button class="btn-outline btn-small" type="button" id="editCategoryBtn">
+                  <span class="icon icon-sm" aria-hidden="true">edit</span> Edit
+                </button>
+                <button class="btn-outline btn-small" type="button" id="toggleCategoryBtn">Deactivate</button>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table class="table" id="typeTable">
+                <thead>
+                  <tr><th>Equipment type</th><th>Spec fields</th><th>Listings</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
+                </thead>
+                <tbody>
+                  <tr><td colspan="5">Pick a category to see its types.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="requestsPanel" role="tabpanel" aria-labelledby="requestsTab" hidden>
+        <div class="card">
+          <div class="toolbar">
+            <select class="select-filter" id="requestStatusFilter" aria-label="Filter requests by status">
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+              <option value="">All requests</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table class="table" id="requestTable">
+              <thead>
+                <tr><th>Requested type</th><th>Category</th><th>Renting party</th><th>Reason</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
+              </thead>
+              <tbody>
+                <tr><td colspan="6">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="requestPager"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Category modal (add + edit) -->
+  <div class="modal-backdrop" id="categoryModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="categoryModalTitle">
+      <div class="modal-head">
+        <h3 class="type-headline-sm" id="categoryModalTitle">Add Category</h3>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <form id="categoryForm" novalidate>
+        <p class="form-error" id="categoryFormError" role="alert" hidden></p>
+        <div class="form-grid" style="margin-top: 18px;">
+          <div class="field field--full">
+            <label class="field-label" for="categoryNameInput">Category name</label>
+            <input class="input-standard" id="categoryNameInput" name="name" required maxlength="80" placeholder="e.g. Marine &amp; Diving">
+          </div>
+          <div class="field">
+            <label class="field-label" for="categoryIconInput">Icon</label>
+            <input class="input-standard" id="categoryIconInput" name="icon" maxlength="40" placeholder="e.g. sailing">
+            <p class="supporting">A <a href="https://fonts.google.com/icons" target="_blank" rel="noopener">Material Symbols</a> name.</p>
+          </div>
+          <div class="field" id="categorySortField" hidden>
+            <label class="field-label" for="categorySortInput">Display order</label>
+            <input class="input-standard" id="categorySortInput" name="sort_order" type="number" min="0" max="65535">
+          </div>
+        </div>
+        <p class="supporting" id="categoryOtherNote" style="margin-top: 12px;">An "Other" type is created with the category, so anything that fits no type can still be listed.</p>
+        <div class="modal-actions" style="margin-top: 20px;">
+          <button class="btn-outline" type="button" data-modal-close>Cancel</button>
+          <button class="btn-primary" type="submit">Save Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Equipment type modal (add + edit, with its spec fields) -->
+  <div class="modal-backdrop" id="typeModal">
+    <div class="modal modal--wide" role="dialog" aria-modal="true" aria-labelledby="typeModalTitle">
+      <div class="modal-head">
+        <h3 class="type-headline-sm" id="typeModalTitle">Add Equipment Type</h3>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <form id="typeForm" novalidate>
+        <p class="form-error" id="typeFormError" role="alert" hidden></p>
+        <div class="form-grid" style="margin-top: 18px;">
+          <div class="field">
+            <label class="field-label" for="typeCategoryInput">Category</label>
+            <select class="input-standard" id="typeCategoryInput" name="category_id" required>
+              <option value="">Select a category</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="typeNameInput">Type name</label>
+            <input class="input-standard" id="typeNameInput" name="name" required maxlength="80" placeholder="e.g. Welding Generator">
+          </div>
+        </div>
+
+        <div class="spec-head">
+          <div>
+            <h4 class="spec-title">Spec fields</h4>
+            <p class="supporting">What renting parties fill in for this type. Reuse an existing key (e.g. <code>power_source</code>) when the meaning is the same.</p>
+          </div>
+          <span class="filter-meter" id="filterMeter">0 / 3 filters</span>
+        </div>
+        <div class="spec-rows" id="specRows"></div>
+        <button class="btn-outline btn-small" type="button" id="addFieldBtn">
+          <span class="icon icon-sm" aria-hidden="true">add</span> Add spec field
+        </button>
+        <datalist id="knownKeys"></datalist>
+
+        <div class="modal-actions" style="margin-top: 20px;">
+          <button class="btn-outline" type="button" data-modal-close>Cancel</button>
+          <button class="btn-primary" type="submit">Save Type</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reject request modal -->
+  <div class="modal-backdrop" id="rejectModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="rejectModalTitle">
+      <div class="modal-head">
+        <h3 class="type-headline-sm" id="rejectModalTitle">Reject request</h3>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <form id="rejectForm" novalidate>
+        <p class="form-error" id="rejectFormError" role="alert" hidden></p>
+        <div class="field" style="margin-top: 18px;">
+          <label class="field-label" for="rejectNote">Note to the renting party</label>
+          <textarea class="input-standard" id="rejectNote" name="admin_note" rows="3" maxlength="500" required placeholder="e.g. Already covered by Scissor Lift."></textarea>
+        </div>
+        <div class="modal-actions" style="margin-top: 20px;">
+          <button class="btn-outline" type="button" data-modal-close>Cancel</button>
+          <button class="btn-primary" type="submit">Reject Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="../../shared/api.js"></script>
+  <script src="../../shared/session.js"></script>
+  <script src="../../shared/script.js"></script>
+  <script src="../../shared/list.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
