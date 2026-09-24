@@ -17,6 +17,7 @@ require_once __DIR__ . '/../controllers/AuthController.php';
 require_once __DIR__ . '/../controllers/AreaManagerController.php';
 require_once __DIR__ . '/../controllers/DeliveryPersonnelController.php';
 require_once __DIR__ . '/../controllers/MaintenanceTechController.php';
+require_once __DIR__ . '/../controllers/VehicleController.php';
 require_once __DIR__ . '/../controllers/FreelanceWorkerController.php';
 require_once __DIR__ . '/../controllers/FreelanceWorkerMockController.php';
 require_once __DIR__ . '/../controllers/PayoutMethodController.php';

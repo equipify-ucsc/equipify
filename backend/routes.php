@@ -24,6 +24,15 @@ $router->add('POST', '/area-manager/delivery-personnel', [DeliveryPersonnelContr
 $router->add('GET',  '/area-manager/technicians',        [MaintenanceTechController::class, 'index'],   ['area_manager']);
 $router->add('POST', '/area-manager/technicians',        [MaintenanceTechController::class, 'store'],   ['area_manager']);
 
+// Area manager: delivery fleet. Removing a vehicle with delivery history
+// retires it instead of deleting it; restore brings it back.
+$router->add('GET',    '/area-manager/vehicles',              [VehicleController::class, 'index'],   ['area_manager']);
+$router->add('POST',   '/area-manager/vehicles',              [VehicleController::class, 'store'],   ['area_manager']);
+$router->add('GET',    '/area-manager/vehicles/{id}',         [VehicleController::class, 'show'],    ['area_manager']);
+$router->add('PUT',    '/area-manager/vehicles/{id}',         [VehicleController::class, 'update'],  ['area_manager']);
+$router->add('DELETE', '/area-manager/vehicles/{id}',         [VehicleController::class, 'destroy'], ['area_manager']);
+$router->add('POST',   '/area-manager/vehicles/{id}/restore', [VehicleController::class, 'restore'], ['area_manager']);
+
 // Freelance worker (equipment operator): own profile, credential documents and
 // portfolio.
 $router->add('GET',  '/freelancer/profile',      [FreelanceWorkerController::class, 'showProfile'],        ['freelance_worker']);

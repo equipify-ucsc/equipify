@@ -167,6 +167,33 @@ final class Validator
     }
 
     /**
+     * A decimal number within a range, with at most $decimals places (so it
+     * fits a DECIMAL(n,$decimals) column without rounding). An empty value
+     * passes: use required() alongside it when the field is mandatory.
+     *
+     * @param mixed $value
+     */
+    public static function decimalRange($value, float $min, float $max, int $decimals, string $label): ?string
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+        if (!is_numeric($value)) {
+            return $label . ' must be a number.';
+        }
+        $number = (float) $value;
+        if ($number < $min || $number > $max) {
+            return $label . ' must be between ' . $min . ' and ' . $max . '.';
+        }
+        // Plain digits only: is_numeric() also accepts "1e1" and " 5".
+        $pattern = $decimals > 0 ? '/^\d+(?:\.\d{1,' . $decimals . '})?$/' : '/^\d+$/';
+        if (preg_match($pattern, (string) $value) !== 1) {
+            return $label . ' can have at most ' . $decimals . ' decimal places.';
+        }
+        return null;
+    }
+
+    /**
      * A money amount that fits DECIMAL(10,2) and is not negative. An empty
      * value passes: rates are optional on a freelancer profile.
      *

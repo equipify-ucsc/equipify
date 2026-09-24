@@ -1,0 +1,10 @@
+# Make the browser check with Apache before reusing a cached page, stylesheet
+# or script. Without this, Chrome guesses a freshness lifetime from the file's
+# age and keeps running an old script.js after it has been edited, without even
+# asking the server. "no-cache" still allows caching: an unchanged file comes
+# back as a cheap 304, a changed one is downloaded.
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html|css|js)$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+</IfModule>
