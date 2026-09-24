@@ -16,21 +16,19 @@ final class FreelanceWorkerModel
      * Inserts the subtype row. Does not manage a transaction: the caller (a
      * service) wraps this with the `users` insert.
      *
-     * @param array{bio:?string,years_experience:?int,hourly_rate:?string,daily_rate:?string} $f
+     * @param array{bio:?string,years_experience:?int} $f
      */
     public static function insert(int $userId, array $f): void
     {
         $stmt = getDbConnection()->prepare(
             'INSERT INTO freelance_workers
-                 (user_id, bio, years_experience, hourly_rate, daily_rate)
-             VALUES (:user_id, :bio, :years_experience, :hourly_rate, :daily_rate)'
+                 (user_id, bio, years_experience)
+             VALUES (:user_id, :bio, :years_experience)'
         );
         $stmt->execute([
             ':user_id'          => $userId,
             ':bio'              => $f['bio'],
             ':years_experience' => $f['years_experience'],
-            ':hourly_rate'      => $f['hourly_rate'],
-            ':daily_rate'       => $f['daily_rate'],
         ]);
     }
 
@@ -47,7 +45,7 @@ final class FreelanceWorkerModel
             'SELECT u.user_id, u.full_name, u.email, u.phone, u.nic_number,
                     u.address_line, u.district, u.profile_photo_url,
                     u.account_status, u.created_at,
-                    fw.bio, fw.years_experience, fw.hourly_rate, fw.daily_rate,
+                    fw.bio, fw.years_experience,
                     fw.availability_status, fw.verification_status,
                     fw.avg_rating, fw.rating_count
                FROM freelance_workers fw
@@ -64,7 +62,7 @@ final class FreelanceWorkerModel
      * Updates only the columns a worker owns. verification_status, avg_rating
      * and rating_count are deliberately absent: the platform sets those.
      *
-     * @param array{bio:?string,years_experience:?int,hourly_rate:?string,daily_rate:?string,availability_status:string} $f
+     * @param array{bio:?string,years_experience:?int,availability_status:string} $f
      */
     public static function updateProfile(int $userId, array $f): void
     {
@@ -72,16 +70,12 @@ final class FreelanceWorkerModel
             'UPDATE freelance_workers
                 SET bio                 = :bio,
                     years_experience    = :years_experience,
-                    hourly_rate         = :hourly_rate,
-                    daily_rate          = :daily_rate,
                     availability_status = :availability_status
               WHERE user_id = :id'
         );
         $stmt->execute([
             ':bio'                 => $f['bio'],
             ':years_experience'    => $f['years_experience'],
-            ':hourly_rate'         => $f['hourly_rate'],
-            ':daily_rate'          => $f['daily_rate'],
             ':availability_status' => $f['availability_status'],
             ':id'                  => $userId,
         ]);

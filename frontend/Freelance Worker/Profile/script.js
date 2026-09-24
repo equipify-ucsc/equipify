@@ -65,8 +65,6 @@
     form.elements.address_line.value = profile.address_line || '';
     form.elements.availability_status.value = profile.availability_status;
     form.elements.years_experience.value = profile.years_experience === null ? '' : profile.years_experience;
-    form.elements.hourly_rate.value = profile.hourly_rate === null ? '' : profile.hourly_rate;
-    form.elements.daily_rate.value = profile.daily_rate === null ? '' : profile.daily_rate;
     form.elements.bio.value = profile.bio || '';
 
     // Read-only tiles.
@@ -138,10 +136,8 @@
       district: form.elements.district.value,
       availability_status: form.elements.availability_status.value,
       bio: form.elements.bio.value,
-      // Optional fields: send null rather than '' when left blank.
-      years_experience: form.elements.years_experience.value || null,
-      hourly_rate: form.elements.hourly_rate.value || null,
-      daily_rate: form.elements.daily_rate.value || null
+      // Optional field: send null rather than '' when left blank.
+      years_experience: form.elements.years_experience.value || null
     }).then(function (res) {
       submitBtn.disabled = false;
       if (!res.ok) {

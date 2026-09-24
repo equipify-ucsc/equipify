@@ -455,3 +455,15 @@
   font-size: 14px;
   line-height: 20px;
 }
+
+/* ---------- Open jobs: loading / empty line ---------- */
+.open-jobs-state {
+  grid-column: 1 / -1;
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--color-on-surface-variant);
+  font-size: 15px;
+  background-color: var(--color-surface-container-lowest);
+  border: 1px dashed var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+}

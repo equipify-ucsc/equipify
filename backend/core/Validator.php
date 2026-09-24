@@ -195,7 +195,7 @@ final class Validator
 
     /**
      * A money amount that fits DECIMAL(10,2) and is not negative. An empty
-     * value passes: rates are optional on a freelancer profile.
+     * value passes: use required() alongside it when the amount is mandatory.
      *
      * @param mixed $value
      */

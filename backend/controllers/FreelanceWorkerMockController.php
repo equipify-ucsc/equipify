@@ -1,8 +1,10 @@
 <?php
 /**
  * Placeholder data for the parts of the freelance-worker portal whose tables
- * the schema does not have yet (jobs, bids, payments, messages, notifications,
- * complaints).
+ * the schema does not have yet (job history, payments, messages,
+ * notifications, complaints). Job offers, bids and declines are real now
+ * (JobOfferController); the offers()/bids() generators below only still feed
+ * the dashboard's placeholder tiles.
  *
  * These endpoints are deliberately shaped exactly like the real ones: same
  * {success, data} envelope, same {items, page, per_page, total, total_pages}
@@ -83,112 +85,6 @@ final class FreelanceWorkerMockController
             'recent_offers'  => array_slice($openOffers, 0, 4),
             'recent_activity' => array_slice(self::activity(), 0, 6),
         ]);
-    }
-
-    // ------------------------------------------------------------- job offers
-
-    /**
-     * GET /freelancer/job-offers?tab=offers|bids&q=&status=&district=&page=&per_page=
-     *
-     * One endpoint for both tabs of the Job Offers page: the "My bids" tab is
-     * the same list joined the other way round, which is how the real query
-     * will work too.
-     */
-    public static function jobOffers(array $params = []): void
-    {
-        $tab      = ListQuery::enum('tab', ['offers', 'bids']) ?: 'offers';
-        $term     = ListQuery::search();
-        $district = ListQuery::enum('district', self::DISTRICTS);
-        $page     = ListQuery::page();
-        $perPage  = ListQuery::perPage();
-
-        if ($tab === 'bids') {
-            $status = ListQuery::enum('status', self::BID_STATUSES);
-            $rows   = self::bids();
-        } else {
-            $status = ListQuery::enum('status', self::OFFER_STATUSES);
-            $rows   = self::offers();
-        }
-
-        Response::ok(ListQuery::paginate(
-            $rows,
-            $page,
-            $perPage,
-            static function (array $row) use ($term, $status, $district): bool {
-                return ListQuery::contains($term, $row['title'], $row['customer_name'], $row['equipment'], $row['job_ref'])
-                    && ($status === '' || $row['status'] === $status)
-                    && ($district === '' || $row['district'] === $district);
-            }
-        ));
-    }
-
-    /**
-     * POST /freelancer/job-offers/{id}/decline
-     *
-     * The only decision an operator makes on an open offer. There is no accept:
-     * the way onto a job is a bid, and the customer picks the winner, so
-     * 'accepted' is a status an offer arrives in, never one this endpoint sets.
-     */
-    public static function declineOffer(array $params = []): void
-    {
-        $offer = self::findById(self::offers(), 'offer_id', (int) ($params['id'] ?? 0));
-        if ($offer === null) {
-            Response::error('That job offer no longer exists.', 404);
-        }
-        if ($offer['status'] !== 'open') {
-            Response::error('This offer is no longer open.', 409);
-        }
-        Response::ok([
-            'offer_id' => $offer['offer_id'],
-            'job_ref'  => $offer['job_ref'],
-            'status'   => 'declined',
-        ]);
-    }
-
-    /**
-     * POST /freelancer/bids: validates a bid the way the real endpoint will,
-     * then returns the bid that would have been stored.
-     */
-    public static function placeBid(array $params = []): void
-    {
-        $in      = Router::jsonBody();
-        $offerId = filter_var($in['offer_id'] ?? null, FILTER_VALIDATE_INT);
-        $amount  = $in['bid_amount_lkr'] ?? null;
-        $message = is_string($in['message'] ?? null) ? trim($in['message']) : '';
-
-        $errors = [];
-        if ($offerId === false || $offerId < 1) {
-            $errors['offer_id'] = 'Select a job offer to bid on.';
-        }
-        if (!is_numeric($amount)) {
-            $errors['bid_amount_lkr'] = 'Enter your bid amount.';
-        } elseif ($problem = Validator::money($amount, 'Bid amount')) {
-            $errors['bid_amount_lkr'] = $problem;
-        } elseif ((float) $amount <= 0) {
-            $errors['bid_amount_lkr'] = 'Bid amount must be more than zero.';
-        }
-        if ($problem = Validator::maxLength($message, 1000, 'Message')) {
-            $errors['message'] = $problem;
-        }
-
-        $offer = self::findById(self::offers(), 'offer_id', (int) $offerId);
-        if ($errors === [] && $offer === null) {
-            Response::error('That job offer no longer exists.', 404);
-        }
-        if ($errors !== []) {
-            Response::error('Please fix the highlighted fields.', 422, $errors);
-        }
-
-        Response::ok([
-            'bid_id'         => 0,
-            'offer_id'       => (int) $offerId,
-            'job_ref'        => $offer['job_ref'],
-            'title'          => $offer['title'],
-            'bid_amount_lkr' => round((float) $amount, 2),
-            'message'        => $message,
-            'status'         => 'submitted',
-            'submitted_at'   => self::ANCHOR,
-        ], 201);
     }
 
     // ------------------------------------------------------------ job history

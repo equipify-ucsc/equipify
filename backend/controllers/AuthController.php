@@ -207,8 +207,6 @@ final class AuthController
         $district   = self::str($in, 'district');
         $bio        = self::str($in, 'bio');
         $experience = $in['years_experience'] ?? null;
-        $hourlyRate = $in['hourly_rate'] ?? null;
-        $dailyRate  = $in['daily_rate'] ?? null;
         $password   = is_string($in['password'] ?? null) ? $in['password'] : '';
         $confirm    = is_string($in['confirm_password'] ?? null) ? $in['confirm_password'] : '';
 
@@ -222,8 +220,6 @@ final class AuthController
             'district'         => Validator::oneOf($district, self::DISTRICTS, 'district'),
             'bio'              => Validator::maxLength($bio, 2000, 'Bio'),
             'years_experience' => Validator::intRange($experience, 0, 70, 'Years of experience'),
-            'hourly_rate'      => Validator::money($hourlyRate, 'Hourly rate'),
-            'daily_rate'       => Validator::money($dailyRate, 'Daily rate'),
             'password'         => Validator::password($password),
         ];
         foreach ($checks as $field => $message) {
@@ -265,8 +261,6 @@ final class AuthController
                 'district'         => $district,
                 'bio'              => $bio === '' ? null : $bio,
                 'years_experience' => ($experience === null || $experience === '') ? null : (int) $experience,
-                'hourly_rate'      => ($hourlyRate === null || $hourlyRate === '') ? null : number_format((float) $hourlyRate, 2, '.', ''),
-                'daily_rate'       => ($dailyRate === null || $dailyRate === '') ? null : number_format((float) $dailyRate, 2, '.', ''),
             ]);
         } catch (PDOException $e) {
             // Lost a race with another sign-up for the same email/phone/NIC.

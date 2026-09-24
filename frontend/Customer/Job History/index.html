@@ -27,7 +27,7 @@
         <span class="icon">help</span>
       </button>
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">Anura Perera</div>
+        <div class="topbar-user-name type-label-md" data-user-name>Anura Perera</div>
         <img alt="User Profile" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
       </div>
     </div>
@@ -123,8 +123,11 @@
       <div class="page-header">
         <div>
           <h1 class="type-page-title">Job History</h1>
-          <p class="page-header__count" id="job-history-count">6 jobs posted</p>
+          <p class="page-header__count" id="job-history-count">Loading jobs…</p>
         </div>
+        <button class="btn-primary" type="button" id="postJobBtn">
+          <span class="icon icon-sm" aria-hidden="true">add_circle</span> Post a Job
+        </button>
       </div>
 
       <!-- Filter tabs -->
@@ -137,184 +140,129 @@
         <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="cancelled">Cancelled</button>
       </div>
 
-      <!-- Job History Grid -->
-      <div class="card-grid" id="job-history-grid">
-
-        <!-- 1: Open -->
-        <article class="card card--hover entity-card" data-status="open">
-          <div class="entity-card-head">
-            <div class="entity-card-main">
-              <div>
-                <span class="badge-label">Heavy Equipment Operator</span>
-                <h3 class="type-headline-sm entity-title">Excavator Operator – Kottawa Highway</h3>
-              </div>
-            </div>
-            <span class="badge-status badge-status--pending">
-              <span class="badge-status__dot" aria-hidden="true"></span> Open
-            </span>
-          </div>
-          <div class="entity-meta-row">
-            <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
-            <span class="type-body-sm">Posted Oct 20, 2025</span>
-          </div>
-          <div class="entity-meta-row">
-            <span class="icon icon-sm" aria-hidden="true">groups</span>
-            <span class="type-body-sm">6 applicants</span>
-          </div>
-          <div class="entity-footer">
-            <button class="btn-outline" type="button" data-action="view-applications">View Applications</button>
-          </div>
-        </article>
-
-        <!-- 2: Open -->
-        <article class="card card--hover entity-card" data-status="open">
-          <div class="entity-card-head">
-            <div class="entity-card-main">
-              <div>
-                <span class="badge-label">Site Supervision</span>
-                <h3 class="type-headline-sm entity-title">Site Supervisor – Port City</h3>
-              </div>
-            </div>
-            <span class="badge-status badge-status--pending">
-              <span class="badge-status__dot" aria-hidden="true"></span> Open
-            </span>
-          </div>
-          <div class="entity-meta-row">
-            <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
-            <span class="type-body-sm">Posted Oct 22, 2025</span>
-          </div>
-          <div class="entity-meta-row">
-            <span class="icon icon-sm" aria-hidden="true">groups</span>
-            <span class="type-body-sm">3 applicants</span>
-          </div>
-          <div class="entity-footer">
-            <button class="btn-outline" type="button" data-action="view-applications">View Applications</button>
-          </div>
-        </article>
-
-        <!-- 3: Hired -->
-        <article class="card card--hover entity-card" data-status="hired">
-          <div class="entity-card-head">
-            <div class="entity-card-main">
-              <div>
-                <span class="badge-label">Crane Operation</span>
-                <h3 class="type-headline-sm entity-title">Crane Operator – Colombo 03 Tower</h3>
-              </div>
-            </div>
-            <span class="badge-status badge-status--active">
-              <span class="badge-status__dot" aria-hidden="true"></span> Hired
-            </span>
-          </div>
-          <div class="entity-meta-row">
-            <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
-            <span class="type-body-sm">Posted Sep 30, 2025</span>
-          </div>
-          <div class="entity-meta-row">
-            <span class="icon icon-sm" aria-hidden="true">person</span>
-            <span class="type-body-sm">Hired: Nimal Perera</span>
-          </div>
-          <div class="entity-footer">
-            <button class="btn-outline" type="button" data-action="view">View Details</button>
-          </div>
-        </article>
-
-        <!-- 4: Completed -->
-        <article class="card card--hover entity-card" data-status="completed">
-          <div class="entity-card-head">
-            <div class="entity-card-main">
-              <div>
-                <span class="badge-label">Generator Servicing</span>
-                <h3 class="type-headline-sm entity-title">Generator Technician – Weekend Cover</h3>
-              </div>
-            </div>
-            <span class="badge-status badge-status--completed">
-              <span class="badge-status__dot" aria-hidden="true"></span> Completed
-            </span>
-          </div>
-          <div class="entity-meta-row">
-            <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
-            <span class="type-body-sm">Posted Aug 02, 2025</span>
-          </div>
-          <div class="entity-meta-row">
-            <span class="icon icon-sm" aria-hidden="true">task_alt</span>
-            <span class="type-body-sm">Completed by: Kasun Silva</span>
-          </div>
-          <div class="entity-footer">
-            <button class="btn-outline" type="button" data-action="view">View Details</button>
-            <button class="link-action" type="button" data-action="rate">Rate Freelancer</button>
-          </div>
-        </article>
-
-        <!-- 5: Cancelled -->
-        <article class="card card--hover entity-card" data-status="cancelled">
-          <div class="entity-card-head">
-            <div class="entity-card-main">
-              <div>
-                <span class="badge-label">Warehouse Operations</span>
-                <h3 class="type-headline-sm entity-title">Forklift Operator – Warehouse Shift</h3>
-              </div>
-            </div>
-            <span class="badge-status badge-status--rejected">
-              <span class="badge-status__dot" aria-hidden="true"></span> Cancelled
-            </span>
-          </div>
-          <div class="entity-meta-row">
-            <span class="icon icon-sm" aria-hidden="true">calendar_today</span>
-            <span class="type-body-sm">Posted Jul 14, 2025</span>
-          </div>
-          <div class="entity-meta-row">
-            <span class="icon icon-sm" aria-hidden="true">cancel</span>
-            <span class="type-body-sm">Cancelled Jul 20, 2025</span>
-          </div>
-          <div class="entity-footer">
-            <button class="btn-outline" type="button" data-action="view">View Details</button>
-          </div>
-        </article>
-
-        <!-- 6: Draft -->
-        <article class="card card--hover entity-card" data-status="draft">
-          <div class="entity-card-head">
-            <div class="entity-card-main">
-              <div>
-                <span class="badge-label">Logistics</span>
-                <h3 class="type-headline-sm entity-title">Delivery Driver – Heavy Haul</h3>
-              </div>
-            </div>
-            <span class="badge-status badge-status--draft">
-              <span class="badge-status__dot" aria-hidden="true"></span> Draft
-            </span>
-          </div>
-          <div class="entity-meta-row">
-            <span class="icon icon-sm" aria-hidden="true">visibility_off</span>
-            <span class="type-body-sm">Not yet published</span>
-          </div>
-          <div class="entity-footer">
-            <button class="btn-solid" type="button" data-action="publish">
-              <span class="icon icon-sm" aria-hidden="true">publish</span> Publish Job
-            </button>
-            <button class="link-action" type="button" data-action="edit">Edit</button>
-          </div>
-        </article>
-
-      </div>
+      <!-- Job History Grid: cards are built by script.js from GET /customer/jobs -->
+      <div class="card-grid" id="job-history-grid" aria-live="polite"></div>
 
       <!-- Shown when the active filter matches no jobs (history itself is non-empty) -->
       <p class="filter-empty" id="job-history-no-results" hidden>No job posts match this filter.</p>
+
+      <!-- Shown when loading the jobs fails -->
+      <p class="filter-empty" id="job-history-error" role="alert" hidden></p>
 
       <!-- Empty state, shown when there is no job history -->
       <div class="empty-state" id="job-history-empty" hidden>
         <span class="icon empty-state__icon" aria-hidden="true">work_off</span>
         <h2 class="type-section-heading">No job posts yet</h2>
         <p class="empty-state__text">When you post a job offer for a freelance worker, it will show up here.</p>
-        <a class="btn-outline btn-inline" href="#">Post a Job</a>
+        <button class="btn-outline btn-inline" type="button" id="emptyPostJobBtn">Post a Job</button>
       </div>
 
     </div>
   </main>
 
+  <!-- Post / edit job modal -->
+  <div class="modal-backdrop" id="jobModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="jobModalTitle">
+      <div class="modal-head">
+        <h3 class="type-headline-sm" id="jobModalTitle">Post a Job</h3>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <form id="jobForm" novalidate>
+        <p class="form-error" id="jobFormError" role="alert" hidden></p>
+        <div class="form-grid">
+          <div class="field field--full">
+            <label class="field-label" for="jobTitle">Job title</label>
+            <input class="input-standard" id="jobTitle" name="title" required maxlength="150" placeholder="e.g. Crane operator for tower lift">
+          </div>
+          <div class="field">
+            <label class="field-label" for="jobEquipment">Equipment to operate</label>
+            <input class="input-standard" id="jobEquipment" name="equipment" required maxlength="100" placeholder="e.g. Mobile Crane (50t)">
+          </div>
+          <div class="field">
+            <label class="field-label" for="jobPrice">Fixed price (LKR)</label>
+            <input class="input-standard" id="jobPrice" name="budget_lkr" type="number" required min="1" step="0.01" inputmode="decimal" placeholder="e.g. 150000">
+            <span class="field-hint">The total you will pay for the whole job.</span>
+          </div>
+          <div class="field">
+            <label class="field-label" for="jobDistrict">District</label>
+            <select class="input-standard" id="jobDistrict" name="district" required>
+              <option value="">Select district</option>
+                <option>Ampara</option>
+                <option>Anuradhapura</option>
+                <option>Badulla</option>
+                <option>Batticaloa</option>
+                <option>Colombo</option>
+                <option>Galle</option>
+                <option>Gampaha</option>
+                <option>Hambantota</option>
+                <option>Jaffna</option>
+                <option>Kalutara</option>
+                <option>Kandy</option>
+                <option>Kegalle</option>
+                <option>Kilinochchi</option>
+                <option>Kurunegala</option>
+                <option>Mannar</option>
+                <option>Matale</option>
+                <option>Matara</option>
+                <option>Moneragala</option>
+                <option>Mullaitivu</option>
+                <option>Nuwara Eliya</option>
+                <option>Polonnaruwa</option>
+                <option>Puttalam</option>
+                <option>Ratnapura</option>
+                <option>Trincomalee</option>
+                <option>Vavuniya</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="jobSite">Site</label>
+            <input class="input-standard" id="jobSite" name="site" required maxlength="150" placeholder="e.g. Port City, Phase 2">
+          </div>
+          <div class="field">
+            <label class="field-label" for="jobStart">Start date</label>
+            <input class="input-standard" id="jobStart" name="start_date" type="date" required>
+          </div>
+          <div class="field">
+            <label class="field-label" for="jobEnd">End date</label>
+            <input class="input-standard" id="jobEnd" name="end_date" type="date" required>
+          </div>
+          <div class="field field--full">
+            <label class="field-label" for="jobDescription">Description (optional)</label>
+            <textarea class="input-standard" id="jobDescription" name="description" maxlength="2000" rows="4" placeholder="What the work involves, site conditions, required certifications…"></textarea>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-outline" type="button" data-modal-close>Cancel</button>
+          <button class="btn-outline" type="submit" id="jobSaveDraftBtn" data-publish="false">Save as draft</button>
+          <button class="btn-primary" type="submit" id="jobSubmitBtn" data-publish="true">Publish job</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bids modal -->
+  <div class="modal-backdrop" id="bidsModal">
+    <div class="modal modal--wide" role="dialog" aria-modal="true" aria-labelledby="bidsModalTitle">
+      <div class="modal-head">
+        <div>
+          <h3 class="type-headline-sm" id="bidsModalTitle">Bids</h3>
+          <p class="modal-subtitle" id="bidsModalSummary"></p>
+        </div>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <div class="bid-list" id="bidList"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
   <script src="../../shared/api.js"></script>
   <script src="../../shared/session.js"></script>
   <script src="../../shared/script.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

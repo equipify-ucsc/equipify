@@ -177,8 +177,6 @@
       district: document.getElementById('district'),
       address: document.getElementById('address'),
       years_experience: document.getElementById('yearsExperience'),
-      hourly_rate: document.getElementById('hourlyRate'),
-      daily_rate: document.getElementById('dailyRate'),
       bio: document.getElementById('bio'),
       password: passwordInput,
       confirm_password: confirmInput,
@@ -235,12 +233,6 @@
       if (years !== '' && (Number(years) < 0 || Number(years) > 70)) {
         errors.years_experience = 'Years of experience must be between 0 and 70.';
       }
-      ['hourly_rate', 'daily_rate'].forEach(function (key) {
-        var value = fields[key].value;
-        if (value !== '' && Number(value) < 0) {
-          errors[key] = 'A rate cannot be negative.';
-        }
-      });
 
       var pw = passwordInput.value;
       if (pw.length < 8 || !/[A-Za-z]/.test(pw) || !/\d/.test(pw)) {
@@ -285,10 +277,8 @@
         district: fields.district.value,
         address: fields.address.value.trim(),
         bio: fields.bio.value.trim(),
-        // Optional numbers: send null rather than '' when left blank.
+        // Optional number: send null rather than '' when left blank.
         years_experience: fields.years_experience.value || null,
-        hourly_rate: fields.hourly_rate.value || null,
-        daily_rate: fields.daily_rate.value || null,
         password: passwordInput.value,
         confirm_password: confirmInput.value,
         terms: fields.terms.checked

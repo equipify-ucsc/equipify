@@ -79,8 +79,6 @@ final class FreelanceWorkerController
         $bio          = self::str($in, 'bio');
         $availability = self::str($in, 'availability_status');
         $experience   = $in['years_experience'] ?? null;
-        $hourlyRate   = $in['hourly_rate'] ?? null;
-        $dailyRate    = $in['daily_rate'] ?? null;
 
         $errors = [];
         $checks = [
@@ -92,8 +90,6 @@ final class FreelanceWorkerController
             'bio'                 => Validator::maxLength($bio, 2000, 'Bio'),
             'availability_status' => Validator::oneOf($availability, self::AVAILABILITY, 'availability'),
             'years_experience'    => Validator::intRange($experience, 0, 70, 'Years of experience'),
-            'hourly_rate'         => Validator::money($hourlyRate, 'Hourly rate'),
-            'daily_rate'          => Validator::money($dailyRate, 'Daily rate'),
         ];
         foreach ($checks as $field => $message) {
             if ($message !== null) {
@@ -125,8 +121,6 @@ final class FreelanceWorkerController
             FreelanceWorkerModel::updateProfile($userId, [
                 'bio'                 => $bio === '' ? null : $bio,
                 'years_experience'    => ($experience === null || $experience === '') ? null : (int) $experience,
-                'hourly_rate'         => ($hourlyRate === null || $hourlyRate === '') ? null : number_format((float) $hourlyRate, 2, '.', ''),
-                'daily_rate'          => ($dailyRate === null || $dailyRate === '') ? null : number_format((float) $dailyRate, 2, '.', ''),
                 'availability_status' => $availability,
             ]);
         } catch (PDOException $e) {
@@ -385,8 +379,6 @@ final class FreelanceWorkerController
             'member_since'        => $row['created_at'],
             'bio'                 => $row['bio'],
             'years_experience'    => $row['years_experience'] === null ? null : (int) $row['years_experience'],
-            'hourly_rate'         => $row['hourly_rate'] === null ? null : (float) $row['hourly_rate'],
-            'daily_rate'          => $row['daily_rate'] === null ? null : (float) $row['daily_rate'],
             'availability_status' => $row['availability_status'],
             'verification_status' => $row['verification_status'],
             'avg_rating'          => (float) $row['avg_rating'],
