@@ -197,7 +197,7 @@ final class JobController
             'site'        => Validator::required($site, 'Site') ?? Validator::maxLength($site, 150, 'Site'),
             'start_date'  => Validator::futureDate($startDate, 'Start date'),
             'end_date'    => Validator::date($endDate, 'End date'),
-            'budget_lkr'  => Validator::required($budget, 'Fixed price') ?? Validator::money($budget, 'Fixed price'),
+            'budget_lkr'  => Validator::required($budget, 'Price') ?? Validator::money($budget, 'Price'),
         ];
         foreach ($checks as $field => $message) {
             if ($message !== null) {
@@ -208,7 +208,7 @@ final class JobController
             $errors['end_date'] = 'End date cannot be before the start date.';
         }
         if (!isset($errors['budget_lkr']) && (float) $budget <= 0) {
-            $errors['budget_lkr'] = 'Fixed price must be more than zero.';
+            $errors['budget_lkr'] = 'Price must be more than zero.';
         }
         if ($errors !== []) {
             Response::error('Please fix the highlighted fields.', 422, $errors);

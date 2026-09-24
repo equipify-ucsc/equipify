@@ -136,7 +136,7 @@
     head.appendChild(badge(meta));
     card.appendChild(head);
 
-    card.appendChild(metaRow('payments', money(job.budget_lkr) + ' fixed price'));
+    card.appendChild(metaRow('payments', 'Price: ' + money(job.budget_lkr)));
     card.appendChild(metaRow('event', formatDate(job.start_date) + ' – ' + formatDate(job.end_date) +
       ' (' + job.duration_days + (job.duration_days === 1 ? ' day)' : ' days)')));
 
@@ -434,7 +434,7 @@
   function openBidsModal(job) {
     document.getElementById('bidsModalTitle').textContent = 'Bids for ' + job.title;
     document.getElementById('bidsModalSummary').textContent =
-      job.job_ref + ' · Your fixed price: ' + money(job.budget_lkr);
+      job.job_ref + ' · Your price: ' + money(job.budget_lkr);
     bidList.textContent = '';
     bidList.appendChild(el('p', 'bid-list__state', 'Loading bids…'));
     openModal(bidsModal);

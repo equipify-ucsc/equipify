@@ -113,7 +113,6 @@
 
     var budget = Portal.element('p', 'record-meta');
     budget.appendChild(Portal.element('span', 'record-amount', Portal.money(offer.budget_lkr)));
-    budget.appendChild(Portal.element('span', null, 'fixed price'));
     budget.appendChild(Portal.element('span', null, 'Posted ' + Portal.date(offer.posted_at)));
     card.appendChild(budget);
 
