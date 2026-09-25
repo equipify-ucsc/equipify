@@ -118,17 +118,54 @@ $router->add('GET',  '/freelancer/job-offers',              [JobOfferController:
 $router->add('POST', '/freelancer/job-offers/{id}/decline', [JobOfferController::class, 'declineOffer'], ['freelance_worker']);
 $router->add('POST', '/freelancer/bids',                    [JobOfferController::class, 'placeBid'],     ['freelance_worker']);
 
-// Freelance worker: placeholder data until the job history/payments/messaging
+// Freelance worker: placeholder data until the job history/payments
 // tables exist. Same response shapes as the real endpoints — see the controller.
 $router->add('GET',  '/freelancer/dashboard',                [FreelanceWorkerMockController::class, 'dashboard'],             ['freelance_worker']);
 $router->add('GET',  '/freelancer/jobs',                     [FreelanceWorkerMockController::class, 'jobs'],                  ['freelance_worker']);
 $router->add('POST', '/freelancer/jobs/{id}/rating',         [FreelanceWorkerMockController::class, 'rateCustomer'],          ['freelance_worker']);
 $router->add('GET',  '/freelancer/payments',                 [FreelanceWorkerMockController::class, 'payments'],              ['freelance_worker']);
 $router->add('GET',  '/freelancer/invoices/{id}',            [FreelanceWorkerMockController::class, 'invoice'],               ['freelance_worker']);
-$router->add('GET',  '/freelancer/conversations',            [FreelanceWorkerMockController::class, 'conversations'],         ['freelance_worker']);
-$router->add('GET',  '/freelancer/messages',                 [FreelanceWorkerMockController::class, 'messages'],              ['freelance_worker']);
-$router->add('POST', '/freelancer/messages',                 [FreelanceWorkerMockController::class, 'sendMessage'],           ['freelance_worker']);
+$router->add('GET',  '/freelancer/conversations',            [MessageController::class, 'conversations'],         ['freelance_worker']);
+$router->add('GET',  '/freelancer/messages',                 [MessageController::class, 'messages'],              ['freelance_worker']);
+$router->add('POST', '/freelancer/messages',                 [MessageController::class, 'sendMessage'],           ['freelance_worker']);
 $router->add('GET',  '/freelancer/notifications',            [FreelanceWorkerMockController::class, 'notifications'],         ['freelance_worker']);
 $router->add('POST', '/freelancer/notifications/read',       [FreelanceWorkerMockController::class, 'markNotificationsRead'], ['freelance_worker']);
-$router->add('GET',  '/freelancer/complaints',               [FreelanceWorkerMockController::class, 'complaints'],            ['freelance_worker']);
-$router->add('POST', '/freelancer/complaints',               [FreelanceWorkerMockController::class, 'submitComplaint'],       ['freelance_worker']);
+$router->add('GET',  '/freelancer/complaints',               [ComplaintController::class, 'index'],            ['freelance_worker']);
+$router->add('POST', '/freelancer/complaints',               [ComplaintController::class, 'store'],       ['freelance_worker']);
+
+// Complaint management: shared session-scoped APIs; reviewers only read, admin alone updates status.
+$complaintUsers = array_keys(ComplaintModel::TARGET_ROLES);
+$complaintReaders = array_merge($complaintUsers, ComplaintModel::REVIEWERS);
+$router->add('GET', '/complaints/metadata', [ComplaintController::class, 'metadata'], $complaintReaders);
+$router->add('GET', '/complaints/targets', [ComplaintController::class, 'targets'], $complaintUsers);
+$router->add('GET', '/complaints', [ComplaintController::class, 'index'], $complaintReaders);
+$router->add('POST', '/complaints', [ComplaintController::class, 'store'], $complaintUsers);
+$router->add('GET', '/complaints/{id}', [ComplaintController::class, 'show'], $complaintReaders);
+$router->add('GET', '/complaints/{id}/attachment', [ComplaintController::class, 'attachment'], $complaintReaders);
+$router->add('POST', '/complaints/{id}/status', [ComplaintController::class, 'updateStatus'], ['admin']);
+
+// Operational messaging: role gates select the portal; membership controls conversation access.
+$router->add('GET', '/customer/conversations', [MessageController::class, 'conversations'], ['customer']);
+$router->add('GET', '/customer/messages', [MessageController::class, 'messages'], ['customer']);
+$router->add('POST', '/customer/messages', [MessageController::class, 'sendMessage'], ['customer']);
+$router->add('GET', '/renting-party/conversations', [MessageController::class, 'conversations'], ['renting_party']);
+$router->add('GET', '/renting-party/messages', [MessageController::class, 'messages'], ['renting_party']);
+$router->add('POST', '/renting-party/messages', [MessageController::class, 'sendMessage'], ['renting_party']);
+$router->add('GET', '/delivery-personnel/conversations', [MessageController::class, 'conversations'], ['delivery_personnel']);
+$router->add('GET', '/delivery-personnel/messages', [MessageController::class, 'messages'], ['delivery_personnel']);
+$router->add('POST', '/delivery-personnel/messages', [MessageController::class, 'sendMessage'], ['delivery_personnel']);
+$router->add('GET', '/technician/conversations', [MessageController::class, 'conversations'], ['maintenance_tech']);
+$router->add('GET', '/technician/messages', [MessageController::class, 'messages'], ['maintenance_tech']);
+$router->add('POST', '/technician/messages', [MessageController::class, 'sendMessage'], ['maintenance_tech']);
+
+// Discover operational counterparts and open a direct conversation.
+$router->add('GET', '/customer/message-users', [MessageController::class, 'users'], ['customer']);
+$router->add('POST', '/customer/conversations', [MessageController::class, 'startConversation'], ['customer']);
+$router->add('GET', '/renting-party/message-users', [MessageController::class, 'users'], ['renting_party']);
+$router->add('POST', '/renting-party/conversations', [MessageController::class, 'startConversation'], ['renting_party']);
+$router->add('GET', '/freelancer/message-users', [MessageController::class, 'users'], ['freelance_worker']);
+$router->add('POST', '/freelancer/conversations', [MessageController::class, 'startConversation'], ['freelance_worker']);
+$router->add('GET', '/delivery-personnel/message-users', [MessageController::class, 'users'], ['delivery_personnel']);
+$router->add('POST', '/delivery-personnel/conversations', [MessageController::class, 'startConversation'], ['delivery_personnel']);
+$router->add('GET', '/technician/message-users', [MessageController::class, 'users'], ['maintenance_tech']);
+$router->add('POST', '/technician/conversations', [MessageController::class, 'startConversation'], ['maintenance_tech']);

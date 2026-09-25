@@ -1,0 +1,1 @@
+EquipifyMessages.init('/renting-party');

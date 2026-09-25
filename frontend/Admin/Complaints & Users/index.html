@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../shared/styles.css">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../shared/complaints.css">
 </head>
 <body data-require-auth="admin" data-login-url="../Login/index.html">
 
@@ -112,64 +113,17 @@
         </div>
       </div>
 
+<p id="complaintMessage" role="status" hidden></p>
       <div class="card">
+        <h2 class="type-headline-sm">Submitted Complaints</h2>
         <div class="toolbar">
-          <div class="search-field">
-            <span class="icon icon-sm" aria-hidden="true">search</span>
-            <input class="search-input" type="text" data-filter-table="complaintsTable" placeholder="Search complaints, users or subjects...">
-          </div>
-          <select class="select-filter" data-status-filter="complaintsTable">
-            <option value="">All statuses</option>
-            <option>Open</option>
-            <option>Under Review</option>
-            <option>Resolved</option>
-          </select>
+          <div class="search-field"><span class="icon icon-sm" aria-hidden="true">search</span><input class="search-input" type="search" id="complaintSearch" placeholder="Search complaints..." aria-label="Search complaints"></div>
+          <select class="select-filter" id="statusFilter" aria-label="Filter by status"><option value="">All statuses</option><option value="open">Open</option><option value="under_review">Under Review</option><option value="resolved">Resolved</option></select>
+          <select class="select-filter" id="categoryFilter" aria-label="Filter by category"><option value="">All categories</option></select>
+          <span class="result-count" id="complaintCount"></span>
         </div>
-        <div class="table-wrap">
-          <table class="table" id="complaintsTable">
-            <thead>
-              <tr><th>ID</th><th>User / Company</th><th>Subject</th><th>Priority</th><th>Status</th><th>Reported</th><th>Action</th></tr>
-            </thead>
-            <tbody>
-              <tr data-status="Open">
-                <td>#CMP-1042</td>
-                <td><strong>BuildPro Lanka</strong><br><span class="table-subtext">Customer</span></td>
-                <td>Equipment condition dispute</td>
-                <td><span class="badge-status badge-status--rejected">High</span></td>
-                <td><span class="badge-status badge-status--pending">Open</span></td>
-                <td>15 Aug 2026</td>
-                <td><button class="btn-outline btn-sm" type="button" data-modal-open="complaintModal">Review</button></td>
-              </tr>
-              <tr data-status="Under Review">
-                <td>#CMP-1041</td>
-                <td><strong>Rana Equipment</strong><br><span class="table-subtext">Renting Party</span></td>
-                <td>Payment disagreement</td>
-                <td><span class="badge-status badge-status--pending">Medium</span></td>
-                <td><span class="badge-status badge-status--pending">Under Review</span></td>
-                <td>14 Aug 2026</td>
-                <td><button class="btn-outline btn-sm" type="button" data-modal-open="complaintModal">Review</button></td>
-              </tr>
-              <tr data-status="Open">
-                <td>#CMP-1038</td>
-                <td><strong>FastLift Operator</strong><br><span class="table-subtext">Freelancer</span></td>
-                <td>Policy violation report</td>
-                <td><span class="badge-status badge-status--rejected">High</span></td>
-                <td><span class="badge-status badge-status--pending">Open</span></td>
-                <td>14 Aug 2026</td>
-                <td><button class="btn-outline btn-sm" type="button" data-modal-open="complaintModal">Review</button></td>
-              </tr>
-              <tr data-status="Resolved">
-                <td>#CMP-1032</td>
-                <td><strong>Metro Events</strong><br><span class="table-subtext">Customer</span></td>
-                <td>Late delivery</td>
-                <td><span class="badge-status badge-status--completed">Low</span></td>
-                <td><span class="badge-status badge-status--active">Resolved</span></td>
-                <td>12 Aug 2026</td>
-                <td><button class="btn-outline btn-sm" type="button" data-modal-open="complaintModal">View</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="table-wrap"><table class="table" id="complaintTable"><thead><tr><th aria-sort="none"><button type="button" data-complaint-sort="complaint_id">ID</button></th><th aria-sort="none"><button type="button" data-complaint-sort="complainant_name">Complainant</button></th><th aria-sort="none"><button type="button" data-complaint-sort="complainant_role">Complainant Role</button></th><th aria-sort="none"><button type="button" data-complaint-sort="against_name">Against</button></th><th aria-sort="none"><button type="button" data-complaint-sort="against_role">Against Role</button></th><th aria-sort="none"><button type="button" data-complaint-sort="category">Category</button></th><th aria-sort="none"><button type="button" data-complaint-sort="subject">Subject</button></th><th aria-sort="none"><button type="button" data-complaint-sort="created_at">Date</button></th><th aria-sort="none"><button type="button" data-complaint-sort="status">Status</button></th><th>Action</th></tr></thead><tbody></tbody></table></div>
+        <div class="pager" id="complaintPager"></div>
       </div>
 
       <div class="card" style="margin-top: 18px;">
@@ -178,9 +132,9 @@
           <span class="badge-status badge-status--rejected">3 flagged</span>
         </div>
         <div class="table-wrap">
-          <table class="table">
+          <table class="table" id="usersTable">
             <thead>
-              <tr><th>User</th><th>Role</th><th>Policy status</th><th>Active rentals</th><th>Actions</th></tr>
+              <tr><th><button class="table-sort" type="button" data-sort-column="0">User <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th><button class="table-sort" type="button" data-sort-column="1">Role <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th><button class="table-sort" type="button" data-sort-column="2">Policy status <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th><button class="table-sort" type="button" data-sort-column="3">Active rentals <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th>Actions</th></tr>
             </thead>
             <tbody>
               <tr>
@@ -207,30 +161,18 @@
             </tbody>
           </table>
         </div>
+        <div class="table-pagination" data-pagination-for="usersTable" aria-label="Users table pagination"></div>
       </div>
 
     </div>
   </main>
 
-  <!-- Complaint review modal -->
-  <div class="modal-backdrop" id="complaintModal">
-    <div class="modal">
-      <div class="modal-head">
-        <h3 class="type-headline-sm">Complaint Review</h3>
-        <button class="modal-close" type="button" data-modal-close aria-label="Close">
-          <span class="icon icon-sm" aria-hidden="true">close</span>
-        </button>
-      </div>
-      <p class="modal-meta">#CMP-1042 · BuildPro Lanka</p>
-      <div class="modal-detail-card">
-        <strong>Equipment condition dispute</strong>
-        <p>Customer reports that the returned excavator did not match the documented pre-rental condition.</p>
-      </div>
-      <div class="modal-actions">
-        <button class="btn-outline" type="button" data-modal-close>Close</button>
-        <button class="btn-solid" type="button" data-modal-action="under-review">Mark Under Review</button>
-        <button class="btn-primary" type="button" data-modal-action="resolve">Resolve</button>
-      </div>
+
+  <div class="modal-backdrop" id="complaintDetailsModal" data-complaint-modal>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="complaintDetailsTitle">
+      <div class="modal-head"><h3 class="type-headline-sm" id="complaintDetailsTitle">Complaint Details</h3><button class="modal-close" type="button" data-complaint-close aria-label="Close"><span class="icon icon-sm" aria-hidden="true">close</span></button></div>
+      <div id="complaintDetailsContent"></div>
+      <div class="modal-actions"><button class="btn-outline" type="button" data-complaint-close>Close</button></div>
     </div>
   </div>
 
@@ -240,5 +182,7 @@
   <script src="../../shared/session.js"></script>
   <script src="../../shared/script.js"></script>
   <script src="script.js"></script>
+  <script src="../../shared/list.js"></script>
+  <script src="../../shared/complaints.js"></script>
 </body>
 </html>

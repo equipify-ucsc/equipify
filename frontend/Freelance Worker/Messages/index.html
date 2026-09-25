@@ -131,13 +131,26 @@
 
       </div>
 
+      <button class="btn-primary new-message-toggle" id="newMessageBtn" type="button" aria-expanded="false" aria-controls="newMessagePanel">+ New Message</button>
+      <section class="card new-message-panel" id="newMessagePanel" aria-labelledby="newMessageTitle" hidden>
+        <div class="section-head">
+          <h2 class="card-title" id="newMessageTitle">New Message</h2>
+          <button class="btn-outline btn-sm" id="closeNewMessageBtn" type="button">Close</button>
+        </div>
+        <label class="field-label" for="messageUserSearch">Search people by name</label>
+        <input class="input-standard" id="messageUserSearch" type="search" maxlength="150" placeholder="Search people..." autocomplete="off">
+        <p class="record-ref" id="messageUserRoles"></p>
+        <p class="form-error" id="messageUserError" role="alert" hidden></p>
+        <div class="message-user-results" id="messageUserResults" aria-live="polite"></div>
+      </section>
+
       <div class="messenger">
         <div class="card">
           <h2 class="card-title">Conversations</h2>
           <div class="toolbar">
             <div class="search-field">
               <span class="icon icon-sm" aria-hidden="true">search</span>
-              <input class="search-input" type="search" id="conversationSearch" placeholder="Search people or job refs…">
+              <input class="search-input" type="search" id="conversationSearch" aria-label="Search conversations" placeholder="Search conversations...">
             </div>
           </div>
           <div class="conversation-list" id="conversationList"></div>
@@ -179,6 +192,7 @@
   <script src="../../shared/script.js"></script>
   <script src="../../shared/list.js"></script>
   <script src="../portal.js"></script>
+  <script src="../../shared/messages.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

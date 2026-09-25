@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Complaint Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/styles.css">
+<link rel="stylesheet" href="../../Freelance Worker/portal.css">
+<link rel="stylesheet" href="../../shared/complaints.css">
+</head>
+<body data-require-auth="customer" data-login-url="../Login &amp; Register Page/login.html">
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md"><span data-user-name>Loading…</span><span class="topbar-user-role">Customer</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true">
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="avatar avatar--placeholder" aria-hidden="true">
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list"><li><a class="sidenav-link" href="../Browsing page/index.html"><span class="icon" aria-hidden="true">dashboard</span><span>Browse Equipment</span></a></li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Wishlist/index.html">
+          <span class="icon" aria-hidden="true">favorite</span>
+          <span>Wishlist</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Rental History/index.html">
+          <span class="icon" aria-hidden="true">construction</span>
+          <span>Rentals</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Job History/index.html">
+          <span class="icon" aria-hidden="true">history</span>
+          <span>Job History</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Messages/index.html"><span class="icon" aria-hidden="true">chat</span><span>Messages</span></a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#" data-logout>
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    <li><a class="sidenav-link is-active" href="index.html" aria-current="page"><span class="icon" aria-hidden="true">flag</span><span>Complaint Management</span></a></li>
+    </ul>
+
+    <div class="sidenav-cta-wrap">
+      <a class="btn-cta" href="../Browsing page/index.html">
+        <span class="icon icon-sm" aria-hidden="true">add_circle</span>
+        Rent Equipment
+      </a>
+    </div>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+<main class="main-content"><div class="content-inner"><div class="page-head"><div><h1 class="type-headline-lg page-title">Complaint Management</h1><p class="type-body-md page-subtitle">Submit and track your complaints.</p></div><div class="page-head-actions"><button class="btn-primary" type="button" data-complaint-open="complaintModal">+ Submit Complaint</button></div></div><p id="complaintMessage" role="status" hidden></p>
+      <div class="card">
+        <h2 class="type-headline-sm">My Complaints</h2>
+        <div class="toolbar">
+          <div class="search-field"><span class="icon icon-sm" aria-hidden="true">search</span><input class="search-input" type="search" id="complaintSearch" placeholder="Search complaints..." aria-label="Search complaints"></div>
+          <select class="select-filter" id="statusFilter" aria-label="Filter by status"><option value="">All statuses</option><option value="open">Open</option><option value="under_review">Under Review</option><option value="resolved">Resolved</option></select>
+          <select class="select-filter" id="categoryFilter" aria-label="Filter by category"><option value="">All categories</option></select>
+          <span class="result-count" id="complaintCount"></span>
+        </div>
+        <div class="table-wrap"><table class="table" id="complaintTable"><thead><tr><th aria-sort="none"><button type="button" data-complaint-sort="complaint_id">ID</button></th><th aria-sort="none"><button type="button" data-complaint-sort="against_name">Against</button></th><th aria-sort="none"><button type="button" data-complaint-sort="category">Category</button></th><th aria-sort="none"><button type="button" data-complaint-sort="subject">Subject</button></th><th aria-sort="none"><button type="button" data-complaint-sort="created_at">Date</button></th><th aria-sort="none"><button type="button" data-complaint-sort="status">Status</button></th><th>Action</th></tr></thead><tbody></tbody></table></div>
+        <div class="pager" id="complaintPager"></div>
+      </div></div></main>
+
+  <div class="modal-backdrop" id="complaintModal" data-complaint-modal>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="complaintFormTitle">
+      <div class="modal-head"><h3 class="type-headline-sm" id="complaintFormTitle">Submit Complaint</h3><button class="modal-close" type="button" data-complaint-close aria-label="Close"><span class="icon icon-sm" aria-hidden="true">close</span></button></div>
+      <form id="complaintForm">
+        <p class="form-error" id="complaintFormError" role="alert" hidden></p>
+        <div class="form-grid" style="margin-top:18px">
+          <div class="field"><label class="field-label" for="againstUser">Complain Against</label><select class="input-standard" id="againstUser" name="against_user_id" required><option value="">Select a user</option></select></div>
+          <div class="field"><label class="field-label" for="complaintCategory">Category</label><select class="input-standard" id="complaintCategory" name="category" required><option value="">Select category</option></select></div>
+          <div class="field field--full"><label class="field-label" for="complaintSubject">Subject</label><input class="input-standard" id="complaintSubject" name="subject" maxlength="150" required placeholder="A short summary"></div>
+          <div class="field field--full"><label class="field-label" for="complaintDescription">Description</label><textarea class="input-standard" id="complaintDescription" name="description" maxlength="2000" required placeholder="Describe what happened."></textarea></div>
+          <div class="field field--full"><label class="field-label" for="complaintAttachment">Supporting Evidence (optional)</label><input class="input-standard" id="complaintAttachment" name="attachment" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp"><span class="field-hint">PDF, JPG, PNG or WebP, up to 5 MB.</span></div>
+        </div>
+        <div class="modal-actions"><button class="btn-outline" type="button" data-complaint-close>Cancel</button><button class="btn-primary" type="submit">Submit Complaint</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="complaintDetailsModal" data-complaint-modal>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="complaintDetailsTitle">
+      <div class="modal-head"><h3 class="type-headline-sm" id="complaintDetailsTitle">Complaint Details</h3><button class="modal-close" type="button" data-complaint-close aria-label="Close"><span class="icon icon-sm" aria-hidden="true">close</span></button></div>
+      <div id="complaintDetailsContent"></div>
+      <div class="modal-actions"><button class="btn-outline" type="button" data-complaint-close>Close</button></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="../../shared/api.js"></script>
+  <script src="../../shared/session.js"></script>
+  <script src="../../shared/script.js"></script>
+  <script src="../../shared/list.js"></script>
+  <script src="../../shared/complaints.js"></script>
+</body>
+</html>
