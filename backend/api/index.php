@@ -28,6 +28,7 @@ require_once __DIR__ . '/../controllers/AdminCatalogueController.php';
 require_once __DIR__ . '/../controllers/RentingPartyEquipmentController.php';
 require_once __DIR__ . '/../controllers/EquipmentBrowseController.php';
 require_once __DIR__ . '/../controllers/EquipmentTypeRequestController.php';
+require_once __DIR__ . '/../controllers/ComplaintController.php';
 
 try {
     session_set_cookie_params([

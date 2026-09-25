@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="../../Freelance Worker/portal.css">
 <link rel="stylesheet" href="../../shared/complaints.css">
 </head>
-<body data-require-auth="freelance_worker" data-login-url="../Login &amp; Register Page/login.html">
+<body data-require-auth="customer" data-login-url="../Login &amp; Register Page/login.html">
 
   <!-- Desktop Top Bar -->
   <header class="topbar topbar--desktop">
@@ -22,7 +22,7 @@
     </div>
     <div class="topbar-actions">
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md"><span data-user-name>Loading…</span><span class="topbar-user-role">Freelance Worker</span></div>
+        <div class="topbar-user-name type-label-md"><span data-user-name>Loading…</span><span class="topbar-user-role">Customer</span></div>
         <div class="avatar avatar--placeholder" aria-hidden="true">
           <span class="icon icon-base">person</span>
         </div>
@@ -55,17 +55,23 @@
         <span class="icon">close</span>
       </button>
     </div>
-    <ul class="sidenav-list">
+    <ul class="sidenav-list"><li><a class="sidenav-link" href="../Browsing page/index.html"><span class="icon" aria-hidden="true">dashboard</span><span>Browse Equipment</span></a></li>
       <li>
-        <a class="sidenav-link" href="../Dashboard/index.html">
-          <span class="icon" aria-hidden="true">dashboard</span>
-          <span>Dashboard</span>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
         </a>
       </li>
       <li>
-        <a class="sidenav-link" href="../Job Offers/index.html">
-          <span class="icon" aria-hidden="true">work</span>
-          <span>Job Offers</span>
+        <a class="sidenav-link" href="../Wishlist/index.html">
+          <span class="icon" aria-hidden="true">favorite</span>
+          <span>Wishlist</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Rental History/index.html">
+          <span class="icon" aria-hidden="true">construction</span>
+          <span>Rentals</span>
         </a>
       </li>
       <li>
@@ -75,45 +81,32 @@
         </a>
       </li>
       <li>
-        <a class="sidenav-link" href="../Payments/index.html">
-          <span class="icon" aria-hidden="true">payments</span>
-          <span>Payments</span>
-        </a>
-      </li>
-      <li>
-        <a class="sidenav-link" href="../Messages/index.html">
-          <span class="icon" aria-hidden="true">chat</span>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">chat_bubble</span>
           <span>Messages</span>
         </a>
       </li>
       <li>
-        <a class="sidenav-link" href="../Notifications/index.html">
-          <span class="icon" aria-hidden="true">notifications</span>
-          <span>Notifications</span>
-        </a>
-      </li>
-      <li>
-        <a class="sidenav-link is-active" href="index.html" aria-current="page">
-          <span class="icon" aria-hidden="true">flag</span>
-          <span>Complaints</span>
-        </a>
-      </li>
-      <li>
-        <a class="sidenav-link" href="../Credentials/index.html">
-          <span class="icon" aria-hidden="true">verified_user</span>
-          <span>Credentials</span>
-        </a>
-      </li>
-      <li>
-        <a class="sidenav-link" href="../Profile/index.html">
-          <span class="icon" aria-hidden="true">account_circle</span>
-          <span>Profile</span>
-        </a>
-      </li>
-      <li>
-        <a class="sidenav-link" href="../Login & Register Page/login.html" data-logout>
+        <a class="sidenav-link" href="#" data-logout>
           <span class="icon" aria-hidden="true">logout</span>
           <span>Logout</span>
+        </a>
+      </li>
+    <li><a class="sidenav-link is-active" href="index.html" aria-current="page"><span class="icon" aria-hidden="true">flag</span><span>Complaint Management</span></a></li>
+    </ul>
+
+    <div class="sidenav-cta-wrap">
+      <a class="btn-cta" href="../Browsing page/index.html">
+        <span class="icon icon-sm" aria-hidden="true">add_circle</span>
+        Rent Equipment
+      </a>
+    </div>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
         </a>
       </li>
     </ul>

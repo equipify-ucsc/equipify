@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Equipify - Complaints &amp; Users</title>
+<title>Equipify - Complaint Management</title>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../shared/styles.css">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../Freelance Worker/portal.css">
 <link rel="stylesheet" href="../../shared/complaints.css">
 </head>
-<body data-require-auth="admin" data-login-url="../Login/index.html">
+<body data-require-auth="area_manager" data-login-url="../Login/index.html">
 
   <!-- Desktop Top Bar -->
   <header class="topbar topbar--desktop">
@@ -22,7 +22,7 @@
     </div>
     <div class="topbar-actions">
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">Dishanthan<span class="topbar-user-role">Super Administrator</span></div>
+        <div class="topbar-user-name type-label-md"><span data-user-name>Loading…</span><span class="topbar-user-role">Area Manager</span></div>
         <div class="avatar avatar--placeholder" aria-hidden="true">
           <span class="icon icon-base">person</span>
         </div>
@@ -63,33 +63,45 @@
         </a>
       </li>
       <li>
-        <a class="sidenav-link" href="../Profile/index.html">
-          <span class="icon" aria-hidden="true">account_circle</span>
-          <span>Profile</span>
+        <a class="sidenav-link" href="../Delivery Assignments/index.html">
+          <span class="icon" aria-hidden="true">assignment_ind</span>
+          <span>Delivery Assignments</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Maintenance Assignments/index.html">
+          <span class="icon" aria-hidden="true">engineering</span>
+          <span>Maintenance Assignments</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Delivery Personnel/index.html">
+          <span class="icon" aria-hidden="true">local_shipping</span>
+          <span>Delivery Personnel</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Maintenance Technicians/index.html">
+          <span class="icon" aria-hidden="true">build</span>
+          <span>Maintenance Technicians</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Vehicles/index.html">
+          <span class="icon" aria-hidden="true">directions_car</span>
+          <span>Vehicles</span>
         </a>
       </li>
       <li>
         <a class="sidenav-link is-active" href="index.html" aria-current="page">
           <span class="icon" aria-hidden="true">flag</span>
-          <span>Complaints &amp; Users</span>
+          <span>Complaints</span>
         </a>
       </li>
       <li>
-        <a class="sidenav-link" href="../Area Managers/index.html">
-          <span class="icon" aria-hidden="true">groups</span>
-          <span>Area Managers</span>
-        </a>
-      </li>
-      <li>
-        <a class="sidenav-link" href="../Equipment Catalogue/index.html">
-          <span class="icon" aria-hidden="true">category</span>
-          <span>Equipment Catalogue</span>
-        </a>
-      </li>
-      <li>
-        <a class="sidenav-link" href="../Document Verification/index.html">
-          <span class="icon" aria-hidden="true">fact_check</span>
-          <span>Document Verification</span>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
         </a>
       </li>
       <li>
@@ -99,21 +111,10 @@
         </a>
       </li>
     </ul>
-
   </nav>
 
   <!-- Main Content -->
-  <main class="main-content">
-    <div class="content-inner">
-
-      <div class="page-head">
-        <div>
-          <h1 class="type-headline-lg page-title">Complaints &amp; User Management</h1>
-          <p class="type-body-md page-subtitle">Monitor reports and take appropriate action on platform users.</p>
-        </div>
-      </div>
-
-<p id="complaintMessage" role="status" hidden></p>
+<main class="main-content"><div class="content-inner"><div class="page-head"><div><h1 class="type-headline-lg page-title">Complaint Management</h1><p class="type-body-md page-subtitle">Review submitted complaints.</p></div></div><p id="complaintMessage" role="status" hidden></p>
       <div class="card">
         <h2 class="type-headline-sm">Submitted Complaints</h2>
         <div class="toolbar">
@@ -124,49 +125,7 @@
         </div>
         <div class="table-wrap"><table class="table" id="complaintTable"><thead><tr><th aria-sort="none"><button type="button" data-complaint-sort="complaint_id">ID</button></th><th aria-sort="none"><button type="button" data-complaint-sort="complainant_name">Complainant</button></th><th aria-sort="none"><button type="button" data-complaint-sort="complainant_role">Complainant Role</button></th><th aria-sort="none"><button type="button" data-complaint-sort="against_name">Against</button></th><th aria-sort="none"><button type="button" data-complaint-sort="against_role">Against Role</button></th><th aria-sort="none"><button type="button" data-complaint-sort="category">Category</button></th><th aria-sort="none"><button type="button" data-complaint-sort="subject">Subject</button></th><th aria-sort="none"><button type="button" data-complaint-sort="created_at">Date</button></th><th aria-sort="none"><button type="button" data-complaint-sort="status">Status</button></th><th>Action</th></tr></thead><tbody></tbody></table></div>
         <div class="pager" id="complaintPager"></div>
-      </div>
-
-      <div class="card" style="margin-top: 18px;">
-        <div class="section-title">
-          <h3 class="type-headline-sm">Users requiring action</h3>
-          <span class="badge-status badge-status--rejected">3 flagged</span>
-        </div>
-        <div class="table-wrap">
-          <table class="table" id="usersTable">
-            <thead>
-              <tr><th><button class="table-sort" type="button" data-sort-column="0">User <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th><button class="table-sort" type="button" data-sort-column="1">Role <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th><button class="table-sort" type="button" data-sort-column="2">Policy status <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th><button class="table-sort" type="button" data-sort-column="3">Active rentals <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th>Actions</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>FastLift Operator</strong></td>
-                <td>Freelancer</td>
-                <td><span class="badge-status badge-status--rejected">Flagged</span></td>
-                <td>1</td>
-                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-action="suspend">Suspend</button> <button class="btn-danger btn-sm" type="button" data-action="ban">Ban</button></td>
-              </tr>
-              <tr>
-                <td><strong>Rana Equipment</strong></td>
-                <td>Renting Party</td>
-                <td><span class="badge-status badge-status--pending">Review</span></td>
-                <td>4</td>
-                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-action="suspend">Suspend</button> <button class="btn-danger btn-sm" type="button" data-action="ban">Ban</button></td>
-              </tr>
-              <tr>
-                <td><strong>PrimeBuild</strong></td>
-                <td>Customer</td>
-                <td><span class="badge-status badge-status--active">Good</span></td>
-                <td>2</td>
-                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-toast="User profile opened.">View</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="table-pagination" data-pagination-for="usersTable" aria-label="Users table pagination"></div>
-      </div>
-
-    </div>
-  </main>
-
+      </div></div></main>
 
   <div class="modal-backdrop" id="complaintDetailsModal" data-complaint-modal>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="complaintDetailsTitle">
@@ -181,7 +140,6 @@
   <script src="../../shared/api.js"></script>
   <script src="../../shared/session.js"></script>
   <script src="../../shared/script.js"></script>
-  <script src="script.js"></script>
   <script src="../../shared/list.js"></script>
   <script src="../../shared/complaints.js"></script>
 </body>

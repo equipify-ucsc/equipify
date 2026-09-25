@@ -109,7 +109,7 @@
     updatePagination(table, state, filteredRows.length);
   }
 
-  document.querySelectorAll('.table[id]').forEach(function (table) {
+  document.querySelectorAll('#usersTable').forEach(function (table) {
     var state = {
       orderedRows: Array.from(table.tBodies[0].rows),
       search: '',
@@ -191,20 +191,6 @@
   document.querySelectorAll('.modal-backdrop').forEach(function (modal) {
     modal.addEventListener('click', function (event) {
       if (event.target === modal) modal.classList.remove('is-open');
-    });
-  });
-
-  // ---------- Modal actions (complaint review) ----------
-  document.querySelectorAll('[data-modal-action]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var action = btn.dataset.modalAction;
-      var modal = btn.closest('.modal-backdrop');
-      if (action === 'under-review') {
-        window.showToast('Complaint marked under review.');
-      } else if (action === 'resolve') {
-        window.showToast('Complaint resolved.');
-      }
-      if (modal) modal.classList.remove('is-open');
     });
   });
 

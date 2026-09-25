@@ -1,0 +1,86 @@
+/* Complaint-specific additions to the existing dashboard/portal styles. */
+.complaint-details { display: grid; grid-template-columns: minmax(100px, 140px) minmax(0, 1fr); gap: 10px 16px; }
+.complaint-details dt { font-weight: 600; }
+.complaint-details dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.complaint-success { padding: 12px; color: #166534; background: #f0fdf4; border-radius: 8px; }
+[data-complaint-modal] .modal { max-height: 90vh; overflow-y: auto; }
+[data-complaint-sort] { font: inherit; color: inherit; border: 0; background: none; padding: 0; cursor: pointer; text-align: left; }
+th[aria-sort="ascending"] [data-complaint-sort]::after { content: ' ↑'; }
+th[aria-sort="descending"] [data-complaint-sort]::after { content: ' ↓'; }
+@media (max-width: 480px) { .complaint-details { grid-template-columns: 1fr; gap: 6px; } .complaint-details dd { margin-bottom: 10px; } }
+
+/* Existing portal pager styling, scoped to this complaint list. */
+#complaintPager {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-md);
+  min-height: 24px;
+}
+
+#complaintPager .pager-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  max-width: 100%;
+  overflow-x: auto;
+  /* Room for the focus ring, which would otherwise be clipped by the scroller. */
+  padding: 3px;
+  scrollbar-width: none;
+}
+#complaintPager .pager-nav::-webkit-scrollbar {
+  display: none;
+}
+
+#complaintPager .pager-btn,
+#complaintPager .pager-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-navy);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+#complaintPager .pager-btn:hover:not(:disabled),
+#complaintPager .pager-num:hover:not(:disabled) {
+  background-color: var(--color-surface-container-low);
+  border-color: var(--color-teal);
+}
+#complaintPager .pager-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* The current page is a marker, not a target: disabled, but at full contrast. */
+#complaintPager .pager-num.is-current {
+  background-color: var(--color-teal);
+  border-color: var(--color-teal);
+  color: #ffffff;
+  opacity: 1;
+  cursor: default;
+}
+
+#complaintPager .pager-gap {
+  padding: 0 2px;
+  color: var(--color-on-surface-variant);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+#complaintCount {
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+  white-space: nowrap;
+}
+
+
+#complaintMessage.form-error, #complaintDetailsContent .form-error { color: #b91c1c; }

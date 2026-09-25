@@ -130,5 +130,16 @@ $router->add('GET',  '/freelancer/messages',                 [FreelanceWorkerMoc
 $router->add('POST', '/freelancer/messages',                 [FreelanceWorkerMockController::class, 'sendMessage'],           ['freelance_worker']);
 $router->add('GET',  '/freelancer/notifications',            [FreelanceWorkerMockController::class, 'notifications'],         ['freelance_worker']);
 $router->add('POST', '/freelancer/notifications/read',       [FreelanceWorkerMockController::class, 'markNotificationsRead'], ['freelance_worker']);
-$router->add('GET',  '/freelancer/complaints',               [FreelanceWorkerMockController::class, 'complaints'],            ['freelance_worker']);
-$router->add('POST', '/freelancer/complaints',               [FreelanceWorkerMockController::class, 'submitComplaint'],       ['freelance_worker']);
+$router->add('GET',  '/freelancer/complaints',               [ComplaintController::class, 'index'],            ['freelance_worker']);
+$router->add('POST', '/freelancer/complaints',               [ComplaintController::class, 'store'],       ['freelance_worker']);
+
+// Complaint management: shared session-scoped APIs; reviewers only read, admin alone updates status.
+$complaintUsers = array_keys(ComplaintModel::TARGET_ROLES);
+$complaintReaders = array_merge($complaintUsers, ComplaintModel::REVIEWERS);
+$router->add('GET', '/complaints/metadata', [ComplaintController::class, 'metadata'], $complaintReaders);
+$router->add('GET', '/complaints/targets', [ComplaintController::class, 'targets'], $complaintUsers);
+$router->add('GET', '/complaints', [ComplaintController::class, 'index'], $complaintReaders);
+$router->add('POST', '/complaints', [ComplaintController::class, 'store'], $complaintUsers);
+$router->add('GET', '/complaints/{id}', [ComplaintController::class, 'show'], $complaintReaders);
+$router->add('GET', '/complaints/{id}/attachment', [ComplaintController::class, 'attachment'], $complaintReaders);
+$router->add('POST', '/complaints/{id}/status', [ComplaintController::class, 'updateStatus'], ['admin']);
