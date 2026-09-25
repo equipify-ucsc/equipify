@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Equipify — Freelance Worker / Job History
+   Design system: "Industrial Integrity"
+   Vanilla CSS — no framework dependencies
+
+   The shell (tokens, reset, typography, topbar, sidenav, buttons, badges)
+   comes from ../../shared/styles.css, and the portal's dashboard-page rules
+   (page head, grids, cards, toolbar, table, pager, modal, form, toast) from
+   ../portal.css. Only rules specific to this page belong here.
+   ========================================================================== */
+
+/* Stars sit on the table's 13px baseline rather than the 18px default. */
+.table .stars .icon {
+  font-size: 16px;
+}

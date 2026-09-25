@@ -11,11 +11,23 @@ require_once __DIR__ . '/../core/Response.php';
 require_once __DIR__ . '/../core/Auth.php';
 require_once __DIR__ . '/../core/Validator.php';
 require_once __DIR__ . '/../core/Router.php';
+require_once __DIR__ . '/../core/ListQuery.php';
 require_once __DIR__ . '/../config/db_config.php';
 require_once __DIR__ . '/../controllers/AuthController.php';
 require_once __DIR__ . '/../controllers/AreaManagerController.php';
 require_once __DIR__ . '/../controllers/DeliveryPersonnelController.php';
 require_once __DIR__ . '/../controllers/MaintenanceTechController.php';
+require_once __DIR__ . '/../controllers/VehicleController.php';
+require_once __DIR__ . '/../controllers/FreelanceWorkerController.php';
+require_once __DIR__ . '/../controllers/FreelanceWorkerMockController.php';
+require_once __DIR__ . '/../controllers/PayoutMethodController.php';
+require_once __DIR__ . '/../controllers/JobController.php';
+require_once __DIR__ . '/../controllers/JobOfferController.php';
+require_once __DIR__ . '/../controllers/CatalogueController.php';
+require_once __DIR__ . '/../controllers/AdminCatalogueController.php';
+require_once __DIR__ . '/../controllers/RentingPartyEquipmentController.php';
+require_once __DIR__ . '/../controllers/EquipmentBrowseController.php';
+require_once __DIR__ . '/../controllers/EquipmentTypeRequestController.php';
 
 try {
     session_set_cookie_params([

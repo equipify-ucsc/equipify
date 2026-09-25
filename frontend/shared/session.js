@@ -32,6 +32,11 @@
     EquipifyApi.get('/auth/me').then(function (res) {
       if (res.ok && res.data.role === requiredRole) {
         document.documentElement.style.visibility = '';
+        // The topbar name is markup-only: any element with [data-user-name]
+        // gets the signed-in user's name, so pages don't hardcode one.
+        document.querySelectorAll('[data-user-name]').forEach(function (el) {
+          el.textContent = res.data.full_name;
+        });
       } else {
         // No session, wrong role, or server unreachable: fail closed.
         goToLogin();

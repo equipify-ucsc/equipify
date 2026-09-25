@@ -99,7 +99,7 @@
     </ul>
 
     <div class="sidenav-cta-wrap">
-      <a class="btn-cta" href="../My Equipment/index.html">
+      <a class="btn-cta" href="../Equipment Details/index.html">
         <span class="icon icon-sm" aria-hidden="true">add_circle</span>
         Add Equipment
       </a>
@@ -130,222 +130,68 @@
         </a>
       </div>
 
+      <!-- Status summary (click a chip to filter) -->
+      <div class="status-summary" id="statusSummary">
+        <button class="summary-chip" type="button" data-status=""><span class="summary-count" data-count="all">–</span> Listed</button>
+        <button class="summary-chip" type="button" data-status="available"><span class="summary-count" data-count="available">–</span> Available</button>
+        <button class="summary-chip" type="button" data-status="on_rent"><span class="summary-count" data-count="on_rent">–</span> On Rent</button>
+        <button class="summary-chip" type="button" data-status="maintenance"><span class="summary-count" data-count="maintenance">–</span> Maintenance</button>
+      </div>
+
       <!-- Filter & Search Bar Card -->
       <div class="filter-card">
         <div class="filter-search-input">
           <span class="icon icon-base" aria-hidden="true">search</span>
-          <input type="text" id="equipmentSearch" placeholder="Search by name, ID, or serial...">
+          <input type="text" id="equipmentSearch" placeholder="Search by title, brand, model or type..." aria-label="Search your equipment">
         </div>
 
         <div class="filter-dropdowns">
           <div class="select-wrapper">
-            <select id="categoryFilter">
-              <option value="all">All Categories</option>
-              <option value="earthmoving">Earthmoving</option>
-              <option value="material">Material Handling</option>
-              <option value="power">Power Generation</option>
-              <option value="aerial">Aerial Work</option>
+            <select id="categoryFilter" aria-label="Filter by category">
+              <option value="">All Categories</option>
             </select>
             <span class="icon select-arrow" aria-hidden="true">expand_more</span>
           </div>
 
           <div class="select-wrapper">
-            <select id="statusFilter">
-              <option value="all">All Statuses</option>
+            <select id="statusFilter" aria-label="Filter by status">
+              <option value="">All Statuses</option>
               <option value="available">Available</option>
-              <option value="on-rent">On Rent</option>
+              <option value="on_rent">On Rent</option>
               <option value="maintenance">Maintenance</option>
+              <option value="retired">Removed</option>
             </select>
             <span class="icon select-arrow" aria-hidden="true">expand_more</span>
           </div>
 
           <div class="select-wrapper">
-            <select id="sortFilter">
+            <select id="sortFilter" aria-label="Sort equipment">
               <option value="recent">Recently Added</option>
               <option value="name">Name A-Z</option>
-              <option value="price">Price: Low to High</option>
+              <option value="price">Daily Rate: Low to High</option>
             </select>
             <span class="icon select-arrow" aria-hidden="true">expand_more</span>
           </div>
         </div>
       </div>
 
-      <!-- Equipment Cards Grid -->
-      <div class="equipment-grid" id="equipmentGrid">
+      <p class="result-count" id="resultCount" aria-live="polite"></p>
 
-        <!-- Card 1: CAT 320 -->
-        <div class="card equipment-card">
-          <div class="card-image-wrapper">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAenzU8H9CEtI43HSB1PIaybM1xXuNwYu4T7Db30OhzZQfrS8TYA3LkgbPG7jJ_8BDpY2ScHLIkFJentINwbZUIA-Ek9NFygoD-APfmG1hiaU74U7PNPLOlphm5NIwmgH1mPky8F8a2_FmBDgmh3swNutdGRRWeO-8UL88_hP5XD_y1Z5JDFSsTI8X6zXRRLhGE1sarsS2f8ntj4RJZLtMmVaTg6OePJUKkorODBZ5acbRQmz0MoDGRB6kMPPOE7X7FXaqgLRpJQQta" alt="CAT 320 Excavator">
-            <span class="status-badge badge-available">Available</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title-row">
-              <h3>CAT 320 Excavator</h3>
-              <div class="price-box">
-                <span class="price-amount">$450</span>
-                <span class="price-unit">/ day</span>
-              </div>
-            </div>
-            <div class="card-category">EARTHMOVING</div>
+      <!-- Equipment Cards Grid (filled from the API) -->
+      <div class="equipment-grid" id="equipmentGrid"></div>
 
-            <div class="card-meta">
-              <div class="meta-row">
-                <span class="icon" aria-hidden="true">location_on</span>
-                <span>Colombo Yard</span>
-                <span class="rating"><span class="icon icon-fill" aria-hidden="true">star</span> 4.8 (24)</span>
-              </div>
-              <div class="meta-row">
-                <span class="icon" aria-hidden="true">build</span>
-                <span>Maintained: Oct 12, 2025</span>
-              </div>
-            </div>
-
-            <div class="card-footer">
-              <a href="../Equipment Details/index.html" class="view-details">View Details <span class="icon" aria-hidden="true">arrow_forward</span></a>
-              <div class="card-actions">
-                <a href="../Equipment Details/index.html" class="action-btn" title="Edit"><span class="icon" aria-hidden="true">edit</span></a>
-                <button class="action-btn" type="button" title="Pause"><span class="icon" aria-hidden="true">pause_circle</span></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 2: Toyota Core IC -->
-        <div class="card equipment-card">
-          <div class="card-image-wrapper">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfKb_qvRJGnY49-lMH4p7vXVM7jeBNE90ikrX6jEVdjdOHYaPZKVKC9IQs1A9FrKP6-PYCoL5OytlQXLup6givP75LkXMXCH3rF6ckKs6O-zo0SXpxDMgHSxAZdgwddKFZUSPzyGAdyYJUDjJwaew7mJ2exs68936Dzg650E7UoD7vnXL1mfJBjJCv3ZMMnES1tQ7vKwppe7U5AzxmzQCzEVMdXQwoV9BaN0dihtMW4KZSMkduukut4ZtSRQc5XEEaOxhyLJZxuu4t" alt="Bobcat S650 Skid-Steer Loader">
-            <span class="status-badge badge-on-rent">On Rent</span>
-            <div class="image-overlay-info">
-              <span>Return due: Nov 05</span>
-              <span>Site: Omega Corp</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-title-row">
-              <h3>Bobcat S650 Skid-Steer</h3>
-              <div class="price-box">
-                <span class="price-amount">$185</span>
-                <span class="price-unit">/ day</span>
-              </div>
-            </div>
-            <div class="card-category">MATERIAL HANDLING</div>
-
-            <div class="card-meta">
-              <div class="meta-row">
-                <span class="icon" aria-hidden="true">location_on</span>
-                <span>Out for delivery</span>
-                <span class="rating"><span class="icon icon-fill" aria-hidden="true">star</span> 4.9 (42)</span>
-              </div>
-              <div class="meta-row">
-                <span class="icon" aria-hidden="true">build</span>
-                <span>Maintained: Sep 01, 2025</span>
-              </div>
-            </div>
-
-            <div class="card-footer">
-              <a href="../Equipment Details/index.html" class="view-details">View Details <span class="icon" aria-hidden="true">arrow_forward</span></a>
-              <div class="card-actions">
-                <a href="../Equipment Details/index.html" class="action-btn" title="Edit"><span class="icon" aria-hidden="true">edit</span></a>
-                <button class="action-btn" type="button" title="Logs"><span class="icon" aria-hidden="true">description</span></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 3: Generac MDG100 -->
-        <div class="card equipment-card">
-          <div class="card-image-wrapper">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuABb06W_bkJgdcZRmJA6UhUjDSIV1yXyg0asz2jIPbSNhnWqGzDRNUJ3CEGE-FlxVqajGLEsHpidvURLe5DCggAhqVXLImBINKFbnztID2LhYhg4kPxHpn_a6ChGCNZUPWD1FUuXiLUM2NZU2ysW16hUvodll92a7fGk8AZ-UXwSLTxebUwj-4HAt2X6gUCZ3mWiiwUZ6fmdNCOuJz67ZfPo4cH-PwlKKwZdt4lTr9UJgIkQcreUo_9hrJx7shSOt8jeE6H9kqabV0v" alt="Generac MDG100 Generator">
-            <span class="status-badge badge-maintenance">Maintenance</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title-row">
-              <h3>Generac MDG100</h3>
-              <div class="price-box">
-                <span class="price-amount">$220</span>
-                <span class="price-unit">/ day</span>
-              </div>
-            </div>
-            <div class="card-category">POWER GENERATION</div>
-
-            <div class="card-meta">
-              <div class="meta-row">
-                <span class="icon" aria-hidden="true">location_on</span>
-                <span>Service Bay</span>
-                <span class="rating"><span class="icon icon-fill" aria-hidden="true">star</span> 4.5 (18)</span>
-              </div>
-              <div class="meta-row alert-row">
-                <span class="icon" aria-hidden="true">warning</span>
-                <span>Hydraulic fluid leak</span>
-              </div>
-            </div>
-
-            <div class="card-footer">
-              <a href="../Equipment Details/index.html" class="view-details">View Details <span class="icon" aria-hidden="true">arrow_forward</span></a>
-              <div class="card-actions">
-                <a href="../Equipment Details/index.html" class="action-btn" title="Edit"><span class="icon" aria-hidden="true">edit</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 4: JLG 450AJ Boom -->
-        <div class="card equipment-card">
-          <div class="card-image-wrapper">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTrHopSzJgkW2EyxD774uo19RQvKrh4qnsmL-8brktHCay7YYsAH1CMPJ74xYCj6PCxsuo2qb1wkCn2963LoMB0W2plUQdd2NQO2AppEdB6AUpFwcbs3TONAXFsUFhIbgvZF6tIEEzUO7Kxubo9VOJI0M1TGUx6MHw_JzzCyxuhvuRXsxh0CqQZ7UKaqO7uRPs5pd0xFR6Q4Lj6D_-nuuZer9Ce08gRw0UbSdB8ppACJqc8Gx4QjE7Q-Zq8i27Cn5gqUMpU3vzdpbe" alt="JLG Electric Scissor Lift">
-            <span class="status-badge badge-available">Available</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title-row">
-              <h3>JLG Scissor Lift 32RS</h3>
-              <div class="price-box">
-                <span class="price-amount">$310</span>
-                <span class="price-unit">/ day</span>
-              </div>
-            </div>
-            <div class="card-category">AERIAL WORK</div>
-
-            <div class="card-meta">
-              <div class="meta-row">
-                <span class="icon" aria-hidden="true">location_on</span>
-                <span>Colombo Yard</span>
-                <span class="rating"><span class="icon icon-fill" aria-hidden="true">star</span> 4.7 (31)</span>
-              </div>
-              <div class="meta-row">
-                <span class="icon" aria-hidden="true">build</span>
-                <span>Maintained: Nov 02, 2025</span>
-              </div>
-            </div>
-
-            <div class="card-footer">
-              <a href="../Equipment Details/index.html" class="view-details">View Details <span class="icon" aria-hidden="true">arrow_forward</span></a>
-              <div class="card-actions">
-                <a href="../Equipment Details/index.html" class="action-btn" title="Edit"><span class="icon" aria-hidden="true">edit</span></a>
-                <button class="action-btn" type="button" title="Pause"><span class="icon" aria-hidden="true">pause_circle</span></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="empty-state" id="emptyState" hidden>
-          <span class="icon" aria-hidden="true">search_off</span>
-          <p>No equipment matches your filters. Try a different search or category.</p>
-        </div>
-
-      </div>
-
-      <!-- Load More Section -->
-      <div class="load-more-container">
-        <button class="btn-load-more" id="loadMoreBtn" type="button">Load More Equipment</button>
-      </div>
+      <div class="pager" id="equipmentPager"></div>
 
     </div>
   </main>
 
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script src="../../shared/api.js"></script>
   <script src="../../shared/session.js"></script>
   <script src="../../shared/script.js"></script>
+  <script src="../../shared/list.js"></script>
+  <script src="../../shared/catalogue.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

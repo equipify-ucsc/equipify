@@ -1189,3 +1189,95 @@ button:focus-visible {
   text-decoration: underline;
   text-decoration-color: var(--secondary);
 }
+
+/* ==========================================================================
+   Listing loaded from the API: loading/missing state, empty gallery, chips
+   ========================================================================== */
+
+.load-state {
+  padding: var(--space-xl, 32px) 0;
+  text-align: center;
+  color: var(--on-surface-variant);
+  font-size: 16px;
+}
+.load-state--error {
+  color: var(--error);
+}
+
+.gallery__empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--outline);
+  font-size: 14px;
+}
+.gallery__empty .material-symbols-outlined {
+  font-size: 64px;
+}
+
+.meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+}
+.meta-chip .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.equipment-header__sub {
+  color: var(--on-surface-variant);
+  font-size: 14px;
+  margin: 4px 0 0;
+}
+
+.extra-specs {
+  margin-top: var(--space-md, 16px);
+  padding-top: var(--space-md, 16px);
+  border-top: 1px solid var(--outline-variant);
+}
+.extra-specs h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  margin: 0 0 6px;
+}
+.extra-specs p {
+  margin: 0;
+  color: var(--on-surface);
+  white-space: pre-line;
+}
+
+.verified-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--secondary);
+}
+.verified-chip .material-symbols-outlined {
+  font-size: 16px;
+  font-variation-settings: 'FILL' 1;
+}
+
+.quantity-field {
+  margin-top: var(--space-md, 16px);
+}
+
+.pricing-header__status--muted {
+  color: var(--on-surface-variant);
+}
+
+/* Elements toggled with the `hidden` attribute must stay hidden even when a
+   component rule above gives them a display value (same rule as
+   shared/styles.css, which this page does not load). */
+[hidden] {
+  display: none !important;
+}

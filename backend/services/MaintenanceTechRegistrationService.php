@@ -1,7 +1,7 @@
 <?php
 /**
  * An area manager registers a maintenance technician account: `users` +
- * `maintenance_techs` rows in one transaction.
+ * `maintenance_techs` + `maintenance_tech_categories` rows in one transaction.
  */
 
 declare(strict_types=1);
@@ -14,7 +14,7 @@ final class MaintenanceTechRegistrationService
 {
     /**
      * @param array{email:string,password:string,full_name:string,phone:string,district:?string,
-     *              specialization:string,years_experience:?int} $in
+     *              specialization:string,years_experience:?int,category_ids:int[]} $in
      *        already validated and normalised by the controller
      * @return int the new user_id
      * @throws PDOException on any database failure (rolled back); duplicate
@@ -38,6 +38,7 @@ final class MaintenanceTechRegistrationService
                 'specialization'   => $in['specialization'],
                 'years_experience' => $in['years_experience'],
             ]);
+            MaintenanceTechModel::insertCategories($userId, $in['category_ids']);
             $db->commit();
             return $userId;
         } catch (Throwable $e) {

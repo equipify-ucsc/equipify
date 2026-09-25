@@ -9,6 +9,11 @@ composer.lock
 .env.local
 config.php
 
+# Encryption key for stored payout details (core/Crypto.php generates it on
+# first use). Committing it would make the encrypted columns readable by anyone
+# with the repo, which is the whole point of encrypting them.
+backend/config/app_key.php
+
 # IDE / editor
 .vscode/
 .idea/
@@ -23,6 +28,11 @@ Thumbs.db
 /uploads/
 /tmp/
 
+# Files uploaded through the app (credential documents, portfolio and
+# equipment photos). Keep .gitkeep so the folder exists in a fresh clone.
+backend/storage/uploads/*
+!backend/storage/uploads/.gitkeep
+
 # Logs and cache
 *.cache
 error_log
@@ -31,3 +41,5 @@ error_log
 CLAUDE.md
 /Information/
 .claude/
+
+dev-router.php

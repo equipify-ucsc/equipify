@@ -119,7 +119,6 @@
       <div class="page-head">
         <div>
           <h1 class="type-headline-lg page-title">Vehicle Management</h1>
-          <p class="type-body-md page-subtitle">Add, update, and remove vehicles assigned to Colombo Region's delivery fleet.</p>
         </div>
         <div class="page-head-actions">
           <button class="btn-primary" type="button" id="addVehicleBtn">
@@ -128,22 +127,27 @@
         </div>
       </div>
 
-      <!-- Stat cards -->
-      <div class="admin-grid admin-grid--3">
+      <!-- Stat cards (active fleet only; filled in by script.js) -->
+      <div class="admin-grid admin-grid--4">
         <div class="card">
           <p class="stat-card-label">Available</p>
-          <h3 class="stat-card-value">18</h3>
+          <h3 class="stat-card-value" id="statAvailable">–</h3>
           <p class="stat-card-trend">Ready for assignment</p>
         </div>
         <div class="card">
           <p class="stat-card-label">In Use</p>
-          <h3 class="stat-card-value">2</h3>
+          <h3 class="stat-card-value" id="statInUse">–</h3>
           <p class="stat-card-trend">On active deliveries</p>
         </div>
         <div class="card">
+          <p class="stat-card-label">Under Maintenance</p>
+          <h3 class="stat-card-value" id="statMaintenance">–</h3>
+          <p class="stat-card-trend">Not assignable</p>
+        </div>
+        <div class="card">
           <p class="stat-card-label">Total Fleet</p>
-          <h3 class="stat-card-value">21</h3>
-          <p class="stat-card-trend">Across Colombo Region</p>
+          <h3 class="stat-card-value" id="statTotal">–</h3>
+          <p class="stat-card-trend">Active vehicles</p>
         </div>
       </div>
 
@@ -154,96 +158,20 @@
             <input class="search-input" type="text" data-filter-table="vehicleTable" placeholder="Search plate number or type...">
           </div>
           <select class="select-filter" id="statusFilter" data-filter-table-status="vehicleTable">
-            <option value="">All statuses</option>
-            <option value="Available">Available</option>
-            <option value="In Use">In Use</option>
-            <option value="Maintenance">Maintenance</option>
+            <option value="">All active</option>
+            <option value="available">Available</option>
+            <option value="in_use">In Use</option>
+            <option value="maintenance">Under Maintenance</option>
+            <option value="retired">Retired</option>
           </select>
         </div>
         <div class="table-wrap">
           <table class="table" id="vehicleTable">
             <thead>
-              <tr><th>Vehicle</th><th>Type</th><th>Capacity</th><th>Assigned Driver</th><th>Status</th><th>Actions</th></tr>
+              <tr><th>Vehicle</th><th>Type</th><th>Max Load</th><th>Cargo Bed (L × W)</th><th>Status</th><th>Actions</th></tr>
             </thead>
             <tbody>
-              <tr data-status="In Use" data-plate="WP-CAB-2231" data-type="Lorry" data-capacity="5 tons" data-driver="R. Jayasuriya">
-                <td><strong>WP-CAB-2231</strong></td>
-                <td>Lorry</td>
-                <td>5 tons</td>
-                <td>R. Jayasuriya</td>
-                <td><span class="badge-status badge-status--pending">In Use</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm row-edit-btn" type="button">Edit</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="Available" data-plate="WP-KA-4410" data-type="Van" data-capacity="1.5 tons" data-driver="">
-                <td><strong>WP-KA-4410</strong></td>
-                <td>Van</td>
-                <td>1.5 tons</td>
-                <td>Unassigned</td>
-                <td><span class="badge-status badge-status--active">Available</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm row-edit-btn" type="button">Edit</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="In Use" data-plate="WP-CAJ-9091" data-type="Lorry" data-capacity="7 tons" data-driver="S. Fernando">
-                <td><strong>WP-CAJ-9091</strong></td>
-                <td>Lorry</td>
-                <td>7 tons</td>
-                <td>S. Fernando</td>
-                <td><span class="badge-status badge-status--pending">In Use</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm row-edit-btn" type="button">Edit</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="Available" data-plate="WP-NA-1123" data-type="Van" data-capacity="1.5 tons" data-driver="A. Silva">
-                <td><strong>WP-NA-1123</strong></td>
-                <td>Van</td>
-                <td>1.5 tons</td>
-                <td>A. Silva</td>
-                <td><span class="badge-status badge-status--active">Available</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm row-edit-btn" type="button">Edit</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="Maintenance" data-plate="WP-GQ-7756" data-type="Pickup" data-capacity="1 ton" data-driver="">
-                <td><strong>WP-GQ-7756</strong></td>
-                <td>Pickup</td>
-                <td>1 ton</td>
-                <td>Unassigned</td>
-                <td><span class="badge-status badge-status--rejected">Maintenance</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm row-edit-btn" type="button">Edit</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-status="Available" data-plate="WP-BX-3387" data-type="Truck" data-capacity="10 tons" data-driver="">
-                <td><strong>WP-BX-3387</strong></td>
-                <td>Truck</td>
-                <td>10 tons</td>
-                <td>Unassigned</td>
-                <td><span class="badge-status badge-status--active">Available</span></td>
-                <td>
-                  <div class="row-actions">
-                    <button class="btn-outline btn-sm row-edit-btn" type="button">Edit</button>
-                    <button class="btn-outline btn-sm row-remove-btn" type="button">Remove</button>
-                  </div>
-                </td>
-              </tr>
+              <tr><td colspan="6">Loading vehicles…</td></tr>
             </tbody>
           </table>
         </div>
@@ -261,37 +189,45 @@
           <span class="icon icon-sm" aria-hidden="true">close</span>
         </button>
       </div>
-      <form id="vehicleForm" data-success-message="Vehicle added to the fleet.">
+      <form id="vehicleForm" novalidate>
+        <p class="field-error" id="vehicleFormError" role="alert" hidden style="color:#b3261e;margin:12px 0 0;"></p>
         <div class="form-grid" style="margin-top: 18px;">
           <div class="field">
             <label class="field-label" for="vehiclePlate">Plate number</label>
-            <input class="input-standard" id="vehiclePlate" required placeholder="WP-XX-0000">
+            <input class="input-standard" id="vehiclePlate" name="plate_number" required maxlength="15" autocomplete="off" placeholder="e.g. WP-CAB-2231">
           </div>
           <div class="field">
             <label class="field-label" for="vehicleType">Type</label>
-            <select class="input-standard" id="vehicleType" required>
+            <select class="input-standard" id="vehicleType" name="vehicle_type" required>
               <option value="">Select type</option>
-              <option>Van</option>
-              <option>Lorry</option>
-              <option>Pickup</option>
-              <option>Truck</option>
+              <option value="van">Van</option>
+              <option value="pickup">Pickup</option>
+              <option value="lorry">Lorry</option>
+              <option value="truck">Truck</option>
+              <option value="flatbed">Flatbed</option>
+              <option value="low_bed_trailer">Low-bed trailer</option>
             </select>
           </div>
           <div class="field">
-            <label class="field-label" for="vehicleCapacity">Capacity</label>
-            <input class="input-standard" id="vehicleCapacity" required placeholder="e.g. 3 tons">
+            <label class="field-label" for="vehicleMaxLoad">Max load (kg)</label>
+            <input class="input-standard" id="vehicleMaxLoad" name="max_load_kg" type="number" required min="1" max="100000" step="1" inputmode="numeric" placeholder="e.g. 5000">
           </div>
           <div class="field">
             <label class="field-label" for="vehicleStatus">Status</label>
-            <select class="input-standard" id="vehicleStatus" required>
-              <option>Available</option>
-              <option>In Use</option>
-              <option>Maintenance</option>
+            <select class="input-standard" id="vehicleStatus" name="status" required>
+              <option value="available">Available</option>
+              <option value="maintenance">Under maintenance</option>
+              <!-- Set by the delivery workflow only; shown (read-only) when editing a vehicle that is on a delivery. -->
+              <option value="in_use" hidden>In use</option>
             </select>
           </div>
-          <div class="field field--full">
-            <label class="field-label" for="vehicleDriver">Assigned driver (optional)</label>
-            <input class="input-standard" id="vehicleDriver" placeholder="Driver name, or leave blank">
+          <div class="field">
+            <label class="field-label" for="vehicleLength">Cargo bed length (m)</label>
+            <input class="input-standard" id="vehicleLength" name="cargo_length_m" type="number" required min="0.5" max="30" step="0.01" inputmode="decimal" placeholder="e.g. 4.20">
+          </div>
+          <div class="field">
+            <label class="field-label" for="vehicleWidth">Cargo bed width (m)</label>
+            <input class="input-standard" id="vehicleWidth" name="cargo_width_m" type="number" required min="0.5" max="5" step="0.01" inputmode="decimal" placeholder="e.g. 2.10">
           </div>
         </div>
         <div class="modal-actions" style="margin-top: 20px;">
@@ -307,6 +243,6 @@
   <script src="../../shared/api.js"></script>
   <script src="../../shared/session.js"></script>
   <script src="../../shared/script.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

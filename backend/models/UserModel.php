@@ -51,14 +51,15 @@ final class UserModel
      * Inserts a base account row and returns the new user_id. Does not manage a
      * transaction: the caller (a service) wraps this with the subtype insert.
      *
-     * @param array{email:string,password_hash:string,role:string,full_name:string,phone:string,address_line:?string,district:?string} $u
+     * @param array{email:string,password_hash:string,role:string,full_name:string,phone:string,address_line:?string,district:?string,nic_number?:?string} $u
+     *        nic_number is optional; roles whose sign-up does not ask for it omit the key.
      */
     public static function insert(array $u): int
     {
         $db = getDbConnection();
         $stmt = $db->prepare(
-            'INSERT INTO users (email, password_hash, role, full_name, phone, address_line, district)
-             VALUES (:email, :password_hash, :role, :full_name, :phone, :address_line, :district)'
+            'INSERT INTO users (email, password_hash, role, full_name, phone, address_line, district, nic_number)
+             VALUES (:email, :password_hash, :role, :full_name, :phone, :address_line, :district, :nic_number)'
         );
         $stmt->execute([
             ':email'         => $u['email'],
@@ -68,6 +69,7 @@ final class UserModel
             ':phone'         => $u['phone'],
             ':address_line'  => $u['address_line'],
             ':district'      => $u['district'],
+            ':nic_number'    => $u['nic_number'] ?? null,
         ]);
         return (int) $db->lastInsertId();
     }
@@ -76,6 +78,61 @@ final class UserModel
     {
         $stmt = getDbConnection()->prepare('UPDATE users SET last_login_at = NOW() WHERE user_id = :id');
         $stmt->execute([':id' => $userId]);
+    }
+
+    public static function nicExists(string $nic): bool
+    {
+        $stmt = getDbConnection()->prepare('SELECT 1 FROM users WHERE nic_number = :nic LIMIT 1');
+        $stmt->execute([':nic' => $nic]);
+        return $stmt->fetchColumn() !== false;
+    }
+
+    /**
+     * The account fields a signed-in user may edit about themselves. Role,
+     * email and account_status are not here on purpose: changing those is not
+     * a self-service action.
+     *
+     * @param array{full_name:string,phone:string,nic_number:?string,address_line:?string,district:?string} $u
+     */
+    public static function updateProfile(int $userId, array $u): void
+    {
+        $stmt = getDbConnection()->prepare(
+            'UPDATE users
+                SET full_name    = :full_name,
+                    phone        = :phone,
+                    nic_number   = :nic_number,
+                    address_line = :address_line,
+                    district     = :district
+              WHERE user_id = :id'
+        );
+        $stmt->execute([
+            ':full_name'    => $u['full_name'],
+            ':phone'        => $u['phone'],
+            ':nic_number'   => $u['nic_number'],
+            ':address_line' => $u['address_line'],
+            ':district'     => $u['district'],
+            ':id'           => $userId,
+        ]);
+    }
+
+    /** True when another account already uses this phone number. */
+    public static function phoneTakenByOther(string $phone, int $userId): bool
+    {
+        $stmt = getDbConnection()->prepare(
+            'SELECT 1 FROM users WHERE phone = :phone AND user_id <> :id LIMIT 1'
+        );
+        $stmt->execute([':phone' => $phone, ':id' => $userId]);
+        return $stmt->fetchColumn() !== false;
+    }
+
+    /** True when another account already uses this NIC number. */
+    public static function nicTakenByOther(string $nic, int $userId): bool
+    {
+        $stmt = getDbConnection()->prepare(
+            'SELECT 1 FROM users WHERE nic_number = :nic AND user_id <> :id LIMIT 1'
+        );
+        $stmt->execute([':nic' => $nic, ':id' => $userId]);
+        return $stmt->fetchColumn() !== false;
     }
 
     public static function updatePasswordHash(int $userId, string $hash): void

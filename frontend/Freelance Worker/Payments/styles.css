@@ -1,0 +1,47 @@
+/* ==========================================================================
+   Equipify — Freelance Worker / Payments
+   Design system: "Industrial Integrity"
+   Vanilla CSS — no framework dependencies
+
+   The shell (tokens, reset, typography, topbar, sidenav, buttons, badges)
+   comes from ../../shared/styles.css, and the portal's dashboard-page rules
+   (page head, grids, cards, toolbar, table, pager, modal, form, toast) from
+   ../portal.css. Only rules specific to this page belong here.
+   ========================================================================== */
+
+/* ---------- Payout methods ---------- */
+
+/* The payout list is a grid, so its loading / empty / error line has to span
+   the tracks rather than sit in the first column as a half-width orphan. */
+.record-list > .list-state {
+  grid-column: 1 / -1;
+}
+
+/* A checkbox reads as one control with its wording, so the box and the text
+   share a row and the whole thing is clickable, unlike the stacked .field
+   layout the text inputs use. */
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 14px;
+  color: var(--color-on-surface);
+  cursor: pointer;
+}
+.checkbox-field input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  accent-color: var(--color-teal);
+  cursor: pointer;
+}
+
+/* "Details cannot be read. Remove this method…" is long enough to wrap, and a
+   flex item shrinks its icon to make room. Pinning the icon's size keeps it
+   round and lets the sentence wrap under itself instead. */
+.record-meta span {
+  align-items: flex-start;
+}
+.record-meta .icon {
+  flex: 0 0 auto;
+}

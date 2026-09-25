@@ -1,0 +1,23 @@
+/* ==========================================================================
+   Equipify — Freelance Worker / Messages
+   Design system: "Industrial Integrity"
+   Vanilla CSS — no framework dependencies
+
+   The shell (tokens, reset, typography, topbar, sidenav, buttons, badges)
+   comes from ../../shared/styles.css, and the portal's dashboard-page rules
+   (page head, grids, cards, toolbar, table, pager, modal, form, toast) from
+   ../portal.css. Only rules specific to this page belong here.
+   ========================================================================== */
+
+/* The composer grows with the message up to a few lines, then scrolls. */
+.composer .input-standard {
+  max-height: 120px;
+}
+
+/* On a phone the conversation list is a short, scrollable strip above the
+   thread rather than a full-height column. */
+@media (max-width: 1023px) {
+  .conversation-list {
+    max-height: 260px;
+  }
+}

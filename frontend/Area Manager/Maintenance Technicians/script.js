@@ -158,6 +158,37 @@
   }
   if (tableBody) loadTechnicians();
 
+  // ---------- Categories serviced: one checkbox per catalogue category ----------
+  var categoryChecks = document.getElementById('technicianCategories');
+  if (categoryChecks) {
+    EquipifyCatalogue.load().then(function (categories) {
+      categoryChecks.textContent = '';
+      if (!categories.length) {
+        var note = document.createElement('span');
+        note.className = 'category-checks__note';
+        note.textContent = 'Could not load the equipment categories. Reload the page to try again.';
+        categoryChecks.appendChild(note);
+        return;
+      }
+      categories.forEach(function (c) {
+        var label = document.createElement('label');
+        var box = document.createElement('input');
+        box.type = 'checkbox';
+        box.name = 'category_ids';
+        box.value = String(c.category_id);
+        label.appendChild(box);
+        label.appendChild(document.createTextNode(c.name));
+        categoryChecks.appendChild(label);
+      });
+    });
+  }
+
+  function checkedCategoryIds() {
+    return Array.prototype.slice.call(categoryChecks.querySelectorAll('input:checked')).map(function (box) {
+      return box.value;
+    });
+  }
+
   // ---------- Register maintenance technician form ----------
   var technicianForm = document.getElementById('technicianForm');
   if (technicianForm && tableBody) {
@@ -171,12 +202,17 @@
         technicianForm.reportValidity();
         return;
       }
+      if (!checkedCategoryIds().length) {
+        formError.textContent = 'Select at least one equipment category this technician services.';
+        formError.hidden = false;
+        return;
+      }
       submitBtn.disabled = true;
       EquipifyApi.post('/area-manager/technicians', {
         full_name: technicianForm.elements.full_name.value,
         email: technicianForm.elements.email.value,
         phone: technicianForm.elements.phone.value,
-        specialization: technicianForm.elements.specialization.value,
+        category_ids: checkedCategoryIds(),
         // Optional field: send null rather than '' when it was left blank.
         years_experience: technicianForm.elements.years_experience.value || null,
         password: technicianForm.elements.password.value

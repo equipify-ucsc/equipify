@@ -207,6 +207,14 @@ textarea.input-standard {
   resize: vertical;
 }
 
+/* .input-standard also dresses inputs and textareas, which have no arrow to
+   make room for — only the selects need the extra right-hand padding that
+   shared/styles.css reserves. */
+select.input-standard {
+  padding-right: 34px;
+}
+
+
 /* ---------- Toast ---------- */
 .toast {
   position: fixed;

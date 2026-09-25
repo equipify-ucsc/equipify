@@ -9,6 +9,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../models/UserModel.php';
 require_once __DIR__ . '/../services/CustomerRegistrationService.php';
 require_once __DIR__ . '/../services/RentingPartyRegistrationService.php';
+require_once __DIR__ . '/../services/FreelanceWorkerRegistrationService.php';
 require_once __DIR__ . '/../models/RentingPartyModel.php';
 require_once __DIR__ . '/../core/Upload.php';
 
@@ -186,6 +187,93 @@ final class AuthController
         Response::ok(['user_id' => $userId, 'role' => 'renting_party', 'full_name' => $ownerName], 201);
     }
 
+    /**
+     * POST /auth/register/freelance-worker — always creates a freelance worker
+     * (equipment operator); role is never read from the request. Freelancers are
+     * the only staff-side role with public sign-up: unlike technicians and
+     * delivery personnel nobody registers them, so there is no `registered_by`.
+     * The account starts `verification_status = 'pending'` and the worker uploads
+     * credentials afterwards from the Credentials page.
+     */
+    public static function registerFreelanceWorker(array $params = []): void
+    {
+        $in = Router::jsonBody();
+
+        $fullName   = self::str($in, 'full_name');
+        $email      = strtolower(self::str($in, 'email'));
+        $phoneRaw   = self::str($in, 'phone');
+        $nicRaw     = self::str($in, 'nic_number');
+        $address    = self::str($in, 'address');
+        $district   = self::str($in, 'district');
+        $bio        = self::str($in, 'bio');
+        $experience = $in['years_experience'] ?? null;
+        $password   = is_string($in['password'] ?? null) ? $in['password'] : '';
+        $confirm    = is_string($in['confirm_password'] ?? null) ? $in['confirm_password'] : '';
+
+        $errors = [];
+        $checks = [
+            'full_name'        => Validator::required($fullName, 'Full name') ?? Validator::maxLength($fullName, 150, 'Full name'),
+            'email'            => Validator::email($email),
+            'phone'            => Validator::phone($phoneRaw),
+            'nic_number'       => Validator::nic($nicRaw),
+            'address'          => Validator::required($address, 'Address') ?? Validator::maxLength($address, 255, 'Address'),
+            'district'         => Validator::oneOf($district, self::DISTRICTS, 'district'),
+            'bio'              => Validator::maxLength($bio, 2000, 'Bio'),
+            'years_experience' => Validator::intRange($experience, 0, 70, 'Years of experience'),
+            'password'         => Validator::password($password),
+        ];
+        foreach ($checks as $field => $message) {
+            if ($message !== null) {
+                $errors[$field] = $message;
+            }
+        }
+        if (!isset($errors['password']) && $password !== $confirm) {
+            $errors['confirm_password'] = 'Passwords do not match.';
+        }
+        if (($in['terms'] ?? false) !== true) {
+            $errors['terms'] = 'You must accept the Terms of Service and Privacy Policy.';
+        }
+
+        $phone = isset($errors['phone']) ? '' : (string) Validator::normalizePhone($phoneRaw);
+        $nic   = isset($errors['nic_number']) ? '' : (string) Validator::normalizeNic($nicRaw);
+
+        if (!isset($errors['email']) && UserModel::emailExists($email)) {
+            $errors['email'] = 'An account with this email already exists.';
+        }
+        if (!isset($errors['phone']) && UserModel::phoneExists($phone)) {
+            $errors['phone'] = 'An account with this phone number already exists.';
+        }
+        if (!isset($errors['nic_number']) && UserModel::nicExists($nic)) {
+            $errors['nic_number'] = 'An account with this NIC number already exists.';
+        }
+        if ($errors !== []) {
+            Response::error('Please fix the highlighted fields.', 422, $errors);
+        }
+
+        try {
+            $userId = FreelanceWorkerRegistrationService::register([
+                'email'            => $email,
+                'password'         => $password,
+                'full_name'        => $fullName,
+                'phone'            => $phone,
+                'nic_number'       => $nic,
+                'address'          => $address,
+                'district'         => $district,
+                'bio'              => $bio === '' ? null : $bio,
+                'years_experience' => ($experience === null || $experience === '') ? null : (int) $experience,
+            ]);
+        } catch (PDOException $e) {
+            // Lost a race with another sign-up for the same email/phone/NIC.
+            if ($e->getCode() === '23000') {
+                Response::error('An account with this email, phone number or NIC already exists.', 422);
+            }
+            throw $e;
+        }
+
+        Auth::login($userId, 'freelance_worker');
+        Response::ok(['user_id' => $userId, 'role' => 'freelance_worker', 'full_name' => $fullName], 201);
+    }
+
     /** POST /auth/login */
     public static function login(array $params = []): void
     {
@@ -195,7 +283,7 @@ final class AuthController
 
         // Each login page only signs in its own kind of account; omitted = customer.
         $role = $in['portal'] ?? 'customer';
-        $portals = ['customer', 'renting_party', 'delivery_personnel', 'maintenance_tech', 'area_manager', 'admin'];
+        $portals = ['customer', 'renting_party', 'freelance_worker', 'delivery_personnel', 'maintenance_tech', 'area_manager', 'admin'];
         if (!in_array($role, $portals, true)) {
             Response::error('Unknown login portal.', 422);
         }
