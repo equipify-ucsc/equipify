@@ -150,17 +150,11 @@
 
   /* ---------------- Validation ---------------- */
 
-  function passesLuhn(digits) {
-    var sum = 0;
-    for (var i = 0; i < digits.length; i++) {
-      var n = Number(digits.charAt(digits.length - 1 - i));
-      if (i % 2 === 1) {
-        n *= 2;
-        if (n > 9) n -= 9;
-      }
-      sum += n;
-    }
-    return sum % 10 === 0;
+  // Demo form: any 13-19 digit number is accepted. A checksum (Luhn) check
+  // belongs with the real payment gateway, not in this mock.
+  function isCardNumber(value) {
+    var digits = value.replace(/\D/g, '');
+    return digits.length >= 13 && digits.length <= 19;
   }
 
   function expiryInFuture(value) {
@@ -175,7 +169,7 @@
 
   var checks = [
     { id: 'cardName', test: function (v) { return v.trim().length >= 2; } },
-    { id: 'cardNumber', test: function (v) { var d = v.replace(/\D/g, ''); return d.length >= 13 && d.length <= 19 && passesLuhn(d); } },
+    { id: 'cardNumber', test: isCardNumber },
     { id: 'cardExpiry', test: expiryInFuture },
     { id: 'cardCvc', test: function (v) { return /^\d{3,4}$/.test(v); } }
   ];
