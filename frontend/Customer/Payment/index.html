@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Payment</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/styles.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-require-auth="customer">
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Help">
+        <span class="icon">help</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md" data-user-name>Anura Perera</div>
+        <img alt="User Profile" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" type="button" aria-label="Notifications">
+        <span class="icon">notifications</span>
+      </button>
+      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Wishlist/index.html">
+          <span class="icon" aria-hidden="true">favorite</span>
+          <span>Wishlist</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="../Rental History/index.html">
+          <span class="icon" aria-hidden="true">construction</span>
+          <span>Rentals</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Job History/index.html">
+          <span class="icon" aria-hidden="true">history</span>
+          <span>Job History</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">chat_bubble</span>
+          <span>Messages</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="#" data-logout>
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidenav-cta-wrap">
+      <a class="btn-cta" href="../Browsing page/index.html">
+        <span class="icon icon-sm" aria-hidden="true">add_circle</span>
+        Rent Equipment
+      </a>
+    </div>
+
+    <ul class="sidenav-footer">
+      <li>
+        <a class="sidenav-link" href="#">
+          <span class="icon" aria-hidden="true">settings</span>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <a class="back-link" id="backLink" href="../Rental History/index.html">
+        <span class="icon icon-sm" aria-hidden="true">arrow_back</span>
+        Back to rentals
+      </a>
+
+      <div class="page-header">
+        <h1 class="type-page-title">Complete Payment</h1>
+        <p class="page-header__sub" id="pageSub">The renting party accepted your request. Pay before the deadline to confirm your rental.</p>
+      </div>
+
+      <!-- Request lifecycle -->
+      <ol class="stepper" id="stepper" aria-label="Rental request steps">
+        <li class="stepper__step is-done">
+          <span class="stepper__num"><span class="icon icon-sm" aria-hidden="true">check</span></span>
+          <span class="stepper__text">
+            <span class="stepper__title">Request details</span>
+            <span class="stepper__meta">Sent</span>
+          </span>
+        </li>
+        <li class="stepper__step is-done">
+          <span class="stepper__num"><span class="icon icon-sm" aria-hidden="true">check</span></span>
+          <span class="stepper__text">
+            <span class="stepper__title">Owner response</span>
+            <span class="stepper__meta">Accepted</span>
+          </span>
+        </li>
+        <li class="stepper__step is-current" id="stepPayment">
+          <span class="stepper__num">3</span>
+          <span class="stepper__text">
+            <span class="stepper__title">Payment</span>
+            <span class="stepper__meta">By the end of the day after acceptance</span>
+          </span>
+        </li>
+        <li class="stepper__step" id="stepHandover">
+          <span class="stepper__num">4</span>
+          <span class="stepper__text">
+            <span class="stepper__title" id="stepHandoverTitle">Delivery</span>
+            <span class="stepper__meta" id="stepHandoverDate">The day before the start</span>
+          </span>
+        </li>
+      </ol>
+
+      <!-- Unknown or missing request -->
+      <div class="state-panel" id="errorState" hidden>
+        <span class="icon state-panel__icon" aria-hidden="true">receipt_long</span>
+        <h2 class="type-section-heading">Payment not found</h2>
+        <p class="state-panel__text">We couldn't find a rental waiting for payment. It may already be paid or cancelled.</p>
+        <a class="btn-outline btn-inline" href="../Rental History/index.html">Back to rentals</a>
+      </div>
+
+      <div id="paymentView" hidden>
+
+        <!-- Payment deadline -->
+        <div class="deadline-banner" id="deadlineBanner" role="status">
+          <span class="icon" aria-hidden="true">schedule</span>
+          <div>
+            <p class="deadline-banner__title">Pay within <span data-countdown-remaining></span></p>
+            <p class="deadline-banner__text">Pay by <strong data-countdown-at></strong>, or this request is cancelled and the dates are released.</p>
+          </div>
+        </div>
+
+        <div class="deadline-banner deadline-banner--closed" id="closedBanner" hidden role="alert">
+          <span class="icon" aria-hidden="true">timer_off</span>
+          <div>
+            <p class="deadline-banner__title">Payment window closed</p>
+            <p class="deadline-banner__text">The deadline passed before payment, so this request was cancelled. You can place a new request from the equipment page.</p>
+          </div>
+        </div>
+
+        <div class="confirm-grid">
+
+          <!-- Card payment -->
+          <form class="card form-section pay-form" id="payForm" novalidate>
+            <div class="form-section__head">
+              <h2 class="type-card-heading">Card payment</h2>
+              <span class="card-brands" aria-hidden="true">
+                <span class="icon">credit_card</span>
+              </span>
+            </div>
+            <p class="form-section__desc">Visa, Mastercard and Amex are accepted.</p>
+
+            <fieldset class="pay-fieldset" id="payFieldset">
+              <legend class="sr-only">Card details</legend>
+              <div class="form-grid">
+                <div class="field field--full">
+                  <label class="field-label" for="cardName">Name on card</label>
+                  <input class="input-standard" id="cardName" type="text" maxlength="60" autocomplete="cc-name">
+                  <p class="field-error" id="cardNameError">Enter the name shown on the card.</p>
+                </div>
+                <div class="field field--full">
+                  <label class="field-label" for="cardNumber">Card number</label>
+                  <input class="input-standard" id="cardNumber" type="text" inputmode="numeric" maxlength="23" autocomplete="cc-number" placeholder="1234 5678 9012 3456">
+                  <p class="field-error" id="cardNumberError">Enter a valid card number.</p>
+                </div>
+                <div class="field">
+                  <label class="field-label" for="cardExpiry">Expiry (MM/YY)</label>
+                  <input class="input-standard" id="cardExpiry" type="text" inputmode="numeric" maxlength="5" autocomplete="cc-exp" placeholder="MM/YY">
+                  <p class="field-error" id="cardExpiryError">Enter a future expiry date.</p>
+                </div>
+                <div class="field">
+                  <label class="field-label" for="cardCvc">CVC</label>
+                  <input class="input-standard" id="cardCvc" type="text" inputmode="numeric" maxlength="4" autocomplete="cc-csc" placeholder="123">
+                  <p class="field-error" id="cardCvcError">Enter the 3 or 4 digit code.</p>
+                </div>
+              </div>
+            </fieldset>
+
+            <p class="info-note">
+              <span class="icon icon-sm" aria-hidden="true">lock</span>
+              <span>Demo only: no card is charged. The payment gateway will be connected when the rentals module goes live.</span>
+            </p>
+
+            <div class="form-actions">
+              <a class="btn-outline" href="../Rental History/index.html">Pay Later</a>
+              <button class="btn-primary" type="submit" id="payBtn">
+                <span class="icon icon-sm" aria-hidden="true">lock</span>
+                <span id="payBtnText">Pay</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Order summary -->
+          <aside class="card summary-card" aria-labelledby="summaryHeading">
+            <h2 class="type-card-heading" id="summaryHeading">Order summary</h2>
+
+            <div class="summary-item">
+              <div class="summary-item__thumb">
+                <span class="icon" id="summaryIcon" aria-hidden="true">construction</span>
+              </div>
+              <div class="summary-item__info">
+                <p class="summary-item__title" id="summaryTitle"></p>
+                <p class="summary-item__owner" id="summaryOwner"></p>
+              </div>
+            </div>
+
+            <dl class="summary-list">
+              <div class="summary-list__row"><dt>Request</dt><dd id="summaryRef"></dd></div>
+              <div class="summary-list__row"><dt>Start date</dt><dd id="summaryStart"></dd></div>
+              <div class="summary-list__row"><dt>End date</dt><dd id="summaryEnd"></dd></div>
+              <div class="summary-list__row"><dt>Duration</dt><dd id="summaryDays"></dd></div>
+              <div class="summary-list__row" id="summaryUnitsRow" hidden><dt>Units</dt><dd id="summaryUnits"></dd></div>
+              <div class="summary-list__row"><dt id="summaryHandoverLabel">Delivery</dt><dd id="summaryHandover"></dd></div>
+              <div class="summary-list__row"><dt id="summaryPlaceLabel">Deliver to</dt><dd id="summaryPlace"></dd></div>
+            </dl>
+
+            <div class="price-list">
+              <div class="price-list__row">
+                <span id="priceRateLine"></span>
+                <span id="priceRateTotal"></span>
+              </div>
+              <div class="price-list__row" id="priceDeliveryRow">
+                <span>Platform delivery</span>
+                <span id="priceDelivery"></span>
+              </div>
+              <div class="price-list__row" id="priceDepositRow" hidden>
+                <span>Refundable deposit</span>
+                <span id="priceDeposit"></span>
+              </div>
+              <div class="price-list__total">
+                <span>Total due</span>
+                <span id="priceTotal"></span>
+              </div>
+            </div>
+
+            <p class="summary-note" id="depositNote" hidden>
+              <span class="icon icon-sm" aria-hidden="true">info</span>
+              <span>The deposit is refunded after the equipment is returned in good condition.</span>
+            </p>
+          </aside>
+        </div>
+      </div>
+
+      <!-- Shown after payment -->
+      <section class="card success-panel" id="successPanel" hidden aria-labelledby="successHeading" tabindex="-1">
+        <span class="icon icon-fill success-panel__icon" aria-hidden="true">check_circle</span>
+        <h2 class="type-section-heading" id="successHeading">Payment received</h2>
+        <p class="success-panel__text" id="successText"></p>
+        <div class="form-actions form-actions--center">
+          <a class="btn-outline" href="../Browsing page/index.html">Keep browsing</a>
+          <a class="btn-primary" href="../Rental History/index.html">View my rentals</a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="../../shared/api.js"></script>
+  <script src="../../shared/session.js"></script>
+  <script src="../../shared/script.js"></script>
+  <script src="../../shared/rental-timing.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -229,13 +229,15 @@
   document.getElementById('galleryNext').addEventListener('click', function () { goToIndex(currentIndex + 1); });
 
   /* ==========================================================================
-     Booking estimate — days × units × daily rate, plus fees
-     The platform fee and delivery estimate stay fixed until the rentals
-     module prices them.
+     Booking estimate — days × units × daily rate, plus platform delivery
+     The delivery estimate stays fixed until the rentals module prices it.
+     The earliest start date leaves room for the request windows (see
+     shared/rental-timing.js): owner response, payment, then delivery the
+     day before the start.
      ========================================================================== */
 
-  var PLATFORM_FEE = 2500;
   var DELIVERY_FEE = 15000;
+  var Timing = window.EquipifyRentalTiming;
 
   var startDateInput = document.getElementById('startDate');
   var endDateInput = document.getElementById('endDate');
@@ -250,17 +252,8 @@
   var logisticsDeliveryOption = document.getElementById('logisticsDelivery');
   var logisticsSelfOption = document.getElementById('logisticsSelf');
 
-  function todayISO(offsetDays) {
-    var d = new Date();
-    d.setDate(d.getDate() + (offsetDays || 0));
-    var local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
-    return local.toISOString().split('T')[0];
-  }
-
   function getSelectedDays() {
-    if (!startDateInput.value || !endDateInput.value) return 0;
-    var msPerDay = 1000 * 60 * 60 * 24;
-    return Math.round((new Date(endDateInput.value) - new Date(startDateInput.value)) / msPerDay);
+    return Timing.daysBetween(startDateInput.value, endDateInput.value);
   }
 
   function units() {
@@ -284,7 +277,7 @@
       (count > 1 ? ' x ' + count + ' units' : '');
     rateTotal.textContent = formatLKR(rentalCost);
     deliveryRow.style.display = logisticsDeliveryRadio.checked ? 'flex' : 'none';
-    grandTotal.textContent = formatLKR(rentalCost + PLATFORM_FEE + delivery);
+    grandTotal.textContent = formatLKR(rentalCost + delivery);
   }
 
   function setLogisticsSelection() {
@@ -294,10 +287,14 @@
   }
 
   function initBooking() {
-    startDateInput.min = todayISO();
-    endDateInput.min = todayISO();
-    startDateInput.value = todayISO();
-    endDateInput.value = todayISO(3);
+    var earliest = Timing.earliestStartISO();
+    startDateInput.min = earliest;
+    endDateInput.min = Timing.addDaysISO(earliest, 1);
+    startDateInput.value = earliest;
+    endDateInput.value = Timing.addDaysISO(earliest, 3);
+    document.getElementById('dateHint').textContent =
+      'Earliest start: ' + Timing.formatDate(earliest) + '. This leaves time for the renting party to respond ' +
+      '(by the end of the next day), for payment (by the end of the day after acceptance), and for delivery the day before.';
 
     if (listing.quantity > 1) {
       document.getElementById('quantityField').hidden = false;
@@ -311,10 +308,14 @@
     }
 
     startDateInput.addEventListener('change', function () {
+      // Typed dates can bypass the picker's min, so clamp to the earliest start.
+      if (startDateInput.value && startDateInput.value < earliest) {
+        startDateInput.value = earliest;
+      }
       if (startDateInput.value) {
-        endDateInput.min = startDateInput.value;
-        if (endDateInput.value && endDateInput.value < startDateInput.value) {
-          endDateInput.value = startDateInput.value;
+        endDateInput.min = Timing.addDaysISO(startDateInput.value, 1);
+        if (endDateInput.value && endDateInput.value <= startDateInput.value) {
+          endDateInput.value = Timing.addDaysISO(startDateInput.value, 1);
         }
       }
       recalculate();
@@ -330,13 +331,20 @@
     }
     requestRentalBtn.addEventListener('click', function () {
       var days = getSelectedDays();
-      if (days <= 0) {
+      if (days <= 0 || startDateInput.value < earliest) {
         dateError.classList.add('is-visible');
         startDateInput.focus();
         return;
       }
-      // Placeholder action — the rentals module will submit this request.
-      window.alert('Rental request ready:\n' + days + ' day(s), ' + grandTotal.textContent + ' total.');
+      // The request itself (address, contact, agreement) is confirmed on the next page.
+      var params = new URLSearchParams({
+        id: id,
+        start: startDateInput.value,
+        end: endDateInput.value,
+        units: String(units()),
+        logistics: logisticsSelfRadio.checked ? 'self' : 'delivery'
+      });
+      window.location.href = '../Confirm Request/index.html?' + params.toString();
     });
 
     recalculate();

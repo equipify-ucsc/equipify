@@ -180,6 +180,7 @@
           </div>
         </div>
         <p class="date-error" id="dateError">End date must be after the start date.</p>
+        <p class="date-hint" id="dateHint"></p>
 
         <!-- Units, for listings that cover several identical items -->
         <div class="date-field quantity-field" id="quantityField" hidden>
@@ -216,10 +217,6 @@
             <span id="rateLine"></span>
             <span id="rateTotal"></span>
           </div>
-          <div class="price-breakdown__row">
-            <span>Platform Fee</span>
-            <span>LKR 2,500</span>
-          </div>
           <div class="price-breakdown__row" id="deliveryRow">
             <span>Platform delivery (Est.)</span>
             <span>LKR 15,000</span>
@@ -237,7 +234,7 @@
         <!-- CTAs -->
         <div class="widget-ctas">
           <button class="btn-primary" type="button" id="requestRentalBtn">
-            Request Rental
+            Place Rental Request
             <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
           </button>
           <div class="widget-ctas__row">
@@ -278,6 +275,7 @@
 
 <script src="../../shared/api.js"></script>
 <script src="../../shared/session.js"></script>
+<script src="../../shared/rental-timing.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
