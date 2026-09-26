@@ -208,3 +208,122 @@
   max-width: 420px;
   margin-bottom: var(--space-md);
 }
+
+/* ---------- Request flow note ---------- */
+.flow-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  padding: 12px var(--space-md);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-completed-bg);
+  color: var(--color-completed-fg);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.flow-note .icon {
+  margin-top: 1px;
+}
+
+/* ---------- Request deadline + outcome lines ---------- */
+.deadline-note,
+.entity-reason {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: var(--space-md);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.deadline-note .icon,
+.entity-reason .icon {
+  margin-top: 1px;
+}
+
+.deadline-note {
+  background-color: var(--color-pending-bg);
+  color: var(--color-pending-fg);
+}
+.deadline-note strong {
+  font-weight: 600;
+}
+.deadline-note.is-urgent {
+  background-color: var(--color-rejected-bg);
+  color: var(--color-rejected-fg);
+}
+
+.entity-reason {
+  background-color: var(--color-surface-container-low);
+  color: var(--color-on-surface-variant);
+}
+
+.entity-footer a {
+  text-decoration: none;
+}
+
+/* ---------- Modal (same pattern as Customer/Job History) ---------- */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(26, 40, 64, 0.5);
+  z-index: 60;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+}
+.modal-backdrop.is-open {
+  display: flex;
+}
+
+.modal {
+  background-color: var(--color-surface-container-lowest);
+  width: min(480px, 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
+  padding: var(--space-lg);
+  max-height: calc(100vh - 2 * var(--space-lg));
+  overflow-y: auto;
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.modal-subtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+}
+
+.modal-close {
+  background-color: var(--color-surface-container-low);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  display: inline-flex;
+  color: var(--color-on-surface-variant);
+}
+.modal-close:hover {
+  background-color: var(--color-surface-container);
+}
+
+.modal-text {
+  margin-top: var(--space-md);
+  font-size: 14px;
+  color: var(--color-on-surface);
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 20px;
+}

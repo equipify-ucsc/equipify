@@ -67,4 +67,32 @@ final class MaintenanceTechModel
         $stmt->execute([':manager_id' => $areaManagerId]);
         return $stmt->fetchAll();
     }
+
+    /** The subtype row for a profile page (the `users` part comes from UserModel::findAccount). */
+    public static function findDetails(int $userId): ?array
+    {
+        $stmt = getDbConnection()->prepare(
+            'SELECT bio, years_experience, specialization, availability_status
+               FROM maintenance_techs WHERE user_id = :id LIMIT 1'
+        );
+        $stmt->execute([':id' => $userId]);
+        $row = $stmt->fetch();
+        return $row === false ? null : $row;
+    }
+
+    /** @param array{bio:?string,years_experience:?int,specialization:?string} $t */
+    public static function updateDetails(int $userId, array $t): void
+    {
+        $stmt = getDbConnection()->prepare(
+            'UPDATE maintenance_techs
+                SET bio = :bio, years_experience = :years_experience, specialization = :specialization
+              WHERE user_id = :id'
+        );
+        $stmt->execute([
+            ':bio'              => $t['bio'],
+            ':years_experience' => $t['years_experience'],
+            ':specialization'   => $t['specialization'],
+            ':id'               => $userId,
+        ]);
+    }
 }

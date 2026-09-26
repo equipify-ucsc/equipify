@@ -27,8 +27,8 @@
         <span class="icon">help</span>
       </button>
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">Lanka Heavy Equipment</div>
-        <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+        <div class="topbar-user-name type-label-md" data-display-name>Loading…</div>
+        <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar><span class="icon icon-base">person</span></div>
       </div>
     </div>
   </header>
@@ -45,7 +45,7 @@
       <button class="icon-btn" type="button" aria-label="Notifications">
         <span class="icon">notifications</span>
       </button>
-      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar><span class="icon icon-base">person</span></div>
     </div>
   </header>
 
@@ -123,22 +123,26 @@
       <div class="page-header">
         <div class="page-title-group">
           <h2>Rental Requests</h2>
-          <p>Manage incoming equipment bookings and active rentals.</p>
+          <p>Accept or reject new requests before their deadline. Unanswered requests expire automatically.</p>
         </div>
 
         <div class="filter-controls">
+          <button class="attention-chip" type="button" id="attentionChip" hidden>
+            <span class="icon" aria-hidden="true">notification_important</span>
+            <span id="attentionText"></span>
+          </button>
+
           <div class="select-wrapper">
+            <label class="sr-only" for="statusFilter">Filter by status</label>
             <select id="statusFilter">
               <option value="all">All Statuses</option>
-              <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
+              <option value="response">Awaiting Your Response</option>
+              <option value="payment">Awaiting Payment</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="rejected">Rejected</option>
+              <option value="expired">Expired / Cancelled</option>
             </select>
             <span class="icon select-arrow" aria-hidden="true">expand_more</span>
-          </div>
-
-          <div class="date-range-chip">
-            <span class="icon" aria-hidden="true">calendar_month</span>
-            <span>Oct 12 - Oct 19</span>
           </div>
         </div>
       </div>
@@ -146,7 +150,7 @@
       <!-- Main Split Grid -->
       <div class="requests-grid">
 
-        <!-- Left Column: Rentals Data Table -->
+        <!-- Left Column: Requests Data Table -->
         <div class="card table-card">
           <div class="table-responsive">
             <table class="rentals-table">
@@ -160,143 +164,231 @@
                   <th>ACTIONS</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="customer-cell">
-                      <div class="avatar-circle">SA</div>
-                      <div class="customer-info">
-                        <span class="company-name">Summit Build Co.</span>
-                        <span class="contact-name">Sarah Jenkins</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="equipment-info">
-                      <span class="equipment-title">Excavator CAT 320</span>
-                      <span class="equipment-id">ID: EQ-4092</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="period-info">
-                      <span class="date-range">Oct 15 - Oct 22</span>
-                      <span class="days-count">7 Days</span>
-                    </div>
-                  </td>
-                  <td class="amount-cell">$4,200.00</td>
-                  <td>
-                    <span class="badge-status badge-status--pending">Pending</span>
-                  </td>
-                  <td class="actions-cell">
-                    <div class="row-actions">
-                      <button class="action-btn approve" type="button" title="Approve"><span class="icon" aria-hidden="true">check</span></button>
-                      <button class="action-btn decline" type="button" title="Decline"><span class="icon" aria-hidden="true">close</span></button>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <div class="customer-cell">
-                      <div class="avatar-circle">MR</div>
-                      <div class="customer-info">
-                        <span class="company-name">Metro Roads LLC</span>
-                        <span class="contact-name">Mike Richards</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="equipment-info">
-                      <span class="equipment-title">Asphalt Paver Volvo</span>
-                      <span class="equipment-id">ID: EQ-1120</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="period-info">
-                      <span class="date-range">Oct 16 - Oct 18</span>
-                      <span class="days-count">3 Days</span>
-                    </div>
-                  </td>
-                  <td class="amount-cell">$2,850.00</td>
-                  <td>
-                    <span class="badge-status badge-status--active">Approved</span>
-                  </td>
-                  <td class="actions-cell">
-                    <div class="row-actions">
-                      <a class="action-btn" href="../Equipment Details/index.html" title="View equipment"><span class="icon" aria-hidden="true">visibility</span></a>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              <tbody id="requestsBody"></tbody>
             </table>
+            <p class="table-empty" id="tableEmpty" hidden>No requests match this filter.</p>
           </div>
 
           <!-- Table Pagination Footer -->
           <div class="table-footer">
-            <span class="pagination-info">Showing 1 to 2 of 24 entries</span>
+            <span class="pagination-info" id="paginationInfo"></span>
             <div class="pagination-controls">
               <button class="pagination-btn disabled" type="button" disabled>Prev</button>
               <button class="pagination-btn active" type="button">1</button>
-              <button class="pagination-btn" type="button">2</button>
-              <button class="pagination-btn" type="button">Next</button>
+              <button class="pagination-btn disabled" type="button" disabled>Next</button>
             </div>
           </div>
         </div>
 
-        <!-- Right Column: Today's Logistics Sidebar Card -->
-        <aside class="card logistics-card">
-          <div class="logistics-header">
-            <h3>Today's Logistics</h3>
-            <span class="count-chip">3 Items</span>
-          </div>
+        <div class="side-column">
 
-          <div class="logistics-list">
-
-            <!-- Item 1: Pickup -->
-            <div class="logistics-item">
-              <div class="item-icon-box pickup">
-                <span class="icon" aria-hidden="true">local_shipping</span>
-              </div>
-              <div class="item-content">
-                <h4 class="item-title">Pickup: Scissor Lift 19ft</h4>
-                <p class="item-details">Downtown Site A &bull; 09:00 AM</p>
-                <div class="item-subtext">
-                  <span class="mini-avatar">JB</span>
-                  <span>Apex Builders</span>
+          <!-- How requests work -->
+          <aside class="card flow-card" aria-labelledby="flowHeading">
+            <h3 id="flowHeading">How requests work</h3>
+            <ol class="flow-steps">
+              <li>
+                <span class="flow-steps__num">1</span>
+                <div>
+                  <p class="flow-steps__title">You respond</p>
+                  <p class="flow-steps__text">Accept or reject by the end of the day after the request arrives.</p>
                 </div>
-              </div>
+              </li>
+              <li>
+                <span class="flow-steps__num">2</span>
+                <div>
+                  <p class="flow-steps__title">The customer pays</p>
+                  <p class="flow-steps__text">By the end of the day after you accept. The dates are held for them until then.</p>
+                </div>
+              </li>
+              <li>
+                <span class="flow-steps__num">3</span>
+                <div>
+                  <p class="flow-steps__title">Handover</p>
+                  <p class="flow-steps__text">Equipify delivers the day before the start, or the customer collects it from you.</p>
+                </div>
+              </li>
+            </ol>
+            <p class="flow-card__note">If a deadline passes without action, the request is cancelled automatically.</p>
+          </aside>
+
+          <!-- Today's Logistics Sidebar Card -->
+          <aside class="card logistics-card">
+            <div class="logistics-header">
+              <h3>Today's Logistics</h3>
+              <span class="count-chip">2 Items</span>
             </div>
 
-            <!-- Item 2: Return -->
-            <div class="logistics-item">
-              <div class="item-icon-box return">
-                <span class="icon" aria-hidden="true">keyboard_return</span>
-              </div>
-              <div class="item-content">
-                <h4 class="item-title">Return: Backhoe Loader</h4>
-                <p class="item-details">Yard 2 &bull; 02:30 PM</p>
-                <div class="item-subtext">
-                  <span class="mini-avatar">TC</span>
-                  <span>TerraCorp</span>
+            <div class="logistics-list">
+
+              <!-- Item 1: Pickup -->
+              <div class="logistics-item">
+                <div class="item-icon-box pickup">
+                  <span class="icon" aria-hidden="true">local_shipping</span>
+                </div>
+                <div class="item-content">
+                  <h4 class="item-title">Pickup: Scissor Lift 19ft</h4>
+                  <p class="item-details">Downtown Site A &bull; 09:00 AM</p>
+                  <div class="item-subtext">
+                    <span class="mini-avatar">JB</span>
+                    <span>Apex Builders</span>
+                  </div>
                 </div>
               </div>
+
+              <!-- Item 2: Return -->
+              <div class="logistics-item">
+                <div class="item-icon-box return">
+                  <span class="icon" aria-hidden="true">keyboard_return</span>
+                </div>
+                <div class="item-content">
+                  <h4 class="item-title">Return: Backhoe Loader</h4>
+                  <p class="item-details">Yard 2 &bull; 02:30 PM</p>
+                  <div class="item-subtext">
+                    <span class="mini-avatar">TC</span>
+                    <span>TerraCorp</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
-          </div>
-
-          <button class="btn-view-logistics" type="button">
-            View All Logistics
-          </button>
-        </aside>
+            <button class="btn-view-logistics" type="button">
+              View All Logistics
+            </button>
+          </aside>
+        </div>
 
       </div>
 
     </div>
   </main>
 
+  <!-- Request details -->
+  <div class="modal-backdrop" id="detailsModal">
+    <div class="modal modal--wide" role="dialog" aria-modal="true" aria-labelledby="detailsTitle">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="detailsTitle">Request details</h3>
+          <p class="modal-subtitle" id="detailsSubtitle"></p>
+        </div>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon" aria-hidden="true">close</span>
+        </button>
+      </div>
+
+      <div class="details-status" id="detailsStatus"></div>
+
+      <div class="details-grid">
+        <section>
+          <h4 class="details-heading">Customer</h4>
+          <dl class="details-list">
+            <div><dt>Company</dt><dd id="dCompany"></dd></div>
+            <div><dt>Requested by</dt><dd id="dContact"></dd></div>
+            <div><dt>On-site contact</dt><dd id="dSiteContact"></dd></div>
+          </dl>
+        </section>
+        <section>
+          <h4 class="details-heading">Rental</h4>
+          <dl class="details-list">
+            <div><dt>Equipment</dt><dd id="dEquipment"></dd></div>
+            <div><dt>Dates</dt><dd id="dDates"></dd></div>
+            <div><dt>Units</dt><dd id="dUnits"></dd></div>
+          </dl>
+        </section>
+        <section>
+          <h4 class="details-heading">Handover</h4>
+          <dl class="details-list">
+            <div><dt>Method</dt><dd id="dHandover"></dd></div>
+            <div><dt id="dPlaceLabel">Location</dt><dd id="dPlace"></dd></div>
+            <div><dt>Handover date</dt><dd id="dHandoverDate"></dd></div>
+          </dl>
+        </section>
+        <section>
+          <h4 class="details-heading">Payment</h4>
+          <dl class="details-list">
+            <div><dt>Rental total</dt><dd id="dTotal"></dd></div>
+            <div><dt>Refundable deposit</dt><dd id="dDeposit"></dd></div>
+          </dl>
+        </section>
+      </div>
+
+      <section class="details-notes">
+        <h4 class="details-heading">Notes from the customer</h4>
+        <p id="dNotes"></p>
+      </section>
+
+      <div class="modal-actions" id="detailsActions">
+        <button class="btn-outline" type="button" data-modal-close>Close</button>
+        <button class="btn-outline btn-outline--danger" type="button" id="detailsRejectBtn">Reject</button>
+        <button class="btn-primary" type="button" id="detailsAcceptBtn">Accept Request</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accept confirmation -->
+  <div class="modal-backdrop" id="acceptModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="acceptTitle">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="acceptTitle">Accept this request?</h3>
+          <p class="modal-subtitle" id="acceptSubtitle"></p>
+        </div>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <p class="modal-text">The customer must pay by <strong id="acceptPayBy"></strong>. These dates are held for them until then. If they don't pay in time, the request is cancelled and the dates are released.</p>
+      <div class="modal-actions">
+        <button class="btn-outline" type="button" data-modal-close>Not Yet</button>
+        <button class="btn-primary" type="button" id="acceptConfirmBtn">
+          <span class="icon icon-sm" aria-hidden="true">check</span> Accept Request
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reject with a reason -->
+  <div class="modal-backdrop" id="rejectModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="rejectTitle">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="rejectTitle">Reject this request?</h3>
+          <p class="modal-subtitle" id="rejectSubtitle"></p>
+        </div>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <form id="rejectForm" novalidate>
+        <div class="field">
+          <label class="field-label" for="rejectReason">Reason</label>
+          <div class="select-wrapper select-wrapper--block">
+            <select id="rejectReason">
+              <option value="">Select a reason</option>
+              <option>Not available on these dates</option>
+              <option>Under maintenance</option>
+              <option>Other</option>
+            </select>
+            <span class="icon select-arrow" aria-hidden="true">expand_more</span>
+          </div>
+          <p class="field-error" id="rejectReasonError">Choose a reason so the customer knows why.</p>
+        </div>
+        <div class="field">
+          <label class="field-label" for="rejectMessage">Message to the customer <span class="optional">(optional)</span></label>
+          <textarea class="input-textarea" id="rejectMessage" rows="3" maxlength="300" placeholder="e.g. It's free from 15 October if that works for you."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-outline" type="button" data-modal-close>Cancel</button>
+          <button class="btn-danger" type="submit">Reject Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script src="../../shared/api.js"></script>
-  <script src="../../shared/session.js"></script>
+  <script src="../../shared/session.js?v=2"></script>
   <script src="../../shared/script.js"></script>
+  <script src="../../shared/rental-timing.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

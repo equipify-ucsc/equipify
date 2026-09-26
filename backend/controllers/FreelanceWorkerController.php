@@ -17,6 +17,7 @@ require_once __DIR__ . '/../models/CredentialDocModel.php';
 require_once __DIR__ . '/../models/PortfolioItemModel.php';
 require_once __DIR__ . '/../core/Upload.php';
 require_once __DIR__ . '/../core/ListQuery.php';
+require_once __DIR__ . '/ProfileController.php';
 
 final class FreelanceWorkerController
 {
@@ -377,6 +378,7 @@ final class FreelanceWorkerController
             'district'            => $row['district'],
             'account_status'      => $row['account_status'],
             'member_since'        => $row['created_at'],
+            'photo_url'           => ProfileController::photoUrl($row['profile_photo_url']),
             'bio'                 => $row['bio'],
             'years_experience'    => $row['years_experience'] === null ? null : (int) $row['years_experience'],
             'availability_status' => $row['availability_status'],

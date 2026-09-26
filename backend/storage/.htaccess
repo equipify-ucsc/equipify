@@ -1,4 +1,5 @@
-# Uploaded files (credential documents, portfolio images, equipment photos) are
-# never served straight from disk. They are read through a controller that
-# checks permission first, so every direct request here is refused.
+# Uploaded files (credential documents, portfolio images, equipment photos,
+# profile photos) are never served straight from disk. They are read through
+# a controller that checks permission first, so every direct request here is
+# refused.
 Require all denied

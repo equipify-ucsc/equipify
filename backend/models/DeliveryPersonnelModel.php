@@ -60,4 +60,16 @@ final class DeliveryPersonnelModel
         $stmt->execute([':manager_id' => $areaManagerId]);
         return $stmt->fetchAll();
     }
+
+    /** The subtype row for a profile page (the `users` part comes from UserModel::findAccount). */
+    public static function findDetails(int $userId): ?array
+    {
+        $stmt = getDbConnection()->prepare(
+            'SELECT driving_license_no, license_class, license_expiry, availability_status
+               FROM delivery_personnel WHERE user_id = :id LIMIT 1'
+        );
+        $stmt->execute([':id' => $userId]);
+        $row = $stmt->fetch();
+        return $row === false ? null : $row;
+    }
 }

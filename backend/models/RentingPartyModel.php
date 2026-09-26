@@ -40,4 +40,42 @@ final class RentingPartyModel
             ':logo_url'      => $logoUrl,
         ]);
     }
+
+    /** The subtype row for a profile page (the `users` part comes from UserModel::findAccount). */
+    public static function findDetails(int $userId): ?array
+    {
+        $stmt = getDbConnection()->prepare(
+            'SELECT business_name, business_reg_no, business_address, district,
+                    description, verification_status, avg_rating, rating_count
+               FROM renting_parties WHERE user_id = :id LIMIT 1'
+        );
+        $stmt->execute([':id' => $userId]);
+        $row = $stmt->fetch();
+        return $row === false ? null : $row;
+    }
+
+    /**
+     * The business columns the party edits itself. business_reg_no and
+     * verification_status are absent on purpose: an admin verifies those.
+     *
+     * @param array{business_name:string,business_address:string,district:string,description:?string} $b
+     */
+    public static function updateDetails(int $userId, array $b): void
+    {
+        $stmt = getDbConnection()->prepare(
+            'UPDATE renting_parties
+                SET business_name    = :business_name,
+                    business_address = :business_address,
+                    district         = :district,
+                    description      = :description
+              WHERE user_id = :id'
+        );
+        $stmt->execute([
+            ':business_name'    => $b['business_name'],
+            ':business_address' => $b['business_address'],
+            ':district'         => $b['district'],
+            ':description'      => $b['description'],
+            ':id'               => $userId,
+        ]);
+    }
 }

@@ -928,12 +928,6 @@ button:focus-visible {
   outline: none;
 }
 
-.date-field__icon {
-  color: var(--outline);
-  font-size: 20px;
-  pointer-events: none;
-}
-
 .date-error {
   font-size: 12px;
   color: var(--error);
@@ -943,6 +937,13 @@ button:focus-visible {
 
 .date-error.is-visible {
   display: block;
+}
+
+.date-hint {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--on-surface-variant);
+  margin: -4px 0 0 0;
 }
 
 /* Logistics radios */

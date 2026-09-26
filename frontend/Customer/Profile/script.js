@@ -1,6 +1,7 @@
 /* ==========================================================================
    Equipify — Customer Profile
-   Page-specific behavior (vanilla JS, needs shared/api.js)
+   Page-specific behavior (vanilla JS, needs shared/api.js, shared/session.js
+   and shared/profile.js)
    ========================================================================== */
 
 (function () {
@@ -17,6 +18,103 @@
       });
       tab.classList.add('is-active');
       tab.setAttribute('aria-selected', 'true');
+    });
+  });
+
+  // ---------- Profile header + edit form (GET/PUT /profile) ----------
+  // Only the personal details are real: company, contact name, email,
+  // address, phone and photo. The stats, active rentals and reviews are still
+  // sample content until those features have tables. The contact name and
+  // photo are drawn by session.js ([data-user-name], [data-user-avatar]).
+  var editCard = document.getElementById('editCard');
+  var editBtn = document.getElementById('editProfileBtn');
+  var form = document.getElementById('profileForm');
+  var formError = document.getElementById('profileFormError');
+  var saveBtn = document.getElementById('saveProfileBtn');
+
+  var photo = EquipifyProfile.initPhotoUploader({
+    changeBtn: document.getElementById('changePhotoBtn'),
+    removeBtn: document.getElementById('removePhotoBtn')
+  });
+
+  // The last profile the server confirmed, so Cancel can restore the form.
+  var saved = null;
+
+  function setText(id, value) {
+    var node = document.getElementById(id);
+    if (node) node.textContent = value || '–';
+  }
+
+  function fillProfile(p) {
+    saved = p;
+    var address = [p.address_line, p.district].filter(function (part) { return part; }).join(', ');
+    setText('profileCompany', p.company_name || p.full_name);
+    setText('profileEmail', p.email);
+    setText('profilePhone', p.phone);
+    setText('profileAddress', address);
+
+    form.elements.full_name.value = p.full_name || '';
+    form.elements.company_name.value = p.company_name || '';
+    document.getElementById('emailInput').value = p.email || '';
+    form.elements.phone.value = p.phone || '';
+    form.elements.address_line.value = p.address_line || '';
+    EquipifyProfile.fillDistricts(form.elements.district, p.district);
+
+    photo.setHasPhoto(!!p.photo_url);
+  }
+
+  function setEditing(on) {
+    editCard.hidden = !on;
+    editBtn.setAttribute('aria-expanded', on ? 'true' : 'false');
+    formError.hidden = true;
+    if (on) {
+      editCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      form.elements.full_name.focus({ preventScroll: true });
+    } else if (saved) {
+      fillProfile(saved);
+    }
+  }
+
+  EquipifyApi.get('/profile').then(function (res) {
+    if (!res.ok) {
+      setText('profileCompany', 'Profile unavailable');
+      return;
+    }
+    fillProfile(res.data);
+  });
+
+  editBtn.addEventListener('click', function () {
+    setEditing(editCard.hidden);
+  });
+  document.getElementById('cancelEditBtn').addEventListener('click', function () {
+    setEditing(false);
+  });
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    formError.hidden = true;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    saveBtn.disabled = true;
+    EquipifyApi.put('/profile', {
+      full_name: form.elements.full_name.value,
+      company_name: form.elements.company_name.value,
+      phone: form.elements.phone.value,
+      address_line: form.elements.address_line.value,
+      district: form.elements.district.value
+    }).then(function (res) {
+      saveBtn.disabled = false;
+      if (!res.ok) {
+        EquipifyProfile.showFormError(formError, res);
+        return;
+      }
+      fillProfile(res.data);
+      setEditing(false);
+      EquipifySession.refresh();
+      EquipifyProfile.toast('Profile updated successfully.');
     });
   });
 

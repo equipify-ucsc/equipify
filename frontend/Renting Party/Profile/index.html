@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../shared/styles.css">
+<link rel="stylesheet" href="../../shared/profile.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body data-require-auth="renting_party">
@@ -27,8 +28,8 @@
         <span class="icon">help</span>
       </button>
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">Lanka Heavy Equipment</div>
-        <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+        <div class="topbar-user-name type-label-md" data-display-name>Loading…</div>
+        <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar><span class="icon icon-base">person</span></div>
       </div>
     </div>
   </header>
@@ -45,7 +46,7 @@
       <button class="icon-btn" type="button" aria-label="Notifications">
         <span class="icon">notifications</span>
       </button>
-      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar><span class="icon icon-base">person</span></div>
     </div>
   </header>
 
@@ -135,6 +136,8 @@
         </div>
       </div>
 
+      <p class="form-error" id="profileFormError" role="alert" hidden></p>
+
       <!-- Main Profile Dashboard Grid -->
       <div class="profile-grid">
 
@@ -146,26 +149,42 @@
 
             <!-- Company Info Column -->
             <div class="card form-card">
+              <!-- Business and owner details come from GET /profile (script.js);
+                   website, hours and VAT are still sample content. -->
               <div class="company-brand-header">
-                <div class="company-logo-box">
+                <div class="company-logo-box" data-user-avatar>
                   <span class="icon" aria-hidden="true">architecture</span>
                 </div>
                 <div class="company-brand-info">
-                  <h3>Lanka Heavy Equipment</h3>
+                  <h3 data-display-name>Loading…</h3>
                   <span class="badge-status badge-status--completed">Heavy Machinery</span>
+                  <div class="photo-actions photo-actions--start">
+                    <button class="photo-btn" type="button" id="changePhotoBtn"><span class="icon" aria-hidden="true">photo_camera</span> Change photo</button>
+                    <button class="photo-btn photo-btn--danger" type="button" id="removePhotoBtn" hidden><span class="icon" aria-hidden="true">delete</span> Remove</button>
+                  </div>
                 </div>
               </div>
 
               <div class="form-group">
+                <label for="businessName">Business Name</label>
+                <input type="text" id="businessName" maxlength="150" required>
+              </div>
+
+              <div class="form-group">
+                <label for="ownerName">Owner / Contact Name</label>
+                <input type="text" id="ownerName" maxlength="150" required>
+              </div>
+
+              <div class="form-group">
                 <label for="regNumber">Business Registration Number</label>
-                <input type="text" id="regNumber" value="PV-90210-445" readonly>
+                <input type="text" id="regNumber" readonly>
               </div>
 
               <div class="form-group">
                 <label for="primaryEmail">Primary Email</label>
                 <div class="input-with-icon">
                   <span class="icon" aria-hidden="true">mail</span>
-                  <input type="email" id="primaryEmail" value="contact@lankaheavy.lk">
+                  <input type="email" id="primaryEmail" readonly title="Your login email can't be changed here">
                 </div>
               </div>
 
@@ -173,7 +192,7 @@
                 <label for="phoneNumber">Phone Number</label>
                 <div class="input-with-icon">
                   <span class="icon" aria-hidden="true">call</span>
-                  <input type="text" id="phoneNumber" value="+94 77 019 2837">
+                  <input type="text" id="phoneNumber" required placeholder="+94 ...">
                 </div>
               </div>
 
@@ -190,21 +209,17 @@
             <div class="card form-card">
               <div class="card-header-action">
                 <label class="form-section-title">Business Address</label>
-                <button class="icon-edit-btn" type="button" title="Edit Address"><span class="icon" aria-hidden="true">edit</span></button>
+                <button class="icon-edit-btn" type="button" title="Edit Address" id="editAddressBtn"><span class="icon" aria-hidden="true">edit</span></button>
               </div>
 
               <div class="form-group">
-                <textarea rows="2">4500 Industrial Estate, Colombo 10&#10;Western Province</textarea>
+                <textarea rows="2" id="businessAddress" maxlength="255" aria-label="Business address" required></textarea>
               </div>
 
               <div class="form-group">
                 <label for="operatingDistrict">Operating District</label>
                 <div class="select-wrapper">
-                  <select id="operatingDistrict">
-                    <option>Colombo</option>
-                    <option>Gampaha</option>
-                    <option>Kandy</option>
-                  </select>
+                  <select id="operatingDistrict"></select>
                   <span class="icon select-arrow" aria-hidden="true">expand_more</span>
                 </div>
               </div>
@@ -230,7 +245,7 @@
           <div class="card company-desc-card">
             <label class="form-section-title">Company Description</label>
             <div class="form-group">
-              <textarea rows="3">Lanka Heavy Equipment provides top-tier industrial machinery for commercial construction projects across the Western Province. Specializing in excavators, loaders, and specialized lifting equipment.</textarea>
+              <textarea rows="3" id="businessDescription" maxlength="2000" aria-label="Company description" placeholder="Tell customers what you rent out and where you operate."></textarea>
             </div>
           </div>
 
@@ -238,8 +253,8 @@
           <div class="card verification-card">
             <div class="verification-header">
               <h3>Verification &amp; Documents</h3>
-              <span class="badge-status badge-status--active">
-                <span class="icon icon-sm icon-fill" aria-hidden="true">verified</span> Verified Partner
+              <span class="badge-status badge-status--active" id="verificationBadge">
+                <span class="icon icon-sm icon-fill" aria-hidden="true">verified</span> <span id="verificationLabel">Verified Partner</span>
               </span>
             </div>
 
@@ -337,8 +352,9 @@
   </main>
 
   <script src="../../shared/api.js"></script>
-  <script src="../../shared/session.js"></script>
+  <script src="../../shared/session.js?v=2"></script>
   <script src="../../shared/script.js"></script>
-  <script src="script.js"></script>
+  <script src="../../shared/profile.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

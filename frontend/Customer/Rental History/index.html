@@ -27,8 +27,8 @@
         <span class="icon">help</span>
       </button>
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">Anura Perera</div>
-        <img alt="User Profile" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+        <div class="topbar-user-name type-label-md" data-user-name>Loading…</div>
+        <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar><span class="icon icon-base">person</span></div>
       </div>
     </div>
   </header>
@@ -45,7 +45,7 @@
       <button class="icon-btn" type="button" aria-label="Notifications">
         <span class="icon">notifications</span>
       </button>
-      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar><span class="icon icon-base">person</span></div>
     </div>
   </header>
 
@@ -123,15 +123,22 @@
       <div class="page-header">
         <div>
           <h1 class="type-page-title">Rental History</h1>
-          <p class="page-header__count" id="rental-history-count">8 rentals</p>
+          <p class="page-header__count" id="rental-history-count">10 rentals</p>
         </div>
       </div>
+
+      <!-- How a request moves -->
+      <p class="flow-note">
+        <span class="icon icon-sm" aria-hidden="true">info</span>
+        <span>After you place a request, the renting party has until the end of the next day to accept or reject it. Once it's accepted, you have until the end of the following day to pay. Requests that miss either deadline are cancelled automatically.</span>
+      </p>
 
       <!-- Filter tabs -->
       <div class="filter-tabs" role="tablist" aria-label="Filter rentals by status">
         <button class="filter-tab is-active" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
-        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="active">Active</button>
-        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="pending">Pending Confirmation</button>
+        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="response">Awaiting Response</button>
+        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="payment">Payment Due</button>
+        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="active">Upcoming &amp; Active</button>
         <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="completed">Completed</button>
         <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="cancelled">Cancelled</button>
       </div>
@@ -139,7 +146,157 @@
       <!-- Rental History Grid -->
       <div class="card-grid" id="rental-history-grid">
 
-        <!-- 1: Active -->
+        <!-- Payment due (urgent: accepted yesterday, so it closes at the end of today) -->
+        <article class="card card--hover entity-card" data-status="payment" data-expire-reason="Expired — payment not made">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div class="entity-thumb">
+                <span class="icon icon-xl" aria-hidden="true">air</span>
+              </div>
+              <div>
+                <h3 class="type-headline-sm entity-title">Atlas Copco XAS 185 Air Compressor</h3>
+                <p class="type-body-sm entity-subtitle">Accepted by Colombo Tool Hire</p>
+              </div>
+            </div>
+            <span class="badge-status badge-status--pending">
+              <span class="badge-status__dot" aria-hidden="true"></span> Payment Due
+            </span>
+          </div>
+          <div class="deadline-note" data-accepted-ago="1260">
+            <span class="icon icon-sm" aria-hidden="true">schedule</span>
+            <span>Pay by <strong data-countdown-at></strong> (<span data-countdown-remaining></span> left) or the request is cancelled.</span>
+          </div>
+          <div class="entity-detail-grid">
+            <div class="detail-cell">
+              <div class="detail-cell-label">Start Date</div>
+              <div class="detail-cell-value">Oct 01, 2026</div>
+            </div>
+            <div class="detail-cell">
+              <div class="detail-cell-label">End Date</div>
+              <div class="detail-cell-value">Oct 05, 2026</div>
+            </div>
+          </div>
+          <p class="entity-price">LKR 36,000 <span class="entity-price__unit">due · self pickup</span></p>
+          <div class="entity-footer">
+            <a class="btn-primary" href="../Payment/index.html?rental=RQ-2038">
+              <span class="icon icon-sm" aria-hidden="true">payments</span> Pay Now
+            </a>
+            <button class="link-action" type="button" data-action="cancel">Cancel Request</button>
+          </div>
+        </article>
+
+        <!-- Payment due -->
+        <article class="card card--hover entity-card" data-status="payment" data-expire-reason="Expired — payment not made">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div class="entity-thumb">
+                <img class="entity-thumb__image" alt="Bobcat S650 skid-steer loader" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfKb_qvRJGnY49-lMH4p7vXVM7jeBNE90ikrX6jEVdjdOHYaPZKVKC9IQs1A9FrKP6-PYCoL5OytlQXLup6givP75LkXMXCH3rF6ckKs6O-zo0SXpxDMgHSxAZdgwddKFZUSPzyGAdyYJUDjJwaew7mJ2exs68936Dzg650E7UoD7vnXL1mfJBjJCv3ZMMnES1tQ7vKwppe7U5AzxmzQCzEVMdXQwoV9BaN0dihtMW4KZSMkduukut4ZtSRQc5XEEaOxhyLJZxuu4t">
+              </div>
+              <div>
+                <h3 class="type-headline-sm entity-title">Bobcat S650 Skid-Steer Loader</h3>
+                <p class="type-body-sm entity-subtitle">Accepted by Lanka Earthmovers</p>
+              </div>
+            </div>
+            <span class="badge-status badge-status--pending">
+              <span class="badge-status__dot" aria-hidden="true"></span> Payment Due
+            </span>
+          </div>
+          <div class="deadline-note" data-accepted-ago="120">
+            <span class="icon icon-sm" aria-hidden="true">schedule</span>
+            <span>Pay by <strong data-countdown-at></strong> (<span data-countdown-remaining></span> left) or the request is cancelled.</span>
+          </div>
+          <div class="entity-detail-grid">
+            <div class="detail-cell">
+              <div class="detail-cell-label">Start Date</div>
+              <div class="detail-cell-value">Oct 03, 2026</div>
+            </div>
+            <div class="detail-cell">
+              <div class="detail-cell-label">End Date</div>
+              <div class="detail-cell-value">Oct 10, 2026</div>
+            </div>
+          </div>
+          <p class="entity-price">LKR 124,000 <span class="entity-price__unit">due · platform delivery</span></p>
+          <div class="entity-footer">
+            <a class="btn-primary" href="../Payment/index.html?rental=RQ-2041">
+              <span class="icon icon-sm" aria-hidden="true">payments</span> Pay Now
+            </a>
+            <button class="link-action" type="button" data-action="cancel">Cancel Request</button>
+          </div>
+        </article>
+
+        <!-- Awaiting owner response -->
+        <article class="card card--hover entity-card" data-status="response" data-expire-reason="Expired — no response from renting party">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div class="entity-thumb">
+                <img class="entity-thumb__image" alt="JLG 1930ES electric scissor lift" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTrHopSzJgkW2EyxD774uo19RQvKrh4qnsmL-8brktHCay7YYsAH1CMPJ74xYCj6PCxsuo2qb1wkCn2963LoMB0W2plUQdd2NQO2AppEdB6AUpFwcbs3TONAXFsUFhIbgvZF6tIEEzUO7Kxubo9VOJI0M1TGUx6MHw_JzzCyxuhvuRXsxh0CqQZ7UKaqO7uRPs5pd0xFR6Q4Lj6D_-nuuZer9Ce08gRw0UbSdB8ppACJqc8Gx4QjE7Q-Zq8i27Cn5gqUMpU3vzdpbe">
+              </div>
+              <div>
+                <h3 class="type-headline-sm entity-title">JLG 1930ES Electric Scissor Lift</h3>
+                <p class="type-body-sm entity-subtitle">Requested from Access Equip Pro</p>
+              </div>
+            </div>
+            <span class="badge-status badge-status--pending">
+              <span class="badge-status__dot" aria-hidden="true"></span> Awaiting Owner Response
+            </span>
+          </div>
+          <div class="deadline-note" data-placed-ago="360">
+            <span class="icon icon-sm" aria-hidden="true">hourglass_top</span>
+            <span>The owner must respond by <strong data-countdown-at></strong> (<span data-countdown-remaining></span> left).</span>
+          </div>
+          <div class="entity-detail-grid">
+            <div class="detail-cell">
+              <div class="detail-cell-label">Requested Start</div>
+              <div class="detail-cell-value">Oct 02, 2026</div>
+            </div>
+            <div class="detail-cell">
+              <div class="detail-cell-label">Requested End</div>
+              <div class="detail-cell-value">Oct 09, 2026</div>
+            </div>
+          </div>
+          <p class="entity-price">LKR 8,000 <span class="entity-price__unit">/ day</span></p>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="cancel">Cancel Request</button>
+          </div>
+        </article>
+
+        <!-- Confirmed (paid, not started yet) -->
+        <article class="card card--hover entity-card" data-status="active">
+          <div class="entity-card-head">
+            <div class="entity-card-main">
+              <div class="entity-thumb">
+                <span class="icon icon-xl" aria-hidden="true">agriculture</span>
+              </div>
+              <div>
+                <h3 class="type-headline-sm entity-title">Kubota KX057 Mini Excavator</h3>
+                <p class="type-body-sm entity-subtitle">Rented from Lanka Earthmovers</p>
+              </div>
+            </div>
+            <span class="badge-status badge-status--completed">
+              <span class="badge-status__dot" aria-hidden="true"></span> Confirmed
+            </span>
+          </div>
+          <p class="entity-meta-row type-body-sm">
+            <span class="icon icon-sm" aria-hidden="true">local_shipping</span>
+            Paid · Equipify delivers on Sep 30, 2026
+          </p>
+          <div class="entity-detail-grid">
+            <div class="detail-cell">
+              <div class="detail-cell-label">Start Date</div>
+              <div class="detail-cell-value">Oct 01, 2026</div>
+            </div>
+            <div class="detail-cell">
+              <div class="detail-cell-label">End Date</div>
+              <div class="detail-cell-value">Oct 06, 2026</div>
+            </div>
+          </div>
+          <p class="entity-price">LKR 105,000 <span class="entity-price__unit">paid</span></p>
+          <div class="entity-footer">
+            <button class="btn-outline" type="button" data-action="invoice">View Receipt</button>
+          </div>
+        </article>
+
+        <!-- Active -->
         <article class="card card--hover entity-card" data-status="active">
           <div class="entity-card-head">
             <div class="entity-card-main">
@@ -158,11 +315,11 @@
           <div class="entity-detail-grid">
             <div class="detail-cell">
               <div class="detail-cell-label">Start Date</div>
-              <div class="detail-cell-value">Oct 12, 2025</div>
+              <div class="detail-cell-value">Sep 12, 2026</div>
             </div>
             <div class="detail-cell">
               <div class="detail-cell-label">End Date (Est.)</div>
-              <div class="detail-cell-value">Nov 28, 2025</div>
+              <div class="detail-cell-value">Oct 28, 2026</div>
             </div>
           </div>
           <p class="entity-price">LKR 28,000 <span class="entity-price__unit">/ day</span></p>
@@ -173,7 +330,7 @@
           </div>
         </article>
 
-        <!-- 2: Active -->
+        <!-- Active -->
         <article class="card card--hover entity-card" data-status="active">
           <div class="entity-card-head">
             <div class="entity-card-main">
@@ -192,11 +349,11 @@
           <div class="entity-detail-grid">
             <div class="detail-cell">
               <div class="detail-cell-label">Start Date</div>
-              <div class="detail-cell-value">Oct 20, 2025</div>
+              <div class="detail-cell-value">Sep 20, 2026</div>
             </div>
             <div class="detail-cell">
               <div class="detail-cell-label">End Date (Est.)</div>
-              <div class="detail-cell-value">Nov 05, 2025</div>
+              <div class="detail-cell-value">Oct 05, 2026</div>
             </div>
           </div>
           <p class="entity-price">LKR 15,500 <span class="entity-price__unit">/ day</span></p>
@@ -207,71 +364,7 @@
           </div>
         </article>
 
-        <!-- 3: Pending Confirmation -->
-        <article class="card card--hover entity-card" data-status="pending">
-          <div class="entity-card-head">
-            <div class="entity-card-main">
-              <div class="entity-thumb">
-                <img class="entity-thumb__image" alt="JLG 1930ES electric scissor lift" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTrHopSzJgkW2EyxD774uo19RQvKrh4qnsmL-8brktHCay7YYsAH1CMPJ74xYCj6PCxsuo2qb1wkCn2963LoMB0W2plUQdd2NQO2AppEdB6AUpFwcbs3TONAXFsUFhIbgvZF6tIEEzUO7Kxubo9VOJI0M1TGUx6MHw_JzzCyxuhvuRXsxh0CqQZ7UKaqO7uRPs5pd0xFR6Q4Lj6D_-nuuZer9Ce08gRw0UbSdB8ppACJqc8Gx4QjE7Q-Zq8i27Cn5gqUMpU3vzdpbe">
-              </div>
-              <div>
-                <h3 class="type-headline-sm entity-title">JLG 1930ES Electric Scissor Lift</h3>
-                <p class="type-body-sm entity-subtitle">Rented from Access Equip Pro</p>
-              </div>
-            </div>
-            <span class="badge-status badge-status--pending">
-              <span class="badge-status__dot" aria-hidden="true"></span> Pending Confirmation
-            </span>
-          </div>
-          <div class="entity-detail-grid">
-            <div class="detail-cell">
-              <div class="detail-cell-label">Requested Start</div>
-              <div class="detail-cell-value">Nov 02, 2025</div>
-            </div>
-            <div class="detail-cell">
-              <div class="detail-cell-label">Requested End</div>
-              <div class="detail-cell-value">Nov 09, 2025</div>
-            </div>
-          </div>
-          <p class="entity-price">LKR 8,000 <span class="entity-price__unit">/ day</span></p>
-          <div class="entity-footer">
-            <button class="btn-outline" type="button" data-action="cancel">Cancel Request</button>
-          </div>
-        </article>
-
-        <!-- 4: Pending Confirmation -->
-        <article class="card card--hover entity-card" data-status="pending">
-          <div class="entity-card-head">
-            <div class="entity-card-main">
-              <div class="entity-thumb">
-                <img class="entity-thumb__image" alt="Bobcat S650 skid-steer loader" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfKb_qvRJGnY49-lMH4p7vXVM7jeBNE90ikrX6jEVdjdOHYaPZKVKC9IQs1A9FrKP6-PYCoL5OytlQXLup6givP75LkXMXCH3rF6ckKs6O-zo0SXpxDMgHSxAZdgwddKFZUSPzyGAdyYJUDjJwaew7mJ2exs68936Dzg650E7UoD7vnXL1mfJBjJCv3ZMMnES1tQ7vKwppe7U5AzxmzQCzEVMdXQwoV9BaN0dihtMW4KZSMkduukut4ZtSRQc5XEEaOxhyLJZxuu4t">
-              </div>
-              <div>
-                <h3 class="type-headline-sm entity-title">Bobcat S650 Skid-Steer Loader</h3>
-                <p class="type-body-sm entity-subtitle">Rented from Lanka Earthmovers</p>
-              </div>
-            </div>
-            <span class="badge-status badge-status--pending">
-              <span class="badge-status__dot" aria-hidden="true"></span> Pending Confirmation
-            </span>
-          </div>
-          <div class="entity-detail-grid">
-            <div class="detail-cell">
-              <div class="detail-cell-label">Requested Start</div>
-              <div class="detail-cell-value">Nov 10, 2025</div>
-            </div>
-            <div class="detail-cell">
-              <div class="detail-cell-label">Requested End</div>
-              <div class="detail-cell-value">Nov 17, 2025</div>
-            </div>
-          </div>
-          <p class="entity-price">LKR 12,000 <span class="entity-price__unit">/ day</span></p>
-          <div class="entity-footer">
-            <button class="btn-outline" type="button" data-action="cancel">Cancel Request</button>
-          </div>
-        </article>
-
-        <!-- 5: Completed -->
+        <!-- Completed -->
         <article class="card card--hover entity-card" data-status="completed">
           <div class="entity-card-head">
             <div class="entity-card-main">
@@ -290,11 +383,11 @@
           <div class="entity-detail-grid">
             <div class="detail-cell">
               <div class="detail-cell-label">Start Date</div>
-              <div class="detail-cell-value">Sep 02, 2025</div>
+              <div class="detail-cell-value">Aug 02, 2026</div>
             </div>
             <div class="detail-cell">
               <div class="detail-cell-label">Returned</div>
-              <div class="detail-cell-value">Sep 09, 2025</div>
+              <div class="detail-cell-value">Aug 09, 2026</div>
             </div>
           </div>
           <p class="entity-price">LKR 45,000 total</p>
@@ -304,7 +397,7 @@
           </div>
         </article>
 
-        <!-- 6: Completed -->
+        <!-- Completed -->
         <article class="card card--hover entity-card" data-status="completed">
           <div class="entity-card-head">
             <div class="entity-card-main">
@@ -323,11 +416,11 @@
           <div class="entity-detail-grid">
             <div class="detail-cell">
               <div class="detail-cell-label">Start Date</div>
-              <div class="detail-cell-value">Aug 14, 2025</div>
+              <div class="detail-cell-value">Jul 14, 2026</div>
             </div>
             <div class="detail-cell">
               <div class="detail-cell-label">Returned</div>
-              <div class="detail-cell-value">Aug 30, 2025</div>
+              <div class="detail-cell-value">Jul 30, 2026</div>
             </div>
           </div>
           <p class="entity-price">LKR 128,000 total</p>
@@ -337,7 +430,7 @@
           </div>
         </article>
 
-        <!-- 7: Cancelled -->
+        <!-- Cancelled: rejected by the renting party -->
         <article class="card card--hover entity-card" data-status="cancelled">
           <div class="entity-card-head">
             <div class="entity-card-main">
@@ -346,30 +439,34 @@
               </div>
               <div>
                 <h3 class="type-headline-sm entity-title">Road Roller 10-Ton</h3>
-                <p class="type-body-sm entity-subtitle">Rented from Lanka Build Machinery</p>
+                <p class="type-body-sm entity-subtitle">Requested from Lanka Build Machinery</p>
               </div>
             </div>
             <span class="badge-status badge-status--rejected">
               <span class="badge-status__dot" aria-hidden="true"></span> Cancelled
             </span>
           </div>
+          <p class="entity-reason">
+            <span class="icon icon-sm" aria-hidden="true">block</span>
+            Rejected by renting party: not available on these dates
+          </p>
           <div class="entity-detail-grid">
             <div class="detail-cell">
               <div class="detail-cell-label">Requested Start</div>
-              <div class="detail-cell-value">Jul 18, 2025</div>
+              <div class="detail-cell-value">Aug 18, 2026</div>
             </div>
             <div class="detail-cell">
               <div class="detail-cell-label">Cancelled On</div>
-              <div class="detail-cell-value">Jul 16, 2025</div>
+              <div class="detail-cell-value">Aug 12, 2026</div>
             </div>
           </div>
           <p class="entity-price">LKR 22,000 <span class="entity-price__unit">/ day</span></p>
           <div class="entity-footer">
-            <button class="btn-outline" type="button" data-action="view">View Details</button>
+            <a class="btn-outline" href="../Browsing page/index.html">Find Similar</a>
           </div>
         </article>
 
-        <!-- 8: Cancelled -->
+        <!-- Cancelled: owner never responded -->
         <article class="card card--hover entity-card" data-status="cancelled">
           <div class="entity-card-head">
             <div class="entity-card-main">
@@ -378,26 +475,30 @@
               </div>
               <div>
                 <h3 class="type-headline-sm entity-title">Boom Lift 45ft</h3>
-                <p class="type-body-sm entity-subtitle">Rented from Access Equip Pro</p>
+                <p class="type-body-sm entity-subtitle">Requested from Access Equip Pro</p>
               </div>
             </div>
             <span class="badge-status badge-status--rejected">
               <span class="badge-status__dot" aria-hidden="true"></span> Cancelled
             </span>
           </div>
+          <p class="entity-reason">
+            <span class="icon icon-sm" aria-hidden="true">timer_off</span>
+            Expired — no response from renting party
+          </p>
           <div class="entity-detail-grid">
             <div class="detail-cell">
               <div class="detail-cell-label">Requested Start</div>
-              <div class="detail-cell-value">Jun 05, 2025</div>
+              <div class="detail-cell-value">Jun 05, 2026</div>
             </div>
             <div class="detail-cell">
               <div class="detail-cell-label">Cancelled On</div>
-              <div class="detail-cell-value">Jun 04, 2025</div>
+              <div class="detail-cell-value">May 30, 2026</div>
             </div>
           </div>
           <p class="entity-price">LKR 9,500 <span class="entity-price__unit">/ day</span></p>
           <div class="entity-footer">
-            <button class="btn-outline" type="button" data-action="view">View Details</button>
+            <a class="btn-outline" href="../Browsing page/index.html">Find Similar</a>
           </div>
         </article>
 
@@ -417,9 +518,30 @@
     </div>
   </main>
 
+  <!-- Cancel request confirmation -->
+  <div class="modal-backdrop" id="cancelModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cancelModalTitle">
+      <div class="modal-head">
+        <div>
+          <h3 class="type-headline-sm" id="cancelModalTitle">Cancel this request?</h3>
+          <p class="modal-subtitle" id="cancelModalItem"></p>
+        </div>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <p class="modal-text">The renting party will be notified and the dates will be released. This can't be undone.</p>
+      <div class="modal-actions">
+        <button class="btn-outline" type="button" data-modal-close>Keep Request</button>
+        <button class="btn-danger" type="button" id="cancelConfirmBtn">Cancel Request</button>
+      </div>
+    </div>
+  </div>
+
   <script src="../../shared/api.js"></script>
-  <script src="../../shared/session.js"></script>
+  <script src="../../shared/session.js?v=2"></script>
   <script src="../../shared/script.js"></script>
+  <script src="../../shared/rental-timing.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

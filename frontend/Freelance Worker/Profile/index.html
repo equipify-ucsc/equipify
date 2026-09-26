@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../shared/styles.css">
+<link rel="stylesheet" href="../../shared/profile.css">
 <link rel="stylesheet" href="../portal.css">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -23,7 +24,7 @@
     <div class="topbar-actions">
       <div class="topbar-user">
         <div class="topbar-user-name type-label-md"><span data-user-name>Loading…</span><span class="topbar-user-role">Equipment Operator</span></div>
-        <div class="avatar avatar--placeholder" aria-hidden="true">
+        <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
           <span class="icon icon-base">person</span>
         </div>
       </div>
@@ -39,7 +40,7 @@
       <span class="brand-name">Equipify</span>
     </div>
     <div class="topbar-actions">
-      <div class="avatar avatar--placeholder" aria-hidden="true">
+      <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
         <span class="icon icon-base">person</span>
       </div>
     </div>
@@ -168,6 +169,19 @@
 
       <div class="card" style="margin-top: 18px;">
         <h2 class="card-title">Profile details</h2>
+        <!-- Profile photo: stored by POST /profile/photo, drawn by session.js -->
+        <div class="profile-photo-row">
+          <div class="profile-photo" data-user-avatar>
+            <span class="icon icon-photo" aria-hidden="true">person</span>
+          </div>
+          <div>
+            <p class="profile-photo-hint">JPG, PNG or WEBP, up to 2 MB.</p>
+            <div class="photo-actions photo-actions--start">
+              <button class="photo-btn" type="button" id="changePhotoBtn"><span class="icon" aria-hidden="true">photo_camera</span> Change photo</button>
+              <button class="photo-btn photo-btn--danger" type="button" id="removePhotoBtn" hidden><span class="icon" aria-hidden="true">delete</span> Remove</button>
+            </div>
+          </div>
+        </div>
         <form id="profileForm" data-success-message="Profile updated successfully.">
           <p class="form-error" id="profileFormError" role="alert" hidden></p>
           <div class="form-grid">
@@ -292,10 +306,11 @@
   <div class="toast" id="toast"></div>
 
   <script src="../../shared/api.js"></script>
-  <script src="../../shared/session.js"></script>
+  <script src="../../shared/session.js?v=2"></script>
   <script src="../../shared/script.js"></script>
   <script src="../../shared/list.js"></script>
   <script src="../portal.js"></script>
-  <script src="script.js"></script>
+  <script src="../../shared/profile.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>
