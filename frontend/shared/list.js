@@ -24,6 +24,10 @@
 
    Rows are built with createElement + textContent by the caller's renderItem;
    nothing here ever assigns innerHTML from server data.
+
+   A UI-only page with no endpoint yet passes source instead of endpoint: a
+   function (params) => Promise<{ok, data|error}> in the same shape
+   EquipifyApi.query resolves with (see shared/inbox-mock.js).
    ========================================================================== */
 
 (function () {
@@ -34,6 +38,8 @@
   /**
    * @param {Object} options
    * @param {string} options.endpoint      list endpoint path
+   * @param {Function} [options.source]    (params) => Promise<{ok,data,error}>,
+   *                                       used instead of endpoint when given
    * @param {Element} options.container    where rows/cards are appended
    * @param {Function} options.renderItem  (item, index) => Element
    * @param {Element} [options.searchInput]
@@ -200,7 +206,11 @@
       var id = ++requestId;
       showState('Loading…', 'loading');
 
-      return EquipifyApi.query(options.endpoint, params()).then(function (res) {
+      var request = options.source
+        ? options.source(params())
+        : EquipifyApi.query(options.endpoint, params());
+
+      return request.then(function (res) {
         if (id !== requestId) return;
 
         if (!res.ok) {

@@ -141,6 +141,15 @@
     if (owner.rating_count > 0) partyBits.push('★ ' + owner.avg_rating.toFixed(1) + ' (' + owner.rating_count + ' reviews)');
     document.getElementById('partySub').textContent = partyBits.join(' • ');
 
+    // "Message" opens (or starts) a conversation with this renting party about the listing.
+    document.getElementById('messageOwnerBtn').addEventListener('click', function () {
+      window.location.href = '../Messages/index.html?' + new URLSearchParams({
+        to: owner.business_name,
+        role: 'renting_party',
+        about: item.title
+      }).toString();
+    });
+
     // Self pickup happens at the renting party's district.
     document.getElementById('pickupDesc').textContent =
       'Collect it from the renting party in ' + item.district + ' and return it with your own transport.';

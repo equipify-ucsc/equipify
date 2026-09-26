@@ -21,6 +21,10 @@
       <span class="brand-name">Equipify</span>
     </div>
     <div class="topbar-actions">
+      <a class="icon-btn" href="../Notifications/index.html" aria-label="Notifications">
+        <span class="icon">notifications</span>
+        <span class="icon-btn-count" data-inbox-count="notifications" hidden></span>
+      </a>
       <div class="topbar-user">
         <div class="topbar-user-name type-label-md"><span data-user-name>Loading…</span><span class="topbar-user-role">Area Manager · <span data-user-district></span> Region</span></div>
         <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
@@ -39,6 +43,10 @@
       <span class="brand-name">Equipify</span>
     </div>
     <div class="topbar-actions">
+      <a class="icon-btn" href="../Notifications/index.html" aria-label="Notifications">
+        <span class="icon">notifications</span>
+        <span class="icon-btn-count" data-inbox-count="notifications" hidden></span>
+      </a>
       <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
         <span class="icon icon-base">person</span>
       </div>
@@ -90,6 +98,20 @@
         <a class="sidenav-link" href="../Vehicles/index.html">
           <span class="icon" aria-hidden="true">directions_car</span>
           <span>Vehicles</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Messages/index.html">
+          <span class="icon" aria-hidden="true">chat</span>
+          <span>Messages</span>
+          <span class="nav-count" data-inbox-count="messages" hidden></span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Notifications/index.html">
+          <span class="icon" aria-hidden="true">notifications</span>
+          <span>Notifications</span>
+          <span class="nav-count" data-inbox-count="notifications" hidden></span>
         </a>
       </li>
       <li>
@@ -195,6 +217,8 @@
   <script src="../../shared/api.js"></script>
   <script src="../../shared/session.js?v=2"></script>
   <script src="../../shared/script.js"></script>
+  <script src="../../shared/inbox-mock.js"></script>
+  <script src="../../shared/inbox-badges.js"></script>
   <script src="../../shared/profile.js"></script>
   <script src="script.js?v=2"></script>
 </body>
