@@ -22,22 +22,32 @@ final class CustomerModel
         ]);
     }
 
-    /** The customer's own profile: base user columns plus the subtype row. */
-    public static function findProfile(int $userId): ?array
+    /** The subtype row for a profile page (the `users` part comes from UserModel::findAccount). */
+    public static function findDetails(int $userId): ?array
     {
         $stmt = getDbConnection()->prepare(
-            'SELECT u.user_id, u.full_name, u.email, u.phone,
-                    u.address_line, u.district, u.created_at,
-                    c.company_name, c.billing_address,
-                    c.freelancer_avg_rating, c.freelancer_rating_count,
-                    c.renting_party_avg_rating, c.renting_party_rating_count
-               FROM customers c
-               JOIN users u ON u.user_id = c.user_id
-              WHERE c.user_id = :id
-              LIMIT 1'
+            'SELECT company_name, billing_address,
+                    freelancer_avg_rating, freelancer_rating_count,
+                    renting_party_avg_rating, renting_party_rating_count
+               FROM customers WHERE user_id = :id LIMIT 1'
         );
         $stmt->execute([':id' => $userId]);
         $row = $stmt->fetch();
         return $row === false ? null : $row;
+    }
+
+    /** The columns a customer edits about themselves. Ratings are the platform's. */
+    public static function updateDetails(int $userId, ?string $companyName, string $billingAddress): void
+    {
+        $stmt = getDbConnection()->prepare(
+            'UPDATE customers
+                SET company_name = :company_name, billing_address = :billing_address
+              WHERE user_id = :id'
+        );
+        $stmt->execute([
+            ':company_name'    => $companyName,
+            ':billing_address' => $billingAddress,
+            ':id'              => $userId,
+        ]);
     }
 }

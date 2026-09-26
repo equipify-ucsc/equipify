@@ -27,8 +27,8 @@
         <span class="icon">help</span>
       </button>
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">Lanka Heavy Equipment</div>
-        <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+        <div class="topbar-user-name type-label-md" data-display-name>Loading…</div>
+        <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar><span class="icon icon-base">person</span></div>
       </div>
     </div>
   </header>
@@ -45,7 +45,7 @@
       <button class="icon-btn" type="button" aria-label="Notifications">
         <span class="icon">notifications</span>
       </button>
-      <img alt="User profile avatar" class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiMTVGDQQY7WkzRgqJKfoYJe1V7BBsBOFj3CPO5Awv_p7rotKiBxshVf1TazUJip0Wc2QgCU9nx1MmevN4aD5v1vwpOl9dBZMe9gRWAKDqGXZbcyjddXsmZQZZckJUYkWZdA1oWtRh8anzMe5XBdHaK_M33XZs8gIkrBNBaIspAF58PxcIiMweQNNspCKH13TxrYFRBH9SpXlqFbXP6LdWMOZPMFI4P6le4sfhX8A3uM3vs2O52LnVBmloTGhLp3tbbfmjsxHinC7">
+      <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar><span class="icon icon-base">person</span></div>
     </div>
   </header>
 
@@ -122,7 +122,7 @@
       <!-- Welcome Banner & Quick Action Buttons -->
       <section class="welcome-header">
         <div class="welcome-text">
-          <h1>Welcome back, Lanka Heavy Equipment</h1>
+          <h1>Welcome back, <span data-display-name>…</span></h1>
           <p>Your equipment fleet is performing at 86% capacity today.</p>
         </div>
         <div class="action-buttons">
@@ -380,7 +380,7 @@
   </main>
 
   <script src="../../shared/api.js"></script>
-  <script src="../../shared/session.js"></script>
+  <script src="../../shared/session.js?v=2"></script>
   <script src="../../shared/script.js"></script>
   <script src="script.js"></script>
 </body>

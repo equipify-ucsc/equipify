@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../shared/styles.css">
+<link rel="stylesheet" href="../../shared/profile.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body data-require-auth="customer">
@@ -28,7 +29,7 @@
       </button>
       <div class="topbar-user">
         <div class="topbar-user-name type-label-md" data-user-name>Loading…</div>
-        <div class="avatar avatar--placeholder" aria-hidden="true"><span class="icon icon-base">person</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar><span class="icon icon-base">person</span></div>
       </div>
     </div>
   </header>
@@ -49,7 +50,7 @@
         <span class="icon">help</span>
       </button>
       <button class="support-btn type-label-md" type="button">Support</button>
-      <div class="avatar avatar--placeholder" aria-hidden="true"><span class="icon icon-base">person</span></div>
+      <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar><span class="icon icon-base">person</span></div>
     </div>
   </header>
 
@@ -127,11 +128,17 @@
       <section class="card profile-card">
         <div class="profile-top">
           <div class="profile-identity">
-            <div class="profile-logo profile-logo--placeholder" aria-hidden="true">
-              <span class="icon icon-xl">business</span>
+            <div>
+              <div class="profile-logo profile-logo--placeholder" data-user-avatar>
+                <span class="icon icon-xl" aria-hidden="true">business</span>
+              </div>
+              <div class="photo-actions">
+                <button class="photo-btn" type="button" id="changePhotoBtn"><span class="icon" aria-hidden="true">photo_camera</span> Change</button>
+                <button class="photo-btn photo-btn--danger" type="button" id="removePhotoBtn" hidden><span class="icon" aria-hidden="true">delete</span> Remove</button>
+              </div>
             </div>
             <div>
-              <!-- Header fields are filled by script.js from GET /customer/profile -->
+              <!-- Company, contact name, email, address and phone come from GET /profile (script.js) -->
               <h1 class="type-headline-lg profile-name" id="profileCompany">Loading…</h1>
               <div class="profile-meta type-body-md">
                 <span class="icon icon-base" aria-hidden="true">person</span>
@@ -141,7 +148,7 @@
               </div>
             </div>
           </div>
-          <button class="btn-primary" type="button">
+          <button class="btn-primary" type="button" id="editProfileBtn" aria-expanded="false" aria-controls="editCard">
             <span class="icon icon-sm" aria-hidden="true">edit</span> Edit Profile
           </button>
         </div>
@@ -151,17 +158,17 @@
             <div class="stat-tiles">
               <div class="stat-tile">
                 <span class="icon" aria-hidden="true">history</span>
-                <div class="stat-tile-value">0</div>
+                <div class="stat-tile-value">42</div>
                 <div class="stat-tile-label">Total Rentals</div>
               </div>
               <div class="stat-tile stat-tile--secondary">
                 <span class="icon" aria-hidden="true">local_shipping</span>
-                <div class="stat-tile-value">0</div>
+                <div class="stat-tile-value">5</div>
                 <div class="stat-tile-label">Active Now</div>
               </div>
               <div class="stat-tile">
                 <span class="icon icon-star icon-fill" aria-hidden="true">star</span>
-                <div class="stat-tile-value" id="profileRating">–</div>
+                <div class="stat-tile-value">4.8</div>
                 <div class="stat-tile-label">Rating</div>
               </div>
               <div class="stat-tile stat-tile--accent">
@@ -200,19 +207,57 @@
         </div>
       </section>
 
+      <!-- Edit form (PUT /profile), opened by "Edit Profile" -->
+      <section class="card profile-card profile-edit-card" id="editCard" hidden>
+        <h2 class="type-headline-md profile-edit-title">Edit profile</h2>
+        <form id="profileForm" novalidate>
+          <p class="form-error" id="profileFormError" role="alert" hidden></p>
+          <div class="form-grid">
+            <div class="field">
+              <label class="field-label" for="fullName">Full name</label>
+              <input class="input-standard" id="fullName" name="full_name" maxlength="150" required>
+            </div>
+            <div class="field">
+              <label class="field-label" for="companyName">Company name <span class="field-optional">(optional)</span></label>
+              <input class="input-standard" id="companyName" name="company_name" maxlength="150">
+            </div>
+            <div class="field">
+              <label class="field-label" for="emailInput">Email</label>
+              <input class="input-standard" id="emailInput" type="email" readonly title="Your login email can't be changed here">
+            </div>
+            <div class="field">
+              <label class="field-label" for="phone">Phone</label>
+              <input class="input-standard" id="phone" name="phone" required placeholder="+94 ...">
+            </div>
+            <div class="field">
+              <label class="field-label" for="addressLine">Address</label>
+              <input class="input-standard" id="addressLine" name="address_line" maxlength="255" required>
+            </div>
+            <div class="field">
+              <label class="field-label" for="district">District</label>
+              <select class="input-standard" id="district" name="district" required></select>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn-outline" type="button" id="cancelEditBtn">Cancel</button>
+            <button class="btn-primary" type="submit" id="saveProfileBtn">Save Changes</button>
+          </div>
+        </form>
+      </section>
+
       <!-- Dashboard Summary Stats -->
       <div class="stats-row">
         <div class="summary-stat">
           <div class="summary-stat-label">Active Rentals</div>
-          <div class="summary-stat-value">0</div>
+          <div class="summary-stat-value">5</div>
         </div>
         <div class="summary-stat">
           <div class="summary-stat-label">Total Spend</div>
-          <div class="summary-stat-value">Rs. 0</div>
+          <div class="summary-stat-value">Rs. 142K</div>
         </div>
         <div class="summary-stat">
           <div class="summary-stat-label">Saved Items</div>
-          <div class="summary-stat-value">0</div>
+          <div class="summary-stat-value">12</div>
         </div>
         <div class="summary-stat">
           <div class="summary-stat-label">Open Jobs</div>
@@ -229,7 +274,73 @@
           </a>
         </div>
         <div class="card-grid">
-          <p class="open-jobs-state">No active rentals yet.</p>
+
+          <!-- Active Rental Card 1 -->
+          <div class="card card--hover entity-card">
+            <div class="entity-card-head">
+              <div class="entity-card-main">
+                <div class="entity-thumb">
+                  <span class="icon icon-xl" aria-hidden="true">agriculture</span>
+                </div>
+                <div>
+                  <h3 class="type-headline-sm entity-title">CAT 320D Excavator</h3>
+                  <p class="type-body-sm entity-subtitle">Site: Kottawa Highway Project</p>
+                </div>
+              </div>
+              <span class="badge-status badge-status--active">
+                <span class="badge-status__dot" aria-hidden="true"></span> Deployed
+              </span>
+            </div>
+            <div class="entity-detail-grid">
+              <div class="detail-cell">
+                <div class="detail-cell-label">Start Date</div>
+                <div class="detail-cell-value">Oct 12, 2023</div>
+              </div>
+              <div class="detail-cell">
+                <div class="detail-cell-label">End Date (Est.)</div>
+                <div class="detail-cell-value">Nov 28, 2023</div>
+              </div>
+            </div>
+            <div class="entity-footer">
+              <button class="btn-solid" type="button">
+                <span class="icon icon-sm" aria-hidden="true">calendar_month</span> Extend
+              </button>
+            </div>
+          </div>
+
+          <!-- Active Rental Card 2 -->
+          <div class="card card--hover entity-card">
+            <div class="entity-card-head">
+              <div class="entity-card-main">
+                <div class="entity-thumb">
+                  <span class="icon icon-xl" aria-hidden="true">electric_bolt</span>
+                </div>
+                <div>
+                  <h3 class="type-headline-sm entity-title">100kVA Generator</h3>
+                  <p class="type-body-sm entity-subtitle">Site: Colombo Port City</p>
+                </div>
+              </div>
+              <span class="badge-status badge-status--active">
+                <span class="badge-status__dot" aria-hidden="true"></span> Deployed
+              </span>
+            </div>
+            <div class="entity-detail-grid">
+              <div class="detail-cell">
+                <div class="detail-cell-label">Start Date</div>
+                <div class="detail-cell-value">Oct 20, 2023</div>
+              </div>
+              <div class="detail-cell">
+                <div class="detail-cell-label">End Date (Est.)</div>
+                <div class="detail-cell-value">Nov 05, 2023</div>
+              </div>
+            </div>
+            <div class="entity-footer">
+              <button class="btn-solid" type="button">
+                <span class="icon icon-sm" aria-hidden="true">calendar_month</span> Extend
+              </button>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -254,7 +365,7 @@
             <h2 class="type-headline-md">Ratings &amp; Reviews</h2>
             <div class="rating-chip">
               <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
-              <span id="profileRatingSummary">No reviews yet</span>
+              <span>4.8 Average Trust Score (64 reviews)</span>
             </div>
           </div>
           <button class="link-action" type="button">
@@ -268,7 +379,43 @@
         </div>
 
         <div class="card-grid">
-          <p class="open-jobs-state">No reviews yet.</p>
+          <!-- Review Card 1 -->
+          <div class="card card--hover review-card">
+            <div class="review-head">
+              <div>
+                <div class="review-author">Lanka Equipment Rentals</div>
+                <div class="review-role">Equipment Provider</div>
+              </div>
+              <span class="review-time">2 weeks ago</span>
+            </div>
+            <div class="review-stars">
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+            </div>
+            <p class="review-quote">"Professional communication and timely returns. Highly recommended for any large scale project."</p>
+          </div>
+
+          <!-- Review Card 2 -->
+          <div class="card card--hover review-card">
+            <div class="review-head">
+              <div>
+                <div class="review-author">Saman Kumara</div>
+                <div class="review-role">Site Manager</div>
+              </div>
+              <span class="review-time">1 month ago</span>
+            </div>
+            <div class="review-stars">
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+              <span class="icon icon-sm icon-star icon-fill" aria-hidden="true">star</span>
+            </div>
+            <p class="review-quote">"Excellent partner. They maintain their rented equipment well and are very responsive to site requirements."</p>
+          </div>
         </div>
       </section>
 
@@ -276,8 +423,9 @@
   </main>
 
   <script src="../../shared/api.js"></script>
-  <script src="../../shared/session.js"></script>
+  <script src="../../shared/session.js?v=2"></script>
   <script src="../../shared/script.js"></script>
-  <script src="script.js?v=3"></script>
+  <script src="../../shared/profile.js"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>

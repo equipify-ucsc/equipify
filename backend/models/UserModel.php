@@ -140,4 +140,38 @@ final class UserModel
         $stmt = getDbConnection()->prepare('UPDATE users SET password_hash = :h WHERE user_id = :id');
         $stmt->execute([':h' => $hash, ':id' => $userId]);
     }
+
+    /**
+     * Every `users` column a profile page shows about its own account.
+     *
+     * @return array<string,mixed>|null
+     */
+    public static function findAccount(int $userId): ?array
+    {
+        $stmt = getDbConnection()->prepare(
+            'SELECT user_id, email, role, full_name, phone, nic_number,
+                    address_line, district, profile_photo_url, account_status,
+                    last_login_at, created_at
+               FROM users WHERE user_id = :id LIMIT 1'
+        );
+        $stmt->execute([':id' => $userId]);
+        $row = $stmt->fetch();
+        return $row === false ? null : $row;
+    }
+
+    /** The stored profile photo path (relative to storage/), or null when there is none. */
+    public static function profilePhotoPath(int $userId): ?string
+    {
+        $stmt = getDbConnection()->prepare('SELECT profile_photo_url FROM users WHERE user_id = :id LIMIT 1');
+        $stmt->execute([':id' => $userId]);
+        $path = $stmt->fetchColumn();
+        return $path === false || $path === null || $path === '' ? null : (string) $path;
+    }
+
+    /** Sets (or with null clears) the profile photo path. */
+    public static function setProfilePhoto(int $userId, ?string $path): void
+    {
+        $stmt = getDbConnection()->prepare('UPDATE users SET profile_photo_url = :p WHERE user_id = :id');
+        $stmt->execute([':p' => $path, ':id' => $userId]);
+    }
 }

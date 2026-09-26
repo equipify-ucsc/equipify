@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../shared/styles.css">
+<link rel="stylesheet" href="../../shared/profile.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body data-require-auth="admin" data-login-url="../Login/index.html">
@@ -21,8 +22,8 @@
     </div>
     <div class="topbar-actions">
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">Dishanthan<span class="topbar-user-role">Super Administrator</span></div>
-        <div class="avatar avatar--placeholder" aria-hidden="true">
+        <div class="topbar-user-name type-label-md"><span data-user-name>Loading…</span><span class="topbar-user-role">Super Administrator</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
           <span class="icon icon-base">person</span>
         </div>
       </div>
@@ -38,7 +39,7 @@
       <span class="brand-name">Equipify</span>
     </div>
     <div class="topbar-actions">
-      <div class="avatar avatar--placeholder" aria-hidden="true">
+      <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
         <span class="icon icon-base">person</span>
       </div>
     </div>
@@ -118,16 +119,21 @@
       <div class="profile-layout">
 
         <div class="card profile-side">
-          <div class="profile-photo">
+          <div class="profile-photo" data-user-avatar>
             <span class="icon icon-photo" aria-hidden="true">person</span>
           </div>
-          <h3 class="type-headline-sm profile-side-name">Dishanthan</h3>
+          <div class="photo-actions">
+            <button class="photo-btn" type="button" id="changePhotoBtn"><span class="icon" aria-hidden="true">photo_camera</span> Change photo</button>
+            <button class="photo-btn photo-btn--danger" type="button" id="removePhotoBtn" hidden><span class="icon" aria-hidden="true">delete</span> Remove</button>
+          </div>
+          <!-- Name, email, status and last login come from GET /profile (script.js) -->
+          <h3 class="type-headline-sm profile-side-name" data-user-name>Loading…</h3>
           <p class="profile-side-role">Super Administrator</p>
           <div class="info-list">
-            <div class="info-row"><strong>Email</strong>dishanthan@equipify.lk</div>
+            <div class="info-row"><strong>Email</strong><span id="sideEmail">–</span></div>
             <div class="info-row"><strong>Access</strong>Full platform control</div>
-            <div class="info-row"><strong>Status</strong><span class="badge-status badge-status--active">Active</span></div>
-            <div class="info-row"><strong>Last login</strong>Today, 10:14 PM</div>
+            <div class="info-row"><strong>Status</strong><span class="badge-status badge-status--active" id="sideStatus">Active</span></div>
+            <div class="info-row"><strong>Last login</strong><span id="sideLastLogin">–</span></div>
           </div>
         </div>
 
@@ -136,19 +142,20 @@
             <h3 class="type-headline-sm">Account information</h3>
             <span class="badge-status badge-status--completed">Administrator</span>
           </div>
-          <form id="profileForm">
+          <form id="profileForm" novalidate>
+            <p class="form-error" id="profileFormError" role="alert" hidden></p>
             <div class="form-grid">
               <div class="field">
                 <label class="field-label" for="fullName">Full name</label>
-                <input class="input-standard" id="fullName" required value="Dishanthan">
+                <input class="input-standard" id="fullName" name="full_name" maxlength="150" required>
               </div>
               <div class="field">
                 <label class="field-label" for="profileEmail">Email</label>
-                <input class="input-standard" id="profileEmail" type="email" required value="dishanthan@equipify.lk">
+                <input class="input-standard" id="profileEmail" type="email" readonly title="Your login email can't be changed here">
               </div>
               <div class="field">
                 <label class="field-label" for="profilePhone">Phone</label>
-                <input class="input-standard" id="profilePhone" required value="+94 77 123 4567">
+                <input class="input-standard" id="profilePhone" name="phone" required placeholder="+94 ...">
               </div>
               <div class="field">
                 <label class="field-label" for="profileRole">Role</label>
@@ -170,8 +177,9 @@
   <div class="toast" id="toast"></div>
 
   <script src="../../shared/api.js"></script>
-  <script src="../../shared/session.js"></script>
+  <script src="../../shared/session.js?v=2"></script>
   <script src="../../shared/script.js"></script>
-  <script src="script.js"></script>
+  <script src="../../shared/profile.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

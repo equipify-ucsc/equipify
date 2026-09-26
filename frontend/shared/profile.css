@@ -1,0 +1,152 @@
+/* ==========================================================================
+   Equipify — shared profile-page styles (load after shared/styles.css and
+   before the page's own styles.css, alongside shared/profile.js).
+   The edit form, error line, toast, and the change/remove photo buttons that
+   every role's Profile page uses. Admin and Area Manager keep their own copies
+   of the form rules; these match them.
+   ========================================================================== */
+
+/* ---------- Photo controls ---------- */
+.photo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs) var(--space-sm);
+  margin-top: var(--space-sm);
+}
+.photo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--color-teal);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.photo-btn:hover:not(:disabled) {
+  background-color: var(--color-surface-container);
+}
+.photo-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.photo-btn--danger {
+  color: var(--color-error, #ba1a1a);
+}
+.photo-btn .icon {
+  font-size: 16px;
+}
+/* Under a name in a left-aligned header rather than centred under a photo. */
+.photo-actions--start {
+  justify-content: flex-start;
+  margin-left: -8px;
+}
+/* Placeholder person icon inside a large profile photo box. */
+.icon-photo {
+  font-size: 40px;
+  color: var(--color-on-surface-variant);
+}
+
+/* ---------- Edit card (pages whose header is display-only) ---------- */
+.profile-edit-card {
+  margin-top: var(--space-lg);
+}
+.profile-edit-title {
+  color: var(--color-navy);
+  margin-bottom: var(--space-md);
+}
+
+/* ---------- Edit form ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+@media (min-width: 640px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.field--full {
+  grid-column: 1 / -1;
+}
+.field-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+.field-optional {
+  font-weight: 400;
+  color: var(--color-on-surface-variant);
+}
+.input-standard {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  padding: 10px 12px;
+  color: var(--color-on-surface);
+  outline: none;
+  font: inherit;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input-standard:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
+}
+.input-standard:disabled,
+.input-standard[readonly] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+textarea.input-standard {
+  resize: vertical;
+}
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+.form-error {
+  margin: 0 0 var(--space-md);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background-color: rgba(186, 26, 26, 0.08);
+  color: var(--color-error, #ba1a1a);
+  font-size: 13px;
+}
+.form-error[hidden] {
+  display: none;
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  background-color: var(--color-deep-navy);
+  color: #ffffff;
+  padding: 13px 16px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+  font-size: 14px;
+  font-weight: 600;
+  display: none;
+  z-index: 80;
+}
+.toast.is-visible {
+  display: block;
+}

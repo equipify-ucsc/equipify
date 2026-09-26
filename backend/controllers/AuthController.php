@@ -12,6 +12,7 @@ require_once __DIR__ . '/../services/RentingPartyRegistrationService.php';
 require_once __DIR__ . '/../services/FreelanceWorkerRegistrationService.php';
 require_once __DIR__ . '/../models/RentingPartyModel.php';
 require_once __DIR__ . '/../core/Upload.php';
+require_once __DIR__ . '/ProfileController.php';
 
 final class AuthController
 {
@@ -337,11 +338,22 @@ final class AuthController
             Response::error('Please log in to continue.', 401);
         }
 
+        // What every page's topbar shows: a renting party is known by its
+        // business name, everyone else by their own name.
+        $displayName = $user['full_name'];
+        if ($user['role'] === 'renting_party') {
+            $business    = RentingPartyModel::findDetails((int) $user['user_id']);
+            $displayName = $business['business_name'] ?? $displayName;
+        }
+
         Response::ok([
-            'user_id'   => (int) $user['user_id'],
-            'role'      => $user['role'],
-            'full_name' => $user['full_name'],
-            'email'     => $user['email'],
+            'user_id'      => (int) $user['user_id'],
+            'role'         => $user['role'],
+            'full_name'    => $user['full_name'],
+            'display_name' => $displayName,
+            'email'        => $user['email'],
+            'district'     => $user['district'],
+            'photo_url'    => ProfileController::photoUrl(UserModel::profilePhotoPath((int) $user['user_id'])),
         ]);
     }
 

@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../shared/styles.css">
+<link rel="stylesheet" href="../../shared/profile.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body data-require-auth="delivery_personnel" data-login-url="../Login/index.html">
@@ -27,8 +28,8 @@
         <span class="icon">help</span>
       </button>
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">Nuwan Fernando</div>
-        <div class="avatar avatar--placeholder" aria-hidden="true">
+        <div class="topbar-user-name type-label-md" data-user-name>Loading…</div>
+        <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
           <span class="icon icon-base">person</span>
         </div>
       </div>
@@ -50,7 +51,7 @@
       <button class="icon-btn" type="button" aria-label="Help">
         <span class="icon">help</span>
       </button>
-      <div class="avatar avatar--placeholder" aria-hidden="true">
+      <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
         <span class="icon icon-base">person</span>
       </div>
     </div>
@@ -101,20 +102,28 @@
   <main class="main-content">
     <div class="content-inner">
 
-      <!-- Profile Header -->
+      <!-- Profile Header: personal details come from GET /profile (script.js);
+           the bio, experience and vehicle below are still sample content. -->
       <section class="card profile-card">
         <div class="profile-top">
           <div class="profile-identity">
-            <div class="profile-photo">
-              <img alt="Nuwan Fernando" src="https://lh3.googleusercontent.com/d/1YC-ssS5vG9o5eWawjzpemXcDqvdfolb2">
+            <div class="profile-photo" data-user-avatar>
+              <span class="icon icon-photo" aria-hidden="true">person</span>
             </div>
             <div>
-              <h1 class="type-headline-lg profile-name">Nuwan Fernando</h1>
+              <h1 class="type-headline-lg profile-name" data-user-name>Loading…</h1>
               <div class="profile-meta type-body-md">
                 <span class="role">Delivery Personnel</span>
               </div>
+              <div class="photo-actions photo-actions--start">
+                <button class="photo-btn" type="button" id="changePhotoBtn"><span class="icon" aria-hidden="true">photo_camera</span> Change photo</button>
+                <button class="photo-btn photo-btn--danger" type="button" id="removePhotoBtn" hidden><span class="icon" aria-hidden="true">delete</span> Remove</button>
+              </div>
             </div>
           </div>
+          <button class="btn-primary" type="button" id="editProfileBtn" aria-expanded="false" aria-controls="editCard">
+            <span class="icon icon-sm" aria-hidden="true">edit</span> Edit Profile
+          </button>
         </div>
 
         <p class="profile-bio type-body-md">
@@ -129,7 +138,7 @@
               <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">location_on</span></div>
               <div class="contact-text">
                 <div class="contact-label">Location</div>
-                <div class="contact-value">Colombo, Sri Lanka</div>
+                <div class="contact-value" id="profileLocation">–</div>
               </div>
             </div>
             <div class="contact-item">
@@ -143,14 +152,14 @@
               <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">mail</span></div>
               <div class="contact-text">
                 <div class="contact-label">Email</div>
-                <div class="contact-value">nuwan.fernando@equipify.lk</div>
+                <div class="contact-value" id="profileEmail">–</div>
               </div>
             </div>
             <div class="contact-item">
               <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">phone</span></div>
               <div class="contact-text">
                 <div class="contact-label">Phone</div>
-                <div class="contact-value">+94 77 987 6543</div>
+                <div class="contact-value" id="profilePhone">–</div>
               </div>
             </div>
             <div class="contact-item">
@@ -164,12 +173,47 @@
         </div>
       </section>
 
+      <!-- Edit form (PUT /profile), opened by "Edit Profile" -->
+      <section class="card profile-card profile-edit-card" id="editCard" hidden>
+        <h2 class="type-headline-md profile-edit-title">Edit profile</h2>
+        <form id="profileForm" novalidate>
+          <p class="form-error" id="profileFormError" role="alert" hidden></p>
+          <div class="form-grid">
+            <div class="field">
+              <label class="field-label" for="fullName">Full name</label>
+              <input class="input-standard" id="fullName" name="full_name" maxlength="150" required>
+            </div>
+            <div class="field">
+              <label class="field-label" for="emailInput">Email</label>
+              <input class="input-standard" id="emailInput" type="email" readonly title="Your login email can't be changed here">
+            </div>
+            <div class="field">
+              <label class="field-label" for="phone">Phone</label>
+              <input class="input-standard" id="phone" name="phone" required placeholder="+94 ...">
+            </div>
+            <div class="field">
+              <label class="field-label" for="nicNumber">NIC number</label>
+              <input class="input-standard" id="nicNumber" name="nic_number" maxlength="12" placeholder="200012345678">
+            </div>
+            <div class="field field--full">
+              <label class="field-label" for="addressLine">Address</label>
+              <input class="input-standard" id="addressLine" name="address_line" maxlength="255">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn-outline" type="button" id="cancelEditBtn">Cancel</button>
+            <button class="btn-primary" type="submit" id="saveProfileBtn">Save Changes</button>
+          </div>
+        </form>
+      </section>
+
     </div>
   </main>
 
   <script src="../../shared/api.js"></script>
-  <script src="../../shared/session.js"></script>
+  <script src="../../shared/session.js?v=2"></script>
   <script src="../../shared/script.js"></script>
-  <script src="script.js"></script>
+  <script src="../../shared/profile.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

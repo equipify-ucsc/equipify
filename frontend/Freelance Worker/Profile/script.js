@@ -42,6 +42,12 @@
   // without another request.
   var saved = null;
 
+  // Profile photo: POST/DELETE /profile/photo through shared/profile.js.
+  var photo = EquipifyProfile.initPhotoUploader({
+    changeBtn: document.getElementById('changePhotoBtn'),
+    removeBtn: document.getElementById('removePhotoBtn')
+  });
+
   // ---------- Load ----------
   function load() {
     EquipifyApi.get('/freelancer/profile').then(function (res) {
@@ -66,6 +72,7 @@
     form.elements.availability_status.value = profile.availability_status;
     form.elements.years_experience.value = profile.years_experience === null ? '' : profile.years_experience;
     form.elements.bio.value = profile.bio || '';
+    photo.setHasPhoto(!!profile.photo_url);
 
     // Read-only tiles.
     var rating = document.getElementById('ratingValue');

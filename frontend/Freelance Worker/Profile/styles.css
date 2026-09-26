@@ -13,3 +13,26 @@
 #bio {
   min-height: 140px;
 }
+
+/* Profile photo above the details form. */
+.profile-photo-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+.profile-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.profile-photo-hint {
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+}

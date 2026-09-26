@@ -62,7 +62,8 @@
   height: 100%;
   object-fit: cover;
 }
-/* No logo upload yet: show a company icon instead of an image. */
+/* Company icon until a profile photo is uploaded (session.js then layers the
+   photo over it; see [data-user-avatar] in shared/styles.css). */
 .profile-logo--placeholder {
   display: flex;
   align-items: center;

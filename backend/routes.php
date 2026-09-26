@@ -14,6 +14,14 @@ $router->add('POST', '/auth/login',   [AuthController::class, 'login']);
 $router->add('POST', '/auth/logout',   [AuthController::class, 'logout']);
 $router->add('GET',  '/auth/me',       [AuthController::class, 'me']);
 
+// Own profile (every role but the freelance worker, which has /freelancer/profile)
+// and own profile photo (every role). Always the signed-in user; see ProfileController.
+$router->add('GET',    '/profile',       [ProfileController::class, 'show'],        ['customer', 'renting_party', 'maintenance_tech', 'delivery_personnel', 'area_manager', 'admin']);
+$router->add('PUT',    '/profile',       [ProfileController::class, 'update'],      ['customer', 'renting_party', 'maintenance_tech', 'delivery_personnel', 'area_manager', 'admin']);
+$router->add('GET',    '/profile/photo', [ProfileController::class, 'showPhoto'],   ['customer', 'renting_party', 'freelance_worker', 'maintenance_tech', 'delivery_personnel', 'area_manager', 'admin']);
+$router->add('POST',   '/profile/photo', [ProfileController::class, 'uploadPhoto'], ['customer', 'renting_party', 'freelance_worker', 'maintenance_tech', 'delivery_personnel', 'area_manager', 'admin']);
+$router->add('DELETE', '/profile/photo', [ProfileController::class, 'deletePhoto'], ['customer', 'renting_party', 'freelance_worker', 'maintenance_tech', 'delivery_personnel', 'area_manager', 'admin']);
+
 // Admin: area manager registration (no public sign-up for this role)
 $router->add('GET',  '/admin/area-managers', [AreaManagerController::class, 'index'], ['admin']);
 $router->add('POST', '/admin/area-managers', [AreaManagerController::class, 'store'], ['admin']);
@@ -98,9 +106,6 @@ $router->add('GET',    '/freelancer/payout-methods',          [PayoutMethodContr
 $router->add('POST',   '/freelancer/payout-methods',          [PayoutMethodController::class, 'store'],          ['freelance_worker']);
 $router->add('POST',   '/freelancer/payout-methods/{id}/default', [PayoutMethodController::class, 'makeDefault'], ['freelance_worker']);
 $router->add('DELETE', '/freelancer/payout-methods/{id}',     [PayoutMethodController::class, 'destroy'],        ['freelance_worker']);
-
-// Customer: the signed-in customer's own profile.
-$router->add('GET',    '/customer/profile',            [CustomerController::class, 'showProfile'], ['customer']);
 
 // Customer: fixed-price job offers for freelance workers. Deleting an open job
 // cancels it instead (see JobController::destroy); hiring picks one bid.

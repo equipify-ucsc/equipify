@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../shared/styles.css">
+<link rel="stylesheet" href="../../shared/profile.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body data-require-auth="area_manager" data-login-url="../Login/index.html">
@@ -21,8 +22,8 @@
     </div>
     <div class="topbar-actions">
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">K. Perera<span class="topbar-user-role">Area Manager · Colombo Region</span></div>
-        <div class="avatar avatar--placeholder" aria-hidden="true">
+        <div class="topbar-user-name type-label-md"><span data-user-name>Loading…</span><span class="topbar-user-role">Area Manager · <span data-user-district></span> Region</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
           <span class="icon icon-base">person</span>
         </div>
       </div>
@@ -38,7 +39,7 @@
       <span class="brand-name">Equipify</span>
     </div>
     <div class="topbar-actions">
-      <div class="avatar avatar--placeholder" aria-hidden="true">
+      <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
         <span class="icon icon-base">person</span>
       </div>
     </div>
@@ -129,16 +130,21 @@
       <div class="profile-layout">
 
         <div class="card profile-side">
-          <div class="profile-photo">
-            <img alt="K. Perera" src="https://lh3.googleusercontent.com/d/1XQc_Ps5_P5yuzb1vSwIRU_yhaRwtMdg0">
+          <div class="profile-photo" data-user-avatar>
+            <span class="icon icon-photo" aria-hidden="true">person</span>
           </div>
-          <h3 class="type-headline-sm profile-side-name">K. Perera</h3>
-          <p class="profile-side-role">Area Manager · Colombo Region</p>
+          <div class="photo-actions">
+            <button class="photo-btn" type="button" id="changePhotoBtn"><span class="icon" aria-hidden="true">photo_camera</span> Change photo</button>
+            <button class="photo-btn photo-btn--danger" type="button" id="removePhotoBtn" hidden><span class="icon" aria-hidden="true">delete</span> Remove</button>
+          </div>
+          <!-- Name, email, region, status and last login come from GET /profile (script.js) -->
+          <h3 class="type-headline-sm profile-side-name" data-user-name>Loading…</h3>
+          <p class="profile-side-role">Area Manager · <span data-user-district></span> Region</p>
           <div class="info-list">
-            <div class="info-row"><strong>Email</strong>k.perera@equipify.lk</div>
-            <div class="info-row"><strong>Region</strong>Colombo Region</div>
-            <div class="info-row"><strong>Status</strong><span class="badge-status badge-status--active">Active</span></div>
-            <div class="info-row"><strong>Last login</strong>Today, 9:42 AM</div>
+            <div class="info-row"><strong>Email</strong><span id="sideEmail">–</span></div>
+            <div class="info-row"><strong>Region</strong><span data-user-district></span> Region</div>
+            <div class="info-row"><strong>Status</strong><span class="badge-status badge-status--active" id="sideStatus">Active</span></div>
+            <div class="info-row"><strong>Last login</strong><span id="sideLastLogin">–</span></div>
           </div>
         </div>
 
@@ -147,19 +153,20 @@
             <h3 class="type-headline-sm">Account information</h3>
             <span class="badge-status badge-status--completed">Area Manager</span>
           </div>
-          <form id="profileForm">
+          <form id="profileForm" novalidate>
+            <p class="form-error" id="profileFormError" role="alert" hidden></p>
             <div class="form-grid">
               <div class="field">
                 <label class="field-label" for="fullName">Full name</label>
-                <input class="input-standard" id="fullName" required value="K. Perera">
+                <input class="input-standard" id="fullName" name="full_name" maxlength="150" required>
               </div>
               <div class="field">
                 <label class="field-label" for="profileEmail">Email</label>
-                <input class="input-standard" id="profileEmail" type="email" required value="k.perera@equipify.lk">
+                <input class="input-standard" id="profileEmail" type="email" readonly title="Your login email can't be changed here">
               </div>
               <div class="field">
                 <label class="field-label" for="profilePhone">Phone</label>
-                <input class="input-standard" id="profilePhone" required value="+94 77 234 5678">
+                <input class="input-standard" id="profilePhone" name="phone" required placeholder="+94 ...">
               </div>
               <div class="field">
                 <label class="field-label" for="profileRole">Role</label>
@@ -167,33 +174,8 @@
               </div>
               <div class="field field--full">
                 <label class="field-label" for="profileRegion">Assigned district</label>
-                <select class="input-standard" id="profileRegion" required>
-                  <option>Ampara</option>
-                  <option>Anuradhapura</option>
-                  <option>Badulla</option>
-                  <option>Batticaloa</option>
-                  <option selected>Colombo</option>
-                  <option>Galle</option>
-                  <option>Gampaha</option>
-                  <option>Hambantota</option>
-                  <option>Jaffna</option>
-                  <option>Kalutara</option>
-                  <option>Kandy</option>
-                  <option>Kegalle</option>
-                  <option>Kilinochchi</option>
-                  <option>Kurunegala</option>
-                  <option>Mannar</option>
-                  <option>Matale</option>
-                  <option>Matara</option>
-                  <option>Monaragala</option>
-                  <option>Mullaitivu</option>
-                  <option>Nuwara Eliya</option>
-                  <option>Polonnaruwa</option>
-                  <option>Puttalam</option>
-                  <option>Ratnapura</option>
-                  <option>Trincomalee</option>
-                  <option>Vavuniya</option>
-                </select>
+                <!-- Assigned by an admin; shown here, not editable. Filled by script.js. -->
+                <select class="input-standard" id="profileRegion" disabled></select>
               </div>
               <div class="field field--full">
                 <label class="field-label" for="profileSummary">Profile summary</label>
@@ -211,8 +193,9 @@
   <div class="toast" id="toast"></div>
 
   <script src="../../shared/api.js"></script>
-  <script src="../../shared/session.js"></script>
+  <script src="../../shared/session.js?v=2"></script>
   <script src="../../shared/script.js"></script>
-  <script src="script.js"></script>
+  <script src="../../shared/profile.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

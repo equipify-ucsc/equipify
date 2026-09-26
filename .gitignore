@@ -33,6 +33,10 @@ Thumbs.db
 backend/storage/uploads/*
 !backend/storage/uploads/.gitkeep
 
+# Profile pictures for every role (users.profile_photo_url).
+backend/storage/profile-photos/*
+!backend/storage/profile-photos/.gitkeep
+
 # Logs and cache
 *.cache
 error_log

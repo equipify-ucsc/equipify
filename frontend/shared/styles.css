@@ -416,6 +416,24 @@ table {
   font-size: 18px;
 }
 
+/* Profile photo: shared/session.js adds an <img data-avatar-img> to any
+   [data-user-avatar] box (topbar avatar, profile-page photo) and marks it
+   .has-photo; without a photo the box keeps its placeholder icon. */
+[data-user-avatar] {
+  position: relative;
+  overflow: hidden;
+}
+[data-user-avatar] > img[data-avatar-img] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+[data-user-avatar].has-photo > .icon {
+  visibility: hidden;
+}
+
 .topbar--desktop {
   display: none;
 }

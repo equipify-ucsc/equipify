@@ -21,8 +21,8 @@
     </div>
     <div class="topbar-actions">
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">K. Perera<span class="topbar-user-role">Area Manager · Colombo Region</span></div>
-        <div class="avatar avatar--placeholder" aria-hidden="true">
+        <div class="topbar-user-name type-label-md"><span data-user-name>Loading…</span><span class="topbar-user-role">Area Manager · <span data-user-district></span> Region</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
           <span class="icon icon-base">person</span>
         </div>
       </div>
@@ -38,7 +38,7 @@
       <span class="brand-name">Equipify</span>
     </div>
     <div class="topbar-actions">
-      <div class="avatar avatar--placeholder" aria-hidden="true">
+      <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
         <span class="icon icon-base">person</span>
       </div>
     </div>
@@ -119,7 +119,7 @@
       <div class="page-head">
         <div>
           <h1 class="type-headline-lg page-title">Area Manager Dashboard</h1>
-          <p class="type-body-md page-subtitle">Regional overview for Colombo Region — personnel, fleet, assignments, and complaints.</p>
+          <p class="type-body-md page-subtitle">Regional overview for <span data-user-district></span> Region — personnel, fleet, assignments, and complaints.</p>
         </div>
         <div class="page-head-actions">
           <button class="btn-outline" type="button" id="refreshBtn">
@@ -235,7 +235,7 @@
   <div class="toast" id="toast"></div>
 
   <script src="../../shared/api.js"></script>
-<script src="../../shared/session.js"></script>
+<script src="../../shared/session.js?v=2"></script>
 <script src="../../shared/script.js"></script>
   <script src="script.js"></script>
 </body>
