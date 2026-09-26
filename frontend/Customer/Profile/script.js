@@ -20,6 +20,35 @@
     });
   });
 
+  // ---------- Profile header (GET /customer/profile) ----------
+  // The contact name comes from session.js via [data-user-name]; this fills
+  // the rest of the header card with the signed-in customer's own details.
+  function setText(id, value) {
+    var node = document.getElementById(id);
+    if (node) node.textContent = value;
+  }
+
+  EquipifyApi.get('/customer/profile').then(function (res) {
+    if (!res.ok) {
+      setText('profileCompany', 'Profile unavailable');
+      return;
+    }
+    var p = res.data;
+    var address = [p.address_line, p.district].filter(function (part) { return part; }).join(', ');
+
+    setText('profileCompany', p.company_name || p.full_name);
+    setText('profileEmail', p.email);
+    setText('profilePhone', p.phone);
+    setText('profileAddress', address || '–');
+
+    if (p.rating_count > 0) {
+      var avg = p.avg_rating.toFixed(1);
+      setText('profileRating', avg);
+      setText('profileRatingSummary', avg + ' average from ' + p.rating_count +
+        (p.rating_count === 1 ? ' review' : ' reviews'));
+    }
+  });
+
   // ---------- Open jobs (GET /customer/jobs) ----------
   // The section shows the newest few open jobs; the full list, and every
   // action on a job, lives on the Job History page.

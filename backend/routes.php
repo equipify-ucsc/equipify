@@ -99,6 +99,9 @@ $router->add('POST',   '/freelancer/payout-methods',          [PayoutMethodContr
 $router->add('POST',   '/freelancer/payout-methods/{id}/default', [PayoutMethodController::class, 'makeDefault'], ['freelance_worker']);
 $router->add('DELETE', '/freelancer/payout-methods/{id}',     [PayoutMethodController::class, 'destroy'],        ['freelance_worker']);
 
+// Customer: the signed-in customer's own profile.
+$router->add('GET',    '/customer/profile',            [CustomerController::class, 'showProfile'], ['customer']);
+
 // Customer: fixed-price job offers for freelance workers. Deleting an open job
 // cancels it instead (see JobController::destroy); hiring picks one bid.
 $router->add('GET',    '/customer/jobs',               [JobController::class, 'index'],    ['customer']);

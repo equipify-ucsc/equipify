@@ -62,6 +62,16 @@
   height: 100%;
   object-fit: cover;
 }
+/* No logo upload yet: show a company icon instead of an image. */
+.profile-logo--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-on-surface-variant);
+}
+.profile-logo--placeholder .icon {
+  font-size: 44px;
+}
 
 .profile-name {
   color: var(--color-navy);
