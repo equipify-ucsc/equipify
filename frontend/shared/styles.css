@@ -333,6 +333,33 @@ table {
   background-color: rgba(255, 255, 255, 0.12);
 }
 
+/* The topbar bell links to the Notifications page and carries its unread
+   count (filled by shared/inbox-badges.js, hidden at 0). */
+a.icon-btn {
+  position: relative;
+  text-decoration: none;
+}
+.icon-btn-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: var(--radius-full);
+  background-color: #d93025;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 17px;
+  text-align: center;
+  box-shadow: 0 0 0 2px var(--color-deep-navy);
+}
+.icon-btn-count[hidden] {
+  display: none;
+}
+
 /* ---------- Top header (desktop) ---------- */
 .topbar {
   position: fixed;
@@ -549,6 +576,28 @@ table {
   background-color: var(--color-teal);
   color: #ffffff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Unread count at the end of a sidenav entry (Messages, Notifications). */
+.nav-count {
+  margin-left: auto;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-teal);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+}
+.sidenav-link.is-active .nav-count {
+  background-color: #ffffff;
+  color: var(--color-teal);
+}
+.nav-count[hidden] {
+  display: none;
 }
 
 .sidenav-cta-wrap {

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Admin Messages</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/styles.css">
+<link rel="stylesheet" href="../../shared/inbox.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-require-auth="admin" data-login-url="../Login/index.html">
+
+  <!-- Desktop Top Bar -->
+  <header class="topbar topbar--desktop">
+    <div class="topbar-brand">
+      <div class="topbar-logo">
+        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+      </div>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="../Notifications/index.html" aria-label="Notifications">
+        <span class="icon">notifications</span>
+        <span class="icon-btn-count" data-inbox-count="notifications" hidden></span>
+      </a>
+      <div class="topbar-user">
+        <div class="topbar-user-name type-label-md"><span data-user-name>Loading…</span><span class="topbar-user-role">Super Administrator</span></div>
+        <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
+          <span class="icon icon-base">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Top Bar -->
+  <header class="topbar--mobile">
+    <div class="topbar-brand">
+      <button class="menu-btn" type="button" id="menuOpenBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidenav">
+        <span class="icon">menu</span>
+      </button>
+      <span class="brand-name">Equipify</span>
+    </div>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="../Notifications/index.html" aria-label="Notifications">
+        <span class="icon">notifications</span>
+        <span class="icon-btn-count" data-inbox-count="notifications" hidden></span>
+      </a>
+      <div class="avatar avatar--placeholder" aria-hidden="true" data-user-avatar>
+        <span class="icon icon-base">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer overlay -->
+  <div class="sidenav-overlay" id="sidenavOverlay"></div>
+
+  <!-- Side Navigation -->
+  <nav class="sidenav" id="sidenav" aria-label="Primary">
+    <div class="sidenav-close">
+      <button type="button" id="menuCloseBtn" aria-label="Close navigation menu">
+        <span class="icon">close</span>
+      </button>
+    </div>
+    <ul class="sidenav-list">
+      <li>
+        <a class="sidenav-link" href="../Dashboard/index.html">
+          <span class="icon" aria-hidden="true">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Profile/index.html">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Complaints &amp; Users/index.html">
+          <span class="icon" aria-hidden="true">flag</span>
+          <span>Complaints &amp; Users</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Area Managers/index.html">
+          <span class="icon" aria-hidden="true">groups</span>
+          <span>Area Managers</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Equipment Catalogue/index.html">
+          <span class="icon" aria-hidden="true">category</span>
+          <span>Equipment Catalogue</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Document Verification/index.html">
+          <span class="icon" aria-hidden="true">fact_check</span>
+          <span>Document Verification</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link is-active" href="index.html" aria-current="page">
+          <span class="icon" aria-hidden="true">chat</span>
+          <span>Messages</span>
+          <span class="nav-count" data-inbox-count="messages" hidden></span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Notifications/index.html">
+          <span class="icon" aria-hidden="true">notifications</span>
+          <span>Notifications</span>
+          <span class="nav-count" data-inbox-count="notifications" hidden></span>
+        </a>
+      </li>
+      <li>
+        <a class="sidenav-link" href="../Login/index.html" data-logout>
+          <span class="icon" aria-hidden="true">logout</span>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-inner">
+
+      <div class="page-head">
+        <div>
+          <h1 class="type-headline-lg page-title">Messages</h1>
+          <p class="type-body-md page-subtitle">Contact any user on the platform, for example while investigating a complaint.</p>
+        </div>
+        <div class="page-head-actions">
+          <button class="btn-primary" type="button" id="newMessageBtn">
+            <span class="icon icon-sm" aria-hidden="true">edit_square</span> New message
+          </button>
+        </div>
+      </div>
+
+      <div class="messenger">
+        <div class="card">
+          <h2 class="card-title">Conversations</h2>
+          <div class="toolbar">
+            <div class="search-field">
+              <span class="icon icon-sm" aria-hidden="true">search</span>
+              <input class="search-input" type="search" id="conversationSearch" placeholder="Search people or references…" aria-label="Search conversations">
+            </div>
+          </div>
+          <div class="conversation-list" id="conversationList"></div>
+          <div class="pager" id="conversationPager"></div>
+        </div>
+
+        <div class="card" id="threadCard">
+          <div class="section-head">
+            <div class="thread-head">
+              <div class="thread-avatar" id="threadAvatar" aria-hidden="true"><span class="icon icon-sm">chat</span></div>
+              <div>
+                <h2 class="card-title" id="threadName">Select a conversation</h2>
+                <p class="record-ref" id="threadMeta">Pick someone on the left to read the thread.</p>
+              </div>
+            </div>
+            <button class="btn-outline btn-sm" type="button" id="loadEarlierBtn" hidden>Load earlier</button>
+          </div>
+
+          <div class="thread" id="thread" aria-live="polite">
+            <p class="list-state">No conversation selected.</p>
+          </div>
+
+          <form class="composer" id="composerForm">
+            <label class="sr-only" for="composerInput">Message</label>
+            <textarea class="input-standard" id="composerInput" rows="1" maxlength="2000" placeholder="Write a message… (Enter to send, Shift+Enter for a new line)" disabled></textarea>
+            <button class="btn-primary" type="submit" id="composerSend" disabled>
+              <span class="icon icon-sm" aria-hidden="true">send</span> Send
+            </button>
+          </form>
+          <p class="composer-hint" id="composerHint" hidden><span class="icon icon-sm" aria-hidden="true">info</span><span></span></p>
+          <p class="form-error" id="composerError" role="alert" hidden></p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- New message: people this role may start a conversation with -->
+  <div class="modal-backdrop" id="newMessageModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="newMessageTitle">
+      <div class="modal-head">
+        <h2 class="card-title" id="newMessageTitle">New message</h2>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <p class="modal-intro">You can start a conversation with customers, renting parties, freelance workers, technicians, delivery personnel and area managers. Anyone can reply to a conversation you are in.</p>
+      <div class="chip-group" id="roleChips" role="group" aria-label="Filter by role"></div>
+      <div class="toolbar">
+        <div class="search-field">
+          <span class="icon icon-sm" aria-hidden="true">search</span>
+          <input class="search-input" type="search" id="peopleSearch" placeholder="Search by name or area…" aria-label="Search people">
+        </div>
+      </div>
+      <div class="people-list" id="peopleList"></div>
+      <div class="pager" id="peoplePager"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="../../shared/api.js"></script>
+  <script src="../../shared/session.js?v=2"></script>
+  <script src="../../shared/script.js"></script>
+  <script src="../../shared/list.js"></script>
+  <script src="../../shared/inbox-mock.js"></script>
+  <script src="../../shared/inbox-badges.js"></script>
+  <script src="../../shared/messages.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
