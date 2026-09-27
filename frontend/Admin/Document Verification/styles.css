@@ -189,16 +189,58 @@
   flex-wrap: wrap;
 }
 
-/* ---------- Verification checklist ---------- */
-.checklist-role {
-  color: var(--color-on-surface);
-  font-size: 14px;
+/* ---------- Modal ---------- */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(26, 40, 64, 0.5);
+  z-index: 60;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
 }
-.checklist-text {
-  margin-top: 6px;
+.modal-backdrop.is-open {
+  display: flex;
+}
+
+.modal {
+  background-color: var(--color-surface-container-lowest);
+  width: min(560px, 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
+  padding: var(--space-lg);
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-close {
+  background-color: var(--color-surface-container-low);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  display: inline-flex;
+  color: var(--color-on-surface-variant);
+}
+.modal-close:hover {
+  background-color: var(--color-surface-container);
+}
+
+.modal-meta {
   color: var(--color-on-surface-variant);
   font-size: 13px;
-  line-height: 1.5;
+  margin-top: var(--space-xs);
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 /* ---------- Toast ---------- */
@@ -226,4 +268,155 @@
   color: var(--color-on-surface-variant);
   font-size: 12px;
   text-align: center;
+}
+
+/* ---------- Form elements ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+@media (min-width: 640px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.input-standard {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  padding: 10px 12px;
+  color: var(--color-on-surface);
+  outline: none;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input-standard:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
+}
+
+/* .input-standard also dresses inputs and textareas, which have no arrow to
+   make room for — only the selects need the extra right-hand padding that
+   shared/styles.css reserves. */
+select.input-standard {
+  padding-right: 34px;
+}
+
+/* ---------- Toolbar result count ---------- */
+.result-count {
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+  white-space: nowrap;
+}
+
+/* ---------- List states + pager (same look as the Freelance Worker lists) ---------- */
+.list-state {
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--color-on-surface-variant);
+  font-size: 14px;
+}
+.list-state--error {
+  color: var(--color-rejected-fg);
+}
+td.list-state {
+  text-align: center;
+}
+.pager-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+  overflow-x: auto;
+  padding: 3px;
+}
+.pager-btn,
+.pager-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-navy);
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.pager-btn:hover:not(:disabled),
+.pager-num:hover:not(:disabled) {
+  background-color: var(--color-surface-container-low);
+  border-color: var(--color-teal);
+}
+.pager-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.pager-num.is-current {
+  background-color: var(--color-teal);
+  border-color: var(--color-teal);
+  color: #ffffff;
+  opacity: 1;
+  cursor: default;
+}
+.pager-gap {
+  padding: 0 2px;
+  color: var(--color-on-surface-variant);
+}
+
+.cell-muted {
+  display: block;
+  color: var(--color-on-surface-variant);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* A rejection reason or other note under a table cell, wrapped not truncated. */
+.table td {
+  overflow-wrap: anywhere;
+}
+
+.table {
+  min-width: 820px;
+}
+.table .badge-status,
+.table th,
+.table-actions .btn-outline {
+  white-space: nowrap;
+}
+
+/* body is a flex row, so without this the main column grows to fit a wide
+   table instead of letting .table-wrap scroll it sideways. */
+.main-content {
+  min-width: 0;
+}
+
+/* This page's .btn-primary loads after shared/styles.css, so restate the
+   small size for the row's Approve button. */
+.btn-primary.btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
 }

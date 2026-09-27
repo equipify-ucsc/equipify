@@ -148,14 +148,12 @@
             <button class="photo-btn" type="button" id="changePhotoBtn"><span class="icon" aria-hidden="true">photo_camera</span> Change photo</button>
             <button class="photo-btn photo-btn--danger" type="button" id="removePhotoBtn" hidden><span class="icon" aria-hidden="true">delete</span> Remove</button>
           </div>
-          <!-- Name, email, status and last login come from GET /profile (script.js) -->
+          <!-- Name and email come from GET /profile (script.js) -->
           <h3 class="type-headline-sm profile-side-name" data-user-name>Loading…</h3>
           <p class="profile-side-role">Super Administrator</p>
           <div class="info-list">
             <div class="info-row"><strong>Email</strong><span id="sideEmail">–</span></div>
             <div class="info-row"><strong>Access</strong>Full platform control</div>
-            <div class="info-row"><strong>Status</strong><span class="badge-status badge-status--active" id="sideStatus">Active</span></div>
-            <div class="info-row"><strong>Last login</strong><span id="sideLastLogin">–</span></div>
           </div>
         </div>
 
@@ -204,6 +202,6 @@
   <script src="../../shared/inbox-mock.js"></script>
   <script src="../../shared/inbox-badges.js"></script>
   <script src="../../shared/profile.js"></script>
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>

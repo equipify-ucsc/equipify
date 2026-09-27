@@ -78,4 +78,13 @@ final class RentingPartyModel
             ':id'               => $userId,
         ]);
     }
+
+    /** Set by an admin's decision on the party's business registration document. */
+    public static function setVerificationStatus(int $userId, string $status): void
+    {
+        $stmt = getDbConnection()->prepare(
+            'UPDATE renting_parties SET verification_status = :status WHERE user_id = :id'
+        );
+        $stmt->execute([':status' => $status, ':id' => $userId]);
+    }
 }

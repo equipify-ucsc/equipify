@@ -259,11 +259,6 @@
   grid-template-columns: 1fr;
   gap: var(--space-lg);
 }
-@media (min-width: 1024px) {
-  .lists-grid {
-    grid-template-columns: 2fr 1fr;
-  }
-}
 
 .view-all-link {
   font-size: 13px;
@@ -345,92 +340,3 @@ tbody tr:last-child td {
   color: var(--color-on-surface-variant);
 }
 
-.maintenance-card {
-  display: flex;
-  flex-direction: column;
-}
-
-.maintenance-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  padding: var(--space-md) var(--card-padding) var(--card-padding);
-}
-
-.maintenance-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-sm);
-  border: 1px solid var(--color-surface-variant);
-  border-radius: var(--radius-sm);
-  transition: background-color 0.15s ease;
-}
-.maintenance-item:hover {
-  background-color: var(--color-surface-container-low);
-}
-
-.date-badge {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-sm);
-  background-color: var(--color-surface-container-low);
-  border: 1px solid var(--color-outline-variant);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.date-badge .month {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--color-rejected-fg);
-}
-.date-badge .day {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--color-on-surface);
-}
-
-.maint-info {
-  flex: 1;
-  min-width: 0;
-}
-.maint-info h4 {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-on-surface);
-  margin-bottom: 2px;
-}
-.maint-info p {
-  font-size: 12px;
-  color: var(--color-on-surface-variant);
-}
-
-.chevron-icon {
-  color: var(--color-outline);
-  font-size: 14px;
-  flex-shrink: 0;
-}
-
-.btn-dashed {
-  margin: 0 var(--card-padding) var(--card-padding);
-  background: none;
-  border: 1.5px dashed var(--color-outline-variant);
-  border-radius: var(--radius-sm);
-  padding: 10px;
-  color: var(--color-on-surface-variant);
-  font-weight: 600;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-xs);
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-.btn-dashed:hover {
-  border-color: var(--color-teal);
-  color: var(--color-teal);
-}

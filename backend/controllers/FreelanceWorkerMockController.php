@@ -2,7 +2,8 @@
 /**
  * Placeholder data for the parts of the freelance-worker portal whose tables
  * the schema does not have yet (job history, payments, messages,
- * notifications, complaints). Job offers, bids and declines are real now
+ * notifications). Complaints moved to the shared UI-only form
+ * (frontend/shared/complaints-mock.js). Job offers, bids and declines are real now
  * (JobOfferController); the offers()/bids() generators below only still feed
  * the dashboard's placeholder tiles.
  *
@@ -33,7 +34,6 @@ final class FreelanceWorkerMockController
     private const JOB_STATUSES      = ['in_progress', 'completed', 'cancelled'];
     private const PAYMENT_STATUSES  = ['paid', 'pending', 'failed'];
     private const NOTIFICATION_TYPES = ['job', 'bid', 'payment'];
-    private const COMPLAINT_STATUSES = ['submitted', 'under_review', 'resolved', 'dismissed'];
 
     private const DISTRICTS = [
         'Colombo', 'Gampaha', 'Kandy', 'Galle', 'Kurunegala', 'Matara', 'Jaffna', 'Ratnapura',
@@ -297,62 +297,6 @@ final class FreelanceWorkerMockController
         Response::ok(['marked' => 1, 'notification_id' => $id]);
     }
 
-    // ------------------------------------------------------------- complaints
-
-    /** GET /freelancer/complaints?q=&status=&page=&per_page= */
-    public static function complaints(array $params = []): void
-    {
-        $term   = ListQuery::search();
-        $status = ListQuery::enum('status', self::COMPLAINT_STATUSES);
-
-        Response::ok(ListQuery::paginate(
-            self::complaintRows(),
-            ListQuery::page(),
-            ListQuery::perPage(),
-            static function (array $row) use ($term, $status): bool {
-                return ListQuery::contains($term, $row['subject'], $row['against_name'], $row['reference'], $row['job_ref'])
-                    && ($status === '' || $row['status'] === $status);
-            }
-        ));
-    }
-
-    /** POST /freelancer/complaints */
-    public static function submitComplaint(array $params = []): void
-    {
-        $in      = Router::jsonBody();
-        $against = is_string($in['against_name'] ?? null) ? trim($in['against_name']) : '';
-        $jobRef  = is_string($in['job_ref'] ?? null) ? trim($in['job_ref']) : '';
-        $subject = is_string($in['subject'] ?? null) ? trim($in['subject']) : '';
-        $details = is_string($in['details'] ?? null) ? trim($in['details']) : '';
-
-        $errors = [];
-        $checks = [
-            'against_name' => Validator::required($against, 'Customer name') ?? Validator::maxLength($against, 150, 'Customer name'),
-            'job_ref'      => Validator::maxLength($jobRef, 30, 'Job reference'),
-            'subject'      => Validator::required($subject, 'Subject') ?? Validator::maxLength($subject, 150, 'Subject'),
-            'details'      => Validator::required($details, 'Details') ?? Validator::maxLength($details, 2000, 'Details'),
-        ];
-        foreach ($checks as $field => $message) {
-            if ($message !== null) {
-                $errors[$field] = $message;
-            }
-        }
-        if ($errors !== []) {
-            Response::error('Please fix the highlighted fields.', 422, $errors);
-        }
-
-        Response::ok([
-            'complaint_id' => 0,
-            'reference'    => 'CMP-NEW',
-            'against_name' => $against,
-            'job_ref'      => $jobRef,
-            'subject'      => $subject,
-            'details'      => $details,
-            'status'       => 'submitted',
-            'submitted_at' => self::ANCHOR,
-        ], 201);
-    }
-
     // ==================================================== generated mock rows
 
     /** @return array<int,array<string,mixed>> 32 job offers */
@@ -526,38 +470,6 @@ final class FreelanceWorkerMockController
                 'created_at'      => self::day(-($i - 1)) . ' 0' . ($i % 9) . ':30',
                 // The newest handful are unread.
                 'is_read'         => $i > 6,
-            ];
-        }
-        return $rows;
-    }
-
-    /** @return array<int,array<string,mixed>> 14 complaints */
-    private static function complaintRows(): array
-    {
-        $subjects = [
-            'Site access denied on arrival',
-            'Agreed hours not honoured',
-            'Unsafe working conditions on site',
-            'Payment delayed beyond agreed terms',
-            'Equipment handed over damaged',
-        ];
-
-        $rows = [];
-        for ($i = 1; $i <= 14; $i++) {
-            $status = self::COMPLAINT_STATUSES[$i % 4];
-            $rows[] = [
-                'complaint_id' => $i,
-                'reference'    => self::ref('CMP', 900 + $i),
-                'against_name' => self::CUSTOMERS[$i % count(self::CUSTOMERS)],
-                'job_ref'      => self::ref('JOB', 3100 + $i),
-                'subject'      => $subjects[$i % count($subjects)],
-                'details'      => 'Reported by the operator after the shift on ' . self::day(-($i * 4)) . '.',
-                'status'       => $status,
-                'submitted_at' => self::day(-($i * 4)),
-                'updated_at'   => self::day(-($i * 4) + 2),
-                'resolution'   => in_array($status, ['resolved', 'dismissed'], true)
-                    ? 'Reviewed by the admin team; the customer has been contacted.'
-                    : null,
             ];
         }
         return $rows;

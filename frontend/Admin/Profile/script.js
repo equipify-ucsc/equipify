@@ -24,22 +24,11 @@
     if (node) node.textContent = value || '–';
   }
 
-  function formatDateTime(value) {
-    if (!value) return 'Never';
-    var parsed = new Date(String(value).replace(' ', 'T'));
-    if (isNaN(parsed.getTime())) return String(value);
-    return parsed.toLocaleString('en-US', {
-      month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit'
-    });
-  }
-
   function fill(profile) {
     form.elements.full_name.value = profile.full_name || '';
     form.elements.phone.value = profile.phone || '';
     document.getElementById('profileEmail').value = profile.email || '';
     setText('sideEmail', profile.email);
-    setText('sideLastLogin', formatDateTime(profile.last_login_at));
-    setText('sideStatus', profile.account_status === 'active' ? 'Active' : profile.account_status);
     photo.setHasPhoto(!!profile.photo_url);
   }
 

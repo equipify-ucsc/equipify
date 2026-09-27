@@ -4,9 +4,8 @@
    sends PUT /profile with the columns a party owns (business name, owner
    name, phone, business address, operating district, description). The
    registration number and verification are an admin's, and email is the
-   login, so those stay read-only. Website, operating hours, VAT, documents
-   and the performance panel are still sample content: they can be typed in
-   edit mode but aren't stored yet. The photo is changed through
+   login, so those stay read-only. The document list is still sample
+   content. The photo is changed through
    shared/profile.js. Needs shared/api.js, shared/session.js, shared/profile.js.
    ========================================================================== */
 

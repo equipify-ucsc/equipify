@@ -142,18 +142,18 @@
       <div class="admin-grid admin-grid--3">
         <div class="card">
           <p class="stat-card-label">Active Managers</p>
-          <h3 class="stat-card-value">12</h3>
+          <h3 class="stat-card-value" id="statActive">–</h3>
           <p class="stat-card-trend">Across operational districts</p>
         </div>
         <div class="card">
-          <p class="stat-card-label">Pending Approval</p>
-          <h3 class="stat-card-value">3</h3>
-          <p class="stat-card-trend">Awaiting admin review</p>
+          <p class="stat-card-label">Inactive</p>
+          <h3 class="stat-card-value" id="statInactive">–</h3>
+          <p class="stat-card-trend">Suspended or deactivated</p>
         </div>
         <div class="card">
           <p class="stat-card-label">Districts Covered</p>
-          <h3 class="stat-card-value">25</h3>
-          <p class="stat-card-trend">Current service areas</p>
+          <h3 class="stat-card-value" id="statDistricts">–</h3>
+          <p class="stat-card-trend">By active managers, of 25</p>
         </div>
       </div>
 
@@ -163,8 +163,8 @@
             <span class="icon icon-sm" aria-hidden="true">search</span>
             <input class="search-input" type="text" data-filter-table="managerTable" placeholder="Search managers or districts...">
           </div>
-          <select class="select-filter">
-            <option>All districts</option>
+          <select class="select-filter" id="districtFilter" aria-label="Filter by district">
+            <option value="">All districts</option>
             <option>Ampara</option>
             <option>Anuradhapura</option>
             <option>Badulla</option>
@@ -195,10 +195,10 @@
         <div class="table-wrap">
           <table class="table" id="managerTable">
             <thead>
-              <tr><th>Manager</th><th>District</th><th>Email</th><th>Phone</th><th>Status</th></tr>
+              <tr><th>Manager</th><th>District</th><th>Email</th><th>Phone</th><th>Status</th><th>Action</th></tr>
             </thead>
             <tbody>
-              <tr><td colspan="5">Loading…</td></tr>
+              <tr><td colspan="6">Loading…</td></tr>
             </tbody>
           </table>
         </div>
@@ -275,6 +275,40 @@
     </div>
   </div>
 
+  <!-- Change account status modal -->
+  <div class="modal-backdrop" id="statusModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 class="type-headline-sm">Change account status</h3>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <p class="modal-meta" id="statusModalName"></p>
+      <form id="statusForm" novalidate>
+        <p class="field-error" id="statusFormError" role="alert" hidden style="color:#b3261e;margin:12px 0 0;"></p>
+        <div class="form-grid" style="margin-top: 18px;">
+          <div class="field field--full">
+            <label class="field-label" for="statusSelect">Status</label>
+            <select class="input-standard" id="statusSelect" name="status" required>
+              <option value="active">Active</option>
+              <option value="suspended">Suspended</option>
+              <option value="deactivated">Deactivated</option>
+            </select>
+          </div>
+          <div class="field field--full" id="statusReasonField">
+            <label class="field-label" for="statusReason">Reason</label>
+            <textarea class="input-standard" id="statusReason" name="reason" rows="3" maxlength="255" placeholder="Why is this account being suspended or deactivated?"></textarea>
+          </div>
+        </div>
+        <div class="modal-actions" style="margin-top: 20px;">
+          <button class="btn-outline" type="button" data-modal-close>Cancel</button>
+          <button class="btn-primary" type="submit">Save status</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
   <script src="../../shared/api.js"></script>
@@ -282,6 +316,7 @@
   <script src="../../shared/script.js"></script>
   <script src="../../shared/inbox-mock.js"></script>
   <script src="../../shared/inbox-badges.js"></script>
-  <script src="script.js"></script>
+  <script src="../../shared/account-status.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

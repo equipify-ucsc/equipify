@@ -126,10 +126,10 @@
       <div class="page-head">
         <div>
           <h1 class="type-headline-lg page-title">Complaints</h1>
-          <p class="type-body-md page-subtitle">Raise an issue with a customer, then follow it through here.</p>
+          <p class="type-body-md page-subtitle">Raise an issue with someone you dealt with on Equipify, then follow it through here.</p>
         </div>
         <div class="page-head-actions">
-          <button class="btn-primary" type="button" data-modal-open="complaintModal">
+          <button class="btn-primary" type="button" id="newComplaintBtn">
             <span class="icon icon-sm" aria-hidden="true">flag</span> New complaint
           </button>
         </div>
@@ -139,14 +139,13 @@
         <div class="toolbar">
           <div class="search-field">
             <span class="icon icon-sm" aria-hidden="true">search</span>
-            <input class="search-input" type="search" id="complaintSearch" placeholder="Search by subject, customer or reference…">
+            <input class="search-input" type="search" id="complaintSearch" placeholder="Search by subject, name or reference…" aria-label="Search complaints">
           </div>
           <select class="select-filter" id="statusFilter" aria-label="Filter by status">
             <option value="">All statuses</option>
-            <option value="submitted">Submitted</option>
-            <option value="under_review">Under review</option>
-            <option value="resolved">Resolved</option>
-            <option value="dismissed">Dismissed</option>
+          </select>
+          <select class="select-filter" id="categoryFilter" aria-label="Filter by category">
+            <option value="">All categories</option>
           </select>
           <span class="result-count" id="complaintCount"></span>
         </div>
@@ -154,7 +153,7 @@
         <div class="table-wrap">
           <table class="table" id="complaintTable">
             <thead>
-              <tr><th>Reference</th><th>Subject</th><th>Against</th><th>Submitted</th><th>Status</th><th>Latest update</th></tr>
+              <tr><th>Reference</th><th>Subject</th><th>Against</th><th>Category</th><th>Submitted</th><th>Status</th><th>Latest update</th></tr>
             </thead>
             <tbody></tbody>
           </table>
@@ -162,47 +161,11 @@
         <div class="pager" id="complaintPager"></div>
       </div>
 
+      <!-- The complaint form is the same for every role; shared/complaints.js builds it here. -->
+      <div id="complaintFormMount"></div>
+
     </div>
   </main>
-
-  <!-- Submit a complaint -->
-  <div class="modal-backdrop" id="complaintModal">
-    <div class="modal">
-      <div class="modal-head">
-        <h3 class="type-headline-sm">Submit a complaint</h3>
-        <button class="modal-close" type="button" data-modal-close aria-label="Close">
-          <span class="icon icon-sm" aria-hidden="true">close</span>
-        </button>
-      </div>
-      <form id="complaintForm" data-success-message="Complaint submitted. An admin will take it from here.">
-        <p class="form-error" id="complaintFormError" role="alert" hidden></p>
-        <div class="form-grid" style="margin-top: 18px;">
-          <div class="field">
-            <label class="field-label" for="againstName">Customer</label>
-            <input class="input-standard" id="againstName" name="against_name" maxlength="150" required placeholder="Customer or company name">
-          </div>
-          <div class="field">
-            <label class="field-label" for="jobRef">Job reference (optional)</label>
-            <input class="input-standard" id="jobRef" name="job_ref" maxlength="30" placeholder="e.g. JOB-3112">
-          </div>
-          <div class="field field--full">
-            <label class="field-label" for="complaintSubject">Subject</label>
-            <input class="input-standard" id="complaintSubject" name="subject" maxlength="150" required placeholder="A short summary">
-          </div>
-          <div class="field field--full">
-            <label class="field-label" for="complaintDetails">What happened?</label>
-            <textarea class="input-standard" id="complaintDetails" name="details" maxlength="2000" required placeholder="Dates, site, who you dealt with, and what went wrong."></textarea>
-            <span class="field-hint">An admin reads every complaint. You can follow the status on this page.</span>
-          </div>
-        </div>
-        <div class="modal-actions">
-          <button class="btn-outline" type="button" data-modal-close>Cancel</button>
-          <button class="btn-primary" type="submit">Submit complaint</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
 
   <div class="toast" id="toast"></div>
 
@@ -211,6 +174,8 @@
   <script src="../../shared/script.js"></script>
   <script src="../../shared/list.js"></script>
   <script src="../portal.js"></script>
-  <script src="script.js"></script>
+  <script src="../../shared/complaints-mock.js"></script>
+  <script src="../../shared/complaints.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>
