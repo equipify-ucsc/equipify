@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Reset Password</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../../shared/auth.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="auth-shell">
+
+  <!-- Left column: form -->
+  <main class="auth-form-col">
+    <div class="auth-form-inner">
+
+      <div style="margin-bottom: 40px; display: flex; flex-direction: column; align-items: flex-start;">
+        <img class="logo-mark" style="margin-bottom: 16px;" alt="Equipify Logo"
+             src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+        <h1 class="text-headline-md" style="color: var(--primary-container); margin: 0;">Equipify</h1>
+      </div>
+
+      <!-- Shown while the link is being checked, so no password box appears
+           before we know the link is good. -->
+      <section id="checkingStep">
+        <p class="text-body-md" style="color: var(--on-surface-variant); margin: 0;">Checking your reset link…</p>
+      </section>
+
+      <!-- The link is dead: expired, already used, or not a real token. -->
+      <section id="deadStep" hidden>
+        <div style="margin-bottom: 24px;">
+          <h2 class="text-headline-lg" style="color: var(--primary-container); margin: 0 0 8px 0;">This link no longer works</h2>
+          <p class="text-body-md" style="color: var(--on-surface-variant); margin: 0;" id="deadMessage"></p>
+        </div>
+        <a class="btn btn-cta" id="requestAgain" href="../Forgot Password/index.html" style="display:block; text-align:center;">Request a new link</a>
+      </section>
+
+      <!-- The link is good: choose a new password. -->
+      <section id="formStep" hidden>
+        <div style="margin-bottom: 32px;">
+          <h2 class="text-headline-lg" style="color: var(--primary-container); margin: 0 0 8px 0;">Choose a new password</h2>
+          <p class="text-body-md" style="color: var(--on-surface-variant); margin: 0;" id="accountLine"></p>
+        </div>
+
+        <form id="resetForm" novalidate>
+          <div class="field">
+            <label class="text-label-md field-label" for="password">New password <span class="field-required">*</span></label>
+            <div class="password-wrap">
+              <input class="input-standard" id="password" name="password" type="password" placeholder="At least 8 characters" autocomplete="new-password" required>
+              <button class="password-toggle" type="button" id="passwordToggle" aria-label="Show password">
+                <span class="material-symbols-outlined">visibility</span>
+              </button>
+            </div>
+            <div class="password-strength" aria-hidden="true">
+              <span class="password-strength-bar"></span>
+              <span class="password-strength-bar"></span>
+              <span class="password-strength-bar"></span>
+              <span class="password-strength-bar"></span>
+            </div>
+            <p class="field-hint" id="strengthLabel"></p>
+            <p class="error-message" id="passwordError" style="display:none;">
+              <span class="material-symbols-outlined">error</span>
+              <span class="error-text"></span>
+            </p>
+          </div>
+
+          <div class="field">
+            <label class="text-label-md field-label" for="confirmPassword">Confirm new password <span class="field-required">*</span></label>
+            <div class="password-wrap">
+              <input class="input-standard" id="confirmPassword" name="confirm_password" type="password" placeholder="Type it again" autocomplete="new-password" required>
+              <button class="password-toggle" type="button" id="confirmToggle" aria-label="Show password">
+                <span class="material-symbols-outlined">visibility</span>
+              </button>
+            </div>
+            <p class="error-message" id="confirmError" style="display:none;">
+              <span class="material-symbols-outlined">error</span>
+              <span class="error-text"></span>
+            </p>
+          </div>
+
+          <p class="error-message" id="formError" role="alert" style="display:none;">
+            <span class="material-symbols-outlined">error</span>
+            <span class="error-text"></span>
+          </p>
+
+          <button class="btn btn-cta" type="submit" id="submitBtn" style="margin-top: 16px;">Update password</button>
+        </form>
+      </section>
+
+      <!-- Done. The user is not signed in: they go and log in with the new one. -->
+      <section id="doneStep" hidden>
+        <div style="margin-bottom: 24px;">
+          <h2 class="text-headline-lg" style="color: var(--primary-container); margin: 0 0 8px 0;">Password updated</h2>
+          <p class="text-body-md" style="color: var(--on-surface-variant); margin: 0;" id="doneMessage"></p>
+        </div>
+
+        <div class="auth-notice auth-notice--success">
+          <span class="material-symbols-outlined">check_circle</span>
+          <span id="redirectNote">Taking you to the login page…</span>
+        </div>
+
+        <a class="btn btn-cta" id="goToLogin" href="#" style="display:block; text-align:center; margin-top:16px;">Go to login</a>
+      </section>
+
+      <p class="mobile-copyright">© 2026 Equipify Sri Lanka. Industrial Reliability.</p>
+    </div>
+  </main>
+
+  <!-- Right column: visual -->
+  <aside class="auth-visual-col">
+    <img class="auth-visual-bg" alt="Equipment on a construction site"
+         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZvnolQMcWAhWVgEV60n2Z0u8si-f7qpuMqy9HNF1VOgRSAL2umnkok52T7X6FhgvEby3DfHQxf6wtpM5SpSSlN7HL9VCGw0Y1eP-nmenw90_a2x5Ye3OejX7ZioXjc8EGxLKbPAwRwjuN7W20HCoPtwRrRkpchSQl02oObDoeJUJHvp2NA_WDxFLvHIfLCHTgEDye0LMkrX2FxPfN5pCSlTvOedKvaM2SSvk75zFE2_m8lQRi6HX3Wjp2NwzgpJVgOyZitP7_wBI">
+    <div class="auth-visual-overlay"></div>
+
+    <div class="auth-visual-content">
+      <h3 class="text-headline-xl" style="margin: 0 0 24px 0;">One link, one use</h3>
+      <p class="text-body-lg" style="color: rgba(255,255,255,0.9); margin: 0;">
+        Reset links expire after an hour and stop working the moment they are used, so an old email in your inbox is harmless.
+      </p>
+    </div>
+
+    <p class="auth-visual-footnote text-body-sm">© 2026 Equipify Sri Lanka. Industrial Reliability.</p>
+  </aside>
+
+</div>
+
+<script src="../../shared/auth.js"></script>
+<script src="../../shared/api.js"></script>
+<script src="../portals.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -37,6 +37,11 @@ backend/storage/uploads/*
 backend/storage/profile-photos/*
 !backend/storage/profile-photos/.gitkeep
 
+# Mail written by the mock transport (core/Mailer.php). These hold live
+# password reset links, so they must never be committed.
+backend/storage/mail/*
+!backend/storage/mail/.gitkeep
+
 # Logs and cache
 *.cache
 error_log

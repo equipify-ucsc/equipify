@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipify - Forgot Password</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../../shared/auth.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="auth-shell">
+
+  <!-- Left column: form -->
+  <main class="auth-form-col">
+    <div class="auth-form-inner">
+
+      <div style="margin-bottom: 40px; display: flex; flex-direction: column; align-items: flex-start;">
+        <img class="logo-mark" style="margin-bottom: 16px;" alt="Equipify Logo"
+             src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
+        <h1 class="text-headline-md" style="color: var(--primary-container); margin: 0;">Equipify</h1>
+      </div>
+
+      <!-- Step 1: ask for the address -->
+      <section id="requestStep">
+        <div style="margin-bottom: 32px;">
+          <h2 class="text-headline-lg" style="color: var(--primary-container); margin: 0 0 8px 0;">Forgot your password?</h2>
+          <p class="text-body-md" style="color: var(--on-surface-variant); margin: 0;">
+            Enter the email address on your account and we will send you a link to choose a new password.
+          </p>
+        </div>
+
+        <form id="forgotForm" novalidate>
+          <div class="field">
+            <label class="text-label-md field-label" for="email">Email address <span class="field-required">*</span></label>
+            <input class="input-standard" id="email" name="email" type="email" placeholder="you@example.lk" autocomplete="email" required>
+            <p class="error-message" id="emailError" style="display:none;">
+              <span class="material-symbols-outlined">error</span>
+              <span class="error-text"></span>
+            </p>
+          </div>
+
+          <p class="error-message" id="formError" role="alert" style="display:none;">
+            <span class="material-symbols-outlined">error</span>
+            <span class="error-text"></span>
+          </p>
+
+          <button class="btn btn-cta" type="submit" id="submitBtn" style="margin-top: 16px;">Send reset link</button>
+        </form>
+      </section>
+
+      <!-- Step 2: sent. Deliberately says nothing about whether the account
+           exists — the server answers the same either way. -->
+      <section id="sentStep" hidden>
+        <div style="margin-bottom: 24px;">
+          <h2 class="text-headline-lg" style="color: var(--primary-container); margin: 0 0 8px 0;">Check your email</h2>
+          <p class="text-body-md" style="color: var(--on-surface-variant); margin: 0;" id="sentMessage"></p>
+        </div>
+
+        <div class="auth-notice auth-notice--success">
+          <span class="material-symbols-outlined">mark_email_read</span>
+          <span>If you do not see it, check your spam folder. The link works once and expires after an hour.</span>
+        </div>
+
+        <button class="btn btn-cta" type="button" id="resendBtn" style="margin-top: 16px;">Use a different email</button>
+      </section>
+
+      <div class="auth-footer">
+        <p>Remembered it? <a class="link-teal" id="backToLogin" href="../../Customer/Login &amp; Register Page/login.html">Back to login</a></p>
+      </div>
+
+      <p class="mobile-copyright">© 2026 Equipify Sri Lanka. Industrial Reliability.</p>
+    </div>
+  </main>
+
+  <!-- Right column: visual -->
+  <aside class="auth-visual-col">
+    <img class="auth-visual-bg" alt="Equipment on a construction site"
+         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZvnolQMcWAhWVgEV60n2Z0u8si-f7qpuMqy9HNF1VOgRSAL2umnkok52T7X6FhgvEby3DfHQxf6wtpM5SpSSlN7HL9VCGw0Y1eP-nmenw90_a2x5Ye3OejX7ZioXjc8EGxLKbPAwRwjuN7W20HCoPtwRrRkpchSQl02oObDoeJUJHvp2NA_WDxFLvHIfLCHTgEDye0LMkrX2FxPfN5pCSlTvOedKvaM2SSvk75zFE2_m8lQRi6HX3Wjp2NwzgpJVgOyZitP7_wBI">
+    <div class="auth-visual-overlay"></div>
+
+    <div class="auth-visual-content">
+      <h3 class="text-headline-xl" style="margin: 0 0 24px 0;">Back to work in a minute</h3>
+      <p class="text-body-lg" style="color: rgba(255,255,255,0.9); margin: 0;">
+        Password resets work the same way for every Equipify account — customers, renting parties, operators, technicians, drivers and area managers.
+      </p>
+    </div>
+
+    <p class="auth-visual-footnote text-body-sm">© 2026 Equipify Sri Lanka. Industrial Reliability.</p>
+  </aside>
+
+</div>
+
+<script src="../../shared/auth.js"></script>
+<script src="../../shared/api.js"></script>
+<script src="../portals.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
