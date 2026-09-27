@@ -309,6 +309,9 @@
           container: document.getElementById('peopleList'),
           searchInput: search,
           pager: document.getElementById('peoplePager'),
+          // Only some roles' pages carry the count span; setCount() ignores a
+          // missing element, so passing it unconditionally is safe.
+          countLabel: document.getElementById('peopleCount'),
           perPage: 6,
           extraParams: { role: '' },
           emptyMessage: 'Nobody matches that search.',
@@ -425,6 +428,7 @@
         container: conversationList,
         searchInput: conversationSearch,
         pager: document.getElementById('conversationPager'),
+        countLabel: document.getElementById('conversationCount'),
         perPage: 8,
         emptyMessage: 'No conversations to show. Use "New message" to start one.',
         renderItem: conversationButton,

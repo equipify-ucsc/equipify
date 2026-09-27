@@ -1,69 +1,180 @@
 /* ==========================================================================
-   Equipify — Delivery Personnel Dashboard
-   Mobile navigation drawer + delivery status editing (vanilla JS, no
-   dependencies)
+   Equipify — Delivery Personnel / Dashboard
+
+   The assigned deliveries, from GET /deliveries. Searching, filtering and
+   paging are all query params handled by the server (see shared/list.js), so
+   picking "Delayed" narrows every delivery you have, not just the ones on the
+   page in front of you — which is what the previous client-side tab filtering
+   got wrong once there was more than one page of them.
+
+   Changing a delivery's status PUTs it and re-fetches, rather than only
+   recolouring the badge, so what you see is what the server has.
+
+   There is no deliveries table yet; the rows come from
+   backend/fixtures/deliveries.json. The page only ever sees the API.
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  // ---------- Delivery status filtering ----------
-  var filterTabs = document.querySelectorAll('.filter-tab');
-  var grid = document.getElementById('delivery-grid');
-  var noResults = document.getElementById('delivery-grid-no-results');
-  var activeFilter = 'all';
-
-  function applyFilter() {
-    if (!grid) return;
-    var visibleCount = 0;
-
-    grid.querySelectorAll('.delivery-card').forEach(function (card) {
-      var isMatch = activeFilter === 'all' || card.getAttribute('data-status') === activeFilter;
-      card.hidden = !isMatch;
-      if (isMatch) visibleCount += 1;
-    });
-
-    if (noResults) {
-      noResults.hidden = visibleCount !== 0;
-    }
-  }
-
-  filterTabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      filterTabs.forEach(function (t) {
-        t.classList.remove('is-active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      tab.classList.add('is-active');
-      tab.setAttribute('aria-selected', 'true');
-      activeFilter = tab.getAttribute('data-filter');
-      applyFilter();
-    });
-  });
-
-  // ---------- Delivery status editing ----------
-  var STATUS_MAP = {
-    'in-transit': { badgeClass: 'badge-status--active', label: 'In Transit' },
-    'pending-pickup': { badgeClass: 'badge-status--pending', label: 'Pending Pickup' },
-    'delayed': { badgeClass: 'badge-status--draft', label: 'Delayed' },
-    'delivered': { badgeClass: 'badge-status--completed', label: 'Delivered' }
+  /** Stored status -> its badge modifier and label. */
+  var STATUS = {
+    pending_pickup: { label: 'Pending Pickup', badge: 'pending' },
+    in_transit:     { label: 'In Transit',     badge: 'active' },
+    delayed:        { label: 'Delayed',        badge: 'draft' },
+    delivered:      { label: 'Delivered',      badge: 'completed' }
   };
 
-  document.querySelectorAll('[data-status-select]').forEach(function (select) {
-    select.addEventListener('change', function () {
-      var deliveryCard = select.closest('.delivery-card');
-      var badge = deliveryCard && deliveryCard.querySelector('[data-status-badge]');
-      var status = STATUS_MAP[select.value];
-      if (!deliveryCard || !badge || !status) return;
+  var grid = document.getElementById('delivery-grid');
+  if (!grid) return;
 
-      Object.keys(STATUS_MAP).forEach(function (key) {
-        badge.classList.remove(STATUS_MAP[key].badgeClass);
+  var list = EquipifyList.create({
+    endpoint: '/deliveries',
+    container: grid,
+    pager: document.getElementById('deliveryPager'),
+    countLabel: document.getElementById('deliveryCount'),
+    // The sort <select> rides in `filters`, so changing it also returns to
+    // page 1 -- same as the search box and the other filter controls.
+    filters: { sort: document.getElementById('deliverySort') },
+    perPage: 8,
+    emptyMessage: 'No deliveries match this filter.',
+    renderItem: deliveryCard
+  });
+
+  // ---------- Filter tabs ----------
+  // Each tab sets the `status` param and restarts at page 1; "All" clears it.
+  var tabs = document.querySelectorAll('.filter-tab');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (other) {
+        var active = other === tab;
+        other.classList.toggle('is-active', active);
+        other.setAttribute('aria-selected', active ? 'true' : 'false');
       });
-      badge.classList.add(status.badgeClass);
-      badge.lastChild.textContent = ' ' + status.label;
-
-      deliveryCard.setAttribute('data-status', select.value);
-      applyFilter();
+      var status = tab.getAttribute('data-filter');
+      list.setParam('status', status === 'all' ? '' : status);
     });
   });
+
+  // ---------- Cards ----------
+  function deliveryCard(delivery) {
+    var status = STATUS[delivery.status] || { label: delivery.status, badge: 'draft' };
+
+    var card = element('div', 'card delivery-card');
+    card.setAttribute('data-delivery-id', delivery.delivery_id);
+    card.setAttribute('data-status', delivery.status);
+
+    var head = element('div', 'delivery-card-head');
+
+    var thumb = element('div', 'delivery-thumb');
+    thumb.appendChild(icon(delivery.icon || 'local_shipping'));
+    head.appendChild(thumb);
+
+    var titles = document.createElement('div');
+    titles.appendChild(element('h3', 'type-headline-sm delivery-title',
+      delivery.equipment + ' – Delivery to ' + delivery.destination));
+    titles.appendChild(element('p', 'type-body-sm delivery-subtitle',
+      'Destination: ' + delivery.destination));
+    head.appendChild(titles);
+
+    head.appendChild(badge(status));
+    card.appendChild(head);
+
+    var details = element('div', 'delivery-detail-grid');
+    details.appendChild(detail('Reference', delivery.reference));
+    details.appendChild(detail('Delivery Date', formatDate(delivery.scheduled_on)));
+    details.appendChild(detail('Customer', delivery.customer));
+    details.appendChild(detail('Vehicle', delivery.vehicle));
+    card.appendChild(details);
+
+    card.appendChild(statusEditor(delivery));
+    return card;
+  }
+
+  /** The "Update Status" select. Saves to the server, then reloads the list. */
+  function statusEditor(delivery) {
+    var wrap = element('div', 'delivery-footer');
+
+    var id = 'status-' + delivery.delivery_id;
+    var label = element('label', 'status-label', 'Update Status');
+    label.setAttribute('for', id);
+    wrap.appendChild(label);
+
+    var select = document.createElement('select');
+    select.className = 'status-select';
+    select.id = id;
+    Object.keys(STATUS).forEach(function (value) {
+      var option = new Option(STATUS[value].label, value);
+      option.selected = value === delivery.status;
+      select.appendChild(option);
+    });
+
+    select.addEventListener('change', function () {
+      select.disabled = true;
+      EquipifyApi.put('/deliveries/' + delivery.delivery_id + '/status', { status: select.value })
+        .then(function (res) {
+          select.disabled = false;
+          if (!res.ok) {
+            toast(res.error);
+            select.value = delivery.status;
+            return;
+          }
+          toast(delivery.reference + ' is now ' + (STATUS[res.data.status] || {}).label + '.');
+          // Re-fetch rather than patch the card: if a filter is active the row
+          // may no longer belong on this page at all.
+          list.reload();
+        });
+    });
+
+    wrap.appendChild(select);
+    return wrap;
+  }
+
+  // ---------- Small builders ----------
+  function element(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined && text !== null) node.textContent = text;
+    return node;
+  }
+
+  function icon(name) {
+    var span = element('span', 'icon', name);
+    span.setAttribute('aria-hidden', 'true');
+    return span;
+  }
+
+  function badge(status) {
+    var span = element('span', 'badge-status badge-status--' + status.badge);
+    var dot = element('span', 'badge-status__dot');
+    dot.setAttribute('aria-hidden', 'true');
+    span.appendChild(dot);
+    span.appendChild(document.createTextNode(' ' + status.label));
+    return span;
+  }
+
+  function detail(label, value) {
+    var cell = element('div', 'detail-cell');
+    cell.appendChild(element('div', 'detail-cell-label', label));
+    cell.appendChild(element('div', 'detail-cell-value', value || '—'));
+    return cell;
+  }
+
+  /** "2026-09-27" -> "27 Sep 2026". */
+  function formatDate(value) {
+    if (!value) return '—';
+    var parsed = new Date(String(value).replace(' ', 'T'));
+    if (isNaN(parsed.getTime())) return String(value);
+    return parsed.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+
+  var toastTimer;
+  function toast(message) {
+    var box = document.getElementById('toast');
+    if (!box) return;
+    box.textContent = message;
+    box.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { box.classList.remove('is-visible'); }, 2600);
+  }
 })();

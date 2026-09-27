@@ -4,9 +4,11 @@
    Two fetches, no hardcoded rows:
      GET /freelancer/profile   (real: users + freelance_workers) for the greeting
        name, rating, verification banner and the availability toggle
-     GET /freelancer/dashboard (placeholder until the jobs/payments tables
-       exist) for the remaining tiles, the earnings chart, the latest offers and
-       the activity feed
+     GET /freelancer/dashboard for the remaining tiles, the earnings chart, the
+       latest offers and the activity feed. The offer and bid figures there are
+       real (they come from the jobs/job_bids tables, same as the Job Offers
+       page); active jobs, earnings and the activity feed are still placeholder
+       until those tables exist
 
    Changing the availability select saves immediately with
    PUT /freelancer/availability, which writes freelance_workers.availability_status.
@@ -92,7 +94,7 @@
     });
   });
 
-  // ---------- Dashboard figures (placeholder data) ----------
+  // ---------- Dashboard figures (offers and bids real, the rest placeholder) ----------
   EquipifyApi.get('/freelancer/dashboard').then(function (res) {
     if (!res.ok) {
       window.showToast(res.error);

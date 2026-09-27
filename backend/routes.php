@@ -150,3 +150,32 @@ $router->add('GET',  '/freelancer/messages',                 [FreelanceWorkerMoc
 $router->add('POST', '/freelancer/messages',                 [FreelanceWorkerMockController::class, 'sendMessage'],           ['freelance_worker']);
 $router->add('GET',  '/freelancer/notifications',            [FreelanceWorkerMockController::class, 'notifications'],         ['freelance_worker']);
 $router->add('POST', '/freelancer/notifications/read',       [FreelanceWorkerMockController::class, 'markNotificationsRead'], ['freelance_worker']);
+
+// Messaging, notifications and complaints for the roles whose tables do not
+// exist yet. The rows come from backend/fixtures/*.json through the normal
+// API, so these pages are written against real endpoints — see the controllers.
+// Paths are role-neutral (like /profile above) because the resources are
+// per-user: widening them to another role is adding a string to the array.
+$router->add('GET',  '/notifications',        [NotificationController::class, 'index'],     ['delivery_personnel', 'maintenance_tech']);
+$router->add('PUT',  '/notifications/read',   [NotificationController::class, 'markRead'],  ['delivery_personnel', 'maintenance_tech']);
+$router->add('GET',  '/notifications/counts', [NotificationController::class, 'counts'],    ['delivery_personnel', 'maintenance_tech']);
+
+$router->add('GET',  '/conversations',        [MessageController::class, 'indexConversations'], ['delivery_personnel', 'maintenance_tech']);
+$router->add('POST', '/conversations',        [MessageController::class, 'storeConversation'],  ['delivery_personnel', 'maintenance_tech']);
+$router->add('GET',  '/conversations/{id}',   [MessageController::class, 'showConversation'],   ['delivery_personnel', 'maintenance_tech']);
+$router->add('GET',  '/messages',             [MessageController::class, 'index'],              ['delivery_personnel', 'maintenance_tech']);
+$router->add('POST', '/messages',             [MessageController::class, 'store'],              ['delivery_personnel', 'maintenance_tech']);
+$router->add('GET',  '/messaging/contacts',   [MessageController::class, 'contacts'],           ['delivery_personnel', 'maintenance_tech']);
+
+$router->add('GET',  '/complaints',           [ComplaintController::class, 'index'], ['freelance_worker', 'delivery_personnel', 'maintenance_tech']);
+$router->add('POST', '/complaints',           [ComplaintController::class, 'store'], ['freelance_worker', 'delivery_personnel', 'maintenance_tech']);
+
+// Delivery personnel: assigned deliveries, and the three profile fields the
+// delivery_personnel table has no columns for.
+$router->add('GET',  '/deliveries',              [DeliveryController::class, 'index'],         ['delivery_personnel']);
+$router->add('PUT',  '/deliveries/{id}/status',  [DeliveryController::class, 'updateStatus'],  ['delivery_personnel']);
+$router->add('GET',  '/profile-extras',          [DeliveryController::class, 'profileExtras'], ['delivery_personnel']);
+
+// Maintenance technician: booked appointments.
+$router->add('GET',  '/appointments',             [AppointmentController::class, 'index'],        ['maintenance_tech']);
+$router->add('PUT',  '/appointments/{id}/status', [AppointmentController::class, 'updateStatus'], ['maintenance_tech']);

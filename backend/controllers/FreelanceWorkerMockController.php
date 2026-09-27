@@ -3,9 +3,12 @@
  * Placeholder data for the parts of the freelance-worker portal whose tables
  * the schema does not have yet (job history, payments, messages,
  * notifications). Complaints moved to the shared UI-only form
- * (frontend/shared/complaints-mock.js). Job offers, bids and declines are real now
- * (JobOfferController); the offers()/bids() generators below only still feed
- * the dashboard's placeholder tiles.
+ * (frontend/shared/complaints-mock.js). Job offers, bids and declines are real
+ * now (JobOfferController), and the dashboard's "Open offers", "Pending bids"
+ * and "Latest offers" come from it, so they agree with the Job Offers page.
+ * Everything else on the dashboard -- active jobs, earnings, the chart, the
+ * activity feed -- is still generated here. The offers()/bids() generators
+ * below are what is left of the old placeholder tiles.
  *
  * These endpoints are deliberately shaped exactly like the real ones: same
  * {success, data} envelope, same {items, page, per_page, total, total_pages}
@@ -23,6 +26,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../core/ListQuery.php';
 require_once __DIR__ . '/../models/FreelanceWorkerModel.php';
+require_once __DIR__ . '/JobOfferController.php';
 
 final class FreelanceWorkerMockController
 {
@@ -60,9 +64,10 @@ final class FreelanceWorkerMockController
     /** GET /freelancer/dashboard */
     public static function dashboard(array $params = []): void
     {
-        $openOffers  = array_values(array_filter(self::offers(), static fn ($o) => $o['status'] === 'open'));
-        $activeJobs  = array_values(array_filter(self::jobRows(), static fn ($j) => $j['status'] === 'in_progress'));
-        $pendingBids = array_values(array_filter(self::bids(), static fn ($b) => in_array($b['status'], ['submitted', 'shortlisted'], true)));
+        // Real: the same models the Job Offers page reads.
+        $jobs = JobOfferController::dashboardSummary((int) Auth::userId());
+        // Placeholder: there is no jobs-in-progress state on a worker yet.
+        $activeJobs = array_values(array_filter(self::jobRows(), static fn ($j) => $j['status'] === 'in_progress'));
 
         $monthEarnings = 0.0;
         foreach (self::paymentRows() as $payment) {
@@ -73,16 +78,16 @@ final class FreelanceWorkerMockController
 
         Response::ok([
             'stats' => [
-                'open_offers'    => count($openOffers),
+                'open_offers'    => $jobs['open_offers'],
                 'active_jobs'    => count($activeJobs),
-                'pending_bids'   => count($pendingBids),
+                'pending_bids'   => $jobs['pending_bids'],
                 'month_earnings' => round($monthEarnings, 2),
                 'unread_notifications' => count(array_filter(self::notificationRows(), static fn ($n) => !$n['is_read'])),
             ],
             // Twelve weeks of earnings for the CSS bar chart; `height_pct` keeps
             // the bar sizing out of the page script.
             'earnings_chart' => self::earningsChart(),
-            'recent_offers'  => array_slice($openOffers, 0, 4),
+            'recent_offers'  => $jobs['recent_offers'],
             'recent_activity' => array_slice(self::activity(), 0, 6),
         ]);
     }

@@ -1,0 +1,30 @@
+{
+  "delivery_personnel": [
+    { "conversation_id": "101", "party_id": "m1", "party_name": "Ravindu Jayasuriya",    "party_role_key": "area_manager",  "party_detail": "Area manager, Colombo",     "context_ref": "DEL-4410", "minutes_ago": 18,   "unread_count": 2 },
+    { "conversation_id": "104", "party_id": "m2", "party_name": "Tharindu Silva",        "party_role_key": "area_manager",  "party_detail": "Area manager, Gampaha",     "context_ref": "DEL-4400", "minutes_ago": 55,   "unread_count": 2 },
+    { "conversation_id": "105", "party_id": "c2", "party_name": "Nimali Fernando",       "party_role_key": "customer",      "party_detail": "Port City Development",     "context_ref": "DEL-4409", "minutes_ago": 140,  "unread_count": 1 },
+    { "conversation_id": "102", "party_id": "c1", "party_name": "Kasun Perera",          "party_role_key": "customer",      "party_detail": "Lanka Build Construction",  "context_ref": "DEL-4407", "minutes_ago": 240,  "unread_count": 1 },
+    { "conversation_id": "106", "party_id": "r1", "party_name": "Lanka Heavy Hire",      "party_role_key": "renting_party", "party_detail": "Renting party, Peliyagoda", "context_ref": "DEL-4404", "minutes_ago": 320,  "unread_count": 0 },
+    { "conversation_id": "107", "party_id": "c3", "party_name": "Dilan Weerasooriya",    "party_role_key": "customer",      "party_detail": "Nuge Builders (Pvt) Ltd",   "context_ref": "DEL-4408", "minutes_ago": 480,  "unread_count": 1 },
+    { "conversation_id": "108", "party_id": "m3", "party_name": "Anushka Dias",          "party_role_key": "area_manager",  "party_detail": "Area manager, Kalutara",    "context_ref": "DEL-4396", "minutes_ago": 900,  "unread_count": 0 },
+    { "conversation_id": "109", "party_id": "c5", "party_name": "Ishara Bandara",        "party_role_key": "customer",      "party_detail": "Metro Developers",          "context_ref": "DEL-4406", "minutes_ago": 1450, "unread_count": 0 },
+    { "conversation_id": "103", "party_id": "r2", "party_name": "Colombo Equip Rentals", "party_role_key": "renting_party", "party_detail": "Renting party, Colombo 05", "context_ref": "DEL-4405", "minutes_ago": 1600, "unread_count": 0 },
+    { "conversation_id": "110", "party_id": "r3", "party_name": "Kandy Plant Services",  "party_role_key": "renting_party", "party_detail": "Renting party, Kandy",      "context_ref": "DEL-4392", "minutes_ago": 2200, "unread_count": 0 },
+    { "conversation_id": "111", "party_id": "c6", "party_name": "Nuwan Rajapaksha",      "party_role_key": "customer",      "party_detail": "Coastal Works Ltd",         "context_ref": "DEL-4405", "minutes_ago": 3100, "unread_count": 1 },
+    { "conversation_id": "112", "party_id": "m1", "party_name": "Ravindu Jayasuriya",    "party_role_key": "area_manager",  "party_detail": "Area manager, Colombo",     "context_ref": "DEL-4402", "minutes_ago": 4300, "unread_count": 0 }
+  ],
+  "maintenance_tech": [
+    { "conversation_id": "201", "party_id": "r1", "party_name": "Lanka Heavy Hire",      "party_role_key": "renting_party", "party_detail": "Renting party, Peliyagoda", "context_ref": "APT-2209", "minutes_ago": 32,   "unread_count": 2 },
+    { "conversation_id": "204", "party_id": "r4", "party_name": "Galle Machinery Co",    "party_role_key": "renting_party", "party_detail": "Renting party, Galle",      "context_ref": "APT-2200", "minutes_ago": 70,   "unread_count": 2 },
+    { "conversation_id": "205", "party_id": "m2", "party_name": "Tharindu Silva",        "party_role_key": "area_manager",  "party_detail": "Area manager, Gampaha",     "context_ref": "APT-2198", "minutes_ago": 210,  "unread_count": 1 },
+    { "conversation_id": "202", "party_id": "m1", "party_name": "Ravindu Jayasuriya",    "party_role_key": "area_manager",  "party_detail": "Area manager, Colombo",     "context_ref": "APT-2208", "minutes_ago": 310,  "unread_count": 1 },
+    { "conversation_id": "206", "party_id": "r5", "party_name": "Northern Plant Hire",   "party_role_key": "renting_party", "party_detail": "Renting party, Jaffna",     "context_ref": "APT-2195", "minutes_ago": 360,  "unread_count": 0 },
+    { "conversation_id": "207", "party_id": "r2", "party_name": "Colombo Equip Rentals", "party_role_key": "renting_party", "party_detail": "Renting party, Colombo 05", "context_ref": "APT-2206", "minutes_ago": 620,  "unread_count": 1 },
+    { "conversation_id": "208", "party_id": "m4", "party_name": "Pradeep Kumara",        "party_role_key": "area_manager",  "party_detail": "Area manager, Kandy",       "context_ref": "APT-2192", "minutes_ago": 1050, "unread_count": 1 },
+    { "conversation_id": "209", "party_id": "r6", "party_name": "Ruhunu Equipment",      "party_role_key": "renting_party", "party_detail": "Renting party, Matara",     "context_ref": "APT-2189", "minutes_ago": 1700, "unread_count": 0 },
+    { "conversation_id": "203", "party_id": "r2", "party_name": "Colombo Equip Rentals", "party_role_key": "renting_party", "party_detail": "Renting party, Colombo 05", "context_ref": "APT-2205", "minutes_ago": 2100, "unread_count": 0 },
+    { "conversation_id": "210", "party_id": "r7", "party_name": "Summit Plant Rentals",  "party_role_key": "renting_party", "party_detail": "Renting party, Kurunegala", "context_ref": "APT-2186", "minutes_ago": 2400, "unread_count": 1 },
+    { "conversation_id": "211", "party_id": "m5", "party_name": "Hiruni Ekanayake",      "party_role_key": "area_manager",  "party_detail": "Area manager, Galle",       "context_ref": "APT-2183", "minutes_ago": 3300, "unread_count": 1 },
+    { "conversation_id": "212", "party_id": "r3", "party_name": "Kandy Plant Services",  "party_role_key": "renting_party", "party_detail": "Renting party, Kandy",      "context_ref": "APT-2180", "minutes_ago": 4600, "unread_count": 0 }
+  ]
+}

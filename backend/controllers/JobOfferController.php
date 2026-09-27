@@ -5,7 +5,8 @@
  *
  * A worker never takes a job directly. They bid, the customer compares the
  * bids and hires one (JobController::hire), and that is what turns an offer
- * into "accepted" here. Declining only hides the job from this worker's open
+ * into "accepted" here. Bidding is limited to verified operators; browsing and
+ * declining are not, so an unverified worker can still see what is out there. Declining only hides the job from this worker's open
  * offers (it shows as Declined); the job stays open for everyone else.
  *
  * Responses keep the shapes the Job Offers page was built against, so the
@@ -18,6 +19,7 @@ require_once __DIR__ . '/../core/ListQuery.php';
 require_once __DIR__ . '/../models/JobModel.php';
 require_once __DIR__ . '/../models/JobBidModel.php';
 require_once __DIR__ . '/../models/JobDeclineModel.php';
+require_once __DIR__ . '/../models/FreelanceWorkerModel.php';
 require_once __DIR__ . '/JobController.php';
 
 final class JobOfferController
@@ -95,11 +97,27 @@ final class JobOfferController
         ]);
     }
 
-    /** POST /freelancer/bids  {offer_id, bid_amount_lkr, message} */
+    /**
+     * POST /freelancer/bids  {offer_id, bid_amount_lkr, message}
+     *
+     * Only a verified operator may bid. A customer hires off these bids and
+     * has no other way to check who they are hiring, so the admin's
+     * verification is what stands behind the bid. The check comes before the
+     * input is even read: an unverified worker cannot bid whatever they send.
+     */
     public static function placeBid(array $params = []): void
     {
         $workerId = (int) Auth::userId();
-        $in       = Router::jsonBody();
+
+        if (!FreelanceWorkerModel::isVerified($workerId)) {
+            Response::error(
+                'Only verified operators can bid. Upload your documents on the '
+                . 'Credentials page so an admin can verify you.',
+                403
+            );
+        }
+
+        $in = Router::jsonBody();
         $offerId  = filter_var($in['offer_id'] ?? null, FILTER_VALIDATE_INT);
         $amount   = $in['bid_amount_lkr'] ?? null;
         $message  = is_string($in['message'] ?? null) ? trim($in['message']) : '';
@@ -162,13 +180,37 @@ final class JobOfferController
         ]), 201);
     }
 
+    /**
+     * The job and bid figures on the freelance worker's dashboard, read from
+     * the same models as the Job Offers page so the two agree. The rest of
+     * that dashboard is still placeholder data.
+     *
+     * @return array{open_offers:int,pending_bids:int,recent_offers:array<int,array<string,mixed>>}
+     */
+    public static function dashboardSummary(int $workerId): array
+    {
+        $openOnly = ['q' => '', 'status' => 'open', 'district' => ''];
+
+        return [
+            'open_offers'   => JobModel::countOffersForWorker($workerId, $openOnly),
+            'pending_bids'  => JobBidModel::countUndecidedForWorker($workerId),
+            'recent_offers' => array_map(
+                [self::class, 'presentOffer'],
+                JobModel::offersForWorker($workerId, $openOnly, 4, 0)
+            ),
+        ];
+    }
+
     // ------------------------------------------------------------- helpers
 
     /**
+     * Public because the dashboard renders offers with the same fields as the
+     * Job Offers page and should not carry a second copy of this shape.
+     *
      * @param array<string,mixed> $row
      * @return array<string,mixed>
      */
-    private static function presentOffer(array $row): array
+    public static function presentOffer(array $row): array
     {
         return [
             'offer_id'          => (int) $row['job_id'],

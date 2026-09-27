@@ -33,6 +33,20 @@ final class FreelanceWorkerModel
     }
 
     /**
+     * Whether an admin has verified this worker. Checked before actions only
+     * verified operators may take, such as bidding on a job. A missing row
+     * reads as not verified.
+     */
+    public static function isVerified(int $userId): bool
+    {
+        $stmt = getDbConnection()->prepare(
+            'SELECT verification_status FROM freelance_workers WHERE user_id = :id LIMIT 1'
+        );
+        $stmt->execute([':id' => $userId]);
+        return $stmt->fetchColumn() === 'verified';
+    }
+
+    /**
      * The signed-in worker's own profile: the account fields they may edit plus
      * every freelance_workers column, including the ones only the platform
      * writes (verification_status, avg_rating, rating_count).

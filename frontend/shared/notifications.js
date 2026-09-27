@@ -68,6 +68,9 @@
       },
       pager: document.getElementById('notificationPager'),
       countLabel: document.getElementById('notificationCount'),
+      // Stated rather than inherited, so the page size is visible next to the
+      // row counts it has to divide. This is the list.js default.
+      perPage: 10,
       emptyMessage: "You're all caught up.",
       renderItem: notificationItem
     });

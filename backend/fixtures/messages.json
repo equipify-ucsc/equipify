@@ -1,0 +1,127 @@
+{
+  "101": [
+    { "message_id": "101-1", "sender": "them", "body": "Morning. DEL-4410 is assigned to you, the excavator goes to Kottawa Highway Project.", "minutes_ago": 95 },
+    { "message_id": "101-2", "sender": "me",   "body": "Got it. Which yard am I collecting from?",                                             "minutes_ago": 88 },
+    { "message_id": "101-3", "sender": "them", "body": "Lanka Heavy Hire in Peliyagoda. Ask for Sanjeewa at the gate.",                        "minutes_ago": 80 },
+    { "message_id": "101-4", "sender": "me",   "body": "Understood. I will be there by 07:30.",                                                "minutes_ago": 74 },
+    { "message_id": "101-5", "sender": "them", "body": "The low-bed trailer is booked for you, plate LP-2291.",                                "minutes_ago": 30 },
+    { "message_id": "101-6", "sender": "them", "body": "One more thing, the site gate closes at 18:00 sharp.",                                 "minutes_ago": 18 }
+  ],
+  "102": [
+    { "message_id": "102-1", "sender": "them", "body": "Hello, any update on the generator arriving today?",              "minutes_ago": 420 },
+    { "message_id": "102-2", "sender": "me",   "body": "Loaded and on the way. Should reach you around 14:00.",           "minutes_ago": 400 },
+    { "message_id": "102-3", "sender": "them", "body": "Perfect. Please call when you are at the gate.",                  "minutes_ago": 380 },
+    { "message_id": "102-4", "sender": "me",   "body": "Will do.",                                                        "minutes_ago": 372 },
+    { "message_id": "102-5", "sender": "them", "body": "Traffic on Baseline is heavy, take the Kirulapone turn instead.", "minutes_ago": 240 }
+  ],
+  "103": [
+    { "message_id": "103-1", "sender": "them", "body": "The mixer needs to come back to our yard after the job, not to the depot.", "minutes_ago": 1900 },
+    { "message_id": "103-2", "sender": "me",   "body": "Noted, I will bring it to Colombo 05.",                                     "minutes_ago": 1850 },
+    { "message_id": "103-3", "sender": "them", "body": "Thanks. Our yard closes at 17:30.",                                         "minutes_ago": 1600 }
+  ],
+  "104": [
+    { "message_id": "104-1", "sender": "them", "body": "Two jobs for you tomorrow, both out of the Peliyagoda yard.", "minutes_ago": 88 },
+    { "message_id": "104-2", "sender": "me",   "body": "Noted. Which one goes first?",                                "minutes_ago": 77 },
+    { "message_id": "104-3", "sender": "them", "body": "DEL-4400 first, the roller is needed on site by 08:00.",      "minutes_ago": 66 },
+    { "message_id": "104-4", "sender": "them", "body": "I have put the tipper against your name for it.",             "minutes_ago": 55 }
+  ],
+  "105": [
+    { "message_id": "105-1", "sender": "them", "body": "Any idea what time the generator reaches Port City?",        "minutes_ago": 210 },
+    { "message_id": "105-2", "sender": "me",   "body": "Should be with you before noon, the gate pass is arranged.", "minutes_ago": 175 },
+    { "message_id": "105-3", "sender": "them", "body": "Perfect, I will have someone at the delivery bay.",          "minutes_ago": 140 }
+  ],
+  "106": [
+    { "message_id": "106-1", "sender": "me",   "body": "Compressor is loaded and leaving the yard now.",             "minutes_ago": 480 },
+    { "message_id": "106-2", "sender": "them", "body": "Thanks. Return docket is in the cab, please get it signed.", "minutes_ago": 400 },
+    { "message_id": "106-3", "sender": "me",   "body": "Will do.",                                                   "minutes_ago": 320 }
+  ],
+  "107": [
+    { "message_id": "107-1", "sender": "them", "body": "The mixer never turned up yesterday.",                               "minutes_ago": 720 },
+    { "message_id": "107-2", "sender": "me",   "body": "Apologies, the site road was closed. Rescheduled for this morning.", "minutes_ago": 600 },
+    { "message_id": "107-3", "sender": "them", "body": "Understood, thanks for coming back to me.",                          "minutes_ago": 480 }
+  ],
+  "108": [
+    { "message_id": "108-1", "sender": "them", "body": "Can you cover a Kalutara run on Friday?",        "minutes_ago": 1440 },
+    { "message_id": "108-2", "sender": "me",   "body": "Yes, as long as it is after the Moratuwa drop.", "minutes_ago": 1260 },
+    { "message_id": "108-3", "sender": "them", "body": "That works. I will send the details.",           "minutes_ago": 1080 },
+    { "message_id": "108-4", "sender": "me",   "body": "Thanks.",                                        "minutes_ago": 900 }
+  ],
+  "109": [
+    { "message_id": "109-1", "sender": "them", "body": "Is the crane section still coming Thursday?", "minutes_ago": 1933 },
+    { "message_id": "109-2", "sender": "me",   "body": "Yes, booked on the crane truck.",             "minutes_ago": 1450 }
+  ],
+  "110": [
+    { "message_id": "110-1", "sender": "them", "body": "Please check the tyre pressures before you set off.", "minutes_ago": 2933 },
+    { "message_id": "110-2", "sender": "me",   "body": "Checked this morning, all fine.",                     "minutes_ago": 2200 }
+  ],
+  "111": [
+    { "message_id": "111-1", "sender": "me",   "body": "Loader delivered to the Negombo site, signed by the foreman.", "minutes_ago": 4133 },
+    { "message_id": "111-2", "sender": "them", "body": "Received, thank you.",                                         "minutes_ago": 3100 }
+  ],
+  "112": [
+    { "message_id": "112-1", "sender": "them", "body": "Good work clearing the backlog last week.", "minutes_ago": 5733 },
+    { "message_id": "112-2", "sender": "me",   "body": "Appreciated.",                              "minutes_ago": 4300 }
+  ],
+  "201": [
+    { "message_id": "201-1", "sender": "them", "body": "The CAT 320D is throwing an intermittent fault code. Can you look at it Tuesday?", "minutes_ago": 210 },
+    { "message_id": "201-2", "sender": "me",   "body": "Tuesday works. Do you have the code number?",                                      "minutes_ago": 190 },
+    { "message_id": "201-3", "sender": "them", "body": "E1122, it clears itself after a restart but comes back under load.",               "minutes_ago": 170 },
+    { "message_id": "201-4", "sender": "me",   "body": "Sounds like a sensor rather than the engine. I will bring the diagnostic kit.",    "minutes_ago": 150 },
+    { "message_id": "201-5", "sender": "them", "body": "Appreciated. The machine is at the Peliyagoda yard.",                              "minutes_ago": 60 },
+    { "message_id": "201-6", "sender": "them", "body": "Gate pass is arranged under your name.",                                           "minutes_ago": 32 }
+  ],
+  "202": [
+    { "message_id": "202-1", "sender": "them", "body": "Port City moved the generator service to 14:00, can you still make it?", "minutes_ago": 500 },
+    { "message_id": "202-2", "sender": "me",   "body": "Yes, that is fine. I finish the Nugegoda job by noon.",                  "minutes_ago": 470 },
+    { "message_id": "202-3", "sender": "them", "body": "Great, I will confirm with the site.",                                   "minutes_ago": 450 },
+    { "message_id": "202-4", "sender": "them", "body": "Confirmed. They will shut the unit down at 13:30 for you.",              "minutes_ago": 310 }
+  ],
+  "203": [
+    { "message_id": "203-1", "sender": "me",   "body": "The hydraulic repair estimate for the mixer is Rs 42,000 including seals.", "minutes_ago": 2600 },
+    { "message_id": "203-2", "sender": "them", "body": "Let me get that approved internally.",                                      "minutes_ago": 2400 },
+    { "message_id": "203-3", "sender": "me",   "body": "No problem. I have put the job on hold until then.",                        "minutes_ago": 2100 }
+  ],
+  "204": [
+    { "message_id": "204-1", "sender": "them", "body": "The grader is throwing a hydraulic warning again.", "minutes_ago": 112 },
+    { "message_id": "204-2", "sender": "me",   "body": "I will bring the pressure gauge and a spare hose.", "minutes_ago": 98 },
+    { "message_id": "204-3", "sender": "them", "body": "Thanks. It is parked at the Galle yard.",           "minutes_ago": 84 },
+    { "message_id": "204-4", "sender": "them", "body": "Gate code is 4471 if you arrive before seven.",     "minutes_ago": 70 }
+  ],
+  "205": [
+    { "message_id": "205-1", "sender": "them", "body": "Can you fit in a load test on the boom lift this week?", "minutes_ago": 314 },
+    { "message_id": "205-2", "sender": "me",   "body": "Thursday afternoon would work.",                         "minutes_ago": 262 },
+    { "message_id": "205-3", "sender": "them", "body": "Booked, thank you.",                                     "minutes_ago": 210 }
+  ],
+  "206": [
+    { "message_id": "206-1", "sender": "me",   "body": "Alternator replaced and tested, unit is back in service.", "minutes_ago": 540 },
+    { "message_id": "206-2", "sender": "them", "body": "Great, I will update the hire record.",                    "minutes_ago": 450 },
+    { "message_id": "206-3", "sender": "me",   "body": "Invoice follows tonight.",                                 "minutes_ago": 360 }
+  ],
+  "207": [
+    { "message_id": "207-1", "sender": "them", "body": "Annual inspection paperwork is due for the 25t crane.", "minutes_ago": 930 },
+    { "message_id": "207-2", "sender": "me",   "body": "I have the certificate ready, sending it across.",      "minutes_ago": 775 },
+    { "message_id": "207-3", "sender": "them", "body": "Received.",                                             "minutes_ago": 620 }
+  ],
+  "208": [
+    { "message_id": "208-1", "sender": "them", "body": "Kandy depot has three machines needing a service.",   "minutes_ago": 1574 },
+    { "message_id": "208-2", "sender": "me",   "body": "I can take two next week, the third the week after.", "minutes_ago": 1312 },
+    { "message_id": "208-3", "sender": "them", "body": "That is fine, I will schedule them.",                 "minutes_ago": 1050 }
+  ],
+  "209": [
+    { "message_id": "209-1", "sender": "them", "body": "Coolant flush on the Matara generator, how soon?", "minutes_ago": 2266 },
+    { "message_id": "209-2", "sender": "me",   "body": "Friday morning.",                                  "minutes_ago": 1700 }
+  ],
+  "210": [
+    { "message_id": "210-1", "sender": "me",   "body": "Undercarriage repair finished, tracks re-tensioned.", "minutes_ago": 3200 },
+    { "message_id": "210-2", "sender": "them", "body": "Thanks, looks good.",                                 "minutes_ago": 2400 }
+  ],
+  "211": [
+    { "message_id": "211-1", "sender": "them", "body": "Any parts you want us to stock ahead of next month?", "minutes_ago": 4950 },
+    { "message_id": "211-2", "sender": "me",   "body": "Filters and a couple of hydraulic hoses would help.", "minutes_ago": 4125 },
+    { "message_id": "211-3", "sender": "them", "body": "Noted.",                                              "minutes_ago": 3300 }
+  ],
+  "212": [
+    { "message_id": "212-1", "sender": "them", "body": "Thanks for turning the gearbox job around so quickly.", "minutes_ago": 6133 },
+    { "message_id": "212-2", "sender": "me",   "body": "No problem.",                                           "minutes_ago": 4600 }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "people": [
+    { "person_id": "c1", "name": "Kasun Perera",          "role": "customer",      "detail": "Lanka Build Construction" },
+    { "person_id": "c2", "name": "Nimali Fernando",       "role": "customer",      "detail": "Port City Development" },
+    { "person_id": "c3", "name": "Dilan Weerasooriya",    "role": "customer",      "detail": "Nuge Builders (Pvt) Ltd" },
+    { "person_id": "c4", "name": "Shanika Alwis",         "role": "customer",      "detail": "Malabe Logistics Hub" },
+    { "person_id": "r1", "name": "Lanka Heavy Hire",      "role": "renting_party", "detail": "Renting party, Peliyagoda" },
+    { "person_id": "r2", "name": "Colombo Equip Rentals", "role": "renting_party", "detail": "Renting party, Colombo 05" },
+    { "person_id": "r3", "name": "Kandy Plant Services",  "role": "renting_party", "detail": "Renting party, Kandy" },
+    { "person_id": "m1", "name": "Ravindu Jayasuriya",    "role": "area_manager",  "detail": "Area manager, Colombo" },
+    { "person_id": "m2", "name": "Tharindu Silva",        "role": "area_manager",  "detail": "Area manager, Gampaha" },
+    { "person_id": "c5", "name": "Ishara Bandara",        "role": "customer",      "detail": "Metro Developers" },
+    { "person_id": "c6", "name": "Nuwan Rajapaksha",      "role": "customer",      "detail": "Coastal Works Ltd" },
+    { "person_id": "c7", "name": "Chamari Gunasekara",    "role": "customer",      "detail": "Western Infra Group" },
+    { "person_id": "r4", "name": "Galle Machinery Co",    "role": "renting_party", "detail": "Renting party, Galle" },
+    { "person_id": "r5", "name": "Northern Plant Hire",   "role": "renting_party", "detail": "Renting party, Jaffna" },
+    { "person_id": "r6", "name": "Ruhunu Equipment",      "role": "renting_party", "detail": "Renting party, Matara" },
+    { "person_id": "r7", "name": "Summit Plant Rentals",  "role": "renting_party", "detail": "Renting party, Kurunegala" },
+    { "person_id": "m3", "name": "Anushka Dias",          "role": "area_manager",  "detail": "Area manager, Kalutara" },
+    { "person_id": "m4", "name": "Pradeep Kumara",        "role": "area_manager",  "detail": "Area manager, Kandy" },
+    { "person_id": "m5", "name": "Hiruni Ekanayake",      "role": "area_manager",  "detail": "Area manager, Galle" },
+    { "person_id": "m6", "name": "Sajith Ranaweera",      "role": "area_manager",  "detail": "Area manager, Kurunegala" },
+    { "person_id": "m7", "name": "Menaka Wijesinghe",     "role": "area_manager",  "detail": "Area manager, Matara" }
+  ]
+}

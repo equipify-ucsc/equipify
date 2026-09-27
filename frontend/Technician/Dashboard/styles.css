@@ -77,7 +77,48 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-sm);
+  /* On a narrow screen the sort control drops under the heading instead of
+     squeezing it. */
+  flex-wrap: wrap;
   margin-bottom: var(--space-md);
+}
+
+.section-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.sort-control-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-on-surface-variant);
+}
+
+/* Matches .status-select below, so the two selects on this page look alike.
+   No .select-wrapper: shared/styles.css already paints the chevron. */
+.sort-select {
+  min-width: 190px;
+  padding: 8px 34px 8px var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-size: 14px;
+  font-weight: 600;
+}
+.sort-select:focus-visible {
+  outline: none;
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
 }
 
 /* ---------- Job cards ---------- */

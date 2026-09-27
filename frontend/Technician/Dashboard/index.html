@@ -122,180 +122,45 @@
       <section class="section">
         <div class="section-header">
           <h2 class="type-headline-md">Active Jobs</h2>
+          <div class="section-tools">
+            <span class="result-count" id="jobCount"></span>
+            <label class="sort-control">
+              <span class="sort-control-label">Sort</span>
+              <select class="sort-select" id="jobSort" aria-label="Sort appointments">
+                <option value="scheduled_asc">Scheduled: soonest first</option>
+                <option value="scheduled_desc">Scheduled: latest first</option>
+                <option value="customer">Customer A–Z</option>
+                <option value="reference">Reference</option>
+              </select>
+            </label>
+          </div>
         </div>
 
         <!-- Filter tabs -->
         <div class="filter-tabs" role="tablist" aria-label="Filter jobs by status">
           <button class="filter-tab is-active" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
           <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="active">Active</button>
-          <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="in-progress">In Progress</button>
-          <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="on-hold">On Hold</button>
+          <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="in_progress">In Progress</button>
+          <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="on_hold">On Hold</button>
           <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="completed">Completed</button>
         </div>
 
-        <div class="card-grid" id="job-grid">
+        <div class="card-grid" id="job-grid"></div>
 
-          <!-- Job Card 1 -->
-          <div class="card job-card" data-job-id="1" data-status="active">
-            <div class="job-card-head">
-              <div class="job-card-main">
-                <div class="job-thumb">
-                  <span class="icon icon-xl" aria-hidden="true">agriculture</span>
-                </div>
-                <div>
-                  <h3 class="type-headline-sm job-title">CAT 320D Excavator &ndash; Engine Diagnostics</h3>
-                  <p class="type-body-sm job-subtitle">Site: Kottawa Highway Project</p>
-                </div>
-              </div>
-              <span class="badge-status badge-status--active" data-status-badge>
-                <span class="badge-status__dot" aria-hidden="true"></span> Active
-              </span>
-            </div>
-            <div class="job-detail-grid">
-              <div class="detail-cell">
-                <div class="detail-cell-label">Scheduled</div>
-                <div class="detail-cell-value">Oct 12, 2023</div>
-              </div>
-              <div class="detail-cell">
-                <div class="detail-cell-label">Customer</div>
-                <div class="detail-cell-value">Lanka Build Construction</div>
-              </div>
-            </div>
-            <div class="job-footer">
-              <label class="status-label" for="status-1">Update Status</label>
-              <select class="status-select" id="status-1" data-status-select>
-                <option value="active" selected>Active</option>
-                <option value="in-progress">In Progress</option>
-                <option value="on-hold">On Hold</option>
-                <option value="completed">Completed</option>
-              </select>
-            </div>
-          </div>
+        <div class="pager" id="jobPager"></div>
 
-          <!-- Job Card 2 -->
-          <div class="card job-card" data-job-id="2" data-status="in-progress">
-            <div class="job-card-head">
-              <div class="job-card-main">
-                <div class="job-thumb">
-                  <span class="icon icon-xl" aria-hidden="true">electric_bolt</span>
-                </div>
-                <div>
-                  <h3 class="type-headline-sm job-title">100kVA Generator &ndash; Routine Maintenance</h3>
-                  <p class="type-body-sm job-subtitle">Site: Colombo Port City</p>
-                </div>
-              </div>
-              <span class="badge-status badge-status--pending" data-status-badge>
-                <span class="badge-status__dot" aria-hidden="true"></span> In Progress
-              </span>
-            </div>
-            <div class="job-detail-grid">
-              <div class="detail-cell">
-                <div class="detail-cell-label">Scheduled</div>
-                <div class="detail-cell-value">Oct 20, 2023</div>
-              </div>
-              <div class="detail-cell">
-                <div class="detail-cell-label">Customer</div>
-                <div class="detail-cell-value">Port City Development</div>
-              </div>
-            </div>
-            <div class="job-footer">
-              <label class="status-label" for="status-2">Update Status</label>
-              <select class="status-select" id="status-2" data-status-select>
-                <option value="active">Active</option>
-                <option value="in-progress" selected>In Progress</option>
-                <option value="on-hold">On Hold</option>
-                <option value="completed">Completed</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Job Card 3 -->
-          <div class="card job-card" data-job-id="3" data-status="on-hold">
-            <div class="job-card-head">
-              <div class="job-card-main">
-                <div class="job-thumb">
-                  <span class="icon icon-xl" aria-hidden="true">construction</span>
-                </div>
-                <div>
-                  <h3 class="type-headline-sm job-title">Concrete Mixer &ndash; Hydraulic Repair</h3>
-                  <p class="type-body-sm job-subtitle">Site: Nugegoda Site B</p>
-                </div>
-              </div>
-              <span class="badge-status badge-status--draft" data-status-badge>
-                <span class="badge-status__dot" aria-hidden="true"></span> On Hold
-              </span>
-            </div>
-            <div class="job-detail-grid">
-              <div class="detail-cell">
-                <div class="detail-cell-label">Scheduled</div>
-                <div class="detail-cell-value">Oct 22, 2023</div>
-              </div>
-              <div class="detail-cell">
-                <div class="detail-cell-label">Customer</div>
-                <div class="detail-cell-value">Nuge Builders (Pvt) Ltd</div>
-              </div>
-            </div>
-            <div class="job-footer">
-              <label class="status-label" for="status-3">Update Status</label>
-              <select class="status-select" id="status-3" data-status-select>
-                <option value="active">Active</option>
-                <option value="in-progress">In Progress</option>
-                <option value="on-hold" selected>On Hold</option>
-                <option value="completed">Completed</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Job Card 4 -->
-          <div class="card job-card" data-job-id="4" data-status="completed">
-            <div class="job-card-head">
-              <div class="job-card-main">
-                <div class="job-thumb">
-                  <span class="icon icon-xl" aria-hidden="true">forklift</span>
-                </div>
-                <div>
-                  <h3 class="type-headline-sm job-title">Backhoe Loader &ndash; Full Service</h3>
-                  <p class="type-body-sm job-subtitle">Site: Malabe Warehouse</p>
-                </div>
-              </div>
-              <span class="badge-status badge-status--completed" data-status-badge>
-                <span class="badge-status__dot" aria-hidden="true"></span> Completed
-              </span>
-            </div>
-            <div class="job-detail-grid">
-              <div class="detail-cell">
-                <div class="detail-cell-label">Scheduled</div>
-                <div class="detail-cell-value">Oct 25, 2023</div>
-              </div>
-              <div class="detail-cell">
-                <div class="detail-cell-label">Customer</div>
-                <div class="detail-cell-value">Malabe Logistics Hub</div>
-              </div>
-            </div>
-            <div class="job-footer">
-              <label class="status-label" for="status-4">Update Status</label>
-              <select class="status-select" id="status-4" data-status-select>
-                <option value="active">Active</option>
-                <option value="in-progress">In Progress</option>
-                <option value="on-hold">On Hold</option>
-                <option value="completed" selected>Completed</option>
-              </select>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Shown when the active filter matches no jobs -->
-        <p class="filter-empty" id="job-grid-no-results" hidden>No jobs match this filter.</p>
       </section>
 
     </div>
   </main>
 
+  <div class="toast" id="toast"></div>
+
   <script src="../../shared/api.js"></script>
   <script src="../../shared/session.js?v=2"></script>
   <script src="../../shared/script.js"></script>
-  <script src="../../shared/inbox-mock.js"></script>
+  <script src="../../shared/list.js"></script>
+  <script src="../../shared/inbox-api.js"></script>
   <script src="../../shared/inbox-badges.js"></script>
   <script src="script.js"></script>
 </body>

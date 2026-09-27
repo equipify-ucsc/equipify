@@ -922,3 +922,123 @@ select:focus-visible {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* ==========================================================================
+   Paged lists — the list helper's states and its numbered pager
+
+   shared/list.js renders these on every paged list, so the rules belong with
+   the rest of the shell rather than with one page. They were previously
+   copied into shared/inbox.css, shared/complaints.css and the freelance
+   portal.css; those copies are identical and now redundant, and can be
+   removed once nothing depends on load order. Pages that load only this file
+   (the Delivery and Technician dashboards) had no pager styling at all.
+   ========================================================================== */
+
+.result-count {
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+  white-space: nowrap;
+}
+
+/* Loading / empty / error lines the list helper puts in place of rows. */
+.list-state {
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--color-on-surface-variant);
+  font-size: 14px;
+}
+.list-state--error {
+  color: var(--color-rejected-fg);
+}
+/* In a grid the state line has to span the tracks, not sit in column one. */
+.card-grid > .list-state {
+  grid-column: 1 / -1;
+}
+
+.pager {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-md);
+  min-height: 24px;
+}
+
+/* A long pager scrolls sideways rather than wrapping onto a second row. */
+.pager-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 3px;
+  scrollbar-width: none;
+}
+.pager-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.pager-btn,
+.pager-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-navy);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.pager-btn:hover:not(:disabled),
+.pager-num:hover:not(:disabled) {
+  background-color: var(--color-surface-container-low);
+  border-color: var(--color-teal);
+}
+.pager-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* The page you are on: filled, and not a button you can press again. */
+.pager-num.is-current {
+  background-color: var(--color-teal);
+  border-color: var(--color-teal);
+  color: #ffffff;
+  opacity: 1;
+  cursor: default;
+}
+
+.pager-gap {
+  padding: 0 2px;
+  color: var(--color-on-surface-variant);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* A brief confirmation after an action, bottom-right. Pages that already load
+   shared/inbox.css or a role's portal.css have their own identical copy; this
+   one serves the pages that load only the shell. */
+.toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  background-color: var(--color-deep-navy);
+  color: #ffffff;
+  padding: 13px 16px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+  font-size: 14px;
+  font-weight: 600;
+  display: none;
+  z-index: 80;
+  max-width: min(360px, calc(100vw - 44px));
+}
+.toast.is-visible {
+  display: block;
+}
