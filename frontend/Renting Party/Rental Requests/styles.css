@@ -87,7 +87,7 @@
   pointer-events: none;
 }
 
-/* ---------- Split grid: table + side column ---------- */
+/* ---------- Requests table wrapper ---------- */
 /* minmax(0, …) lets the table column shrink below the table's width, so
    .table-responsive scrolls instead of widening the whole page on phones. */
 .requests-grid {
@@ -95,11 +95,6 @@
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-lg);
   align-items: start;
-}
-@media (min-width: 1100px) {
-  .requests-grid {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-  }
 }
 
 .table-card {
@@ -265,111 +260,6 @@ tbody tr:last-child td {
   cursor: not-allowed;
 }
 
-/* ---------- Logistics sidebar card ---------- */
-.logistics-card {
-  display: flex;
-  flex-direction: column;
-  padding: var(--card-padding);
-}
-
-.logistics-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-md);
-}
-.logistics-header h3 {
-  font-family: var(--font-heading);
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-navy);
-}
-
-.count-chip {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--color-teal);
-  background-color: var(--color-active-bg);
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-}
-
-.logistics-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  margin-bottom: var(--space-md);
-}
-
-.logistics-item {
-  display: flex;
-  gap: var(--space-sm);
-}
-
-.item-icon-box {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  color: #ffffff;
-}
-.item-icon-box.pickup { background-color: var(--color-teal); }
-.item-icon-box.return { background-color: var(--color-navy); }
-.item-icon-box .icon { font-size: 18px; }
-
-.item-content {
-  min-width: 0;
-}
-.item-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-on-surface);
-  margin-bottom: 2px;
-}
-.item-details {
-  font-size: 12px;
-  color: var(--color-on-surface-variant);
-  margin-bottom: 4px;
-}
-.item-subtext {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: var(--color-on-surface-variant);
-}
-
-.mini-avatar {
-  width: 18px;
-  height: 18px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-surface-container-high);
-  color: var(--color-on-surface);
-  font-size: 9px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-view-logistics {
-  background: none;
-  border: 1.5px solid var(--color-outline-variant);
-  border-radius: var(--radius-sm);
-  padding: 10px;
-  color: var(--color-navy);
-  font-weight: 600;
-  font-size: 13px;
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-.btn-view-logistics:hover {
-  border-color: var(--color-teal);
-  color: var(--color-teal);
-}
-
 /* ---------- Attention chip (requests awaiting a response) ---------- */
 .attention-chip {
   display: inline-flex;
@@ -427,71 +317,6 @@ tbody tr.needs-response td:first-child {
   padding: var(--space-lg) 0 var(--space-sm);
   color: var(--color-on-surface-variant);
   font-size: 14px;
-}
-
-/* ---------- Side column ---------- */
-.side-column {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-}
-
-.flow-card {
-  padding: var(--card-padding);
-}
-.flow-card h3 {
-  font-family: var(--font-heading);
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-navy);
-  margin-bottom: var(--space-md);
-}
-
-.flow-steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.flow-steps li {
-  display: flex;
-  gap: var(--space-sm);
-}
-
-.flow-steps__num {
-  width: 24px;
-  height: 24px;
-  border-radius: var(--radius-full);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 12px;
-  font-weight: 700;
-  color: #ffffff;
-  background-color: var(--color-teal);
-}
-
-.flow-steps__title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-on-surface);
-}
-
-.flow-steps__text {
-  font-size: 12px;
-  line-height: 1.45;
-  color: var(--color-on-surface-variant);
-}
-
-.flow-card__note {
-  margin-top: var(--space-md);
-  padding-top: 12px;
-  border-top: 1px solid var(--color-surface-variant);
-  font-size: 12px;
-  color: var(--color-on-surface-variant);
 }
 
 /* ---------- Modals (same pattern as the other dashboard pages) ---------- */

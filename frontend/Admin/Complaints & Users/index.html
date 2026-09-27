@@ -135,124 +135,158 @@
       </div>
 
       <div class="card">
+        <div class="section-title">
+          <h3 class="type-headline-sm">Complaints</h3>
+        </div>
         <div class="toolbar">
           <div class="search-field">
             <span class="icon icon-sm" aria-hidden="true">search</span>
-            <input class="search-input" type="text" data-filter-table="complaintsTable" placeholder="Search complaints, users or subjects...">
+            <input class="search-input" type="search" id="complaintSearch" placeholder="Search complaints, people or references..." aria-label="Search complaints">
           </div>
-          <select class="select-filter" data-status-filter="complaintsTable">
-            <option value="">All statuses</option>
-            <option>Open</option>
-            <option>Under Review</option>
-            <option>Resolved</option>
+          <select class="select-filter" id="complaintRoleFilter" aria-label="Filter by complainant role">
+            <option value="">All roles</option>
+            <option value="customer">Customer</option>
+            <option value="renting_party">Renting party</option>
+            <option value="freelance_worker">Freelance worker</option>
+            <option value="maintenance_tech">Technician</option>
+            <option value="delivery_personnel">Delivery personnel</option>
           </select>
+          <select class="select-filter" id="complaintCategoryFilter" aria-label="Filter by category">
+            <option value="">All categories</option>
+          </select>
+          <select class="select-filter" id="complaintStatusFilter" aria-label="Filter by status">
+            <option value="">All statuses</option>
+          </select>
+          <span class="result-count" id="complaintCount"></span>
         </div>
         <div class="table-wrap">
           <table class="table" id="complaintsTable">
             <thead>
-              <tr><th>ID</th><th>User / Company</th><th>Subject</th><th>Priority</th><th>Status</th><th>Reported</th><th>Action</th></tr>
+              <tr><th>ID</th><th>Complainant</th><th aria-sort="none"><button class="th-sort" type="button" data-sort="role">Role <span class="icon" aria-hidden="true">unfold_more</span></button></th><th>Against</th><th>Category</th><th>Subject</th><th>Priority</th><th aria-sort="none"><button class="th-sort" type="button" data-sort="status">Status <span class="icon" aria-hidden="true">unfold_more</span></button></th><th>Reported</th><th>Action</th></tr>
             </thead>
-            <tbody>
-              <tr data-status="Open">
-                <td>#CMP-1042</td>
-                <td><strong>BuildPro Lanka</strong><br><span class="table-subtext">Customer</span></td>
-                <td>Equipment condition dispute</td>
-                <td><span class="badge-status badge-status--rejected">High</span></td>
-                <td><span class="badge-status badge-status--pending">Open</span></td>
-                <td>15 Aug 2026</td>
-                <td><button class="btn-outline btn-sm" type="button" data-modal-open="complaintModal">Review</button></td>
-              </tr>
-              <tr data-status="Under Review">
-                <td>#CMP-1041</td>
-                <td><strong>Rana Equipment</strong><br><span class="table-subtext">Renting Party</span></td>
-                <td>Payment disagreement</td>
-                <td><span class="badge-status badge-status--pending">Medium</span></td>
-                <td><span class="badge-status badge-status--pending">Under Review</span></td>
-                <td>14 Aug 2026</td>
-                <td><button class="btn-outline btn-sm" type="button" data-modal-open="complaintModal">Review</button></td>
-              </tr>
-              <tr data-status="Open">
-                <td>#CMP-1038</td>
-                <td><strong>FastLift Operator</strong><br><span class="table-subtext">Freelancer</span></td>
-                <td>Policy violation report</td>
-                <td><span class="badge-status badge-status--rejected">High</span></td>
-                <td><span class="badge-status badge-status--pending">Open</span></td>
-                <td>14 Aug 2026</td>
-                <td><button class="btn-outline btn-sm" type="button" data-modal-open="complaintModal">Review</button></td>
-              </tr>
-              <tr data-status="Resolved">
-                <td>#CMP-1032</td>
-                <td><strong>Metro Events</strong><br><span class="table-subtext">Customer</span></td>
-                <td>Late delivery</td>
-                <td><span class="badge-status badge-status--completed">Low</span></td>
-                <td><span class="badge-status badge-status--active">Resolved</span></td>
-                <td>12 Aug 2026</td>
-                <td><button class="btn-outline btn-sm" type="button" data-modal-open="complaintModal">View</button></td>
-              </tr>
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
+        <div class="pager" id="complaintPager"></div>
       </div>
 
       <div class="card" style="margin-top: 18px;">
         <div class="section-title">
-          <h3 class="type-headline-sm">Users requiring action</h3>
-          <span class="badge-status badge-status--rejected">3 flagged</span>
+          <h3 class="type-headline-sm">Platform users</h3>
+        </div>
+        <div class="toolbar">
+          <div class="search-field">
+            <span class="icon icon-sm" aria-hidden="true">search</span>
+            <input class="search-input" type="search" id="userSearch" placeholder="Search by name, email or business..." aria-label="Search users">
+          </div>
+          <select class="select-filter" id="userRoleFilter" aria-label="Filter by role">
+            <option value="">All roles</option>
+            <option value="customer">Customer</option>
+            <option value="renting_party">Renting party</option>
+            <option value="freelance_worker">Freelance worker</option>
+            <option value="maintenance_tech">Technician</option>
+            <option value="delivery_personnel">Delivery personnel</option>
+            <option value="area_manager">Area manager</option>
+          </select>
+          <select class="select-filter" id="userStatusFilter" aria-label="Filter by account status">
+            <option value="">All statuses</option>
+            <option value="active">Active</option>
+            <option value="suspended">Suspended</option>
+            <option value="banned">Banned</option>
+            <option value="deactivated">Deactivated</option>
+          </select>
+          <span class="result-count" id="userCount"></span>
         </div>
         <div class="table-wrap">
-          <table class="table">
+          <table class="table" id="usersTable">
             <thead>
-              <tr><th>User</th><th>Role</th><th>Policy status</th><th>Active rentals</th><th>Actions</th></tr>
+              <tr><th>User</th><th>Email</th><th aria-sort="none"><button class="th-sort" type="button" data-sort="role">Role <span class="icon" aria-hidden="true">unfold_more</span></button></th><th aria-sort="none"><button class="th-sort" type="button" data-sort="status">Status <span class="icon" aria-hidden="true">unfold_more</span></button></th><th>Joined</th><th>Action</th></tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><strong>FastLift Operator</strong></td>
-                <td>Freelancer</td>
-                <td><span class="badge-status badge-status--rejected">Flagged</span></td>
-                <td>1</td>
-                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-action="suspend">Suspend</button> <button class="btn-danger btn-sm" type="button" data-action="ban">Ban</button></td>
-              </tr>
-              <tr>
-                <td><strong>Rana Equipment</strong></td>
-                <td>Renting Party</td>
-                <td><span class="badge-status badge-status--pending">Review</span></td>
-                <td>4</td>
-                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-action="suspend">Suspend</button> <button class="btn-danger btn-sm" type="button" data-action="ban">Ban</button></td>
-              </tr>
-              <tr>
-                <td><strong>PrimeBuild</strong></td>
-                <td>Customer</td>
-                <td><span class="badge-status badge-status--active">Good</span></td>
-                <td>2</td>
-                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-toast="User profile opened.">View</button></td>
-              </tr>
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
+        <div class="pager" id="userPager"></div>
       </div>
 
     </div>
   </main>
 
-  <!-- Complaint review modal -->
+  <!-- Complaint review modal (filled from the clicked row by script.js) -->
   <div class="modal-backdrop" id="complaintModal">
-    <div class="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="complaintModalTitle">
       <div class="modal-head">
-        <h3 class="type-headline-sm">Complaint Review</h3>
+        <h3 class="type-headline-sm" id="complaintModalTitle">Complaint Review</h3>
         <button class="modal-close" type="button" data-modal-close aria-label="Close">
           <span class="icon icon-sm" aria-hidden="true">close</span>
         </button>
       </div>
-      <p class="modal-meta">#CMP-1042 · BuildPro Lanka</p>
+      <p class="modal-meta" id="complaintModalMeta"></p>
       <div class="modal-detail-card">
-        <strong>Equipment condition dispute</strong>
-        <p>Customer reports that the returned excavator did not match the documented pre-rental condition.</p>
+        <strong id="complaintModalSubject"></strong>
+        <p id="complaintModalDetails"></p>
+        <p id="complaintModalAgainst"></p>
+        <p id="complaintModalResolution" hidden></p>
       </div>
-      <div class="modal-actions">
-        <button class="btn-outline" type="button" data-modal-close>Close</button>
-        <button class="btn-solid" type="button" data-modal-action="under-review">Mark Under Review</button>
-        <button class="btn-primary" type="button" data-modal-action="resolve">Resolve</button>
+      <div class="form-grid">
+        <div class="field">
+          <label class="field-label" for="complaintPriority">Priority</label>
+          <select class="input-standard" id="complaintPriority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="complaintStatusNow">Current status</label>
+          <input class="input-standard" id="complaintStatusNow" disabled>
+        </div>
+        <div class="field field--full">
+          <label class="field-label" for="complaintNote">Resolution note (shown to the complainant)</label>
+          <textarea class="input-standard" id="complaintNote" rows="3" maxlength="500" placeholder="Required when resolving or dismissing"></textarea>
+        </div>
       </div>
+      <p class="field-error" id="complaintModalError" role="alert" hidden style="color:#b3261e;margin:12px 0 0;"></p>
+      <div class="modal-actions" style="margin-top: 20px;">
+        <button class="btn-outline" type="button" data-complaint-action="save">Save priority</button>
+        <button class="btn-solid" type="button" data-complaint-action="under_review">Mark Under Review</button>
+        <button class="btn-danger" type="button" data-complaint-action="dismissed">Dismiss</button>
+        <button class="btn-primary" type="button" data-complaint-action="resolved">Resolve</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change account status modal (wired by shared/account-status.js) -->
+  <div class="modal-backdrop" id="statusModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="statusModalTitle">
+      <div class="modal-head">
+        <h3 class="type-headline-sm" id="statusModalTitle">Change account status</h3>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">
+          <span class="icon icon-sm" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <p class="modal-meta" id="statusModalName"></p>
+      <form id="statusForm" novalidate>
+        <p class="field-error" id="statusFormError" role="alert" hidden style="color:#b3261e;margin:12px 0 0;"></p>
+        <div class="form-grid" style="margin-top: 18px;">
+          <div class="field field--full">
+            <label class="field-label" for="statusSelect">Status</label>
+            <select class="input-standard" id="statusSelect" name="status" required>
+              <option value="active">Active</option>
+              <option value="suspended">Suspended</option>
+              <option value="banned">Banned</option>
+              <option value="deactivated">Deactivated</option>
+            </select>
+          </div>
+          <div class="field field--full" id="statusReasonField">
+            <label class="field-label" for="statusReason">Reason</label>
+            <textarea class="input-standard" id="statusReason" name="reason" rows="3" maxlength="255" placeholder="Why is this account being restricted?"></textarea>
+          </div>
+        </div>
+        <div class="modal-actions" style="margin-top: 20px;">
+          <button class="btn-outline" type="button" data-modal-close>Cancel</button>
+          <button class="btn-primary" type="submit">Save status</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -263,6 +297,9 @@
   <script src="../../shared/script.js"></script>
   <script src="../../shared/inbox-mock.js"></script>
   <script src="../../shared/inbox-badges.js"></script>
-  <script src="script.js"></script>
+  <script src="../../shared/list.js"></script>
+  <script src="../../shared/complaints-mock.js"></script>
+  <script src="../../shared/account-status.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

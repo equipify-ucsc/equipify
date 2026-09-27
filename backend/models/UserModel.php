@@ -174,4 +174,121 @@ final class UserModel
         $stmt = getDbConnection()->prepare('UPDATE users SET profile_photo_url = :p WHERE user_id = :id');
         $stmt->execute([':p' => $path, ':id' => $userId]);
     }
+
+    // ------------------------------------------------------------ admin views
+
+    /** Sortable columns for the admin user list, keyed by the ?sort= value. */
+    private const ADMIN_SORTS = [
+        'role'   => 'u.role',
+        'status' => 'u.account_status',
+    ];
+
+    /**
+     * One page of every non-admin account for the admin's user list. The
+     * filters are already checked against the column enums by the controller,
+     * and $sort/$dir only ever pick from ADMIN_SORTS and ASC/DESC.
+     *
+     * @param array{q?:string,role?:string,status?:string} $filters
+     * @return array<int,array<string,mixed>>
+     */
+    public static function pageForAdmin(array $filters, string $sort, string $dir, int $limit, int $offset): array
+    {
+        [$where, $bind] = self::adminConditions($filters);
+        $order = isset(self::ADMIN_SORTS[$sort])
+            ? self::ADMIN_SORTS[$sort] . ($dir === 'desc' ? ' DESC' : ' ASC') . ', u.created_at DESC'
+            : 'u.created_at DESC';
+
+        $stmt = getDbConnection()->prepare(
+            'SELECT u.user_id, u.full_name, u.email, u.role, u.account_status,
+                    u.status_reason, u.created_at, rp.business_name
+               FROM users u
+               LEFT JOIN renting_parties rp ON rp.user_id = u.user_id
+              ' . $where . '
+              ORDER BY ' . $order . ', u.user_id DESC
+              LIMIT ' . $limit . ' OFFSET ' . $offset
+        );
+        $stmt->execute($bind);
+        return $stmt->fetchAll();
+    }
+
+    /** @param array{q?:string,role?:string,status?:string} $filters */
+    public static function countForAdmin(array $filters): int
+    {
+        [$where, $bind] = self::adminConditions($filters);
+        $stmt = getDbConnection()->prepare(
+            'SELECT COUNT(*) FROM users u
+               LEFT JOIN renting_parties rp ON rp.user_id = u.user_id ' . $where
+        );
+        $stmt->execute($bind);
+        return (int) $stmt->fetchColumn();
+    }
+
+    /**
+     * Shared WHERE clause so the admin page query and its count never drift.
+     * Admin accounts are never listed: one admin can't suspend another here.
+     *
+     * @param array{q?:string,role?:string,status?:string} $filters
+     * @return array{0:string,1:array<string,mixed>}
+     */
+    private static function adminConditions(array $filters): array
+    {
+        $where = ["u.role <> 'admin'"];
+        $bind  = [];
+
+        if (($filters['q'] ?? '') !== '') {
+            $where[] = '(u.full_name LIKE :q1 OR u.email LIKE :q2 OR rp.business_name LIKE :q3)';
+            $like = '%' . $filters['q'] . '%';
+            $bind[':q1'] = $like;
+            $bind[':q2'] = $like;
+            $bind[':q3'] = $like;
+        }
+        if (($filters['role'] ?? '') !== '') {
+            $where[] = 'u.role = :role';
+            $bind[':role'] = $filters['role'];
+        }
+        if (($filters['status'] ?? '') !== '') {
+            $where[] = 'u.account_status = :status';
+            $bind[':status'] = $filters['status'];
+        }
+
+        return ['WHERE ' . implode(' AND ', $where), $bind];
+    }
+
+    /**
+     * An admin's account decision. Login and /auth/me already refuse any
+     * account that isn't 'active', so this takes effect on the user's next
+     * request. Returning to 'active' clears the reason.
+     */
+    public static function setAccountStatus(int $userId, string $status, ?string $reason, int $adminId): void
+    {
+        $stmt = getDbConnection()->prepare(
+            'UPDATE users
+                SET account_status    = :status,
+                    status_reason     = :reason,
+                    status_changed_by = :admin,
+                    status_changed_at = NOW()
+              WHERE user_id = :id'
+        );
+        $stmt->execute([
+            ':status' => $status,
+            ':reason' => $status === 'active' ? null : $reason,
+            ':admin'  => $adminId,
+            ':id'     => $userId,
+        ]);
+    }
+
+    /** @return array<string,mixed>|null the row the admin user list shows */
+    public static function findForAdmin(int $userId): ?array
+    {
+        $stmt = getDbConnection()->prepare(
+            'SELECT u.user_id, u.full_name, u.email, u.role, u.account_status,
+                    u.status_reason, u.created_at, rp.business_name
+               FROM users u
+               LEFT JOIN renting_parties rp ON rp.user_id = u.user_id
+              WHERE u.user_id = :id LIMIT 1'
+        );
+        $stmt->execute([':id' => $userId]);
+        $row = $stmt->fetch();
+        return $row === false ? null : $row;
+    }
 }

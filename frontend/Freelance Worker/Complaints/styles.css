@@ -8,3 +8,19 @@
    (page head, grids, cards, toolbar, table, pager, modal, form, toast) from
    ../portal.css. Only rules specific to this page belong here.
    ========================================================================== */
+
+/* ---------- Shared complaint form extras (see shared/complaints.css) ---------- */
+.complaint-intro {
+  color: var(--color-on-surface-variant);
+  font-size: 13px;
+  margin-top: var(--space-xs);
+}
+
+.field-error-text {
+  color: var(--color-rejected-fg);
+  font-size: 12px;
+}
+
+.input-standard[aria-invalid="true"] {
+  border-color: var(--color-rejected-fg);
+}

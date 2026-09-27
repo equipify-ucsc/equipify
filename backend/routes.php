@@ -26,6 +26,18 @@ $router->add('DELETE', '/profile/photo', [ProfileController::class, 'deletePhoto
 $router->add('GET',  '/admin/area-managers', [AreaManagerController::class, 'index'], ['admin']);
 $router->add('POST', '/admin/area-managers', [AreaManagerController::class, 'store'], ['admin']);
 
+// Admin: every non-admin account, and the account-status decision (suspend,
+// ban, deactivate, reactivate). Used by Complaints & Users and Area Managers.
+$router->add('GET',  '/admin/users',             [AdminUserController::class, 'index'],        ['admin']);
+$router->add('POST', '/admin/users/{id}/status', [AdminUserController::class, 'updateStatus'], ['admin']);
+
+// Admin: credential-document verification. The file endpoint streams the
+// stored document inline so the page can open it in a new tab.
+$router->add('GET',  '/admin/documents',             [AdminDocumentController::class, 'index'],  ['admin']);
+$router->add('GET',  '/admin/documents/{id}/file',   [AdminDocumentController::class, 'file'],   ['admin']);
+$router->add('POST', '/admin/documents/{id}/verify', [AdminDocumentController::class, 'verify'], ['admin']);
+$router->add('POST', '/admin/documents/{id}/reject', [AdminDocumentController::class, 'reject'], ['admin']);
+
 // Public: the equipment catalogue (categories -> types -> spec fields). Read
 // only and needs no login, so logged-out visitors can browse and filter.
 $router->add('GET', '/catalogue',                  [CatalogueController::class, 'index']);
@@ -138,5 +150,3 @@ $router->add('GET',  '/freelancer/messages',                 [FreelanceWorkerMoc
 $router->add('POST', '/freelancer/messages',                 [FreelanceWorkerMockController::class, 'sendMessage'],           ['freelance_worker']);
 $router->add('GET',  '/freelancer/notifications',            [FreelanceWorkerMockController::class, 'notifications'],         ['freelance_worker']);
 $router->add('POST', '/freelancer/notifications/read',       [FreelanceWorkerMockController::class, 'markNotificationsRead'], ['freelance_worker']);
-$router->add('GET',  '/freelancer/complaints',               [FreelanceWorkerMockController::class, 'complaints'],            ['freelance_worker']);
-$router->add('POST', '/freelancer/complaints',               [FreelanceWorkerMockController::class, 'submitComplaint'],       ['freelance_worker']);

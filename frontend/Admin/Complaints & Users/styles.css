@@ -151,15 +151,6 @@
 .table tbody tr:hover td {
   background-color: var(--color-surface-container-low);
 }
-.table-subtext {
-  color: var(--color-on-surface-variant);
-  font-size: 12px;
-}
-.table-actions {
-  display: flex;
-  gap: var(--space-xs);
-  flex-wrap: wrap;
-}
 
 /* ---------- Modal ---------- */
 .modal-backdrop {
@@ -255,4 +246,182 @@
   color: var(--color-on-surface-variant);
   font-size: 12px;
   text-align: center;
+}
+
+/* ---------- Form elements ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+@media (min-width: 640px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.input-standard {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  padding: 10px 12px;
+  color: var(--color-on-surface);
+  outline: none;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input-standard:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(0, 108, 78, 0.2);
+}
+
+/* .input-standard also dresses inputs and textareas, which have no arrow to
+   make room for — only the selects need the extra right-hand padding that
+   shared/styles.css reserves. */
+select.input-standard {
+  padding-right: 34px;
+}
+
+/* ---------- Toolbar result count ---------- */
+.result-count {
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+  white-space: nowrap;
+}
+
+/* ---------- List states + pager (same look as the Freelance Worker lists) ---------- */
+.list-state {
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--color-on-surface-variant);
+  font-size: 14px;
+}
+.list-state--error {
+  color: var(--color-rejected-fg);
+}
+td.list-state {
+  text-align: center;
+}
+.pager-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+  overflow-x: auto;
+  padding: 3px;
+}
+.pager-btn,
+.pager-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-navy);
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.pager-btn:hover:not(:disabled),
+.pager-num:hover:not(:disabled) {
+  background-color: var(--color-surface-container-low);
+  border-color: var(--color-teal);
+}
+.pager-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.pager-num.is-current {
+  background-color: var(--color-teal);
+  border-color: var(--color-teal);
+  color: #ffffff;
+  opacity: 1;
+  cursor: default;
+}
+.pager-gap {
+  padding: 0 2px;
+  color: var(--color-on-surface-variant);
+}
+
+.cell-muted {
+  display: block;
+  color: var(--color-on-surface-variant);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* A rejection reason or other note under a table cell, wrapped not truncated. */
+.table td {
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Sortable column headers ----------
+   The header text is a button so it is keyboard-reachable; aria-sort on the
+   <th> tells assistive tech the current order, and the arrow shows it. */
+.th-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  color: inherit;
+  cursor: pointer;
+}
+.th-sort:hover {
+  color: var(--color-navy);
+}
+.th-sort .icon {
+  font-size: 16px;
+  opacity: 0.45;
+}
+th[aria-sort="ascending"] .th-sort .icon,
+th[aria-sort="descending"] .th-sort .icon {
+  opacity: 1;
+  color: var(--color-teal);
+}
+
+.section-title + .toolbar {
+  margin-top: var(--space-sm);
+}
+
+/* The complaints table has ten columns: give it room and let .table-wrap
+   scroll sideways rather than squeezing IDs and badges onto several lines. */
+#complaintsTable {
+  min-width: 1100px;
+}
+.table td:first-child,
+.table .badge-status,
+.table th {
+  white-space: nowrap;
+}
+
+/* body is a flex row, so without this the main column grows to fit a wide
+   table instead of letting .table-wrap scroll it sideways. */
+.main-content {
+  min-width: 0;
 }

@@ -69,11 +69,6 @@
   gap: var(--space-lg);
   align-items: start;
 }
-@media (min-width: 1100px) {
-  .profile-grid {
-    grid-template-columns: 2fr 1fr;
-  }
-}
 
 .profile-main-col {
   display: flex;
@@ -238,20 +233,6 @@
   pointer-events: none;
 }
 
-.hours-group {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-}
-.hours-group input {
-  flex: 1;
-  min-width: 0;
-}
-.hours-sep {
-  font-size: 13px;
-  color: var(--color-on-surface-variant);
-}
-
 .company-desc-card {
   padding: var(--card-padding);
   display: flex;
@@ -370,132 +351,4 @@
 .btn-upload:hover {
   border-color: var(--color-teal);
   color: var(--color-teal);
-}
-
-/* ---------- Right column: performance + tip ---------- */
-.profile-side-col {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-}
-
-.performance-card {
-  background-color: var(--color-deep-navy);
-  padding: var(--card-padding);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  border: none;
-}
-
-.performance-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  color: #ffffff;
-}
-.performance-header .icon { color: var(--color-teal); }
-.performance-header h3 {
-  font-family: var(--font-heading);
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.metrics-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-}
-
-.metric-box {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  background-color: rgba(255, 255, 255, 0.06);
-  border-radius: var(--radius-sm);
-  padding: var(--space-sm) var(--space-md);
-}
-
-.metric-icon-box {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-full);
-  background-color: rgba(0, 108, 78, 0.25);
-  color: #86f8c9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.metric-icon-box .icon { font-size: 16px; }
-
-.metric-box .metric-label {
-  flex: 1;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.metric-box .metric-value {
-  font-family: var(--font-heading);
-  font-size: 16px;
-  font-weight: 700;
-  color: #ffffff;
-}
-.metric-box .sub-value {
-  font-size: 12px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.performance-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: var(--space-sm);
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  font-size: 12px;
-}
-.period-text {
-  color: rgba(255, 255, 255, 0.6);
-}
-.report-link {
-  color: #86f8c9;
-  font-weight: 600;
-}
-.report-link:hover {
-  text-decoration: underline;
-}
-
-.tip-card {
-  padding: var(--card-padding);
-  background-color: var(--color-active-bg);
-  border-color: var(--color-active-fg);
-}
-
-.tip-content {
-  display: flex;
-  gap: var(--space-sm);
-}
-
-.tip-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-surface-container-lowest);
-  color: var(--color-active-fg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.tip-body h4 {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-active-fg);
-  margin-bottom: 4px;
-}
-.tip-body p {
-  font-size: 13px;
-  color: var(--color-on-surface-variant);
 }

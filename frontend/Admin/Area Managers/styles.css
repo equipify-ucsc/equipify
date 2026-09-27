@@ -228,6 +228,13 @@
   justify-content: flex-end;
 }
 
+.modal-meta {
+  color: var(--color-on-surface-variant);
+  font-size: 13px;
+  margin-top: var(--space-xs);
+}
+
+
 /* ---------- Form elements ---------- */
 .form-grid {
   display: grid;
@@ -304,4 +311,15 @@ select.input-standard {
   color: var(--color-on-surface-variant);
   font-size: 12px;
   text-align: center;
+}
+
+.table .badge-status,
+.table th {
+  white-space: nowrap;
+}
+
+/* body is a flex row, so without this the main column grows to fit a wide
+   table instead of letting .table-wrap scroll it sideways. */
+.main-content {
+  min-width: 0;
 }

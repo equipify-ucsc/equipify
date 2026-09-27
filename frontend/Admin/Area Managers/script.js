@@ -1,6 +1,7 @@
 /* ==========================================================================
    Equipify — Area Managers
-   Mobile navigation drawer + table search filter + register-manager modal
+   Area manager list (search, district filter, status change) + register-manager
+   modal
    (vanilla JS, no dependencies)
    ========================================================================== */
 
@@ -19,18 +20,6 @@
       toast.classList.remove('is-visible');
     }, 2600);
   };
-
-  // ---------- Table search filter ----------
-  document.querySelectorAll('[data-filter-table]').forEach(function (input) {
-    input.addEventListener('input', function () {
-      var target = document.getElementById(input.dataset.filterTable);
-      if (!target) return;
-      var query = input.value.toLowerCase();
-      target.querySelectorAll('tbody tr').forEach(function (row) {
-        row.hidden = !row.textContent.toLowerCase().includes(query);
-      });
-    });
-  });
 
   // ---------- Modal open/close ----------
   document.querySelectorAll('[data-modal-open]').forEach(function (btn) {
@@ -60,6 +49,9 @@
 
   // ---------- Area manager list ----------
   var tableBody = document.querySelector('#managerTable tbody');
+  var districtFilter = document.getElementById('districtFilter');
+  var searchInput = document.querySelector('[data-filter-table="managerTable"]');
+  var managers = [];
 
   function cell(text, strong) {
     var td = document.createElement('td');
@@ -73,47 +65,92 @@
     return td;
   }
 
-  function renderManagers(managers) {
+  function messageRow(text) {
+    var tr = document.createElement('tr');
+    var td = cell(text);
+    td.colSpan = 6;
+    tr.appendChild(td);
+    return tr;
+  }
+
+  function setStat(id, value) {
+    var node = document.getElementById(id);
+    if (node) node.textContent = String(value);
+  }
+
+  // The tiles count every manager, whatever the search or district filter shows.
+  function renderStats() {
+    var active = managers.filter(function (m) { return m.account_status === 'active'; });
+    var districts = {};
+    active.forEach(function (m) { if (m.district) districts[m.district] = true; });
+    setStat('statActive', active.length);
+    setStat('statInactive', managers.length - active.length);
+    setStat('statDistricts', Object.keys(districts).length);
+  }
+
+  function managerRow(m) {
+    var tr = document.createElement('tr');
+    tr.appendChild(cell(m.full_name, true));
+    tr.appendChild(cell(m.district || ''));
+    tr.appendChild(cell(m.email));
+    tr.appendChild(cell(m.phone));
+
+    var status = document.createElement('td');
+    status.appendChild(EquipifyAccountStatus.badge(m.account_status));
+    tr.appendChild(status);
+
+    var action = document.createElement('td');
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn-outline btn-sm';
+    btn.textContent = 'Change status';
+    btn.addEventListener('click', function () {
+      EquipifyAccountStatus.open(m, loadManagers);
+    });
+    action.appendChild(btn);
+    tr.appendChild(action);
+    return tr;
+  }
+
+  // Search and district narrow the rows already loaded: the whole list comes
+  // back in one response, so there is nothing to page.
+  function renderManagers() {
     tableBody.textContent = '';
     if (managers.length === 0) {
-      var empty = document.createElement('tr');
-      var td = cell('No area managers registered yet.');
-      td.colSpan = 5;
-      empty.appendChild(td);
-      tableBody.appendChild(empty);
+      tableBody.appendChild(messageRow('No area managers registered yet.'));
       return;
     }
-    managers.forEach(function (m) {
-      var tr = document.createElement('tr');
-      tr.appendChild(cell(m.full_name, true));
-      tr.appendChild(cell(m.district || ''));
-      tr.appendChild(cell(m.email));
-      tr.appendChild(cell(m.phone));
-      var status = document.createElement('td');
-      var badge = document.createElement('span');
-      badge.className = 'badge-status badge-status--' + (m.account_status === 'active' ? 'active' : 'pending');
-      badge.textContent = m.account_status.charAt(0).toUpperCase() + m.account_status.slice(1);
-      status.appendChild(badge);
-      tr.appendChild(status);
-      tableBody.appendChild(tr);
+    var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    var district = districtFilter ? districtFilter.value : '';
+    var shown = managers.filter(function (m) {
+      if (district && m.district !== district) return false;
+      if (!query) return true;
+      return [m.full_name, m.district, m.email, m.phone].join(' ').toLowerCase().indexOf(query) !== -1;
     });
+    if (shown.length === 0) {
+      tableBody.appendChild(messageRow('No area managers match these filters.'));
+      return;
+    }
+    shown.forEach(function (m) { tableBody.appendChild(managerRow(m)); });
   }
 
   function loadManagers() {
     EquipifyApi.get('/admin/area-managers').then(function (res) {
-      if (res.ok) {
-        renderManagers(res.data);
-      } else {
-        tableBody.innerHTML = '';
-        var tr = document.createElement('tr');
-        var td = cell(res.error);
-        td.colSpan = 5;
-        tr.appendChild(td);
-        tableBody.appendChild(tr);
+      if (!res.ok) {
+        tableBody.textContent = '';
+        tableBody.appendChild(messageRow(res.error));
+        return;
       }
+      managers = res.data;
+      renderStats();
+      renderManagers();
     });
   }
-  if (tableBody) loadManagers();
+  if (tableBody) {
+    loadManagers();
+    if (districtFilter) districtFilter.addEventListener('change', renderManagers);
+    if (searchInput) searchInput.addEventListener('input', renderManagers);
+  }
 
   // ---------- Register area manager form (admin only; saved through the API) ----------
   var managerForm = document.getElementById('managerForm');
