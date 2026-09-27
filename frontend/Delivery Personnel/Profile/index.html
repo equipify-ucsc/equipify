@@ -118,8 +118,9 @@
   <main class="main-content">
     <div class="content-inner">
 
-      <!-- Profile Header: personal details come from GET /profile (script.js);
-           the bio, experience and vehicle below are still sample content. -->
+      <!-- Everything here is filled by script.js: the personal details from
+           GET /profile, and the bio, experience and vehicle type from
+           GET /profile-extras. -->
       <section class="card profile-card">
         <div class="profile-top">
           <div class="profile-identity">
@@ -142,11 +143,7 @@
           </button>
         </div>
 
-        <p class="profile-bio type-body-md">
-          Experienced delivery driver specializing in the safe, on-time transport of
-          heavy equipment and machinery to construction and industrial sites across
-          the region.
-        </p>
+        <p class="profile-bio type-body-md" id="profileBio">&nbsp;</p>
 
         <div class="contact-card">
           <div class="contact-list">
@@ -161,7 +158,7 @@
               <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">work_history</span></div>
               <div class="contact-text">
                 <div class="contact-label">Years of Experience</div>
-                <div class="contact-value">5 Years</div>
+                <div class="contact-value" id="profileYears">–</div>
               </div>
             </div>
             <div class="contact-item">
@@ -182,7 +179,7 @@
               <div class="contact-icon"><span class="icon icon-base" aria-hidden="true">local_shipping</span></div>
               <div class="contact-text">
                 <div class="contact-label">Vehicle Type</div>
-                <div class="contact-value">6-Wheeler Flatbed Truck</div>
+                <div class="contact-value" id="profileVehicle">–</div>
               </div>
             </div>
           </div>
@@ -229,7 +226,7 @@
   <script src="../../shared/api.js"></script>
   <script src="../../shared/session.js?v=2"></script>
   <script src="../../shared/script.js"></script>
-  <script src="../../shared/inbox-mock.js"></script>
+  <script src="../../shared/inbox-api.js"></script>
   <script src="../../shared/inbox-badges.js"></script>
   <script src="../../shared/profile.js"></script>
   <script src="script.js?v=2"></script>

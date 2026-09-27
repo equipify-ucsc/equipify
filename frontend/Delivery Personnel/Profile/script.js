@@ -44,6 +44,23 @@
     photo.setHasPhoto(!!profile.photo_url);
   }
 
+  /**
+   * The bio, experience and vehicle type. These come from /profile-extras
+   * rather than /profile because the delivery_personnel table has no columns
+   * for them yet — unlike maintenance_techs, which carries all three. Until it
+   * does, they are served from backend/fixtures/profile-extras.json.
+   */
+  function fillExtras(extras) {
+    var bio = document.getElementById('profileBio');
+    if (bio) bio.textContent = extras.bio || '';
+    setText('profileYears', extras.years_experience ? extras.years_experience + ' Years' : '');
+    setText('profileVehicle', extras.vehicle_type);
+  }
+
+  EquipifyApi.get('/profile-extras').then(function (res) {
+    if (res.ok) fillExtras(res.data);
+  });
+
   function setEditing(on) {
     editCard.hidden = !on;
     editBtn.setAttribute('aria-expanded', on ? 'true' : 'false');

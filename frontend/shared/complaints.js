@@ -290,6 +290,8 @@
       filters: { status: statusFilter, category: categoryFilter },
       pager: document.getElementById('complaintPager'),
       countLabel: document.getElementById('complaintCount'),
+      // Stated rather than inherited; this is the list.js default.
+      perPage: 10,
       columns: 7,
       emptyMessage: "You haven't raised any complaints.",
       renderItem: complaintRow

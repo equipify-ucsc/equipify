@@ -69,6 +69,7 @@ equipify/
 │   └── <Role>/<Page>/ index.html + styles.css + script.js for each page
 ├── backend/           Tier 2: PHP application (Controller + Model)
 └── schema/            Tier 3: numbered MySQL migration files
+    └── dump/          optional demo data, run by hand (not part of the build)
 ```
 
 ### Backend
@@ -164,6 +165,14 @@ mysql -u root -p equipify < 001_create_users.sql
 ```
 
 …and so on for each file in order. In phpMyAdmin, select the `equipify` database and **Import** each file in order.
+
+### Demo data
+
+`schema/dump/` holds optional demo data — sample rows for trying the pages out, not part of the numbered build. Run these by hand after the migrations, and skip them entirely on a clean deployment:
+
+```bash
+mysql -u root -p equipify < dump/jobs_and_bids.sql
+```
 
 ### Connecting from PHP
 

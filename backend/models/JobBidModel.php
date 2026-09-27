@@ -148,6 +148,21 @@ final class JobBidModel
     }
 
     /**
+     * How many of a worker's bids the customer has not decided on yet — the
+     * "Pending bids" figure on their dashboard. Separate from countForWorker()
+     * because that filters on one status at a time and "pending" is two.
+     */
+    public static function countUndecidedForWorker(int $workerId): int
+    {
+        $stmt = getDbConnection()->prepare(
+            'SELECT COUNT(*) FROM job_bids
+              WHERE worker_id = :worker_id AND status IN ' . self::UNDECIDED
+        );
+        $stmt->execute([':worker_id' => $workerId]);
+        return (int) $stmt->fetchColumn();
+    }
+
+    /**
      * Shared WHERE clause for the page and its count. One placeholder per use,
      * since emulated prepares are off.
      *
