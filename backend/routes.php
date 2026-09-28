@@ -14,6 +14,13 @@ $router->add('POST', '/auth/login',   [AuthController::class, 'login']);
 $router->add('POST', '/auth/logout',   [AuthController::class, 'logout']);
 $router->add('GET',  '/auth/me',       [AuthController::class, 'me']);
 
+// Forgot password. Public by necessity -- whoever needs these cannot log in.
+// Admins are excluded inside the controller, not here, so an admin address
+// gets the same answer as an unknown one.
+$router->add('POST', '/auth/forgot-password', [PasswordResetController::class, 'request']);
+$router->add('GET',  '/auth/reset-password',  [PasswordResetController::class, 'check']);
+$router->add('POST', '/auth/reset-password',  [PasswordResetController::class, 'reset']);
+
 // Own profile (every role but the freelance worker, which has /freelancer/profile)
 // and own profile photo (every role). Always the signed-in user; see ProfileController.
 $router->add('GET',    '/profile',       [ProfileController::class, 'show'],        ['customer', 'renting_party', 'maintenance_tech', 'delivery_personnel', 'area_manager', 'admin']);

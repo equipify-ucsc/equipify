@@ -166,6 +166,21 @@ mysql -u root -p equipify < 001_create_users.sql
 
 …and so on for each file in order. In phpMyAdmin, select the `equipify` database and **Import** each file in order.
 
+### Password reset emails
+
+Nothing in the project sends email yet. `backend/core/Mailer.php` is a mock
+transport that writes each message to `backend/storage/mail/` as a plain
+`.eml` text file instead, so on localhost you read the reset link off disk:
+
+```bash
+cat "$(ls -t backend/storage/mail/*.eml | head -1)"
+```
+
+The same line is also logged, so it appears in the terminal running the dev
+server. That folder is blocked over HTTP and gitignored — the files hold live
+reset links. Swapping in a real transport means rewriting `Mailer::send()` and
+nothing else.
+
 ### Demo data
 
 `schema/dump/` holds optional demo data — sample rows for trying the pages out, not part of the numbered build. Run these by hand after the migrations, and skip them entirely on a clean deployment:

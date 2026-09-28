@@ -759,3 +759,33 @@ ol {
   white-space: nowrap;
   border: 0;
 }
+
+/* ---------- Notice panel ----------
+   A calm, non-error block for the "check your email" and "password updated"
+   steps on the Account pages. auth.css had only the red .error-message, so
+   those pages had nothing to say something went right with. Purely additive:
+   no existing page uses these classes. */
+.auth-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-low);
+  color: var(--on-surface-variant);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.auth-notice .material-symbols-outlined {
+  font-size: 20px;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.auth-notice--success {
+  border-color: var(--brand-teal);
+  background: rgba(0, 108, 78, 0.08);
+  color: var(--brand-teal);
+}

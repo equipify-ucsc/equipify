@@ -14,6 +14,7 @@ require_once __DIR__ . '/../core/Router.php';
 require_once __DIR__ . '/../core/ListQuery.php';
 require_once __DIR__ . '/../config/db_config.php';
 require_once __DIR__ . '/../controllers/AuthController.php';
+require_once __DIR__ . '/../controllers/PasswordResetController.php';
 require_once __DIR__ . '/../controllers/AreaManagerController.php';
 require_once __DIR__ . '/../controllers/AdminUserController.php';
 require_once __DIR__ . '/../controllers/AdminDocumentController.php';
