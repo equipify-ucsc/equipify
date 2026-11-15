@@ -42,6 +42,11 @@ final class NotificationService
         if ($link !== null && self::length($link) > 500) {
             throw new InvalidArgumentException('The notification link is too long.');
         }
+        if ($link !== null && (!preg_match('#\A/(?!/)#', $link)
+            || preg_match('/[\x00-\x20\x7f\\\\]/', rawurldecode($link))
+            || strpos(rawurldecode($link), '//') === 0)) {
+            throw new InvalidArgumentException('Notification links must be local absolute paths.');
+        }
 
         try {
             if (!NotificationModel::userExists($userId)) {

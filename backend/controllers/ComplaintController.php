@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../models/ComplaintModel.php';
+require_once __DIR__ . '/../models/ComplaintActionModel.php';
 require_once __DIR__ . '/../core/Upload.php';
 
 final class ComplaintController
@@ -79,7 +80,7 @@ final class ComplaintController
         $row = self::authorized($params);
         $status = Router::jsonBody()['status'] ?? null;
         if (!in_array($status, ComplaintModel::STATUSES, true)) Response::error('Select a valid status.', 422);
-        ComplaintModel::updateStatus((int) $row['complaint_id'], $status);
+        ComplaintActionModel::changeStatus((int) $row['complaint_id'], $status, (int) Auth::userId());
         Response::ok(self::present((array) ComplaintModel::find((int) $row['complaint_id'])));
     }
 

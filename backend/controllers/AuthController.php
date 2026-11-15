@@ -7,6 +7,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../models/UserModel.php';
+require_once __DIR__ . '/../models/LoginAttemptModel.php';
 require_once __DIR__ . '/../services/CustomerRegistrationService.php';
 require_once __DIR__ . '/../services/RentingPartyRegistrationService.php';
 require_once __DIR__ . '/../services/FreelanceWorkerRegistrationService.php';
@@ -292,22 +293,31 @@ final class AuthController
             Response::error('Enter your email and password.', 422);
         }
 
+        // Trust only the direct peer, never client-supplied forwarding headers.
+        $ip = filter_var($_SERVER['REMOTE_ADDR'] ?? '', FILTER_VALIDATE_IP) ?: null;
+        if (LoginAttemptModel::blocked($email, $ip)) {
+            header('Retry-After: 900');
+            Response::error('Too many login attempts. Please try again later.', 429);
+        }
         $user = UserModel::findByEmail($email);
 
         // Verify against a dummy hash for unknown emails so response time doesn't
         // reveal which emails are registered.
-        $hash = $user['password_hash'] ?? password_hash('equipify-dummy-password', PASSWORD_DEFAULT);
+        $hash = $user['password_hash'] ?? '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.';
         $valid = password_verify($password, $hash);
 
         // Same message for unknown email, wrong password and accounts of another role.
         if ($user === null || !$valid || $user['role'] !== $role) {
+            LoginAttemptModel::record($email, $user === null ? null : (int) $user['user_id'], false, $ip, 'invalid_credentials');
             Response::error('Incorrect email or password.', 401);
         }
         if ($user['account_status'] !== 'active') {
+            LoginAttemptModel::record($email, (int) $user['user_id'], false, $ip, 'inactive_account');
             Response::error('This account is not active. Please contact support.', 403);
         }
 
         $userId = (int) $user['user_id'];
+        LoginAttemptModel::record($email, $userId, true, $ip, null);
         if (password_needs_rehash($user['password_hash'], PASSWORD_DEFAULT)) {
             UserModel::updatePasswordHash($userId, password_hash($password, PASSWORD_DEFAULT));
         }

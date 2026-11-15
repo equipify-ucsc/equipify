@@ -7,6 +7,30 @@ require_once __DIR__ . '/../config/db_config.php';
 
 final class NotificationModel
 {
+    public static function listing(int $userId, int $page, int $perPage, bool $unread): array
+    {
+        $where = 'user_id = ?' . ($unread ? ' AND is_read = 0' : '');
+        $db = getDbConnection();
+        $count = $db->prepare('SELECT COUNT(*) FROM notifications WHERE ' . $where);
+        $count->execute([$userId]);
+        $total = (int) $count->fetchColumn();
+        $page = max(1, min($page, max(1, (int) ceil($total / $perPage))));
+        $stmt = $db->prepare('SELECT notification_id, type, title, body, link, is_read, created_at, read_at
+            FROM notifications WHERE ' . $where . ' ORDER BY created_at DESC, notification_id DESC LIMIT '
+            . $perPage . ' OFFSET ' . (($page - 1) * $perPage));
+        $stmt->execute([$userId]);
+        return ['items' => $stmt->fetchAll(), 'page' => $page, 'per_page' => $perPage,
+            'total' => $total, 'total_pages' => (int) ceil($total / $perPage)];
+    }
+
+    public static function markRead(int $userId, ?int $id): int
+    {
+        $stmt = getDbConnection()->prepare('UPDATE notifications SET is_read = 1, read_at = CURRENT_TIMESTAMP
+            WHERE user_id = ? AND is_read = 0' . ($id === null ? '' : ' AND notification_id = ?'));
+        $stmt->execute($id === null ? [$userId] : [$userId, $id]);
+        return $stmt->rowCount();
+    }
+
     public static function userExists(int $userId): bool
     {
         $stmt = getDbConnection()->prepare(

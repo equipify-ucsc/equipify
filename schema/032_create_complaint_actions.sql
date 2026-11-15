@@ -4,8 +4,8 @@ CREATE TABLE complaint_actions (
     actor_user_id    BIGINT UNSIGNED NULL DEFAULT NULL,
     action_type      VARCHAR(50)     NOT NULL,
     description      TEXT            NOT NULL,
-    previous_status  ENUM('submitted', 'under_review', 'resolved', 'dismissed') NULL DEFAULT NULL,
-    new_status       ENUM('submitted', 'under_review', 'resolved', 'dismissed') NULL DEFAULT NULL,
+    previous_status  ENUM('open', 'under_review', 'resolved') NULL DEFAULT NULL,
+    new_status       ENUM('open', 'under_review', 'resolved') NULL DEFAULT NULL,
     created_at       TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT pk_complaint_actions PRIMARY KEY (action_id),

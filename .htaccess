@@ -1,0 +1,15 @@
+Options -Indexes
+
+# Never expose repository metadata, SQL, documentation or private PHP layers.
+RewriteEngine On
+RewriteRule (^|/)\. - [F,L]
+RewriteRule ^(?:schema|docs|tmp|Information)(?:/|$) - [F,L,NC]
+RewriteRule ^backend/(?!api(?:/|$)) - [F,L,NC]
+<FilesMatch "(?i)(\.(sql|log|ini|env|bak|dist|md)$|^composer\.(json|lock)$)">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "same-origin"
+</IfModule>

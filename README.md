@@ -1,4 +1,6 @@
 # Equipify
+
+Week 1 migration, security, API and verification notes: [docs/week-1.md](docs/week-1.md).
  
 A B2B equipment rental platform connecting customers, renting parties, and freelance workers across Sri Lanka's construction and industrial sectors.
  

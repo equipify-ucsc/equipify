@@ -14,6 +14,7 @@ require_once __DIR__ . '/../core/Router.php';
 require_once __DIR__ . '/../core/ListQuery.php';
 require_once __DIR__ . '/../config/db_config.php';
 require_once __DIR__ . '/../controllers/AuthController.php';
+require_once __DIR__ . '/../controllers/NotificationController.php';
 require_once __DIR__ . '/../controllers/AreaManagerController.php';
 require_once __DIR__ . '/../controllers/DeliveryPersonnelController.php';
 require_once __DIR__ . '/../controllers/MaintenanceTechController.php';
@@ -37,7 +38,7 @@ try {
         'path'     => '/',
         'httponly' => true,
         'samesite' => 'Lax',
-        'secure'   => !empty($_SERVER['HTTPS']),
+        'secure'   => isset($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off' && $_SERVER['HTTPS'] !== '',
     ]);
     session_start();
 

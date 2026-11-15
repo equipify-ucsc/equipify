@@ -14,6 +14,10 @@ $router->add('POST', '/auth/login',   [AuthController::class, 'login']);
 $router->add('POST', '/auth/logout',   [AuthController::class, 'logout']);
 $router->add('GET',  '/auth/me',       [AuthController::class, 'me']);
 
+$notificationRoles = ['customer', 'renting_party', 'freelance_worker', 'delivery_personnel', 'maintenance_tech', 'area_manager', 'admin'];
+$router->add('GET', '/notifications', [NotificationController::class, 'index'], $notificationRoles);
+$router->add('POST', '/notifications/read', [NotificationController::class, 'markRead'], $notificationRoles);
+
 // Admin: area manager registration (no public sign-up for this role)
 $router->add('GET',  '/admin/area-managers', [AreaManagerController::class, 'index'], ['admin']);
 $router->add('POST', '/admin/area-managers', [AreaManagerController::class, 'store'], ['admin']);
