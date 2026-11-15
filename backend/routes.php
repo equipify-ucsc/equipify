@@ -182,3 +182,7 @@ $router->add('GET', '/delivery-personnel/message-users', [MessageController::cla
 $router->add('POST', '/delivery-personnel/conversations', [MessageController::class, 'startConversation'], ['delivery_personnel']);
 $router->add('GET', '/technician/message-users', [MessageController::class, 'users'], ['maintenance_tech']);
 $router->add('POST', '/technician/conversations', [MessageController::class, 'startConversation'], ['maintenance_tech']);
+
+$router->add('GET', '/admin/users', [AdminUserController::class, 'index'], ['admin']);
+$router->add('POST', '/admin/users/{id}/suspend', [AdminUserController::class, 'suspend'], ['admin']);
+$router->add('POST', '/admin/users/{id}/ban', [AdminUserController::class, 'ban'], ['admin']);

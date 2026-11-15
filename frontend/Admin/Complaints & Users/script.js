@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Equipify — Complaints & Users
+   Equipify â€” Complaints & Users
    Mobile navigation drawer + table search/filter + modal + user/complaint
    actions (vanilla JS, no dependencies)
    ========================================================================== */
@@ -59,9 +59,12 @@
       var indicator = button.querySelector('.table-sort-indicator');
       var isActive = pageSort.column === columnIndex;
 
-      button.setAttribute('aria-label', 'Sort by ' + button.textContent.trim().replace(/\s+[↑↓]$/, '') + (isActive ? (pageSort.direction === 'asc' ? ', ascending' : ', descending') : ''));
+      var label = button.cloneNode(true);
+      var labelIndicator = label.querySelector('.table-sort-indicator');
+      if (labelIndicator) labelIndicator.remove();
+      button.setAttribute('aria-label', 'Sort by ' + label.textContent.trim() + (isActive ? (pageSort.direction === 'asc' ? ', ascending' : ', descending') : ''));
       if (header) header.setAttribute('aria-sort', isActive ? (pageSort.direction === 'asc' ? 'ascending' : 'descending') : 'none');
-      if (indicator) indicator.textContent = isActive ? (pageSort.direction === 'asc' ? '↑' : '↓') : '↕';
+      if (indicator) indicator.textContent = isActive ? (pageSort.direction === 'asc' ? '\u2191' : '\u2193') : '\u2195';
     });
   }
 
@@ -194,37 +197,59 @@
     });
   });
 
-  // ---------- Row actions: suspend / ban / approve / reject ----------
-  document.querySelectorAll('[data-action]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var action = btn.dataset.action;
-
-      if (action === 'suspend' || action === 'ban') {
-        if (confirm('Are you sure you want to ' + action + ' this user?')) {
-          var row = btn.closest('tr');
-          var badge = row && row.querySelector('.badge-status');
-          if (badge) {
-            badge.textContent = action === 'ban' ? 'Banned' : 'Suspended';
-            badge.className = 'badge-status badge-status--rejected';
-          }
-          window.showToast('User ' + action + 'ed successfully.');
-        }
-      } else if (action === 'approve' || action === 'reject') {
-        var actionRow = btn.closest('tr');
-        var actionBadge = actionRow && actionRow.querySelector('.badge-status');
-        if (actionBadge) {
-          actionBadge.textContent = action === 'approve' ? 'Verified' : 'Rejected';
-          actionBadge.className = 'badge-status ' + (action === 'approve' ? 'badge-status--active' : 'badge-status--rejected');
-        }
-        window.showToast(action === 'approve' ? 'Document verified successfully.' : 'Document rejected.');
-      }
-    });
-  });
-
   // ---------- Generic "View" style buttons ----------
   document.querySelectorAll('[data-toast]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       window.showToast(btn.dataset.toast);
     });
   });
-})();
+  var usersTable = document.getElementById('usersTable');
+  var usersMessage = document.getElementById('usersMessage');
+  function userRow(user) {
+    var row = document.createElement('tr');
+    row.dataset.status = user.account_status;
+    [user.full_name, user.role, user.account_status, user.user_id].forEach(function (value) {
+      var cell = row.insertCell(); cell.textContent = value;
+    });
+    var actions = row.insertCell();
+    ['suspend', 'ban'].forEach(function (action) {
+      var button = document.createElement('button');
+      button.type = 'button'; button.className = 'btn-outline btn-sm'; button.textContent = action;
+      button.disabled = user.account_status === 'banned' || (action === 'suspend' && user.account_status === 'suspended');
+      button.addEventListener('click', async function () {
+        var reason = window.prompt('Reason to ' + action + ' ' + user.full_name + ' (maximum 255 characters):');
+        if (reason === null) return;
+        reason = reason.trim();
+        if (!reason || Array.from(reason).length > 255) { usersMessage.textContent = 'Enter a reason of 1 to 255 characters.'; return; }
+        if (!window.confirm('Confirm ' + action + ' for user #' + user.user_id + '?')) return;
+        actions.querySelectorAll('button').forEach(function (b) { b.disabled = true; });
+        usersMessage.textContent = 'Saving account status...';
+        var result = await EquipifyApi.post('/admin/users/' + user.user_id + '/' + action, {reason: reason});
+        if (result.ok) {
+          var replacement = userRow(result.data);
+          var state = tableStates.get('usersTable');
+          state.orderedRows[state.orderedRows.indexOf(row)] = replacement;
+          row.replaceWith(replacement); renderTable(usersTable, state);
+          usersMessage.textContent = 'Account status saved.';
+        } else {
+          usersMessage.textContent = result.error;
+          actions.querySelectorAll('button').forEach(function (b) { b.disabled = user.account_status === 'banned' || (b.textContent === 'suspend' && user.account_status === 'suspended'); });
+        }
+      });
+      actions.appendChild(button);
+    });
+    return row;
+  }
+  async function loadUsers() {
+    usersMessage.textContent = 'Loading users...';
+    var result = await EquipifyApi.get('/admin/users');
+    if (!result.ok) {
+      usersMessage.textContent = result.error + ' ';
+      var retry = document.createElement('button'); retry.textContent = 'Retry'; retry.onclick = loadUsers; usersMessage.appendChild(retry); return;
+    }
+    var state = tableStates.get('usersTable');
+    usersTable.tBodies[0].replaceChildren(); state.orderedRows = result.data.map(userRow);
+    renderTable(usersTable, state);
+    usersMessage.textContent = result.data.length ? result.data.length + ' users' : 'No operational users found.';
+  }
+  loadUsers();})();

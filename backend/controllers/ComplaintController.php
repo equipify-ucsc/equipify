@@ -11,6 +11,7 @@ final class ComplaintController
 
     public static function metadata(array $params = []): void
     {
+        self::requireReader();
         Response::ok(['categories' => ComplaintModel::CATEGORIES, 'statuses' => ComplaintModel::STATUSES,
             'target_roles' => ComplaintModel::TARGET_ROLES[Auth::role()] ?? [],
             'max_attachment_bytes' => self::MAX_ATTACHMENT_BYTES]);
@@ -18,11 +19,14 @@ final class ComplaintController
 
     public static function targets(array $params = []): void
     {
+        Auth::requireActiveAccount();
+        Auth::requireRole(array_keys(ComplaintModel::TARGET_ROLES));
         Response::ok(ComplaintModel::targets((int) Auth::userId(), (string) Auth::role()));
     }
 
     public static function index(array $params = []): void
     {
+        self::requireReader();
         $owner = in_array(Auth::role(), ComplaintModel::REVIEWERS, true) ? null : (int) Auth::userId();
         $data = ComplaintModel::listing($owner, ListQuery::search(),
             ListQuery::enum('status', ComplaintModel::STATUSES), ListQuery::search('category'),
@@ -33,6 +37,7 @@ final class ComplaintController
 
     public static function store(array $params = []): void
     {
+        Auth::requireActiveAccount();
         Auth::requireRole(array_keys(ComplaintModel::TARGET_ROLES));
         $in = Router::jsonBody();
         $id = filter_var($in['against_user_id'] ?? null, FILTER_VALIDATE_INT);
@@ -76,6 +81,7 @@ final class ComplaintController
 
     public static function updateStatus(array $params = []): void
     {
+        Auth::requireActiveAccount();
         Auth::requireRole(['admin']);
         $row = self::authorized($params);
         $status = Router::jsonBody()['status'] ?? null;
@@ -107,12 +113,19 @@ final class ComplaintController
 
     private static function authorized(array $params): array
     {
+        self::requireReader();
         $id = filter_var($params['id'] ?? null, FILTER_VALIDATE_INT);
         $row = ($id === false || $id < 1) ? null : ComplaintModel::find($id);
         if ($row === null || !ComplaintModel::canView($row, (int) Auth::userId(), (string) Auth::role())) {
             Response::error('Complaint not found.', 404);
         }
         return $row;
+    }
+
+    private static function requireReader(): void
+    {
+        Auth::requireActiveAccount();
+        Auth::requireRole(array_merge(array_keys(ComplaintModel::TARGET_ROLES), ComplaintModel::REVIEWERS));
     }
 
     private static function present(array $row): array

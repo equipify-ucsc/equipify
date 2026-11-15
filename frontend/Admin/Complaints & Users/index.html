@@ -15,14 +15,11 @@
   <!-- Desktop Top Bar -->
   <header class="topbar topbar--desktop">
     <div class="topbar-brand">
-      <div class="topbar-logo">
-        <img alt="Equipify Logo" src="https://lh3.googleusercontent.com/d/1SJMNJWiRtoW3SBn_i18aeXhflRq7Y92g">
-      </div>
       <span class="brand-name">Equipify</span>
     </div>
     <div class="topbar-actions">
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">Dishanthan<span class="topbar-user-role">Super Administrator</span></div>
+        <div class="topbar-user-name type-label-md"><span data-user-name></span><span class="topbar-user-role">Admin</span></div>
         <div class="avatar avatar--placeholder" aria-hidden="true">
           <span class="icon icon-base">person</span>
         </div>
@@ -128,37 +125,15 @@
 
       <div class="card" style="margin-top: 18px;">
         <div class="section-title">
-          <h3 class="type-headline-sm">Users requiring action</h3>
-          <span class="badge-status badge-status--rejected">3 flagged</span>
+          <h3 class="type-headline-sm">Operational users</h3>
+          <span id="usersMessage" role="status">Loading users...</span>
         </div>
         <div class="table-wrap">
           <table class="table" id="usersTable">
             <thead>
-              <tr><th><button class="table-sort" type="button" data-sort-column="0">User <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th><button class="table-sort" type="button" data-sort-column="1">Role <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th><button class="table-sort" type="button" data-sort-column="2">Policy status <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th><button class="table-sort" type="button" data-sort-column="3">Active rentals <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th>Actions</th></tr>
+              <tr><th><button class="table-sort" type="button" data-sort-column="0">User <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th><button class="table-sort" type="button" data-sort-column="1">Role <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th><button class="table-sort" type="button" data-sort-column="2">Account status <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th><button class="table-sort" type="button" data-sort-column="3">User ID <span class="table-sort-indicator" aria-hidden="true"></span></button></th><th>Actions</th></tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><strong>FastLift Operator</strong></td>
-                <td>Freelancer</td>
-                <td><span class="badge-status badge-status--rejected">Flagged</span></td>
-                <td>1</td>
-                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-action="suspend">Suspend</button> <button class="btn-danger btn-sm" type="button" data-action="ban">Ban</button></td>
-              </tr>
-              <tr>
-                <td><strong>Rana Equipment</strong></td>
-                <td>Renting Party</td>
-                <td><span class="badge-status badge-status--pending">Review</span></td>
-                <td>4</td>
-                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-action="suspend">Suspend</button> <button class="btn-danger btn-sm" type="button" data-action="ban">Ban</button></td>
-              </tr>
-              <tr>
-                <td><strong>PrimeBuild</strong></td>
-                <td>Customer</td>
-                <td><span class="badge-status badge-status--active">Good</span></td>
-                <td>2</td>
-                <td class="table-actions"><button class="btn-outline btn-sm" type="button" data-toast="User profile opened.">View</button></td>
-              </tr>
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
         <div class="table-pagination" data-pagination-for="usersTable" aria-label="Users table pagination"></div>

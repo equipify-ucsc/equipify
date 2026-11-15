@@ -140,4 +140,38 @@ final class UserModel
         $stmt = getDbConnection()->prepare('UPDATE users SET password_hash = :h WHERE user_id = :id');
         $stmt->execute([':h' => $hash, ':id' => $userId]);
     }
+    public const OPERATIONAL_ROLES = ['customer', 'renting_party', 'freelance_worker', 'maintenance_tech', 'delivery_personnel'];
+
+    public static function operationalUsers(): array {
+        return getDbConnection()->query("SELECT user_id, full_name, email, role, account_status, status_reason, status_changed_by, status_changed_at FROM users WHERE role IN ('customer','renting_party','freelance_worker','maintenance_tech','delivery_personnel') ORDER BY user_id")->fetchAll();
+    }
+
+    public static function sanction(int $id, int $actorId, string $status, string $reason): array {
+        $db = getDbConnection();
+        $db->beginTransaction();
+        try {
+            // Lock in ID order, including the actor, so concurrent sanctions cannot
+            // authorize against stale actor status or overwrite a ban.
+            $stmt = $db->prepare('SELECT user_id, role, account_status FROM users WHERE user_id IN (?, ?) ORDER BY user_id FOR UPDATE');
+            $stmt->execute([$id, $actorId]);
+            $rows = [];
+            foreach ($stmt->fetchAll() as $row) $rows[(int)$row['user_id']] = $row;
+            $actor = $rows[$actorId] ?? null;
+            if (!$actor || $actor['role'] !== 'admin' || $actor['account_status'] !== 'active') throw new DomainException('Active Admin required.', 403);
+            $target = $rows[$id] ?? null;
+            if (!$target) throw new DomainException('User not found.', 404);
+            if (!in_array($target['role'], self::OPERATIONAL_ROLES, true)) throw new DomainException('This account cannot be sanctioned.', 403);
+            if (!in_array($status, ['suspended', 'banned'], true) || trim($reason) === '' || mb_strlen($reason, 'UTF-8') > 255) throw new DomainException('Invalid sanction or reason.', 422);
+            if ($target['account_status'] === 'banned' && $status === 'suspended') throw new DomainException('A banned account cannot be suspended.', 409);
+            if ($target['account_status'] !== $status) {
+                $stmt = $db->prepare('UPDATE users SET account_status = ?, status_reason = ?, status_changed_by = ?, status_changed_at = NOW() WHERE user_id = ?');
+                $stmt->execute([$status, $reason, $actorId, $id]);
+            }
+            $stmt = $db->prepare('SELECT user_id, full_name, email, role, account_status, status_reason, status_changed_by, status_changed_at FROM users WHERE user_id = ?');
+            $stmt->execute([$id]);
+            $result = $stmt->fetch();
+            $db->commit();
+            return $result;
+        } catch (Throwable $e) { if ($db->inTransaction()) $db->rollBack(); throw $e; }
+    }
 }

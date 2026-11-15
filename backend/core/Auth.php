@@ -6,6 +6,8 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/../models/UserModel.php';
+
 final class Auth
 {
     /** Marks the session as signed in as this user. Call after credentials are verified. */
@@ -42,6 +44,25 @@ final class Auth
     public static function role(): ?string
     {
         return isset($_SESSION['role']) ? (string) $_SESSION['role'] : null;
+    }
+
+    /** Revalidate sensitive operations against current account state, not a cached role. */
+    public static function requireActiveAccount(): array
+    {
+        $id = self::userId();
+        if ($id === null) Response::error('Please log in to continue.', 401);
+        $user = UserModel::findById($id);
+        if ($user === null || $user['role'] !== self::role()) {
+            $_SESSION = [];
+            Response::error('Your session is no longer valid. Please log in again.', 401);
+        }
+        if ($user['account_status'] !== 'active') {
+            // Clearing server-side identity prevents an old cookie from regaining
+            // privileges if an administrator later reactivates the account.
+            $_SESSION = [];
+            Response::error('This account is not active. Please contact support.', 403);
+        }
+        return $user;
     }
 
     /**

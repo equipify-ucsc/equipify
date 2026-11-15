@@ -309,3 +309,17 @@
   font-size: 12px;
   text-align: center;
 }
+
+/* Keep the sidebar allowance inside this page's desktop width. */
+.main-content, .content-inner, .card { min-width: 0; }
+.table-wrap { width: 100%; max-width: 100%; }
+@media (min-width: 768px) {
+  .main-content { width: calc(100% - var(--sidebar-width)); }
+}
+.topbar-user-name { overflow-wrap: anywhere; min-width: 0; }
+.topbar-user { min-width: 0; }
+.section-title { flex-wrap: wrap; }
+#usersMessage { overflow-wrap: anywhere; }
+/* Override corrupted glyphs from the shared complaint stylesheet on this page. */
+#complaintTable th[aria-sort="ascending"] [data-complaint-sort]::after { content: ' \2191'; }
+#complaintTable th[aria-sort="descending"] [data-complaint-sort]::after { content: ' \2193'; }

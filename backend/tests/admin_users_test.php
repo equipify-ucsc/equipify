@@ -1,0 +1,23 @@
+<?php
+declare(strict_types=1);
+require __DIR__ . '/complaints_security_test.php';
+$admin = securityLogin($accounts['admin']);
+$target = $accounts['customer']['user_id'];
+$oldSession = securityLogin($accounts['customer']);
+foreach (['', str_repeat('x',256), []] as $reason) securityCheck(securityRequest($admin,'POST',"/backend/api/admin/users/$target/suspend",['reason'=>$reason])['status']===422,'Invalid reason');
+foreach (['admin','area_manager'] as $role) securityCheck(securityRequest($admin,'POST','/backend/api/admin/users/'.$accounts[$role]['user_id'].'/ban',['reason'=>'Synthetic'])['status']===403,'Protected target');
+$r=securityRequest($admin,'POST',"/backend/api/admin/users/$target/suspend",['reason'=>'Synthetic suspension','actor_id'=>$target]);
+securityCheck($r['status']===200 && $r['body']['data']['status_changed_by']==$accounts['admin']['user_id'],'Suspend and trusted actor');
+$first=$r['body']['data'];
+securityCheck(securityRequest($oldSession,'GET','/backend/api/complaints')['status']===403,'Existing suspended session denied');
+$r=securityRequest($admin,'POST',"/backend/api/admin/users/$target/suspend",['reason'=>'Repeated']);
+securityCheck($r['body']['data']===$first,'Repeat preserves audit');
+securityCheck(securityRequest($admin,'POST',"/backend/api/admin/users/$target/ban",['reason'=>'Synthetic ban'])['status']===200,'Ban');
+securityCheck(securityRequest($admin,'POST',"/backend/api/admin/users/$target/suspend",['reason'=>'Invalid transition'])['status']===409,'Ban cannot become suspension');
+$r=securityRequest($admin,'GET','/backend/api/admin/users');
+$listed=array_column($r['body']['data'],null,'user_id');
+securityCheck($listed[$target]['account_status']==='banned','Fresh list persists ban');
+securityCheck(securityRequest(securityClient(),'GET','/backend/api/admin/users')['status']===401,'Anonymous denied');
+$setStatus->execute(['suspended',$accounts['admin']['user_id']]);
+securityCheck(securityRequest($admin,'GET','/backend/api/admin/users')['status']===403,'Inactive Admin denied');
+echo "PASS: sanction and complaint checks: $checks\n";

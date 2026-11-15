@@ -33,12 +33,16 @@ final class AreaManagerController
     /** GET /admin/area-managers */
     public static function index(array $params = []): void
     {
+        Auth::requireActiveAccount();
+        Auth::requireRole(['admin']);
         Response::ok(AreaManagerModel::all());
     }
 
     /** POST /admin/area-managers — the registering admin is taken from the session. */
     public static function store(array $params = []): void
     {
+        Auth::requireActiveAccount();
+        Auth::requireRole(['admin']);
         $in = Router::jsonBody();
 
         $fullName = self::str($in, 'full_name');
@@ -94,6 +98,8 @@ final class AreaManagerController
     /** PUT /admin/area-managers/{id}/area; null explicitly clears assignment. */
     public static function assignArea(array $params = []): void
     {
+        Auth::requireActiveAccount();
+        Auth::requireRole(['admin']);
         $rawId = $params['id'] ?? '';
         $id = is_string($rawId) && preg_match('/\A[1-9][0-9]*\z/', $rawId)
             ? filter_var($rawId, FILTER_VALIDATE_INT) : false;

@@ -32,6 +32,7 @@ require_once __DIR__ . '/../controllers/EquipmentBrowseController.php';
 require_once __DIR__ . '/../controllers/EquipmentTypeRequestController.php';
 require_once __DIR__ . '/../controllers/ComplaintController.php';
 require_once __DIR__ . '/../controllers/MessageController.php';
+require_once __DIR__ . '/../controllers/AdminUserController.php';
 
 try {
     session_set_cookie_params([

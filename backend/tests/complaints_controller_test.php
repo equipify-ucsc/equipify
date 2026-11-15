@@ -36,8 +36,15 @@ function response(callable $call, int $expected): array
 }
 $db = getDbConnection();
 $before = (int) $db->query('SELECT COUNT(*) FROM complaints')->fetchColumn();
+$activeUsers = [];
+foreach ($db->query("SELECT user_id, role FROM users WHERE account_status = 'active' ORDER BY user_id")->fetchAll() as $user) {
+    $activeUsers[$user['role']] ??= (int) $user['user_id'];
+}
+foreach (array_merge(array_keys(ComplaintModel::TARGET_ROLES), ComplaintModel::REVIEWERS) as $role) {
+    if (!isset($activeUsers[$role])) throw new RuntimeException('An active test user is required for role: ' . $role);
+}
 foreach (array_keys(ComplaintModel::TARGET_ROLES) as $role) {
-    $_SESSION = ['user_id' => PHP_INT_MAX, 'role' => $role];
+    $_SESSION = ['user_id' => $activeUsers[$role], 'role' => $role];
     // All targets here are deliberately invalid, so the tests never insert a row.
     Router::$input = ['against_user_id' => PHP_INT_MAX, 'category' => 'Other', 'subject' => 'Validation',
         'description' => 'Validation', 'role' => 'admin', 'complainant_id' => 1, 'complainant_role' => 'renting_party'];
@@ -50,15 +57,18 @@ foreach (array_keys(ComplaintModel::TARGET_ROLES) as $role) {
     response(static function () { ComplaintController::targets(); }, 200);
 }
 foreach (['admin', 'area_manager'] as $role) {
-    $_SESSION = ['user_id' => PHP_INT_MAX, 'role' => $role];
+    $_SESSION = ['user_id' => $activeUsers[$role], 'role' => $role];
     response(static function () { ComplaintController::store(); }, 403);
     $_GET = ['category' => 'Other', 'sort' => 'subject', 'direction' => 'asc'];
     response(static function () { ComplaintController::index(); }, 200);
     response(static function () { ComplaintController::metadata(); }, 200);
 }
-$_SESSION = ['user_id' => PHP_INT_MAX, 'role' => 'area_manager'];
+$_SESSION = ['user_id' => $activeUsers['area_manager'], 'role' => 'area_manager'];
 response(static function () { ComplaintController::updateStatus(['id' => 1]); }, 403);
 $_SESSION = [];
 response(static function () { ComplaintController::store(); }, 401);
+$_SESSION = ['user_id' => PHP_INT_MAX, 'role' => 'admin'];
+response(static function () { ComplaintController::index(); }, 401);
+if ($_SESSION !== []) throw new RuntimeException('Missing-account session identity was retained.');
 if ((int) $db->query('SELECT COUNT(*) FROM complaints')->fetchColumn() !== $before) throw new RuntimeException('Unexpected database write');
 echo "PASS: $checks controller response checks; complaint row count unchanged.\n";

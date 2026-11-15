@@ -8,11 +8,15 @@ final class AreaController
 
     public static function index(array $params = []): void
     {
+        Auth::requireActiveAccount();
+        Auth::requireRole(['admin']);
         Response::ok(array_map([self::class, 'present'], AreaModel::all()));
     }
 
     public static function store(array $params = []): void
     {
+        Auth::requireActiveAccount();
+        Auth::requireRole(['admin']);
         [$name, $description] = self::input(0);
         try { $id = AreaModel::insert($name, $description); }
         catch (PDOException $e) { self::duplicateOrThrow($e); }
@@ -21,6 +25,8 @@ final class AreaController
 
     public static function update(array $params = []): void
     {
+        Auth::requireActiveAccount();
+        Auth::requireRole(['admin']);
         $id = (int) self::area($params)['area_id'];
         [$name, $description] = self::input($id);
         try { AreaModel::update($id, $name, $description); }
@@ -33,6 +39,8 @@ final class AreaController
 
     private static function status(array $params, bool $active): void
     {
+        Auth::requireActiveAccount();
+        Auth::requireRole(['admin']);
         $id = (int) self::area($params)['area_id'];
         // The endpoint determines the status; contradictory payloads are rejected.
         $in = Router::jsonBody();
