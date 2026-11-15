@@ -19,8 +19,11 @@ final class MaintenanceTechModel
     {
         $stmt = getDbConnection()->prepare(
             'INSERT INTO maintenance_techs
-                 (user_id, registered_by, specialization, years_experience)
-             VALUES (:user_id, :registered_by, :specialization, :years_experience)'
+                 (user_id, registered_by, area_id, specialization, years_experience)
+             SELECT :user_id, am.user_id, a.area_id, :specialization, :years_experience
+             FROM area_managers am JOIN areas a ON a.area_id = am.area_id AND a.is_active = 1
+             JOIN users actor ON actor.user_id = am.user_id AND actor.account_status = \'active\' AND actor.role = \'area_manager\'
+             WHERE am.user_id = :registered_by'
         );
         $stmt->execute([
             ':user_id'          => $userId,
@@ -28,6 +31,7 @@ final class MaintenanceTechModel
             ':specialization'   => $t['specialization'],
             ':years_experience' => $t['years_experience'],
         ]);
+        if ($stmt->rowCount() !== 1) throw new DomainException('An active assigned area is required.', 409);
     }
 
     /**
@@ -48,23 +52,31 @@ final class MaintenanceTechModel
     }
 
     /**
-     * The roster of one area manager only — an area manager never sees another
-     * region's technicians.
+     * Shared roster for the manager's current active area; unassigned staff
+     * are excluded without falling back to registration ownership.
      *
      * @return array<int,array<string,mixed>>
      */
-    public static function allForManager(int $areaManagerId): array
+    public static function findForManager(int $userId, int $managerId): ?array
+    {
+        return self::allForManager($managerId, $userId)[0] ?? null;
+    }
+
+    public static function allForManager(int $areaManagerId, ?int $userId = null): array
     {
         $stmt = getDbConnection()->prepare(
-            'SELECT u.user_id, u.full_name, u.email, u.phone, u.district,
+            'SELECT u.user_id, u.full_name, u.email, u.phone, u.district, a.area_id, a.name AS area_name,
                     mt.specialization, mt.years_experience, mt.availability_status,
                     u.account_status, u.created_at
                FROM maintenance_techs mt
                JOIN users u ON u.user_id = mt.user_id
-              WHERE mt.registered_by = :manager_id
-              ORDER BY u.created_at DESC'
+               JOIN areas a ON a.area_id = mt.area_id AND a.is_active = 1
+               JOIN area_managers am ON am.area_id = a.area_id
+               JOIN users actor ON actor.user_id = am.user_id AND actor.account_status = \'active\'
+              WHERE am.user_id = :manager_id' . ($userId === null ? '' : ' AND mt.user_id = :user_id') . '
+              ORDER BY u.created_at DESC, u.user_id DESC'
         );
-        $stmt->execute([':manager_id' => $areaManagerId]);
+        $stmt->execute($userId === null ? [':manager_id' => $areaManagerId] : [':manager_id' => $areaManagerId, ':user_id' => $userId]);
         return $stmt->fetchAll();
     }
 }

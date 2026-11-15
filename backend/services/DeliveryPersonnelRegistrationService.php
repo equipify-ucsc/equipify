@@ -9,6 +9,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../config/db_config.php';
 require_once __DIR__ . '/../models/UserModel.php';
 require_once __DIR__ . '/../models/DeliveryPersonnelModel.php';
+require_once __DIR__ . '/../models/AreaManagerModel.php';
 
 final class DeliveryPersonnelRegistrationService
 {
@@ -25,6 +26,7 @@ final class DeliveryPersonnelRegistrationService
         $db = getDbConnection();
         $db->beginTransaction();
         try {
+            AreaManagerModel::operationalArea($areaManagerId, true);
             $userId = UserModel::insert([
                 'email'         => $in['email'],
                 'password_hash' => password_hash($in['password'], PASSWORD_DEFAULT),

@@ -45,7 +45,7 @@
     table.querySelectorAll('tbody tr').forEach(function (row) {
       var matchesQuery = row.textContent.toLowerCase().includes(query);
       var matchesStatus = !status || row.getAttribute('data-status') === status;
-      row.hidden = !(matchesQuery && matchesStatus);
+      row.hidden = !(matchesQuery && matchesStatus && AreaResources.matches(row));
     });
   }
 
@@ -94,13 +94,14 @@
   function messageRow(text) {
     var tr = document.createElement('tr');
     var td = cell(text);
-    td.colSpan = 5;
+    td.colSpan = 6;
     tr.appendChild(td);
     return tr;
   }
 
   function renderTechnicians(technicians) {
     tableBody.textContent = '';
+    AreaResources.rows(technicians);
     if (technicians.length === 0) {
       tableBody.appendChild(messageRow('No maintenance technicians registered yet.'));
       return;
@@ -120,6 +121,8 @@
       tr.appendChild(cell(t.phone + ' · ' + t.email));
       tr.appendChild(cell(categories));
 
+      tr.dataset.area = String(t.area_id);
+      tr.appendChild(cell(t.area_name));
       var statusCell = document.createElement('td');
       var badge = document.createElement('span');
       badge.className = 'badge-status badge-status--' + status.badge;
@@ -135,7 +138,7 @@
       view.type = 'button';
       view.textContent = 'View';
       view.addEventListener('click', function () {
-        window.showToast(t.full_name + ' — profile view is coming soon.');
+        AreaResources.view('/area-manager/technicians/' + t.user_id);
       });
       wrap.appendChild(view);
       actions.appendChild(wrap);
@@ -151,6 +154,7 @@
       if (res.ok) {
         renderTechnicians(res.data);
       } else {
+        AreaResources.rows([]);
         tableBody.textContent = '';
         tableBody.appendChild(messageRow(res.error));
       }

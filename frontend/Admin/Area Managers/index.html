@@ -173,17 +173,57 @@
         <div class="table-wrap">
           <table class="table" id="managerTable">
             <thead>
-              <tr><th>Manager</th><th>District</th><th>Email</th><th>Phone</th><th>Status</th></tr>
+              <tr><th>Manager</th><th>District</th><th>Assigned Area</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr>
             </thead>
             <tbody>
-              <tr><td colspan="5">Loading…</td></tr>
+              <tr><td colspan="7">Loading…</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
+      <section class="card area-management" aria-labelledby="areasTitle">
+        <div class="page-head">
+          <div><h2 class="type-headline-sm" id="areasTitle">Areas</h2><p>Manage operational areas independently of districts.</p></div>
+          <button class="btn-primary" type="button" id="areaCreate">Create Area</button>
+        </div>
+        <p id="areaMessage" role="status" hidden></p>
+        <div class="toolbar">
+          <div class="field"><label for="areaSearch">Search areas</label><input class="search-input" id="areaSearch" type="search" placeholder="Name or description"></div>
+          <div class="field"><label for="areaStatus">Status</label><select class="select-filter" id="areaStatus"><option value="">All statuses</option><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+          <button class="btn-outline" type="button" id="areaRefresh">Refresh Areas</button>
+        </div>
+        <p id="areaCount" aria-live="polite"></p>
+        <div class="table-wrap area-table-wrap"><table class="table" id="areaTable" aria-labelledby="areasTitle" role="table"><colgroup><col class="area-col-name"><col class="area-col-description"><col class="area-col-status"><col class="area-col-actions"></colgroup><thead role="rowgroup"><tr role="row"><th scope="col">Name</th><th scope="col">Description</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead><tbody role="rowgroup"><tr><td colspan="4">Loading areas...</td></tr></tbody></table></div>
+      </section>
     </div>
   </main>
+
+  <div class="modal-backdrop" id="areaModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="areaFormTitle">
+      <div class="modal-head"><h3 class="type-headline-sm" id="areaFormTitle">Create Area</h3><button class="modal-close" type="button" data-area-close aria-label="Close area form"><span class="icon" aria-hidden="true">close</span></button></div>
+      <form id="areaForm">
+        <p id="areaFormError" class="area-error" role="alert" hidden></p>
+        <div class="form-grid">
+          <div class="field field--full"><label class="field-label" for="areaName">Area name</label><input class="input-standard" id="areaName" name="name" maxlength="100" required></div>
+          <div class="field field--full"><label class="field-label" for="areaDescription">Description (optional)</label><textarea class="input-standard" id="areaDescription" name="description" maxlength="5000" rows="4"></textarea></div>
+        </div>
+        <div class="modal-actions"><button class="btn-outline" type="button" data-area-close>Cancel</button><button class="btn-primary" type="submit" id="areaSave">Create Area</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="managerAreaModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="managerAreaTitle">
+      <div class="modal-head"><h3 class="type-headline-sm" id="managerAreaTitle">Assign Area</h3><button class="modal-close" type="button" data-assignment-close aria-label="Close area assignment"><span class="icon" aria-hidden="true">close</span></button></div>
+      <form id="managerAreaForm">
+        <p id="managerAreaContext"></p>
+        <p id="managerAreaError" class="area-error" role="alert" hidden></p>
+        <div class="field"><label class="field-label" for="managerAreaSelect">Area</label><select class="input-standard" id="managerAreaSelect" name="area_id" aria-describedby="managerAreaSelection"><option value="">Unassigned</option></select><p id="managerAreaSelection" role="status"></p></div>
+        <div class="modal-actions"><button class="btn-outline" type="button" data-assignment-close>Cancel</button><button class="btn-primary" id="managerAreaSave" type="submit">Save Assignment</button></div>
+      </form>
+    </div>
+  </div>
 
   <!-- Register area manager modal -->
   <div class="modal-backdrop" id="managerModal">
@@ -259,5 +299,6 @@
   <script src="../../shared/session.js"></script>
   <script src="../../shared/script.js"></script>
   <script src="script.js"></script>
+  <script src="areas.js"></script>
 </body>
 </html>

@@ -51,7 +51,7 @@
       var rowStatus = row.getAttribute('data-status');
       var matchesQuery = row.textContent.toLowerCase().includes(query);
       var matchesStatus = status ? rowStatus === status : rowStatus !== 'retired';
-      row.hidden = !(matchesQuery && matchesStatus);
+      row.hidden = !(matchesQuery && matchesStatus && AreaResources.matches(row));
     });
   }
 
@@ -95,7 +95,7 @@
   function messageRow(text) {
     var tr = document.createElement('tr');
     var td = cell(text);
-    td.colSpan = 6;
+    td.colSpan = 7;
     tr.appendChild(td);
     return tr;
   }
@@ -120,11 +120,13 @@
 
     var tr = document.createElement('tr');
     tr.setAttribute('data-status', status);
+    tr.dataset.area = String(v.area_id);
     tr.appendChild(cell(v.plate_number, true));
     tr.appendChild(cell(v.type_label));
     tr.appendChild(cell(formatKg(v.max_load_kg)));
     tr.appendChild(cell(formatMetres(v.cargo_length_m) + ' × ' + formatMetres(v.cargo_width_m) + ' m'));
 
+    tr.appendChild(cell(v.area_name));
     var statusCell = document.createElement('td');
     var badge = document.createElement('span');
     badge.className = 'badge-status badge-status--' + meta.badge;
@@ -165,6 +167,7 @@
 
   function renderVehicles(vehicles) {
     tableBody.textContent = '';
+    AreaResources.rows(vehicles);
     renderStats(vehicles);
     if (vehicles.length === 0) {
       tableBody.appendChild(messageRow('No vehicles in your fleet yet. Use "Add Vehicle" to add one.'));
@@ -289,7 +292,7 @@
   // ---------- Remove / restore ----------
   function removeVehicle(v) {
     var question = 'Remove vehicle ' + v.plate_number + ' from the fleet?\n\n' +
-      'If it has delivery history it will be retired instead, and you can restore it later.';
+      'The vehicle record will be retained and can be restored later.';
     if (!window.confirm(question)) return;
 
     EquipifyApi.del('/area-manager/vehicles/' + v.vehicle_id).then(function (res) {
@@ -298,7 +301,7 @@
         return;
       }
       window.showToast(res.data.outcome === 'retired'
-        ? 'Vehicle ' + v.plate_number + ' has delivery history, so it was retired instead.'
+        ? 'Vehicle ' + v.plate_number + ' was retired and can be restored later.'
         : 'Vehicle ' + v.plate_number + ' deleted.');
       loadVehicles();
     });

@@ -1,0 +1,10 @@
+.topbar-user-name { min-width: 0; max-width: min(40vw, 22rem); }
+.topbar-user-name > [data-user-name],
+.topbar-user-name > .topbar-user-role {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+[data-resource-area] { overflow-wrap: anywhere; }

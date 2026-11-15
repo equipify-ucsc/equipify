@@ -114,13 +114,13 @@ foreach (['admin','area_manager','delivery_personnel','customer','renting_party'
 $admin = $users['admin']; $manager = $users['area_manager']; $driver = $users['delivery_personnel'];
 $db->exec("INSERT INTO admins (user_id) VALUES ($admin)");
 AreaManagerModel::insert($manager, $admin);
-DeliveryPersonnelModel::insert($driver, $manager, ['driving_license_no' => 'W1-TEST', 'license_class' => 'B', 'license_expiry' => '2030-01-01']);
-verify(count(AreaManagerModel::all()) === 1 && count(DeliveryPersonnelModel::allForManager($manager)) === 1, 'Existing personnel models retain compatibility');
-verify($db->query("SELECT area_id FROM delivery_personnel WHERE user_id = $driver")->fetchColumn() === null, 'Legacy registration remains unassigned');
+rejected(static fn() => AreaManagerModel::operationalArea($manager), 'Unassigned manager has no operational scope');
 $db->exec("INSERT INTO areas (name) VALUES ('Test region')");
 $area = (int) $db->lastInsertId();
-$db->exec("UPDATE area_managers SET area_id = $area WHERE user_id = $manager");
-$db->exec("UPDATE delivery_personnel SET area_id = $area WHERE user_id = $driver");
+AreaManagerModel::assignArea($manager, $area);
+DeliveryPersonnelModel::insert($driver, $manager, ['driving_license_no' => 'W1-TEST', 'license_class' => 'B', 'license_expiry' => '2030-01-01']);
+verify(count(AreaManagerModel::all()) === 1 && count(DeliveryPersonnelModel::allForManager($manager)) === 1, 'Existing personnel models retain compatibility');
+verify((int) $db->query("SELECT area_id FROM delivery_personnel WHERE user_id = $driver")->fetchColumn() === $area, 'New registration inherits active area');
 rejected(static fn() => $db->exec("DELETE FROM areas WHERE area_id = $area"), 'Assigned area deletion restricted');
 $db->exec("INSERT INTO vehicles (managed_by, plate_number, vehicle_type, max_load_kg, cargo_length_m, cargo_width_m)
     VALUES ($manager, 'W1-TEST', 'lorry', 1000, 4, 2)");

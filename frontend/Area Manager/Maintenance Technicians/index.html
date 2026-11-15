@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../shared/styles.css">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../shared/area-manager-display.css">
 </head>
 <body data-require-auth="area_manager" data-login-url="../Login/index.html">
 
@@ -21,7 +22,7 @@
     </div>
     <div class="topbar-actions">
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md">K. Perera<span class="topbar-user-role">Area Manager · Colombo Region</span></div>
+        <div class="topbar-user-name type-label-md"><span data-user-name>Loading...</span><span class="topbar-user-role">Area Manager · <span data-manager-area>Loading area...</span></span></div>
         <div class="avatar avatar--placeholder" aria-hidden="true">
           <span class="icon icon-base">person</span>
         </div>
@@ -119,7 +120,7 @@
       <div class="page-head">
         <div>
           <h1 class="type-headline-lg page-title">Maintenance Technicians</h1>
-          <p class="type-body-md page-subtitle">Register and manage maintenance technicians assigned to Colombo Region.</p>
+          <p class="type-body-md page-subtitle">Register and manage maintenance technicians in your assigned operational area.</p>
         </div>
         <div class="page-head-actions">
           <button class="btn-primary" type="button" data-modal-open="technicianModal">
@@ -131,19 +132,19 @@
       <!-- Stat cards -->
       <div class="admin-grid admin-grid--3">
         <div class="card">
-          <p class="stat-card-label">Active</p>
-          <h3 class="stat-card-value">16</h3>
+          <p class="stat-card-label">Available</p>
+          <h3 class="stat-card-value" data-resource-count="available">0</h3>
           <p class="stat-card-trend">Available for appointments</p>
         </div>
         <div class="card">
-          <p class="stat-card-label">On Leave</p>
-          <h3 class="stat-card-value">3</h3>
+          <p class="stat-card-label">Unavailable</p>
+          <h3 class="stat-card-value" data-resource-count="unavailable">0</h3>
           <p class="stat-card-trend">Unavailable this week</p>
         </div>
         <div class="card">
           <p class="stat-card-label">Total Registered</p>
-          <h3 class="stat-card-value">19</h3>
-          <p class="stat-card-trend">Across Colombo Region</p>
+          <h3 class="stat-card-value" data-resource-count="total">0</h3>
+          <p class="stat-card-trend" data-resource-area>Loading area...</p>
         </div>
       </div>
 
@@ -163,10 +164,10 @@
         <div class="table-wrap">
           <table class="table" id="technicianTable">
             <thead>
-              <tr><th>Technician</th><th>Contact</th><th>Categories Serviced</th><th>Status</th><th>Actions</th></tr>
+              <tr><th>Technician</th><th>Contact</th><th>Categories Serviced</th><th>Area</th><th>Status</th><th>Actions</th></tr>
             </thead>
             <tbody>
-              <tr><td colspan="5">Loading technicians…</td></tr>
+              <tr><td colspan="6">Loading technicians…</td></tr>
             </tbody>
           </table>
         </div>
@@ -226,8 +227,10 @@
 
   <script src="../../shared/api.js"></script>
   <script src="../../shared/session.js"></script>
+  <script src="../../shared/area-manager-display.js"></script>
   <script src="../../shared/script.js"></script>
   <script src="../../shared/catalogue.js"></script>
+  <script src="../../shared/area-resources.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

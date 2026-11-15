@@ -19,7 +19,13 @@ $router->add('GET', '/notifications', [NotificationController::class, 'index'], 
 $router->add('POST', '/notifications/read', [NotificationController::class, 'markRead'], $notificationRoles);
 
 // Admin: area manager registration (no public sign-up for this role)
+$router->add('GET', '/admin/areas', [AreaController::class, 'index'], ['admin']);
+$router->add('POST', '/admin/areas', [AreaController::class, 'store'], ['admin']);
+$router->add('PUT', '/admin/areas/{id}', [AreaController::class, 'update'], ['admin']);
+$router->add('POST', '/admin/areas/{id}/activate', [AreaController::class, 'activate'], ['admin']);
+$router->add('POST', '/admin/areas/{id}/deactivate', [AreaController::class, 'deactivate'], ['admin']);
 $router->add('GET',  '/admin/area-managers', [AreaManagerController::class, 'index'], ['admin']);
+$router->add('PUT', '/admin/area-managers/{id}/area', [AreaManagerController::class, 'assignArea'], ['admin']);
 $router->add('POST', '/admin/area-managers', [AreaManagerController::class, 'store'], ['admin']);
 
 // Public: the equipment catalogue (categories -> types -> spec fields). Read
@@ -68,6 +74,9 @@ $router->add('POST', '/admin/type-requests/{id}/approve',  [EquipmentTypeRequest
 $router->add('POST', '/admin/type-requests/{id}/reject',   [EquipmentTypeRequestController::class, 'reject'],  ['admin']);
 
 // Area manager: staff registration (no public sign-up for either role)
+$router->add('GET', '/area-manager/area', [AreaManagerController::class, 'areaContext'], ['area_manager']);
+$router->add('GET', '/area-manager/delivery-personnel/{id}', [DeliveryPersonnelController::class, 'show'], ['area_manager']);
+$router->add('GET', '/area-manager/technicians/{id}', [MaintenanceTechController::class, 'show'], ['area_manager']);
 $router->add('GET',  '/area-manager/delivery-personnel', [DeliveryPersonnelController::class, 'index'], ['area_manager']);
 $router->add('POST', '/area-manager/delivery-personnel', [DeliveryPersonnelController::class, 'store'], ['area_manager']);
 $router->add('GET',  '/area-manager/technicians',        [MaintenanceTechController::class, 'index'],   ['area_manager']);

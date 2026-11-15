@@ -305,3 +305,65 @@ select.input-standard {
   font-size: 12px;
   text-align: center;
 }
+/* Area controls are scoped to avoid changing the manager registration UI. */
+.area-management { margin-top: 24px; }
+.area-management .toolbar { flex-wrap: wrap; }
+.area-description { overflow-wrap: anywhere; }
+.area-error { color: #b3261e; }
+.area-success { color: #166534; }
+#areaModal .modal { max-height: 90vh; overflow-y: auto; }
+
+/* Keep unbroken Unicode names from setting intrinsic dialog/table widths. */
+.area-management, .area-management .table-wrap { min-width: 0; max-width: 100%; box-sizing: border-box; }
+.area-table-wrap { width: 100%; }
+#areaTable { table-layout: fixed; min-width: 0; width: 100%; }
+#areaTable th, #areaTable td { min-width: 0; overflow-wrap: anywhere; white-space: normal; vertical-align: top; }
+#areaTable td > * { min-width: 0; max-width: 100%; }
+#areaTable .area-col-name { width: 26%; }
+#areaTable .area-col-status { width: 7rem; }
+#areaTable .area-col-actions { width: 9rem; }
+#areaTable .area-text, #areaTable summary { min-width: 0; max-width: 100%; }
+#areaTable summary { cursor: pointer; }
+.area-text-preview {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  max-height: 4.5em;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.area-text-hint { display: block; margin-top: 6px; color: var(--color-teal); font-size: 12px; }
+.area-text-full { margin-top: 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.area-text[open] .area-text-preview { display: none; }
+.area-action-buttons { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+#areaTable .area-actions button { margin: 0; width: 100%; max-width: 100%; min-height: 44px; white-space: normal; overflow-wrap: anywhere; }
+.area-management .toolbar > .field { min-width: 0; max-width: 100%; }
+@media (max-width: 640px) {
+  /* Stack labelled cells instead of squeezing four columns or scrolling the page. */
+  #areaTable, #areaTable tbody, #areaTable tr { display: block; width: 100%; box-sizing: border-box; }
+  #areaTable colgroup { display: none; }
+  #areaTable thead { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); }
+  #areaTable tbody tr { margin-bottom: 16px; border: 1px solid var(--color-surface-variant); border-radius: var(--radius-sm); }
+  #areaTable td { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 8px; padding: 10px; }
+  #areaTable td::before { content: attr(data-label); font-weight: 700; }
+  #areaTable td[colspan] { display: block; }
+  #areaTable td[colspan]::before { content: none; }
+  #areaTable .area-actions { border-bottom: 0; }
+}
+#managerTable td:nth-child(3) { max-width: 14rem; overflow-wrap: anywhere; white-space: normal; }
+#managerAreaModal .modal, #areaModal .modal {
+  width: min(560px, 100%);
+  min-width: 0;
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+}
+#managerAreaModal form, #managerAreaModal .field, #areaModal .field { min-width: 0; max-width: 100%; }
+#managerAreaSelect, #areaModal input, #areaModal textarea { width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; }
+#managerAreaSelect { text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+#managerAreaContext, #managerAreaSelection, #managerAreaError { max-width: 100%; overflow-wrap: anywhere; }
+#areaModal .form-grid { grid-template-columns: minmax(0, 1fr); }

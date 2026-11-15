@@ -7,14 +7,14 @@
  * the vehicle: its plate, type, payload capacity (kg) and cargo-bed size
  * (length × width, metres).
  *
- * Removing a vehicle hard-deletes it unless delivery history still points at
- * it, in which case it is retired instead (see destroy()). Each manager only
- * ever sees or touches the vehicles they added.
+ * Removal retires the vehicle without deleting its history. Managers share
+ * vehicles within their active assigned area.
  */
 
 declare(strict_types=1);
 
 require_once __DIR__ . '/../models/VehicleModel.php';
+require_once __DIR__ . '/AreaManagerController.php';
 
 final class VehicleController
 {
@@ -35,12 +35,10 @@ final class VehicleController
      */
     private const EDITABLE_STATUSES = ['available', 'maintenance'];
 
-    /** MySQL "Cannot delete or update a parent row: a foreign key constraint fails". */
-    private const MYSQL_ROW_IS_REFERENCED = 1451;
-
     /** GET /area-manager/vehicles */
     public static function index(array $params = []): void
     {
+        AreaManagerController::requireOperationalArea();
         Response::ok(array_map(
             [self::class, 'present'],
             VehicleModel::allForManager((int) Auth::userId())
@@ -56,11 +54,14 @@ final class VehicleController
     /** POST /area-manager/vehicles */
     public static function store(array $params = []): void
     {
+        AreaManagerController::requireOperationalArea();
         $managerId = (int) Auth::userId();
         $vehicle   = self::readVehicle(Router::jsonBody(), null, null);
 
         try {
             $vehicleId = VehicleModel::insert($managerId, $vehicle);
+        } catch (DomainException $e) {
+            Response::error($e->getMessage(), 409);
         } catch (PDOException $e) {
             // Lost a race with another request adding the same plate.
             if ($e->getCode() === '23000') {
@@ -69,7 +70,7 @@ final class VehicleController
             throw $e;
         }
 
-        Response::ok(self::present((array) VehicleModel::findForManager($vehicleId, $managerId)), 201);
+        Response::ok(self::present(self::findOr404(['id' => $vehicleId])), 201);
     }
 
     /** PUT /area-manager/vehicles/{id} */
@@ -89,6 +90,8 @@ final class VehicleController
             if (!VehicleModel::update($vehicleId, $managerId, $vehicle)) {
                 Response::error('Vehicle not found.', 404);
             }
+        } catch (DomainException $e) {
+            Response::error($e->getMessage(), 409);
         } catch (PDOException $e) {
             if ($e->getCode() === '23000') {
                 self::duplicatePlate();
@@ -96,16 +99,14 @@ final class VehicleController
             throw $e;
         }
 
-        Response::ok(self::present((array) VehicleModel::findForManager($vehicleId, $managerId)));
+        Response::ok(self::present(self::findOr404($params)));
     }
 
     /**
      * DELETE /area-manager/vehicles/{id}
      *
-     * Tries a hard delete first. When delivery history still references the
-     * vehicle, the deliveries FK (ON DELETE RESTRICT) refuses it, and the
-     * vehicle is retired instead so that history keeps its vehicle. The
-     * response says which of the two happened.
+     * Retains the vehicle row and history; the existing Restore action reverses
+     * removal. The model rechecks area and delivery status while holding locks.
      */
     public static function destroy(array $params = []): void
     {
@@ -121,15 +122,9 @@ final class VehicleController
         }
 
         try {
-            VehicleModel::delete($vehicleId, $managerId);
-            $outcome = 'deleted';
-        } catch (PDOException $e) {
-            if ((int) ($e->errorInfo[1] ?? 0) !== self::MYSQL_ROW_IS_REFERENCED) {
-                throw $e;
-            }
-            VehicleModel::retire($vehicleId, $managerId);
-            $outcome = 'retired';
-        }
+            if (!VehicleModel::retire($vehicleId, $managerId)) Response::error('Vehicle not found.', 404);
+        } catch (DomainException $e) { Response::error($e->getMessage(), 409); }
+        $outcome = 'retired';
 
         Response::ok(['vehicle_id' => $vehicleId, 'outcome' => $outcome]);
     }
@@ -141,11 +136,13 @@ final class VehicleController
         $current   = self::findOr404($params);
         $vehicleId = (int) $current['vehicle_id'];
 
-        if ($current['retired_at'] === null || !VehicleModel::restore($vehicleId, $managerId)) {
-            Response::error('This vehicle is not retired.', 409);
-        }
+        try {
+            if ($current['retired_at'] === null || !VehicleModel::restore($vehicleId, $managerId)) {
+                Response::error('This vehicle is not retired.', 409);
+            }
+        } catch (DomainException $e) { Response::error($e->getMessage(), 409); }
 
-        Response::ok(self::present((array) VehicleModel::findForManager($vehicleId, $managerId)));
+        Response::ok(self::present(self::findOr404($params)));
     }
 
     // ------------------------------------------------------------- helpers
@@ -247,6 +244,8 @@ final class VehicleController
         $type = (string) $row['vehicle_type'];
         return [
             'vehicle_id'     => (int) $row['vehicle_id'],
+            'area_id'        => (int) $row['area_id'],
+            'area_name'      => $row['area_name'],
             'plate_number'   => $row['plate_number'],
             'vehicle_type'   => $type,
             'type_label'     => self::TYPES[$type] ?? $type,
@@ -261,13 +260,13 @@ final class VehicleController
     }
 
     /**
-     * This manager's vehicle for the {id} path segment, or a 404. Another
-     * manager's vehicle is indistinguishable from one that doesn't exist.
+     * A vehicle in this manager's active area, or a 404.
      *
      * @return array<string,mixed>
      */
     private static function findOr404(array $params): array
     {
+        AreaManagerController::requireOperationalArea();
         $id  = filter_var($params['id'] ?? null, FILTER_VALIDATE_INT);
         $row = ($id === false || $id < 1)
             ? null

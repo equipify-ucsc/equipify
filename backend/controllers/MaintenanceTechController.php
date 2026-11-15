@@ -2,13 +2,13 @@
 /**
  * Area-manager-only management of maintenance technicians. There is no public
  * sign-up for this role: routes.php restricts these endpoints to the
- * area_manager role, and each manager only ever sees or touches the roster
- * they registered.
+ * area_manager role. Rosters are shared within the manager's active area.
  */
 
 declare(strict_types=1);
 
 require_once __DIR__ . '/../models/UserModel.php';
+require_once __DIR__ . '/AreaManagerController.php';
 require_once __DIR__ . '/../models/AreaManagerModel.php';
 require_once __DIR__ . '/../models/MaintenanceTechModel.php';
 require_once __DIR__ . '/../models/EquipmentCategoryModel.php';
@@ -21,7 +21,17 @@ final class MaintenanceTechController
     /** GET /area-manager/technicians */
     public static function index(array $params = []): void
     {
+        AreaManagerController::requireOperationalArea();
         Response::ok(MaintenanceTechModel::allForManager((int) Auth::userId()));
+    }
+
+    public static function show(array $params = []): void
+    {
+        AreaManagerController::requireOperationalArea();
+        $id = filter_var($params['id'] ?? null, FILTER_VALIDATE_INT);
+        $row = $id === false || $id < 1 ? null : MaintenanceTechModel::findForManager($id, (int) Auth::userId());
+        if (!$row) Response::error('Technician not found.', 404);
+        Response::ok($row);
     }
 
     /**
@@ -31,6 +41,7 @@ final class MaintenanceTechController
      */
     public static function store(array $params = []): void
     {
+        AreaManagerController::requireOperationalArea();
         $in = Router::jsonBody();
 
         $fullName       = self::str($in, 'full_name');
@@ -94,6 +105,8 @@ final class MaintenanceTechController
                 'years_experience' => $years,
                 'category_ids'     => $categoryIds,
             ], $managerId);
+        } catch (DomainException $e) {
+            Response::error($e->getMessage(), 409);
         } catch (PDOException $e) {
             // Lost a race with another registration for the same email/phone.
             if ($e->getCode() === '23000') {

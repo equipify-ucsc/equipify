@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../shared/styles.css">
 <link rel="stylesheet" href="../../Freelance Worker/portal.css">
 <link rel="stylesheet" href="../../shared/complaints.css">
+<link rel="stylesheet" href="../../shared/area-manager-display.css">
 </head>
 <body data-require-auth="area_manager" data-login-url="../Login/index.html">
 
@@ -22,7 +23,7 @@
     </div>
     <div class="topbar-actions">
       <div class="topbar-user">
-        <div class="topbar-user-name type-label-md"><span data-user-name>Loading…</span><span class="topbar-user-role">Area Manager</span></div>
+        <div class="topbar-user-name type-label-md"><span data-user-name>Loading...</span><span class="topbar-user-role">Area Manager · <span data-manager-area>Loading area...</span></span></div>
         <div class="avatar avatar--placeholder" aria-hidden="true">
           <span class="icon icon-base">person</span>
         </div>
@@ -139,6 +140,7 @@
 
   <script src="../../shared/api.js"></script>
   <script src="../../shared/session.js"></script>
+  <script src="../../shared/area-manager-display.js"></script>
   <script src="../../shared/script.js"></script>
   <script src="../../shared/list.js"></script>
   <script src="../../shared/complaints.js"></script>

@@ -19,6 +19,17 @@ final class AreaManagerController
         'Polonnaruwa', 'Puttalam', 'Ratnapura', 'Trincomalee', 'Vavuniya',
     ];
 
+    public static function requireOperationalArea(): array
+    {
+        try { return AreaManagerModel::operationalArea((int) Auth::userId()); }
+        catch (DomainException $e) { Response::error($e->getMessage(), 409); }
+    }
+
+    public static function areaContext(array $params = []): void
+    {
+        Response::ok(self::requireOperationalArea());
+    }
+
     /** GET /admin/area-managers */
     public static function index(array $params = []): void
     {
@@ -78,6 +89,29 @@ final class AreaManagerController
         }
 
         Response::ok(['user_id' => $userId, 'role' => 'area_manager', 'full_name' => $fullName], 201);
+    }
+
+    /** PUT /admin/area-managers/{id}/area; null explicitly clears assignment. */
+    public static function assignArea(array $params = []): void
+    {
+        $rawId = $params['id'] ?? '';
+        $id = is_string($rawId) && preg_match('/\A[1-9][0-9]*\z/', $rawId)
+            ? filter_var($rawId, FILTER_VALIDATE_INT) : false;
+        if ($id === false) Response::error('Invalid area manager ID.', 422);
+        $in = Router::jsonBody();
+        if (!array_key_exists('area_id', $in) || array_diff(array_keys($in), ['area_id'])) {
+            Response::error('Provide area_id, or null to unassign.', 422, ['area_id' => 'Provide only area_id.']);
+        }
+        // JSON numbers must be positive integers; reject booleans, floats and strings.
+        $areaId = $in['area_id'];
+        if ($areaId !== null && (!is_int($areaId) || $areaId < 1)) {
+            Response::error('Select a valid area.', 422, ['area_id' => 'Use a positive integer or null.']);
+        }
+        try { $manager = AreaManagerModel::assignArea($id, $areaId); }
+        catch (DomainException $e) {
+            Response::error($e->getMessage(), $e->getCode(), $e->getCode() === 422 ? ['area_id' => $e->getMessage()] : []);
+        }
+        Response::ok($manager);
     }
 
     private static function str(array $in, string $key): string

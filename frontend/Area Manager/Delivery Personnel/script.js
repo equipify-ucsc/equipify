@@ -45,7 +45,7 @@
     table.querySelectorAll('tbody tr').forEach(function (row) {
       var matchesQuery = row.textContent.toLowerCase().includes(query);
       var matchesStatus = !status || row.getAttribute('data-status') === status;
-      row.hidden = !(matchesQuery && matchesStatus);
+      row.hidden = !(matchesQuery && matchesStatus && AreaResources.matches(row));
     });
   }
 
@@ -94,13 +94,14 @@
   function messageRow(text) {
     var tr = document.createElement('tr');
     var td = cell(text);
-    td.colSpan = 5;
+    td.colSpan = 6;
     tr.appendChild(td);
     return tr;
   }
 
   function renderPersonnel(people) {
     tableBody.textContent = '';
+    AreaResources.rows(people);
     if (people.length === 0) {
       tableBody.appendChild(messageRow('No delivery personnel registered yet.'));
       return;
@@ -117,6 +118,8 @@
         p.driving_license_no + ' (' + p.license_class + ') · expires ' + p.license_expiry
       ));
 
+      tr.dataset.area = String(p.area_id);
+      tr.appendChild(cell(p.area_name));
       var statusCell = document.createElement('td');
       var badge = document.createElement('span');
       badge.className = 'badge-status badge-status--' + status.badge;
@@ -132,7 +135,7 @@
       view.type = 'button';
       view.textContent = 'View';
       view.addEventListener('click', function () {
-        window.showToast(p.full_name + ' — profile view is coming soon.');
+        AreaResources.view('/area-manager/delivery-personnel/' + p.user_id);
       });
       wrap.appendChild(view);
       actions.appendChild(wrap);
@@ -148,6 +151,7 @@
       if (res.ok) {
         renderPersonnel(res.data);
       } else {
+        AreaResources.rows([]);
         tableBody.textContent = '';
         tableBody.appendChild(messageRow(res.error));
       }
