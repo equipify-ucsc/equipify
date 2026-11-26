@@ -1,4 +1,4 @@
--- 037_create_rental_change_requests.sql
+-- 040_create_rental_change_requests.sql
 -- ERD entity: RENTAL_CHANGE_REQUEST
 -- ERD relationship: RENTAL ||--o{ RENTAL_CHANGE_REQUEST "is changed by"
 --

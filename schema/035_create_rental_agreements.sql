@@ -1,4 +1,4 @@
--- 032_create_rental_agreements.sql
+-- 035_create_rental_agreements.sql
 -- ERD entity: RENTAL_AGREEMENT
 -- ERD relationships: RENTAL ||--o| RENTAL_AGREEMENT "is governed by"
 --                    CUSTOMER |o--o{ RENTAL_AGREEMENT "signs"

@@ -1,4 +1,4 @@
--- 036_create_damage_claims.sql
+-- 039_create_damage_claims.sql
 -- ERD entity: DAMAGE_CLAIM
 -- ERD relationships: RENTAL ||--o| DAMAGE_CLAIM "may lead to"
 --                    ADMIN |o--o{ DAMAGE_CLAIM "settles"

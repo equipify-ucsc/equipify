@@ -36,7 +36,7 @@
 -- deleting it, exactly as it does for rental history.)
 
 CREATE TABLE maintenance_requests (
-    maintenance_request_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    request_id             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     requested_by           BIGINT UNSIGNED NOT NULL,
     equipment_id           BIGINT UNSIGNED NOT NULL,
     title                  VARCHAR(150)    NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE maintenance_requests (
     updated_at             TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP
                                            ON UPDATE CURRENT_TIMESTAMP,
 
-    CONSTRAINT pk_maintenance_requests PRIMARY KEY (maintenance_request_id),
+    CONSTRAINT pk_maintenance_requests PRIMARY KEY (request_id),
     CONSTRAINT fk_maintenance_requests_requested_by FOREIGN KEY (requested_by)
         REFERENCES renting_parties (user_id)
         ON DELETE CASCADE ON UPDATE CASCADE,

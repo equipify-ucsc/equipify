@@ -1,4 +1,4 @@
--- 034_create_inspections.sql
+-- 037_create_inspections.sql
 -- ERD entity: INSPECTION
 -- ERD relationships: RENTAL ||--o{ INSPECTION "is checked by"
 --                    RENTING_PARTY ||--o{ INSPECTION "carries out"

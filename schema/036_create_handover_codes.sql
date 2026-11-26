@@ -1,4 +1,4 @@
--- 033_create_handover_codes.sql
+-- 036_create_handover_codes.sql
 -- ERD entity: HANDOVER_CODE
 -- ERD relationship: RENTAL ||--o{ HANDOVER_CODE "is confirmed with"
 --
@@ -18,7 +18,11 @@
 --                   on the rental card. Suggested use:
 --                     Crypto::encrypt(['code' => '482913'],
 --                                     'handover_code:' . $rentalId . ':' . $purpose)
---   expires_at      the code stops working after this time.
+--   expires_at      the code stops working after this time. PHP always sets it.
+--                   It is NULL DEFAULT NULL, not NOT NULL, on purpose: on older
+--                   MariaDB (explicit_defaults_for_timestamp = OFF, as in XAMPP)
+--                   a bare TIMESTAMP NOT NULL silently becomes
+--                   ON UPDATE CURRENT_TIMESTAMP and would reset on every update.
 --   failed_attempts wrong entries so far; PHP locks the code after a few, so
 --                   a 6-digit code cannot be guessed by trial.
 --   used_at / used_by
@@ -37,7 +41,7 @@ CREATE TABLE handover_codes (
                          'return'
                      )                NOT NULL,
     code_cipher      VARCHAR(255)     NOT NULL,
-    expires_at       TIMESTAMP        NOT NULL,
+    expires_at       TIMESTAMP        NULL DEFAULT NULL,
     failed_attempts  TINYINT UNSIGNED NOT NULL DEFAULT 0,
     used_at          TIMESTAMP        NULL DEFAULT NULL,
     used_by          BIGINT UNSIGNED  NULL DEFAULT NULL,

@@ -1,4 +1,4 @@
--- 035_create_inspection_media.sql
+-- 038_create_inspection_media.sql
 -- ERD entity: INSPECTION_MEDIA
 -- ERD relationship: INSPECTION ||--o{ INSPECTION_MEDIA "is documented by"
 --
