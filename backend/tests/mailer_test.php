@@ -8,6 +8,7 @@ if (($argv[1] ?? '') === '--case') {
     $dir = __DIR__ . '/../../tmp/mailer-regression-' . bin2hex(random_bytes(6));
     putenv('EQUIPIFY_MAIL_FROM=sender@example.test');
     putenv('EQUIPIFY_MAIL_TRANSPORT=sendmail');
+    putenv('EQUIPIFY_SENDMAIL_EXE='); // Never inherit an enabled real native profile.
     putenv('EQUIPIFY_MAIL_ENABLE_SEND=' . ($argv[4] ?? '1'));
     putenv('EQUIPIFY_MAIL_FALLBACK=' . $argv[2]);
     putenv('EQUIPIFY_MAIL_DIRECTORY=' . $dir);

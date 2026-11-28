@@ -4,10 +4,11 @@ declare(strict_types=1);
 if (PHP_SAPI !== 'cli') { http_response_code(404); exit; }
 $name = getenv('EQUIPIFY_DB_NAME') ?: '';
 $port = getenv('EQUIPIFY_DB_PORT') ?: '';
-if (!preg_match('/\Aequipify_week3_test_[a-z0-9_]+\z/', $name)
+if (!preg_match('/\Aequipify_(week3|week4)_test_[a-z0-9_]+\z/', $name, $suiteMatch)
     || !ctype_digit($port) || (int) $port < 1024 || (int) $port > 65535 || (int) $port === 3306) {
-    throw new RuntimeException('Explicit Week 3 fixture and separate non-default test port required.');
+    throw new RuntimeException('Explicit Week 3 or Week 4 fixture and separate non-default test port required.');
 }
+$suite = $suiteMatch[1];
 final class FixtureResponse extends RuntimeException {
     public $data;
     public function __construct($data, int $status) { parent::__construct('', $status); $this->data = $data; }
@@ -53,11 +54,11 @@ $originalEnvironment = [getenv('EQUIPIFY_ENV'), getenv('APP_ENV')];
 $roles = ['customer','renting_party','freelance_worker','delivery_personnel','maintenance_tech','area_manager','admin'];
 try {
     putenv('EQUIPIFY_ENV'); putenv('APP_ENV');
-    foreach ($roles as $role) login($role . '@week3.test', 'Week3-Test-Only!42', $role, 200);
+    foreach ($roles as $role) login($role . '@' . $suite . '.test', ucfirst($suite) . '-Test-Only!42', $role, 200);
     $before = $db->query('SELECT * FROM users ORDER BY user_id')->fetchAll();
     foreach (['EQUIPIFY_ENV=production', 'APP_ENV=prod'] as $setting) {
         putenv($setting);
-        foreach ($roles as $role) login($role . '@week3.test', 'Week3-Test-Only!42', $role, 401);
+        foreach ($roles as $role) login($role . '@' . $suite . '.test', ucfirst($suite) . '-Test-Only!42', $role, 401);
         putenv(explode('=', $setting)[0]);
     }
     verify($db->query('SELECT * FROM users ORDER BY user_id')->fetchAll() === $before, 'Production rejections do not change fixture user records');
@@ -80,7 +81,7 @@ try {
     $db->exec("INSERT INTO $guard.users SELECT * FROM $name.users");
     $db->exec("USE $guard");
     verify($db->query('SELECT DATABASE()')->fetchColumn() === $guard, 'Imported-fixture simulation stays on a new test database');
-    foreach ($roles as $role) login($role . '@week3.test', 'Week3-Test-Only!42', $role, 401);
+    foreach ($roles as $role) login($role . '@' . $suite . '.test', ucfirst($suite) . '-Test-Only!42', $role, 401);
     // Ordinary accounts retain the existing login behavior, even in production mode.
     $controlPassword = bin2hex(random_bytes(24));
     $controlEmail = 'precommit-' . bin2hex(random_bytes(8)) . '@example.test';

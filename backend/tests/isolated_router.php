@@ -1,8 +1,12 @@
 <?php
 if (PHP_SAPI !== 'cli-server') exit;
 $name = getenv('EQUIPIFY_DB_NAME') ?: '';
-if (!preg_match('/\Aequipify_(?:week1|week3|areas)_test_[a-z0-9_]+\z/', $name)) exit;
+if (!preg_match('/\Aequipify_(?:week1|week3|week4|areas)_test_[a-z0-9_]+\z/', $name)) exit;
+// A native sendmail profile can work even when PHP mail() is disabled.
+// This test HTTP server must never inherit permission to send real mail.
+putenv('EQUIPIFY_MAIL_ENABLE_SEND=0');
 $sessions = __DIR__ . '/../../tmp/admin-users-sessions';
+if (str_starts_with($name, 'equipify_week4_test_')) $sessions = __DIR__ . '/../../tmp/week4-sessions/' . $name;
 if (!is_dir($sessions)) mkdir($sessions, 0700, true);
 session_save_path($sessions);
 header('X-Equipify-Test-Database: ' . $name);

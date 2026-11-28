@@ -60,10 +60,15 @@ request('/backend/api/admin/area-managers', 403, null, $customer);
 request('/backend/api/admin/area-managers', 200, null, $admin);
 request('/backend/api/area-manager/delivery-personnel', 200, null, $manager);
 $vehicle = (int) $db->query('SELECT vehicle_id FROM vehicles LIMIT 1')->fetchColumn();
-// Vehicle retirement fallback is exercised through its actual DELETE route.
+// Active reservations must block retirement, even for an inconsistent legacy
+// available flag. Terminal history must still retain the retirement route.
 $curl = curl_init($base . '/backend/api/area-manager/vehicles/' . $vehicle);
 curl_setopt_array($curl, [CURLOPT_RETURNTRANSFER => true, CURLOPT_CUSTOMREQUEST => 'DELETE',
     CURLOPT_COOKIE => $manager, CURLOPT_HTTPHEADER => ['Content-Type: application/json'], CURLOPT_TIMEOUT => 15]);
+$raw = curl_exec($curl);
+verify(curl_getinfo($curl, CURLINFO_RESPONSE_CODE) === 409, 'Vehicle with active delivery cannot retire via API');
+// This file has already verified the explicitly selected synthetic database.
+$db->exec("UPDATE deliveries SET status='cancelled' WHERE vehicle_id=$vehicle AND status='pending'");
 $raw = curl_exec($curl);
 verify(curl_getinfo($curl, CURLINFO_RESPONSE_CODE) === 200 && json_decode($raw, true)['data']['outcome'] === 'retired', 'Vehicle with delivery history retires via API');
 curl_close($curl);

@@ -18,6 +18,11 @@ $notificationRoles = ['customer', 'renting_party', 'freelance_worker', 'delivery
 $router->add('GET', '/notifications', [NotificationController::class, 'index'], $notificationRoles);
 $router->add('GET', '/notifications/unread-count', [NotificationController::class, 'unreadCount'], $notificationRoles);
 $router->add('GET', '/area-manager/deliveries', [DeliveryController::class, 'index'], ['area_manager']);
+$router->add('GET', '/area-manager/deliveries/{id}/available-personnel', [DeliveryController::class, 'availablePersonnel'], ['area_manager']);
+$router->add('GET', '/area-manager/deliveries/{id}/available-vehicles', [DeliveryController::class, 'availableVehicles'], ['area_manager']);
+$router->add('POST', '/area-manager/deliveries/{id}/status', [DeliveryController::class, 'status'], ['area_manager']);
+$router->add('POST', '/area-manager/deliveries/{id}/assign', [DeliveryController::class, 'assign'], ['area_manager']);
+$router->add('POST', '/area-manager/deliveries/{id}/cancel', [DeliveryController::class, 'cancel'], ['area_manager']);
 $router->add('POST', '/notifications/read', [NotificationController::class, 'markRead'], $notificationRoles);
 
 // Admin: area manager registration (no public sign-up for this role)

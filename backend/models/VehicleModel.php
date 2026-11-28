@@ -57,6 +57,7 @@ final class VehicleModel
     {
         return self::operate($vehicleId, $managerId, static function (PDO $db, array $row) use ($v): bool {
             if ($row['retired_at'] !== null) return false;
+            if (self::hasReservation((int)$row['vehicle_id'])) throw new DomainException('Release active delivery reservations before editing this vehicle.',409);
             if ($row['status'] === 'in_use' && $v['status'] !== 'in_use') throw new DomainException('An active delivery controls this vehicle status.', 409);
             $stmt = $db->prepare('UPDATE vehicles SET plate_number = ?, vehicle_type = ?, max_load_kg = ?, cargo_length_m = ?, cargo_width_m = ?, status = ? WHERE vehicle_id = ?');
             $stmt->execute([$v['plate_number'], $v['vehicle_type'], $v['max_load_kg'], $v['cargo_length_m'], $v['cargo_width_m'], $v['status'], $row['vehicle_id']]);
@@ -71,6 +72,7 @@ final class VehicleModel
     {
         return self::operate($vehicleId, $managerId, static function (PDO $db, array $row): bool {
             if ($row['retired_at'] !== null) return false;
+            if (self::hasReservation((int)$row['vehicle_id'])) throw new DomainException('This vehicle has active delivery reservations.',409);
             if ($row['status'] === 'in_use') throw new DomainException('This vehicle is on an active delivery and cannot be removed.', 409);
             $stmt = $db->prepare('UPDATE vehicles SET retired_at = CURRENT_TIMESTAMP WHERE vehicle_id = ?');
             $stmt->execute([$row['vehicle_id']]);
@@ -82,6 +84,7 @@ final class VehicleModel
     {
         return self::operate($vehicleId, $managerId, static function (PDO $db, array $row): bool {
             if ($row['retired_at'] === null) return false;
+            if (self::hasReservation((int)$row['vehicle_id'])) throw new DomainException('Release active delivery reservations before restoring this vehicle.',409);
             if ($row['status'] === 'in_use') throw new DomainException('An active delivery controls this vehicle status.', 409);
             $stmt = $db->prepare("UPDATE vehicles SET retired_at = NULL, status = 'available' WHERE vehicle_id = ?");
             $stmt->execute([$row['vehicle_id']]);
@@ -92,11 +95,20 @@ final class VehicleModel
     private static function operate(int $vehicleId, int $managerId, callable $action): bool
     {
         return self::transaction(static function (PDO $db) use ($vehicleId, $managerId, $action): bool {
+            AreaManagerModel::operationalArea($managerId,true);
             $stmt = $db->prepare(self::SELECT . self::SCOPE . ' WHERE v.vehicle_id = :id FOR UPDATE');
             $stmt->execute([':id' => $vehicleId, ':manager_id' => $managerId]);
             $row = $stmt->fetch();
             return $row ? $action($db, $row) : false;
         });
+    }
+
+    private static function hasReservation(int $vehicleId): bool
+    {
+        $db=getDbConnection();
+        if (!$db->query("SHOW TABLES LIKE 'deliveries'")->fetchColumn()) return false;
+        $stmt=$db->prepare("SELECT delivery_id FROM deliveries WHERE vehicle_id=? AND status IN ('pending','assigned','in_transit') LIMIT 1 FOR UPDATE");
+        $stmt->execute([$vehicleId]);return $stmt->fetchColumn()!==false;
     }
 
     private static function transaction(callable $action)

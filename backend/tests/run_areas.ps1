@@ -4,9 +4,11 @@ $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $php = Join-Path $XamppRoot 'php/php.exe'
 $httpd = Join-Path $XamppRoot 'apache/bin/httpd.exe'
 $originalDatabase = [Environment]::GetEnvironmentVariable('EQUIPIFY_DB_NAME', 'Process')
+$originalMailEnabled = [Environment]::GetEnvironmentVariable('EQUIPIFY_MAIL_ENABLE_SEND', 'Process')
 $apacheProcess = $null
 Push-Location $projectRoot
 try {
+    $env:EQUIPIFY_MAIL_ENABLE_SEND = '0'
     $output = & $php backend/tests/areas_test.php 2>&1
     $testExit = $LASTEXITCODE
     $output | Write-Output
@@ -97,5 +99,6 @@ Header always set X-Equipify-Test-Database "$testDatabase"
         $children | ForEach-Object { Stop-Process -Id $_.ProcessId -ErrorAction SilentlyContinue }
     }
     [Environment]::SetEnvironmentVariable('EQUIPIFY_DB_NAME', $originalDatabase, 'Process')
+    [Environment]::SetEnvironmentVariable('EQUIPIFY_MAIL_ENABLE_SEND', $originalMailEnabled, 'Process')
     Pop-Location
 }

@@ -11,6 +11,18 @@ final class AreaManagerModel
 {
     public static function operationalArea(int $managerId, bool $lock = false): array
     {
+        // Acquire the shared area mutex BEFORE any manager/owner user rows.
+        // Otherwise two area managers can each hold their own row while the
+        // winner needs the other's vehicle-owner row, creating a deadlock.
+        $lockedArea = null;
+        if ($lock) {
+            $probe = getDbConnection()->prepare('SELECT area_id FROM area_managers WHERE user_id=?');
+            $probe->execute([$managerId]); $lockedArea = $probe->fetchColumn();
+            if (!$lockedArea) throw new DomainException('An active assigned area is required. Contact an administrator.',409);
+            $mutex = getDbConnection()->prepare('SELECT area_id FROM areas WHERE area_id=? AND is_active=1 FOR UPDATE');
+            $mutex->execute([$lockedArea]);
+            if (!$mutex->fetchColumn()) throw new DomainException('An active assigned area is required. Contact an administrator.',409);
+        }
         $stmt = getDbConnection()->prepare("SELECT a.area_id, a.name AS area_name
             FROM area_managers am JOIN areas a ON a.area_id = am.area_id AND a.is_active = 1
             JOIN users u ON u.user_id = am.user_id AND u.role = 'area_manager' AND u.account_status = 'active'
@@ -19,6 +31,7 @@ final class AreaManagerModel
         $area = $stmt->fetch();
         if (!$area) throw new DomainException('An active assigned area is required. Contact an administrator.', 409);
         $area['area_id'] = (int) $area['area_id'];
+        if ($lock && $area['area_id'] !== (int)$lockedArea) throw new DomainException('Your assigned area changed. Refresh and retry.',409);
         return $area;
     }
     private const SELECT = 'SELECT u.user_id, u.full_name, u.email, u.phone, u.district, u.account_status, u.created_at,

@@ -8,7 +8,7 @@ final class NotificationController
     {
         Auth::requireActiveAccount();
         Response::ok(NotificationModel::listing((int) Auth::userId(), ListQuery::page(),
-            ListQuery::perPage(), ListQuery::flag('unread'), ListQuery::enum('type', ['job', 'bid', 'payment', 'complaint'])));
+            ListQuery::perPage(), ListQuery::flag('unread'), ListQuery::enum('type', ['job', 'bid', 'payment', 'complaint', 'delivery'])));
     }
 
     public static function markRead(array $params = []): void

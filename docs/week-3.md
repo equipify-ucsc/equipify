@@ -1,5 +1,169 @@
 # Week 3 audit, implementation and verification
 
+## Gmail setup clarification (28 November 2026)
+
+Provider settings are now specified as Gmail, `smtp.gmail.com:587`, STARTTLS (`EQUIPIFY_SMTP_SECURITY=tls`). Approval covers at most four synthetic messages to the same test Gmail account, but the supplied sender/recipient is still a placeholder, not a confirmed actual address. No email has been sent to it or to any Equipify user. Enter the actual address only in local environment; confirm it explicitly before any agent performs sending.
+
+Create a separate `Equipify XAMPP Test` App Password through [Google App Passwords](https://myaccount.google.com/apppasswords) after enabling 2-Step Verification. Account policy can restrict availability; see [Google's App Password guidance](https://support.google.com/accounts/answer/185833?hl=en). Use the generated credential locally, never the ordinary Google password or a value pasted into Git/chat.
+
+In a PowerShell terminal at this repository:
+
+```powershell
+$ErrorActionPreference = 'Stop'
+$testGmail = (Read-Host 'Actual approved test Gmail address (sender and recipient)').Trim()
+if ($testGmail -eq 'YOUR_TEST_GMAIL@gmail.com') { throw 'Replace the placeholder with the actual approved address.' }
+$env:EQUIPIFY_SMTP_HOST = 'smtp.gmail.com'
+$env:EQUIPIFY_SMTP_PORT = '587'
+$env:EQUIPIFY_SMTP_SECURITY = 'tls'
+$env:EQUIPIFY_SMTP_USERNAME = $testGmail
+$env:EQUIPIFY_MAIL_FROM = $testGmail
+$env:EQUIPIFY_MAIL_FROM_NAME = 'Equipify'
+$env:EQUIPIFY_MAIL_TEST_RECIPIENT = $testGmail
+$gmailAppSecret = Read-Host 'Google App Password' -AsSecureString
+$gmailSecretPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($gmailAppSecret)
+try {
+    $env:EQUIPIFY_SMTP_PASSWORD = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($gmailSecretPointer).Replace(' ', '')
+} finally {
+    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($gmailSecretPointer)
+}
+Remove-Item Env:EQUIPIFY_SENDMAIL_EXE -ErrorAction SilentlyContinue
+try {
+    & ./backend/tools/configure_sendmail.ps1 -XamppRoot 'C:/xampp1' `
+        -SendmailDirectory 'C:/YourReviewedSendmailBundle'
+} finally {
+    Remove-Item Env:EQUIPIFY_SMTP_PASSWORD -ErrorAction SilentlyContinue
+}
+# Stop if setup fails; do not proceed without the newly configured profile.
+$env:EQUIPIFY_MAIL_TRANSPORT = 'sendmail'
+$env:EQUIPIFY_MAIL_ENABLE_SEND = '1'
+$env:EQUIPIFY_MAIL_FALLBACK = 'file'
+$env:EQUIPIFY_MAIL_TIMEOUT = '15'
+$env:EQUIPIFY_MAIL_DIRECTORY = Join-Path (Split-Path $env:EQUIPIFY_SENDMAIL_EXE -Parent) 'fallback'
+```
+
+Replace the bundle path with the reviewed TLS-capable folder containing sendmail.exe and its DLLs, outside Git. The installed 0.9.8o bundle is still blocked; neither credentials nor TLS verification have been supplied to override that outstanding compatibility work. The [maintainer-linked TLS 1.2 repository](https://github.com/sendmail-tls1-2/main) contains `Sendmail_v33_TLS1_2.zip`, but that unmaintained fork is not a production security endorsement. Do not disable STARTTLS to make the old bundle connect.
+
+After successful local setup, `test_email.php --preview` saves four local previews. Running `C:/xampp1/php/php.exe backend/tools/test_email.php --send-approved-test` once sends at most four synthetic messages only to the environment's approved recipient and temporarily disables fallback to prevent a saved file being counted as SMTP delivery. Keep application fallback configured to `file`; the verifier restores it afterward. Check the approved inbox/spam for all four subjects and do not retry blindly after a timeout. No database connection or event simulation is involved. Gmail's endpoint/STARTTLS mapping is documented in [Google's SMTP guide](https://developers.google.com/workspace/gmail/imap/imap-smtp).
+
+## SMTP/sendmail implementation and verification (28 November 2026)
+
+**Email transport/configuration tooling is implemented and tested. Live provider configuration and actual inbox delivery are NOT yet verified.** The Gmail clarification above records approval for at most four synthetic messages to one test account; its actual address and local SMTP credentials are still missing. No SMTP credentials are configured in the current process or user environment, and no Internet email was sent. The existing `C:/xampp1` sendmail bundle uses OpenSSL **0.9.8o**, so the setup tool refuses to configure it for live TLS; a reviewed provider-compatible bundle is also required. These are outstanding environment dependencies, not passing delivery tests.
+
+### Existing implementation extended
+
+- Kept `Mailer::send(string $to, string $subject, string $html): bool`, all four `EmailTemplates::render()` templates and the configurable file fallback. No rental, payment, agreement, OTP persistence, scheduler or new email HTTP endpoint was introduced.
+- Added RFC-style Date/UTF-8 MIME headers, folded encoded subjects, quoted-printable HTML, control-character/UTF-8 validation and empty-message validation. This preserves multilingual HTML through the native Windows client rather than sending unencoded 8-bit data.
+- Added `SendmailTransport.php` for the explicitly configured `EQUIPIFY_SENDMAIL_EXE` profile: argument-array execution without a shell, fixed `-t`, bounded timeout, checked native exit status, discarded native stdout/stderr and cleanup of transient input. The input file is created inside the profile's ACL-protected directory and removed in `finally`. Neither message bodies, OTPs, addresses nor native SMTP diagnostics are logged by this transport.
+- An unavailable/disabled/rejected/timed-out send uses a file only if `EQUIPIFY_MAIL_FALLBACK=file`; invalid input is rejected before any file/native transport. A failed file write returns false. True can mean transport acceptance OR saved file; it never proves inbox receipt. The approved-recipient CLI verifier disables fallback, so its success cannot silently mean a saved file.
+- Kept the pre-existing PHP `mail()`/`sendmail_path` compatibility route when no native executable is configured. Use the new explicit native profile for checked exit status, timeout and diagnostic isolation; the legacy compatibility route does not gain those guarantees.
+- Added environment-driven Windows setup, a public empty-credential environment example, a preview/approved-recipient CLI verifier and offline/native transport tests. Generated `sendmail.ini` files are ignored as an additional safeguard.
+- Updated test isolation: the isolated PHP router and Apache regression runners force `EQUIPIFY_MAIL_ENABLE_SEND=0`, and the runners restore the caller's original flag. Disabling PHP's `mail()` alone does not disable an explicitly configured native executable. The original mail fallback subprocess test clears any inherited native profile.
+
+### Fresh test results
+
+| Verification | Result |
+|---|---|
+| `email_format_test.php` | PASS, **55** offline formatting, Unicode/MIME round-trip, injection/invalid input, required template field and output-failure checks |
+| `mailer_test.php` | PASS, **8** isolated compatibility/fallback subprocess cases; real mail disabled and native profile cleared |
+| `sendmail_smtp_test.js` | PASS, **62** checks through the actual XAMPP sendmail executable to a loopback-only SMTP sink: all four subjects and OTP/reference payloads, escaped HTML, multilingual body/subject, credentials with INI punctuation, paths with spaces, rejection, missing executable, timeout, fallback, cleanup, disabled-send behavior and unsafe configuration rejection |
+| Legacy TLS guard | PASS: bundled OpenSSL 0.9.8 profile rejected before live profile creation |
+| `week3_test.php` | PASS, **129** checks on new `equipify_week3_test_20261128_043329_124548f1`, separate MariaDB port 13307 |
+| Existing frontend regression | PASS, **63** checks |
+| Area/Apache regression | PASS, model checks and **284** HTTP assertions on new `equipify_areas_test_20261128_043906_e3a5d4af` at 13307; runner restored its caller's mail-enable flag |
+| Syntax | All **96 PHP** files passed; new native test JavaScript and setup PowerShell parsed successfully |
+| Approved live-send guard | Refused with no approved recipient; no mail sent |
+
+The loopback sink performs actual local SMTP/authentication but does not forward mail, contact an Internet SMTP provider or prove TLS/inbox delivery. Automated tests use only synthetic addresses/credentials. Native profile test credentials are outside the repository and their generated INI is removed after the suite. Preview/fallback outputs remain ignored under `tmp`. The real `equipify` database, normal Apache/MySQL services, `C:/xampp1/php/php.ini` and original `C:/xampp1/sendmail/sendmail.ini` are unchanged.
+
+### Windows setup: environment credentials, private native profile
+
+The native client reads literal settings from an INI beside its executable; it does **not** expand `$ENV` placeholders in that INI. The setup script therefore takes credentials from process environment and materializes them only in a newly created, ACL-protected native profile outside the repository/web root. This private INI necessarily contains the credential locally; it must never be copied into Git or served. Existing profiles are never overwritten. See the [sendmail author's source](https://www.glob.com.au/sendmail/source.html) and [PHP mail configuration](https://www.php.net/manual/en/mail.configuration.php).
+
+1. Use the current repository on `feature/admin-ui-updates`. Confirm the CLI PHP installation with `C:/xampp1/php/php.exe --ini`. The actual installation here is `C:/xampp1`; do not configure the older `C:/xampp` copy or assume normal Apache serves this working tree.
+2. Obtain your provider's SMTP host, port, TLS mode, SMTP username/app-password or SMTP credential, and an authorized From address. The bundled legacy OpenSSL 0.9.8 build cannot satisfy modern TLS 1.2 requirements. Select a reviewed compatible native bundle without overwriting the working XAMPP installation, and pass its directory as `-SendmailDirectory`. The original author's [TLS 1.2 pointer](https://www.glob.com.au/sendmail/) and linked [replacement's documentation](https://github.com/sendmail-tls1-2/main) explain this compatibility issue; neither a download nor provider TLS/certificate behavior was verified by this task. Do not disable encryption to work around it.
+3. In a private PowerShell terminal, set the following **process** variables. Use your provider's exact settings; no provider values are guessed:
+
+```powershell
+$env:EQUIPIFY_SMTP_HOST = Read-Host 'SMTP host'
+$env:EQUIPIFY_SMTP_PORT = Read-Host 'SMTP port (provider-specified)'
+$env:EQUIPIFY_SMTP_SECURITY = Read-Host 'tls for STARTTLS, or ssl for implicit TLS'
+$env:EQUIPIFY_SMTP_USERNAME = Read-Host 'SMTP username'
+$env:EQUIPIFY_MAIL_FROM = Read-Host 'Provider-authorized sender email'
+$env:EQUIPIFY_MAIL_FROM_NAME = 'Equipify'
+$smtpSecret = Read-Host 'SMTP app-password/credential' -AsSecureString
+$smtpPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($smtpSecret)
+try {
+    $env:EQUIPIFY_SMTP_PASSWORD = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($smtpPointer)
+} finally {
+    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($smtpPointer)
+}
+```
+
+Do not paste a real password into chat, a source file or a PowerShell command literal. The native INI setup requires printable ASCII settings without surrounding whitespace; message names/subjects/bodies support UTF-8. `backend/config/.env.example` documents the variables but is not automatically loaded by PHP.
+
+4. Run the setup script **in the same PowerShell process**. Replace only the bundle path with the reviewed compatible directory:
+
+```powershell
+& ./backend/tools/configure_sendmail.ps1 -XamppRoot 'C:/xampp1' `
+    -SendmailDirectory 'C:/YourReviewedSendmailBundle'
+# Optional: -ServiceAccount 'DOMAIN\ApacheAccount' if Apache runs as another identity.
+```
+
+It creates a new profile under `LOCALAPPDATA/Equipify/sendmail-<unique-id>`, removes inherited ACL entries, grants access to the current user/SYSTEM and any explicitly named service account, copies only the executable/DLLs, disables native debug/error logs, clears forced recipients, and sets `EQUIPIFY_SENDMAIL_EXE` in that PowerShell process. It refuses repository/web-root destinations, existing profiles, INI/control-character injection, and unencrypted non-test settings. `-AllowLoopbackTest` permits plaintext only for 127.0.0.1 on an unprivileged port and is for the automated sink only.
+
+5. Set runtime options. File fallback remains optional and private:
+
+```powershell
+$env:EQUIPIFY_MAIL_TRANSPORT = 'sendmail'
+$env:EQUIPIFY_MAIL_ENABLE_SEND = '1'
+$env:EQUIPIFY_MAIL_FALLBACK = 'file'  # omit/set empty to return false instead
+$env:EQUIPIFY_MAIL_TIMEOUT = '15'     # native profile: 1–60 seconds
+$env:EQUIPIFY_MAIL_DIRECTORY = Join-Path (Split-Path $env:EQUIPIFY_SENDMAIL_EXE -Parent) 'fallback'
+Remove-Item Env:EQUIPIFY_SMTP_PASSWORD
+# The native process reads its protected INI, so the setup secret need not remain in environment.
+```
+
+Do not permanently store the password in user/machine environment or commit an env file. Rotate by creating a fresh profile from new credentials, switching the executable setting, restarting only the intended process, and securely retiring the old private profile after it is unused.
+
+6. The new checked native route does not need a global `php.ini` edit. For compatibility with another caller using PHP `mail()`, set `sendmail_path` to the quoted private executable plus `-t` in the **active** PHP INI, keep `mail.log` empty and `mail.add_x_header` off, then restart only the intended Apache/PHP process. For example, with a space-free private path:
+
+```ini
+[mail function]
+sendmail_path = "C:/EquipifyPrivate/sendmail-profile/sendmail.exe -t"
+mail.log =
+mail.add_x_header = Off
+```
+
+For this project's checked route, keep `EQUIPIFY_SENDMAIL_EXE` set to the actual generated path and launch PHP/Apache from the environment that contains the runtime options. A Windows service does not inherit variables set later in an unrelated terminal; provision its environment/account explicitly. Do not launch another normal Apache over ports 80/443 or change the real database while testing. The SMTP CLI verifier below needs no web server and no database.
+
+### Four-template preview and approved inbox verification
+
+Offline preview is safe without provider credentials:
+
+```powershell
+C:/xampp1/php/php.exe backend/tools/test_email.php --preview
+C:/xampp1/php/php.exe backend/tests/email_format_test.php
+C:/xampp1/php/php.exe backend/tests/mailer_test.php
+node backend/tests/sendmail_smtp_test.js
+```
+
+Only after the account owner explicitly approves a recipient for up to four synthetic messages:
+
+```powershell
+$env:EQUIPIFY_MAIL_TEST_RECIPIENT = Read-Host 'Explicitly approved test recipient'
+C:/xampp1/php/php.exe backend/tools/test_email.php --send-approved-test
+```
+
+The live verifier requires explicit sending flags and a configured native executable, disables file fallback for this invocation, labels all four subjects `[Equipify SMTP test]`, and sends only synthetic OTP/reference content with an explicit no-business-event note. It stops at the first failure and prints no address, password, OTP or body. A timeout may occur after remote acceptance, so inspect the inbox before retrying.
+
+Transport acceptance is **not** receipt; see the [PHP mail return-value contract](https://www.php.net/manual/en/function.mail.php). Have the approved inbox owner confirm receipt of all four messages (including spam/quarantine), correct subjects, readable Unicode/HTML and the expected synthetic details. Record received/missing results here without copying OTPs or SMTP credentials. **No such receipt confirmation exists yet.** SMTP provider logs can help diagnose authentication/authorization without enabling message transcripts or copying credential-bearing diagnostics into chat/Git.
+
+### Remaining dependencies
+
+Live SMTP configuration/testing needs the approved recipient, provider host/port/security, authorized sender, credentials supplied locally and a compatible TLS bundle. SMTP relay acceptance, inbox delivery and provider TLS behavior remain unverified. The mailer/template work does not establish a working agreement OTP lifecycle or rental/payment/deadline event integration: their owners must supply durable transitions, secure OTP hashes/expiry/attempts and transaction/outbox/idempotency behavior. No fake rental/payment/agreement events were created to claim those dependencies are complete.
+
+Changed for this task: `Mailer.php`, new `SendmailTransport.php`, new setup/verification tools, `backend/config/.env.example`, email tests, native-send isolation in existing test runners/router, the `sendmail.ini` ignore rule and this document. No teammate branches were merged and no commit/push was performed.
+
 ## Final pre-commit review (28 November 2026)
 
 **READY to commit a partial Week 3 checkpoint. This is not approval to deploy, merge, push or call Week 3 complete.** No staging, commit, merge, reset or push was performed. The real database was not accessed or modified.

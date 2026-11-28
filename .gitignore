@@ -33,6 +33,7 @@ Thumbs.db
 /sessions/
 sess_*
 *.eml
+sendmail.ini
 *.pid
 
 # Files uploaded through the app (credential documents, portfolio and

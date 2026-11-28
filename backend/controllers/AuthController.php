@@ -302,7 +302,7 @@ final class AuthController
         $user = UserModel::findByEmail($email);
         // Public fixture passwords must never authenticate imported test users
         // in an application database, even if a test dump was copied there.
-        if ($user !== null && preg_match('/@(week1|week3|areas)\.test\z/i', $email, $fixture)) {
+        if ($user !== null && preg_match('/@(week1|week3|week4|areas)\.test\z/i', $email, $fixture)) {
             $production = in_array(strtolower((string) getenv('EQUIPIFY_ENV')), ['prod', 'production'], true)
                 || in_array(strtolower((string) getenv('APP_ENV')), ['prod', 'production'], true);
             $database = (string) getDbConnection()->query('SELECT DATABASE()')->fetchColumn();
