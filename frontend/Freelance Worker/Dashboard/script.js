@@ -6,7 +6,7 @@
        name, rating, verification banner and the availability toggle
      GET /freelancer/dashboard (placeholder until the jobs/payments tables
        exist) for the remaining tiles, the earnings chart, the latest offers and
-       the activity feed
+       the activity feed (notifications and unread counts are persisted)
 
    Changing the availability select saves immediately with
    PUT /freelancer/availability, which writes freelance_workers.availability_status.
@@ -17,6 +17,11 @@
 
   var availabilitySelect = document.getElementById('availabilitySelect');
   var banner = document.getElementById('verificationBanner');
+  EquipifyApi.onSessionChange(function () {
+    var activity = document.querySelector('#activityTable tbody');
+    if (activity) activity.replaceChildren();
+    document.querySelectorAll('[data-stat="unread_notifications"]').forEach(function (node) { node.textContent = '—'; });
+  });
 
   // ---------- Verification banner ----------
   // freelance_workers.verification_status decides both the wording and which
@@ -92,7 +97,7 @@
     });
   });
 
-  // ---------- Dashboard figures (placeholder data) ----------
+  // ---------- Dashboard figures (live notifications; other tiles are placeholders) ----------
   EquipifyApi.get('/freelancer/dashboard').then(function (res) {
     if (!res.ok) {
       window.showToast(res.error);

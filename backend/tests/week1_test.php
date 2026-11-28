@@ -1,5 +1,5 @@
 <?php
-/** CLI only. Creates uniquely named test databases; equipify is inspected read-only. */
+/** CLI only. Creates uniquely named test databases; selected source schema is inspected read-only. */
 declare(strict_types=1);
 if (PHP_SAPI !== 'cli') { http_response_code(404); exit; }
 require_once __DIR__ . '/../config/db_config.php';
@@ -23,7 +23,7 @@ function rejected(callable $call, string $label): void {
     throw new RuntimeException('FAILED: ' . $label);
 }
 function connection(string $name): PDO {
-    return new PDO('mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . $name . ';charset=utf8mb4', DB_USER, DB_PASS,
+    return new PDO('mysql:host=' . DB_HOST . ';port=' . (int) (getenv('EQUIPIFY_DB_PORT') ?: DB_PORT) . ';dbname=' . $name . ';charset=utf8mb4', DB_USER, DB_PASS,
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
 }
 function complaintFingerprint(PDO $db): string {
@@ -41,7 +41,12 @@ function migrate(PDO $db, array $files): void {
     }
 }
 
-$source = connection('equipify');
+$sourceName = getenv('EQUIPIFY_TEST_SOURCE_DB') ?: 'equipify';
+if ($sourceName !== 'equipify' && !preg_match('/\Aequipify_week3_test_[a-z0-9_]+\z/', $sourceName)) {
+    throw new RuntimeException('Source must be equipify or an explicitly named isolated Week 3 database.');
+}
+$source = connection($sourceName);
+verify($source->query('SELECT DATABASE()')->fetchColumn() === $sourceName, 'Verified source database');
 $before = complaintFingerprint($source);
 $suffix = gmdate('Ymd_His') . '_' . bin2hex(random_bytes(3));
 $freshName = 'equipify_week1_test_' . $suffix;
@@ -187,7 +192,7 @@ foreach (['complaints_test.php','complaints_controller_test.php'] as $test) {
     passthru(escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg(__DIR__ . '/' . $test) . ($test === 'complaints_test.php' ? ' --database' : ''), $exit);
     verify($exit === 0, $test);
 }
-verify(complaintFingerprint($source) === $before, 'Local equipify complaints unchanged');
+verify(complaintFingerprint($source) === $before, 'Source complaint rows unchanged');
 echo "PASS: $checks Week 1 integration/security checks.\n";
 echo "TEST_DATABASE=$freshName\nUPGRADE_DATABASE=$upgradeName\n";
 echo "Synthetic test databases retained for API checks; no application database migrations executed.\n";

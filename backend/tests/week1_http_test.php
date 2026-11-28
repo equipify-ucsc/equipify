@@ -46,7 +46,8 @@ $preflight = request('/frontend/shared/complaints.js', 200);
 verify(in_array('X-Equipify-Test-Database: ' . $name, $preflight['headers'], true), 'Server explicitly targets the supplied temporary database');
 foreach (['/.git/config','/.gitignore','/schema/031_create_complaints.sql','/backend/config/db_config.php',
     '/backend/models/UserModel.php','/backend/tests/week1_test.php','/backend/tools/create_admin.php',
-    '/backend/storage/uploads/.gitkeep','/tmp/week1/httpd.conf','/README.md'] as $path) request($path, 403);
+    '/backend/storage/uploads/.gitkeep','/tmp/week1/httpd.conf','/README.md',
+    '/sessions/sess_precommit_probe','/frontend/sess_precommit_probe','/frontend/precommit-probe.eml'] as $path) request($path, 403);
 request('/frontend/shared/complaints.js', 200);
 request('/backend/api/notifications', 401);
 request('/backend/api/complaints', 401);

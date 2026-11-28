@@ -1,285 +1,87 @@
 /* ==========================================================================
-   Equipify — Delivery Assignments (Area Manager)
-   Design system: "Industrial Integrity" (topbar + sidenav shell, matching
-   the Area Manager Dashboard shell pattern)
-   Vanilla CSS — no framework dependencies
-
-   Shared shell (design tokens, reset, typography, icons, topbar, sidenav,
-   main-content, buttons, badges, card base, sr-only) now lives in
-   ../../shared/styles.css, loaded before this file. Only page-specific
-   rules and small residual overrides remain below.
-   ========================================================================== */
-
-.topbar-user {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
+   Area Manager delivery overview; component styles stay inside this page. */
+.topbar-user { display: flex; align-items: center; gap: var(--space-sm); }
+.delivery-assignments-page .toast { position: fixed; right: 22px; bottom: 22px; padding: 13px 16px; border-radius: var(--radius-sm); background: var(--color-deep-navy); color: #fff; box-shadow: var(--shadow-card); font-size: 14px; font-weight: 600; display: none; z-index: 80; }
+.delivery-assignments-page .toast.is-visible { display: block; }
+.delivery-page .page-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 28px; }
+.delivery-page .page-title { color: var(--color-deep-navy); margin-bottom: 8px; }
+.delivery-page .page-subtitle { color: #647084; max-width: 580px; }
+.delivery-page .page-head-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; }
+.delivery-page .delivery-view-only { padding: 6px 10px; border: 1px solid #d9e5df; border-radius: 999px; color: #526a60; background: #f2f8f5; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.delivery-page #refreshBtn { min-height: 42px; }
+.delivery-page .filter-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; }
+.delivery-page .filter-tab { min-height: 40px; padding: 9px 16px; border: 1px solid #dce4eb; border-radius: 999px; background: #fff; color: #526176; font: 600 12px/1.4 var(--font-body); cursor: pointer; transition: background-color .15s, border-color .15s; }
+.delivery-page .filter-tab:hover { background: #eef5f1; border-color: #a7cbbb; }
+.delivery-page .filter-tab.is-active { background: var(--color-teal); border-color: var(--color-teal); color: #fff; box-shadow: 0 2px 4px #006c4e14; }
+.delivery-page button:focus-visible { outline: 3px solid #168561; outline-offset: 3px; }
+.delivery-page button:disabled { opacity: .45; cursor: default; }
+.delivery-page .assignment-list { display: flex; flex-direction: column; gap: 20px; list-style: none; margin: 0; padding: 0; }
+.delivery-page .delivery-card { padding: 24px 26px 0; background: #fff; border: 1px solid #e0e7ed; border-radius: 16px; box-shadow: 0 4px 16px #1a284006; overflow: hidden; }
+.delivery-page svg { width: 20px; height: 20px; display: block; flex-shrink: 0; }
+.delivery-page .delivery-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-bottom: 22px; }
+.delivery-page .delivery-identity { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.delivery-page .delivery-truck { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; background: #eaf5ef; color: var(--color-teal); }
+.delivery-page .delivery-truck svg { width: 24px; height: 24px; }
+.delivery-page .delivery-titles { min-width: 0; }
+.delivery-page .delivery-title { margin: 0; color: var(--color-deep-navy); font: 700 17px/1.5 var(--font-heading); overflow-wrap: anywhere; }
+.delivery-page .delivery-reference { margin: 3px 0 0; color: #687589; font-size: 12px; overflow-wrap: anywhere; }
+.delivery-page .delivery-status { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; padding: 6px 11px; border: 1px solid transparent; border-radius: 999px; font-size: 11px; font-weight: 600; line-height: 1.5; white-space: nowrap; }
+.delivery-page .delivery-status-dot { width: 6px; height: 6px; flex-shrink: 0; border-radius: 50%; background: currentColor; }
+.delivery-page .delivery-status--pending { color: #8a5a09; background: #fff6e1; border-color: #f7e8c4; }
+.delivery-page .delivery-status--assigned { color: #285da1; background: #edf4ff; border-color: #dce8fa; }
+.delivery-page .delivery-status--in_transit { color: #6b4aa2; background: #f3edfc; border-color: #e6dcf6; }
+.delivery-page .delivery-status--delivered { color: #006c4e; background: #e8f5ee; border-color: #d4e9de; }
+.delivery-page .delivery-status--cancelled, .delivery-page .delivery-status--unknown { color: #596779; background: #f0f3f6; border-color: #e2e7ed; }
+.delivery-page .delivery-route { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 32px; padding: 22px 0 24px; border-top: 1px solid #edf0f4; }
+.delivery-page .delivery-location { display: flex; align-items: flex-start; gap: 12px; min-width: 0; }
+.delivery-page .delivery-location-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: #f0f3f8; color: #52667e; flex-shrink: 0; }
+.delivery-page .delivery-location-icon--dropoff { color: #007452; background: #eef7f2; }
+.delivery-page .delivery-location-text { min-width: 0; }
+.delivery-page .delivery-label { margin: 0 0 5px; color: #6c7a8c; font-size: 10px; font-weight: 600; letter-spacing: .7px; text-transform: uppercase; }
+.delivery-page .delivery-address { margin: 0; color: #2e4057; font-size: 13px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.delivery-page .delivery-schedule { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 -26px; padding: 15px 26px; border-top: 1px solid #edf0f4; background: #fbfcfd; font-size: 12px; }
+.delivery-page .delivery-calendar { color: #788799; }
+.delivery-page .delivery-calendar svg { width: 17px; height: 17px; }
+.delivery-page .delivery-schedule-label { color: #6b788b; }
+.delivery-page .delivery-scheduled-time { color: #2e4057; font-weight: 600; margin-left: 4px; }
+.delivery-page .delivery-unscheduled { margin-left: 4px; color: #69788b; font-style: italic; }
+.delivery-page .delivery-pagination { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding: 20px 0 8px; }
+.delivery-page .delivery-results { margin: 0; color: #687589; font-size: 12px; }
+.delivery-page .delivery-pagination-controls { display: flex; align-items: center; gap: 12px; }
+.delivery-page .delivery-page-button, .delivery-page .delivery-state-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 42px; padding: 10px 14px; border: 1px solid #d9e3ea; border-radius: 9px; background: #fff; color: #2e4057; font: 600 12px/1.4 var(--font-body); cursor: pointer; transition: background-color .15s; }
+.delivery-page .delivery-page-button svg { width: 16px; height: 16px; }
+.delivery-page .delivery-page-button:hover:enabled { background: #edf5f0; border-color: #b4d1c1; }
+.delivery-page .delivery-page-label { font-size: 12px; color: #687589; white-space: nowrap; }
+.delivery-page .delivery-state { display: flex; min-height: 300px; align-items: center; justify-content: center; flex-direction: column; padding: 40px 24px; border: 1px solid #e0e7ed; border-radius: 16px; background: #fff; text-align: center; }
+.delivery-page .delivery-state-icon { display: grid; place-items: center; width: 60px; height: 60px; margin-bottom: 20px; border-radius: 16px; color: var(--color-teal); background: #edf6f1; }
+.delivery-page .delivery-state-icon svg { width: 28px; height: 28px; }
+.delivery-page .delivery-state--error .delivery-state-icon { color: #a44532; background: #fff1ec; }
+.delivery-page .delivery-state-title { margin: 0 0 8px; color: var(--color-deep-navy); font: 700 17px/1.5 var(--font-heading); }
+.delivery-page .delivery-state-description { margin: 0; max-width: 420px; color: #687589; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+.delivery-page .delivery-state-button { margin-top: 20px; background: var(--color-teal); color: #fff; border-color: var(--color-teal); }
+.delivery-page .delivery-state-button:hover { background: var(--color-teal-hover); }
+.delivery-page .delivery-spinner { width: 30px; height: 30px; margin-bottom: 22px; border: 3px solid #e3eee8; border-top-color: var(--color-teal); border-radius: 50%; animation: delivery-page-spin .8s linear infinite; }
+@keyframes delivery-page-spin { to { transform: rotate(360deg); } }
+@media (max-width: 767px) {
+  .delivery-page .page-head { flex-direction: column; gap: 16px; }
+  .delivery-page .page-head-actions { width: 100%; justify-content: space-between; }
+  .delivery-page .filter-tab { min-height: 44px; padding: 10px 13px; }
+  .delivery-page .delivery-card { padding: 20px 18px 0; }
+  .delivery-page .delivery-card-header { gap: 12px; }
+  .delivery-page .delivery-title { font-size: 15px; }
+  .delivery-page .delivery-truck { width: 38px; height: 38px; border-radius: 10px; }
+  .delivery-page .delivery-route { grid-template-columns: minmax(0,1fr); gap: 22px; padding: 20px 0; }
+  .delivery-page .delivery-schedule { margin-inline: -18px; padding: 14px 18px; }
+  .delivery-page .delivery-pagination { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .delivery-page .delivery-pagination-controls { width: 100%; justify-content: space-between; gap: 8px; }
+  .delivery-page .delivery-page-button, .delivery-page .delivery-state-button, .delivery-page #refreshBtn { min-height: 44px; }
 }
-
-/* ---------- Side navigation ---------- */
-.sidenav-footer {
-  margin-top: auto;
+@media (max-width: 380px) {
+  .delivery-page .delivery-card-header { flex-wrap: wrap; }
+  .delivery-page .delivery-status { margin-left: 50px; }
+  .delivery-page .delivery-page-button { padding-inline: 10px; }
 }
-
-/* ---------- Page head ---------- */
-.page-head {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  justify-content: space-between;
-  margin-bottom: var(--space-lg);
-}
-@media (min-width: 768px) {
-  .page-head {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-}
-
-.page-title {
-  color: var(--color-navy);
-  margin-bottom: 4px;
-}
-
-.page-subtitle {
-  color: var(--color-on-surface-variant);
-}
-
-.page-head-actions {
-  display: flex;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-}
-
-/* ---------- Buttons ---------- */
-.btn-primary {
-  background-color: var(--color-teal);
-  color: #ffffff;
-  padding: 10px var(--space-lg);
-  border: none;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  font-size: 14px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.15s ease;
-  white-space: nowrap;
-}
-.btn-primary:hover {
-  background-color: var(--color-teal-hover);
-}
-.btn-primary:disabled {
-  background-color: var(--color-outline-variant);
-  color: var(--color-on-surface-variant);
-  box-shadow: none;
-  cursor: not-allowed;
-}
-
-.btn-sm {
-  padding: 7px 14px;
-  font-size: 13px;
-}
-
-/* ---------- Card base ---------- */
-.card {
-  padding: var(--card-padding);
-}
-
-/* ---------- Filter tabs ---------- */
-.filter-tabs {
-  display: flex;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-  margin-bottom: var(--space-lg);
-}
-
-.filter-tab {
-  background-color: var(--color-surface-container-lowest);
-  color: var(--color-navy);
-  border: 1px solid var(--color-outline-variant);
-  border-radius: var(--radius-full);
-  padding: 8px 18px;
-  font-weight: 600;
-  font-size: 13px;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-.filter-tab:hover {
-  background-color: rgba(46, 64, 87, 0.06);
-}
-.filter-tab.is-active {
-  background-color: var(--color-teal);
-  border-color: var(--color-teal);
-  color: #ffffff;
-}
-
-/* ---------- Assignment list ---------- */
-.assignment-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.assignment-head {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-md);
-}
-
-.assignment-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-lg);
-  background-color: var(--color-active-bg);
-  color: var(--color-teal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.assignment-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.assignment-title {
-  font-family: var(--font-heading);
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-on-surface);
-}
-
-.assignment-meta {
-  font-size: 13px;
-  color: var(--color-on-surface-variant);
-  margin-top: 2px;
-}
-
-.assignment-body {
-  margin-top: var(--space-md);
-  padding-top: var(--space-md);
-  border-top: 1px solid var(--color-surface-variant);
-}
-
-/* ---------- Assignment form ---------- */
-.assignment-form {
-  display: flex;
-  gap: var(--space-md);
-  flex-wrap: wrap;
-  align-items: flex-end;
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-  min-width: 200px;
-  max-width: 360px;
-}
-.form-field label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-on-surface-variant);
-}
-
-.select-field {
-  background-color: var(--color-surface-container-lowest);
-  color: var(--color-on-surface);
-  border: 1px solid var(--color-outline-variant);
-  border-radius: var(--radius-sm);
-  padding: 9px 36px 9px 12px;
-  font-size: 14px;
-  height: 40px;
-  width: 100%;
-}
-.select-field:focus-visible {
-  outline: none;
-  border-color: var(--color-teal);
-  box-shadow: 0 0 0 2px rgba(0, 108, 78, 0.25);
-}
-
-/* ---------- Searchable dropdown (combobox) ---------- */
-.combobox {
-  position: relative;
-  width: 100%;
-}
-
-.combobox-icon {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  color: var(--color-on-surface-variant);
-  pointer-events: none;
-}
-
-.combobox-list {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  z-index: 30;
-  background-color: var(--color-surface-container-lowest);
-  border: 1px solid var(--color-outline-variant);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-card);
-  max-height: 220px;
-  overflow-y: auto;
-  padding: 4px;
-}
-
-.combobox-option {
-  padding: 8px 10px;
-  border-radius: var(--radius-sm);
-  font-size: 14px;
-  color: var(--color-on-surface);
-  cursor: pointer;
-}
-.combobox-option:hover,
-.combobox-option.is-active {
-  background-color: var(--color-active-bg);
-  color: var(--color-active-fg);
-}
-
-.combobox-empty {
-  padding: 8px 10px;
-  font-size: 13px;
-  color: var(--color-on-surface-variant);
-}
-
-/* ---------- Assignment summary ---------- */
-.assignment-summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
-  flex-wrap: wrap;
-}
-
-.assignment-summary-text {
-  font-size: 14px;
-  color: var(--color-on-surface);
-}
-
-/* ---------- Toast ---------- */
-.toast {
-  position: fixed;
-  right: 22px;
-  bottom: 22px;
-  background-color: var(--color-deep-navy);
-  color: #ffffff;
-  padding: 13px 16px;
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-card);
-  font-size: 14px;
-  font-weight: 600;
-  display: none;
-  z-index: 80;
-}
-.toast.is-visible {
-  display: block;
+@media (prefers-reduced-motion: reduce) {
+  .delivery-page .delivery-spinner { animation: none; }
+  .delivery-page button { transition: none; }
 }

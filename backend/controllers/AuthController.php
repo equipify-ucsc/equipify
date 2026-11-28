@@ -300,6 +300,16 @@ final class AuthController
             Response::error('Too many login attempts. Please try again later.', 429);
         }
         $user = UserModel::findByEmail($email);
+        // Public fixture passwords must never authenticate imported test users
+        // in an application database, even if a test dump was copied there.
+        if ($user !== null && preg_match('/@(week1|week3|areas)\.test\z/i', $email, $fixture)) {
+            $production = in_array(strtolower((string) getenv('EQUIPIFY_ENV')), ['prod', 'production'], true)
+                || in_array(strtolower((string) getenv('APP_ENV')), ['prod', 'production'], true);
+            $database = (string) getDbConnection()->query('SELECT DATABASE()')->fetchColumn();
+            if ($production || !preg_match('/\Aequipify_' . $fixture[1] . '_test_[a-z0-9_]+\z/', $database)) {
+                $user = null;
+            }
+        }
 
         // Verify against a dummy hash for unknown emails so response time doesn't
         // reveal which emails are registered.

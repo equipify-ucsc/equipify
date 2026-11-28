@@ -1,13 +1,4 @@
-/* ==========================================================================
-   Equipify — Freelance Worker / Notifications
-
-   GET /freelancer/notifications, filtered by type and an "unread only" flag
-   and paged on the server. Covers both notification requirements: job and bid
-   updates, and payment updates.
-
-   Notifications have no table in the schema yet, so the feed is placeholder
-   data and "mark read" validates without storing.
-   ========================================================================== */
+/* Persisted notification feed; shared bell polls unread counts. */
 
 (function () {
   'use strict';
@@ -16,6 +7,7 @@
 
   var list = EquipifyList.create({
     endpoint: '/freelancer/notifications',
+    sessionScoped: true,
     container: document.getElementById('notificationFeed'),
     filters: {
       type: document.getElementById('typeFilter'),
@@ -28,7 +20,7 @@
   });
 
   function notificationItem(notification) {
-    var item = Portal.element('div', 'feed-item' + (notification.is_read ? '' : ' is-unread'));
+    var item = Portal.element('div', 'feed-item' + (Number(notification.is_read) ? '' : ' is-unread'));
 
     var icon = Portal.element('div', 'feed-icon feed-icon--' + notification.type);
     icon.appendChild(Portal.icon(ICONS[notification.type] || 'notifications', 'icon'));
@@ -41,7 +33,7 @@
 
     var side = Portal.element('div', 'feed-side');
     side.appendChild(Portal.element('div', 'feed-when', Portal.dateTime(notification.created_at)));
-    if (!notification.is_read) {
+    if (!Number(notification.is_read)) {
       side.appendChild(Portal.button('Mark read', 'btn-outline btn-sm', function () {
         markRead({ notification_id: notification.notification_id }, 'Marked as read.');
       }));

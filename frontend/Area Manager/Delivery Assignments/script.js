@@ -1,197 +1,134 @@
-/* ==========================================================================
-   Equipify — Delivery Assignments (Area Manager)
-   Mobile navigation drawer, status filter, and personnel+vehicle
-   assignment forms (vanilla JS, no dependencies)
-   ========================================================================== */
-
-(function () {
+﻿(function () {
   'use strict';
-
-  // ---------- Toast helper ----------
-  var toastTimer;
-  window.showToast = function (message) {
-    var toast = document.getElementById('toast');
-    if (!toast) return;
-    toast.textContent = message;
-    toast.classList.add('is-visible');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () {
-      toast.classList.remove('is-visible');
-    }, 2600);
+  var list = document.querySelector('.assignment-list'), page = 1, status = '', busy = false, generation = 0, stopped = false;
+  var previous = document.getElementById('deliveryPrevious'), next = document.getElementById('deliveryNext');
+  var pageLabel = document.getElementById('deliveryPage'), summary = document.getElementById('deliverySummary');
+  var refresh = document.getElementById('refreshBtn'), filters = document.querySelectorAll('.filter-tab');
+  var statuses = {
+    pending: 'Pending', assigned: 'Assigned', in_transit: 'In transit', delivered: 'Delivered', cancelled: 'Cancelled'
   };
-
-  // ---------- Refresh button ----------
-  var refreshBtn = document.getElementById('refreshBtn');
-  if (refreshBtn) {
-    refreshBtn.addEventListener('click', function () {
-      window.showToast('Delivery assignments refreshed.');
-    });
+  function element(tag, className, text) {
+    var node = document.createElement(tag); node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
   }
-
-  // ---------- Stub links (sections not built yet) ----------
-  document.querySelectorAll('.is-stub').forEach(function (link) {
-    link.addEventListener('click', function (event) {
-      event.preventDefault();
-      var label = link.getAttribute('data-stub-label') || 'This section';
-      window.showToast(label + ' is coming soon.');
-    });
-  });
-
-  // ---------- Status filter tabs ----------
-  var filterTabs = document.querySelectorAll('.filter-tab');
-  var assignmentCards = document.querySelectorAll('.assignment-card');
-  filterTabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      filterTabs.forEach(function (t) { t.classList.remove('is-active'); });
-      tab.classList.add('is-active');
-      var status = tab.getAttribute('data-filter');
-      assignmentCards.forEach(function (card) {
-        card.hidden = status !== 'all' && card.getAttribute('data-status') !== status;
-      });
-    });
-  });
-
-  // ---------- Searchable dropdowns (combobox) ----------
-  function initCombobox(combobox) {
-    var input = combobox.querySelector('.combobox-input');
-    var list = combobox.querySelector('.combobox-list');
-    var emptyState = list.querySelector('.combobox-empty');
-    var options = Array.prototype.slice.call(list.querySelectorAll('.combobox-option'));
-    var activeIndex = -1;
-
-    function setActiveOption(index) {
-      options.forEach(function (opt) { opt.classList.remove('is-active'); });
-      var visible = options.filter(function (opt) { return !opt.hidden; });
-      if (index >= 0 && index < visible.length) {
-        visible[index].classList.add('is-active');
-        visible[index].scrollIntoView({ block: 'nearest' });
-      }
-    }
-
-    function openList() {
-      list.hidden = false;
-      input.setAttribute('aria-expanded', 'true');
-    }
-
-    function closeList() {
-      list.hidden = true;
-      input.setAttribute('aria-expanded', 'false');
-      activeIndex = -1;
-      setActiveOption(-1);
-    }
-
-    function filterOptions() {
-      var query = input.value.trim().toLowerCase();
-      var anyVisible = false;
-      options.forEach(function (opt) {
-        var match = opt.textContent.toLowerCase().indexOf(query) !== -1;
-        opt.hidden = !match;
-        if (match) anyVisible = true;
-      });
-      if (emptyState) emptyState.hidden = anyVisible;
-      activeIndex = -1;
-      setActiveOption(-1);
-    }
-
-    function selectOption(option) {
-      input.value = option.textContent;
-      input.dataset.value = option.getAttribute('data-value');
-      closeList();
-      input.dispatchEvent(new Event('input', { bubbles: true }));
-      combobox.dispatchEvent(new CustomEvent('combobox:select', { bubbles: true }));
-    }
-
-    input.addEventListener('focus', function () {
-      filterOptions();
-      openList();
-    });
-
-    input.addEventListener('input', function () {
-      if (input.value !== (input.dataset.selectedLabel || '')) {
-        input.dataset.value = '';
-      }
-      filterOptions();
-      openList();
-    });
-
-    input.addEventListener('keydown', function (event) {
-      var visible = options.filter(function (opt) { return !opt.hidden; });
-      if (event.key === 'ArrowDown') {
-        event.preventDefault();
-        openList();
-        activeIndex = Math.min(activeIndex + 1, visible.length - 1);
-        setActiveOption(activeIndex);
-      } else if (event.key === 'ArrowUp') {
-        event.preventDefault();
-        activeIndex = Math.max(activeIndex - 1, 0);
-        setActiveOption(activeIndex);
-      } else if (event.key === 'Enter') {
-        if (!list.hidden && activeIndex >= 0 && visible[activeIndex]) {
-          event.preventDefault();
-          input.dataset.selectedLabel = visible[activeIndex].textContent;
-          selectOption(visible[activeIndex]);
-        }
-      } else if (event.key === 'Escape') {
-        closeList();
-      }
-    });
-
-    options.forEach(function (opt) {
-      opt.addEventListener('mousedown', function (event) {
-        event.preventDefault();
-        input.dataset.selectedLabel = opt.textContent;
-        selectOption(opt);
-      });
-    });
-
-    document.addEventListener('click', function (event) {
-      if (!combobox.contains(event.target)) closeList();
-    });
+  function icon(name) {
+    var paths = {
+      truck: 'M3 6h11v11H3zM14 10h4l3 4v3h-7M7 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4m11 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4',
+      pickup: 'M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12ZM9 9h6m-3-3v6',
+      dropoff: 'M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12Zm-3-12 2 2 4-4',
+      calendar: 'M4 5h16v16H4zM4 10h16M8 3v4m8-4v4',
+      empty: 'M4 5h16v14H4zM4 13h4l2 3h4l2-3h4',
+      error: 'M12 3 2 21h20L12 3ZM12 9v5m0 3v1'
+    };
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none'); svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '1.8'); svg.setAttribute('stroke-linecap', 'round'); svg.setAttribute('stroke-linejoin', 'round');
+    svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
+    var path = document.createElementNS('http://www.w3.org/2000/svg', 'path'); path.setAttribute('d', paths[name]);
+    svg.append(path); return svg;
   }
+  function active() { return !stopped && !document.hidden && document.contains(list); }
+  function clear() {
+    generation++; busy = false; list.replaceChildren(); list.setAttribute('aria-busy', 'false');
+    previous.disabled = next.disabled = true;
+    if (refresh) refresh.disabled = true;
+    if (pageLabel) pageLabel.textContent = '';
+    if (summary) summary.textContent = '';
+  }
+  function stop() { stopped = true; clear(); }
+  EquipifyApi.onSessionChange(stop);
+  document.addEventListener('visibilitychange', function () { clear(); if (active()) load(page); });
+  window.addEventListener('pagehide', stop);
+  window.addEventListener('pageshow', function (event) { if (event.persisted) window.location.reload(); });
 
-  document.querySelectorAll('.combobox').forEach(initCombobox);
-
-  // ---------- Personnel + vehicle assignment forms ----------
-  document.querySelectorAll('.assignment-form').forEach(function (form) {
-    var personnelInput = form.querySelector('.js-personnel-combobox .combobox-input');
-    var vehicleInput = form.querySelector('.js-vehicle-combobox .combobox-input');
-    var submitBtn = form.querySelector('button[type="submit"]');
-
-    function updateSubmitState() {
-      submitBtn.disabled = !(personnelInput.dataset.value && vehicleInput.dataset.value);
+  function setFilter(value) {
+    if (busy || !active()) return;
+    status = value;
+    filters.forEach(function (tab) {
+      var selected = tab.dataset.filter === (value || 'all');
+      tab.classList.toggle('is-active', selected); tab.setAttribute('aria-pressed', String(selected));
+    });
+    return load(1);
+  }
+  function showState(kind, heading, message) {
+    var row = element('li', 'delivery-state delivery-state--' + kind);
+    row.setAttribute('role', kind === 'error' ? 'alert' : 'status');
+    var symbol = element('span', kind === 'loading' ? 'delivery-spinner' : 'delivery-state-icon');
+    symbol.setAttribute('aria-hidden', 'true');
+    if (kind !== 'loading') symbol.append(icon(kind === 'error' ? 'error' : 'empty'));
+    row.append(symbol, element('h2', 'delivery-state-title', heading), element('p', 'delivery-state-description', message));
+    if (kind === 'error' || (kind === 'empty' && status)) {
+      var retry = element('button', 'delivery-state-button', kind === 'error' ? 'Try again' : 'View all deliveries');
+      retry.type = 'button'; retry.onclick = function () { return kind === 'error' ? load(page) : setFilter(''); };
+      row.append(retry);
     }
-    form.addEventListener('input', updateSubmitState);
-    form.addEventListener('combobox:select', updateSubmitState);
-
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-      var card = form.closest('.assignment-card');
-      var summary = card.querySelector('.assignment-summary');
-      var badge = card.querySelector('.badge-status');
-      var personnelName = personnelInput.dataset.value;
-      var vehicleName = vehicleInput.dataset.value;
-
-      summary.querySelector('.assigned-personnel').textContent = personnelName;
-      summary.querySelector('.assigned-vehicle').textContent = vehicleName;
-
-      form.hidden = true;
-      summary.hidden = false;
-
-      card.setAttribute('data-status', 'assigned');
-      badge.textContent = 'Assigned';
-      badge.classList.remove('badge-status--pending');
-      badge.classList.add('badge-status--active');
-
-      window.showToast('Delivery assigned to ' + personnelName + '.');
-    });
-  });
-
-  // ---------- Reassign buttons ----------
-  document.querySelectorAll('.assignment-reassign-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var card = btn.closest('.assignment-card');
-      card.querySelector('.assignment-summary').hidden = true;
-      card.querySelector('.assignment-form').hidden = false;
-    });
-  });
+    list.replaceChildren(row);
+  }
+  function locationBlock(label, address, kind) {
+    var block = element('div', 'delivery-location'), symbol = element('span', 'delivery-location-icon delivery-location-icon--' + kind);
+    symbol.append(icon(kind));
+    var text = element('div', 'delivery-location-text');
+    text.append(element('p', 'delivery-label', label), element('p', 'delivery-address', address || 'Address not provided'));
+    block.append(symbol, text); return block;
+  }
+  function deliveryCard(delivery) {
+    var card = element('li', 'delivery-card'), header = element('div', 'delivery-card-header');
+    var identity = element('div', 'delivery-identity'), symbol = element('span', 'delivery-truck');
+    symbol.append(icon('truck'));
+    var titles = element('div', 'delivery-titles');
+    titles.append(element('h2', 'delivery-title', 'Delivery #' + delivery.delivery_id));
+    titles.append(element('p', 'delivery-reference', delivery.related_reference ? 'Reference ' + delivery.related_reference : 'No reference provided'));
+    identity.append(symbol, titles);
+    var statusKey = Object.prototype.hasOwnProperty.call(statuses, delivery.status) ? delivery.status : 'unknown';
+    var badge = element('span', 'delivery-status delivery-status--' + statusKey);
+    var dot = element('span', 'delivery-status-dot'); dot.setAttribute('aria-hidden', 'true');
+    badge.append(dot, element('span', '', statuses[statusKey] || 'Status unavailable'));
+    header.append(identity, badge);
+    var route = element('div', 'delivery-route');
+    route.append(locationBlock('Pickup location', delivery.pickup_address, 'pickup'), locationBlock('Drop-off location', delivery.delivery_address, 'dropoff'));
+    var schedule = element('div', 'delivery-schedule'), calendar = element('span', 'delivery-calendar');
+    calendar.append(icon('calendar')); schedule.append(calendar, element('span', 'delivery-schedule-label', 'Scheduled'));
+    if (delivery.scheduled_at) {
+      var date = new Date(String(delivery.scheduled_at).replace(' ', 'T')), time = element('time', 'delivery-scheduled-time');
+      time.textContent = isNaN(date.getTime()) ? String(delivery.scheduled_at) : date.toLocaleString(undefined, {year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'});
+      if (!isNaN(date.getTime())) time.setAttribute('datetime', date.toISOString());
+      schedule.append(time);
+    } else schedule.append(element('span', 'delivery-unscheduled', 'Not scheduled'));
+    card.append(header, route, schedule); return card;
+  }
+  async function load(target) {
+    if (busy || !active()) return;
+    var version = generation;
+    busy = true; list.setAttribute('aria-busy', 'true'); previous.disabled = next.disabled = true;
+    if (refresh) refresh.disabled = true;
+    if (summary) summary.textContent = 'Loading deliveries…';
+    if (pageLabel) pageLabel.textContent = 'Loading';
+    showState('loading', 'Loading deliveries', 'Getting the latest delivery updates for your area.');
+    try {
+      var res = await EquipifyApi.query('/area-manager/deliveries', {page: target, per_page: 10, status: status});
+      if (version !== generation || !active()) return;
+      if (!res.ok) {
+        showState('error', res.status === 409 ? 'Area access unavailable' : 'Unable to load deliveries', res.error);
+        if (summary) summary.textContent = 'Deliveries unavailable';
+        if (pageLabel) pageLabel.textContent = '—';
+        return;
+      }
+      page = res.data.page; list.replaceChildren();
+      if (!res.data.items.length) showState('empty', status ? 'No ' + statuses[status].toLowerCase() + ' deliveries' : 'No deliveries in your area', status ? 'Try another status to see more deliveries.' : 'Delivery requests will appear here when they are available.');
+      res.data.items.forEach(function (delivery) { list.append(deliveryCard(delivery)); });
+      previous.disabled = page <= 1; next.disabled = page >= res.data.total_pages;
+      if (pageLabel) pageLabel.textContent = res.data.total_pages ? 'Page ' + page + ' of ' + res.data.total_pages : 'No pages';
+      if (summary) {
+        var start = (page - 1) * res.data.per_page + 1, end = start + res.data.items.length - 1;
+        summary.textContent = res.data.total ? 'Showing ' + start + '–' + end + ' of ' + res.data.total + (res.data.total === 1 ? ' delivery' : ' deliveries') : '0 deliveries';
+      }
+    } finally {
+      if (version === generation) { busy = false; list.setAttribute('aria-busy', 'false'); if (refresh) refresh.disabled = false; }
+    }
+  }
+  filters.forEach(function (tab) { tab.onclick = function () { return setFilter(tab.dataset.filter === 'all' ? '' : tab.dataset.filter); }; });
+  previous.onclick = function () { return load(page - 1); }; next.onclick = function () { return load(page + 1); };
+  if (refresh) refresh.onclick = function () { return load(page); };
+  load(1);
 })();

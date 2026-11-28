@@ -14,6 +14,25 @@
   'use strict';
 
   var BASE = '../../../backend/api';
+  var sessionVersion = 0, identity = null, sessionListeners = [];
+  var sessionChannel = typeof BroadcastChannel === 'function' ? new BroadcastChannel('equipify-session') : null;
+  function invalidateSession(broadcast) {
+    sessionVersion++; identity = null;
+    sessionListeners.slice().forEach(function (listener) { listener(); });
+    if (broadcast) {
+      if (sessionChannel) sessionChannel.postMessage('changed');
+      // No user data is stored; storage events cover browsers without BroadcastChannel.
+      try { localStorage.setItem('equipify-session-change', Date.now() + ':' + Math.random()); } catch (_) {}
+    }
+  }
+  if (sessionChannel) sessionChannel.onmessage = function () { invalidateSession(false); };
+  window.addEventListener('storage', function (event) {
+    if (!sessionChannel && event.key === 'equipify-session-change') invalidateSession(false);
+  });
+  window.addEventListener('pagehide', function () { invalidateSession(false); });
+  function staleResult() {
+    return {ok: false, status: 401, data: null, error: 'Your session changed. Please reload or sign in again.', fields: {}};
+  }
 
   /**
    * @param {string} method  GET, POST, ...
@@ -22,6 +41,8 @@
    * @returns {Promise<{ok:boolean,status:number,data:*,error:string,fields:Object}>}
    */
   function request(method, path, body) {
+    if (method !== 'GET' && /^\/auth\/(login|logout)(?:\?|$)/.test(path)) invalidateSession(true);
+    var version = sessionVersion;
     var options = {
       method: method,
       credentials: 'same-origin',
@@ -34,6 +55,15 @@
 
     return fetch(BASE + path, options).then(function (response) {
       return response.json().catch(function () { return null; }).then(function (json) {
+        if (version !== sessionVersion) return staleResult();
+        var responseIdentity = response.headers.get('X-Equipify-Identity');
+        if (responseIdentity) {
+          if (identity !== null && identity !== responseIdentity) {
+            invalidateSession(true);
+            return staleResult();
+          }
+          identity = responseIdentity;
+        }
         var ok = response.ok && json !== null && json.success === true;
         return {
           ok: ok,
@@ -44,6 +74,7 @@
         };
       });
     }).catch(function () {
+      if (version !== sessionVersion) return staleResult();
       return {
         ok: false,
         status: 0,
@@ -83,6 +114,12 @@
   }
 
   window.EquipifyApi = {
+    sessionVersion: function () { return sessionVersion; },
+    onSessionChange: function (listener) {
+      sessionListeners.push(listener);
+      return function () { sessionListeners = sessionListeners.filter(function (item) { return item !== listener; }); };
+    },
+    invalidateSession: invalidateSession,
     request: request,
     withQuery: withQuery,
     url: url,

@@ -16,6 +16,8 @@ $router->add('GET',  '/auth/me',       [AuthController::class, 'me']);
 
 $notificationRoles = ['customer', 'renting_party', 'freelance_worker', 'delivery_personnel', 'maintenance_tech', 'area_manager', 'admin'];
 $router->add('GET', '/notifications', [NotificationController::class, 'index'], $notificationRoles);
+$router->add('GET', '/notifications/unread-count', [NotificationController::class, 'unreadCount'], $notificationRoles);
+$router->add('GET', '/area-manager/deliveries', [DeliveryController::class, 'index'], ['area_manager']);
 $router->add('POST', '/notifications/read', [NotificationController::class, 'markRead'], $notificationRoles);
 
 // Admin: area manager registration (no public sign-up for this role)
@@ -141,8 +143,8 @@ $router->add('GET',  '/freelancer/invoices/{id}',            [FreelanceWorkerMoc
 $router->add('GET',  '/freelancer/conversations',            [MessageController::class, 'conversations'],         ['freelance_worker']);
 $router->add('GET',  '/freelancer/messages',                 [MessageController::class, 'messages'],              ['freelance_worker']);
 $router->add('POST', '/freelancer/messages',                 [MessageController::class, 'sendMessage'],           ['freelance_worker']);
-$router->add('GET',  '/freelancer/notifications',            [FreelanceWorkerMockController::class, 'notifications'],         ['freelance_worker']);
-$router->add('POST', '/freelancer/notifications/read',       [FreelanceWorkerMockController::class, 'markNotificationsRead'], ['freelance_worker']);
+$router->add('GET',  '/freelancer/notifications',            [NotificationController::class, 'index'],         ['freelance_worker']);
+$router->add('POST', '/freelancer/notifications/read',       [NotificationController::class, 'markRead'], ['freelance_worker']);
 $router->add('GET',  '/freelancer/complaints',               [ComplaintController::class, 'index'],            ['freelance_worker']);
 $router->add('POST', '/freelancer/complaints',               [ComplaintController::class, 'store'],       ['freelance_worker']);
 

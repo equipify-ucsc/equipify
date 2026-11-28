@@ -6,7 +6,7 @@ require_once __DIR__ . '/../config/db_config.php';
 require_once __DIR__ . '/../models/AreaModel.php';
 require_once __DIR__ . '/../models/UserModel.php';
 $name = 'equipify_areas_test_' . gmdate('Ymd_His') . '_' . bin2hex(random_bytes(4));
-$server = new PDO('mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';charset=utf8mb4', DB_USER, DB_PASS,
+$server = new PDO('mysql:host=' . DB_HOST . ';port=' . (int) (getenv('EQUIPIFY_DB_PORT') ?: DB_PORT) . ';charset=utf8mb4', DB_USER, DB_PASS,
     [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 $server->exec("CREATE DATABASE `$name` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
 putenv('EQUIPIFY_DB_NAME=' . $name);

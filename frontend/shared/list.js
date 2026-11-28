@@ -61,6 +61,22 @@
     // A page is only rendered if it is still the newest request: a slow reply
     // for page 1 must not overwrite the page 2 the user already asked for.
     var requestId = 0;
+    var sessionPaused = false;
+    if (options.sessionScoped) {
+      EquipifyApi.onSessionChange(function () {
+        sessionPaused = true; requestId++;
+        showState('Your session changed. Please reload or sign in again.', 'error');
+        if (options.pager) options.pager.textContent = '';
+        setCount(0);
+      });
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+          requestId++; container.textContent = '';
+          if (options.pager) options.pager.textContent = '';
+          setCount(0);
+        } else if (!sessionPaused) load();
+      });
+    }
 
     // ---------- state rows ----------
     // Inside a <tbody> the placeholder has to be a <tr><td colspan>; anywhere
@@ -197,6 +213,7 @@
     }
 
     function load() {
+      if (sessionPaused || (options.sessionScoped && document.hidden)) return Promise.resolve();
       var id = ++requestId;
       showState('Loading…', 'loading');
 
@@ -211,6 +228,7 @@
         }
 
         var data = res.data;
+        if (options.sessionScoped) state.page = data.page;
         setCount(data.total);
 
         container.textContent = '';

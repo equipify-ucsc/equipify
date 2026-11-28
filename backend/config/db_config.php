@@ -9,8 +9,9 @@
  *     $db = getDbConnection();
  *
  * The values below are XAMPP's defaults and this file is committed to git.
- * EQUIPIFY_DB_NAME overrides the database for isolated test/deployment processes;
- * it is server environment configuration, never an HTTP request parameter.
+ * EQUIPIFY_DB_NAME and EQUIPIFY_DB_PORT override the database/port for
+ * isolated test/deployment processes; neither changes the defaults below.
+ * These are server environment settings, never HTTP request parameters.
  * If your local MySQL uses a different user or password, change it locally
  * but NEVER commit a real password.
  */
@@ -46,7 +47,7 @@ function getDbConnection(): PDO
     $dsn = sprintf(
         'mysql:host=%s;port=%d;dbname=%s;charset=%s',
         DB_HOST,
-        DB_PORT,
+        (int) (getenv('EQUIPIFY_DB_PORT') ?: DB_PORT),
         getenv('EQUIPIFY_DB_NAME') ?: DB_NAME,
         DB_CHARSET
     );

@@ -7,18 +7,29 @@ require_once __DIR__ . '/../config/db_config.php';
 
 final class NotificationModel
 {
-    public static function listing(int $userId, int $page, int $perPage, bool $unread): array
+    public static function unreadCount(int $userId): int
     {
+        $stmt = getDbConnection()->prepare('SELECT COUNT(*) FROM notifications WHERE user_id = ? AND is_read = 0');
+        $stmt->execute([$userId]);
+        return (int) $stmt->fetchColumn();
+    }
+
+    public static function listing(int $userId, int $page, int $perPage, bool $unread, string $type = ''): array
+    {
+        $page = max(1, $page);
+        $perPage = max(1, min(50, $perPage));
         $where = 'user_id = ?' . ($unread ? ' AND is_read = 0' : '');
+        $args = [$userId];
+        if ($type !== '') { $where .= ' AND type = ?'; $args[] = $type; }
         $db = getDbConnection();
         $count = $db->prepare('SELECT COUNT(*) FROM notifications WHERE ' . $where);
-        $count->execute([$userId]);
+        $count->execute($args);
         $total = (int) $count->fetchColumn();
         $page = max(1, min($page, max(1, (int) ceil($total / $perPage))));
         $stmt = $db->prepare('SELECT notification_id, type, title, body, link, is_read, created_at, read_at
             FROM notifications WHERE ' . $where . ' ORDER BY created_at DESC, notification_id DESC LIMIT '
             . $perPage . ' OFFSET ' . (($page - 1) * $perPage));
-        $stmt->execute([$userId]);
+        $stmt->execute($args);
         return ['items' => $stmt->fetchAll(), 'page' => $page, 'per_page' => $perPage,
             'total' => $total, 'total_pages' => (int) ceil($total / $perPage)];
     }

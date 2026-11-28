@@ -1,8 +1,9 @@
 <?php
 /**
  * Placeholder data for the parts of the freelance-worker portal whose tables
- * the schema does not have yet (job history, payments, messages,
- * notifications). Job offers, bids and declines are real now
+ * the schema does not have yet (job history, payments and messages).
+ * Notifications and notification-derived dashboard activity are persisted.
+ * Job offers, bids and declines are real now
  * (JobOfferController); the offers()/bids() generators below only still feed
  * the dashboard's placeholder tiles.
  *
@@ -19,6 +20,7 @@
  */
 
 declare(strict_types=1);
+require_once __DIR__ . '/../models/NotificationModel.php';
 
 require_once __DIR__ . '/../core/ListQuery.php';
 require_once __DIR__ . '/../models/FreelanceWorkerModel.php';
@@ -32,7 +34,6 @@ final class FreelanceWorkerMockController
     private const BID_STATUSES      = ['submitted', 'shortlisted', 'won', 'lost'];
     private const JOB_STATUSES      = ['in_progress', 'completed', 'cancelled'];
     private const PAYMENT_STATUSES  = ['paid', 'pending', 'failed'];
-    private const NOTIFICATION_TYPES = ['job', 'bid', 'payment'];
 
     private const DISTRICTS = [
         'Colombo', 'Gampaha', 'Kandy', 'Galle', 'Kurunegala', 'Matara', 'Jaffna', 'Ratnapura',
@@ -59,6 +60,8 @@ final class FreelanceWorkerMockController
     /** GET /freelancer/dashboard */
     public static function dashboard(array $params = []): void
     {
+        Auth::requireActiveAccount();
+        Auth::requireRole(['freelance_worker']);
         $openOffers  = array_values(array_filter(self::offers(), static fn ($o) => $o['status'] === 'open'));
         $activeJobs  = array_values(array_filter(self::jobRows(), static fn ($j) => $j['status'] === 'in_progress'));
         $pendingBids = array_values(array_filter(self::bids(), static fn ($b) => in_array($b['status'], ['submitted', 'shortlisted'], true)));
@@ -76,7 +79,7 @@ final class FreelanceWorkerMockController
                 'active_jobs'    => count($activeJobs),
                 'pending_bids'   => count($pendingBids),
                 'month_earnings' => round($monthEarnings, 2),
-                'unread_notifications' => count(array_filter(self::notificationRows(), static fn ($n) => !$n['is_read'])),
+                'unread_notifications' => NotificationModel::unreadCount((int) Auth::userId()),
             ],
             // Twelve weeks of earnings for the CSS bar chart; `height_pct` keeps
             // the bar sizing out of the page script.
@@ -262,40 +265,6 @@ final class FreelanceWorkerMockController
         ], 201);
     }
 
-    // ---------------------------------------------------------- notifications
-
-    /** GET /freelancer/notifications?type=&unread=1&page=&per_page= */
-    public static function notifications(array $params = []): void
-    {
-        $type   = ListQuery::enum('type', self::NOTIFICATION_TYPES);
-        $unread = ListQuery::flag('unread');
-
-        Response::ok(ListQuery::paginate(
-            self::notificationRows(),
-            ListQuery::page(),
-            ListQuery::perPage(),
-            static function (array $row) use ($type, $unread): bool {
-                return ($type === '' || $row['type'] === $type)
-                    && (!$unread || !$row['is_read']);
-            }
-        ));
-    }
-
-    /** POST /freelancer/notifications/read: one id, or every notification. */
-    public static function markNotificationsRead(array $params = []): void
-    {
-        $in = Router::jsonBody();
-        if (($in['all'] ?? false) === true) {
-            Response::ok(['marked' => count(self::notificationRows())]);
-        }
-
-        $id = filter_var($in['notification_id'] ?? null, FILTER_VALIDATE_INT);
-        if ($id === false || self::findById(self::notificationRows(), 'notification_id', $id) === null) {
-            Response::error('Notification not found.', 404);
-        }
-        Response::ok(['marked' => 1, 'notification_id' => $id]);
-    }
-
     // ==================================================== generated mock rows
 
     /** @return array<int,array<string,mixed>> 32 job offers */
@@ -448,30 +417,10 @@ final class FreelanceWorkerMockController
         return $rows;
     }
 
-    /** @return array<int,array<string,mixed>> 28 notifications */
+    /** @return array<int,array<string,mixed>> persisted dashboard notifications */
     private static function notificationRows(): array
     {
-        $titles = [
-            'job'     => ['New job offer near you', 'Job starts tomorrow', 'Job marked complete'],
-            'bid'     => ['Your bid was shortlisted', 'Your bid was accepted', 'Bidding closed on a job'],
-            'payment' => ['Payment released', 'Payout on the way', 'Invoice available'],
-        ];
-
-        $rows = [];
-        for ($i = 1; $i <= 28; $i++) {
-            $type = self::NOTIFICATION_TYPES[$i % 3];
-            $rows[] = [
-                'notification_id' => $i,
-                'type'            => $type,
-                'title'           => $titles[$type][$i % 3],
-                'body'            => self::ref('JOB', 3100 + $i) . ' · ' . self::CUSTOMERS[$i % count(self::CUSTOMERS)]
-                    . ' · ' . self::DISTRICTS[$i % count(self::DISTRICTS)],
-                'created_at'      => self::day(-($i - 1)) . ' 0' . ($i % 9) . ':30',
-                // The newest handful are unread.
-                'is_read'         => $i > 6,
-            ];
-        }
-        return $rows;
+        return NotificationModel::listing((int) Auth::userId(), 1, 50, false)['items'];
     }
 
     /** @return array<int,array<string,mixed>> 12 weeks of earnings for the chart */

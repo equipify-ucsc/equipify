@@ -7,6 +7,9 @@ composer.lock
 # Environment / secrets — critical for MySQL credentials
 .env
 .env.local
+.env.*
+!.env.example
+!.env.sample
 config.php
 
 # Encryption key for stored payout details (core/Crypto.php generates it on
@@ -27,6 +30,10 @@ Thumbs.db
 # Uploads / user-generated content (if applicable)
 /uploads/
 /tmp/
+/sessions/
+sess_*
+*.eml
+*.pid
 
 # Files uploaded through the app (credential documents, portfolio and
 # equipment photos). Keep .gitkeep so the folder exists in a fresh clone.

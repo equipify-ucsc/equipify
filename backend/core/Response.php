@@ -36,6 +36,9 @@ final class Response
         http_response_code($status);
         header('Content-Type: application/json; charset=utf-8');
         header('Cache-Control: no-store');
+        // Allows the client to discard data when another window changes accounts.
+        header('X-Equipify-Identity: ' . (isset($_SESSION['user_id'], $_SESSION['role'])
+            ? (int) $_SESSION['user_id'] . ':' . (string) $_SESSION['role'] : 'anonymous'));
         echo json_encode($body, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         exit;
     }

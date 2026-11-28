@@ -63,7 +63,7 @@ final class NotificationService
         } catch (InvalidArgumentException $e) {
             throw $e;
         } catch (Throwable $e) {
-            error_log('Notification persistence failed: ' . $e->getMessage());
+            error_log('Notification persistence failed.');
             throw new RuntimeException('Notification could not be saved.');
         }
     }

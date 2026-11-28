@@ -33,6 +33,10 @@ LoadModule headers_module modules/mod_headers.so
 LoadFile "$xamppConfigPath/php/php8ts.dll"
 LoadModule php_module "$xamppConfigPath/php/php8apache2_4.dll"
 PHPIniDir "$xamppConfigPath/php"
+php_admin_value upload_tmp_dir "$projectConfigPath/tmp"
+php_admin_value sys_temp_dir "$projectConfigPath/tmp"
+php_admin_value session.save_path "$projectConfigPath/tmp/admin-users-sessions"
+php_admin_value disable_functions "mail"
 DocumentRoot "$projectConfigPath"
 TypesConfig "$xamppConfigPath/apache/conf/mime.types"
 DirectoryIndex index.html index.php
@@ -46,9 +50,17 @@ Header always set X-Equipify-Test-Database "$testDatabase"
 </Directory>
 "@
     $configFile = $runDirectory + '/httpd.conf'
+    New-Item -ItemType Directory -Path 'tmp/admin-users-sessions' -Force | Out-Null
     $config | Set-Content -LiteralPath $configFile -Encoding ascii
-    & $httpd -d . -t -f $configFile
-    if ($LASTEXITCODE -ne 0) { throw 'Isolated Apache configuration check failed.' }
+    # Apache prints "Syntax OK" to stderr even on success. Windows PowerShell
+    # must judge its exit code, rather than treating that message as a failure.
+    try {
+        $ErrorActionPreference = 'Continue'
+        $syntaxOutput = & $httpd -d . -t -f $configFile 2>&1
+        $syntaxExit = $LASTEXITCODE
+    } finally { $ErrorActionPreference = 'Stop' }
+    $syntaxOutput | ForEach-Object { "$_" }
+    if ($syntaxExit -ne 0) { throw 'Isolated Apache configuration check failed.' }
     # Do not stop or reuse an existing listener, which might be another project.
     $listener = New-Object System.Net.Sockets.TcpClient
     try { $listener.Connect('127.0.0.1', 18081); $portBusy = $true } catch { $portBusy = $false } finally { $listener.Dispose() }
